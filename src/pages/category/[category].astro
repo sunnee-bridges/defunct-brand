@@ -1,0 +1,56 @@
+---
+import { slugify } from "../../lib/slug.js";
+
+/** Build-time: enumerate all categories and precompute the items for each */
+export async function getStaticPaths() {
+  const modules = import.meta.glob("/content/brands/*.json", { eager: true });
+  // Collect brands
+  const brands = Object.values(modules).map((mod: any) => mod.default ?? mod);
+  // Unique categories
+  const cats = Array.from(new Set(brands.map((b: any) => b.category))).sort();
+
+  return cats.map((label) => {
+    const catSlug = slugify(label);
+    const items = brands
+      .filter((b: any) => slugify(b.category) === catSlug)
+      .sort((a: any, b: any) => a.brand.localeCompare(b.brand));
+    return { params: { category: catSlug }, props: { label, items, allCats: cats } };
+  });
+}
+
+const { label, items, allCats } = Astro.props;
+
+const title = `Defunct Brands in ${label}`;
+const desc = `Explore ${items.length} defunct or discontinued brands in ${label}.`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+  </head>
+  <body style="font-family: system-ui, sans-serif; max-width: 920px; margin: 2rem auto; padding: 0 1rem;">
+    <nav><a href="/">← Home</a></nav>
+    <h1>{title}</h1>
+
+    <p style="color:#666">
+      Browse categories:
+      {allCats.map((c: string, i: number) => (
+        <>
+          {i ? " " : ""}{i ? <>&middot; </> : ""}<a href={`/category/${slugify(c)}/`}>{c}</a>
+        </>
+      ))}
+    </p>
+
+    <ul>
+      {items.map((b: any) => (
+        <li style="margin:.35rem 0;">
+          <a href={`/brand/${b.slug}/`}>{b.brand}</a>
+          {b.active?.start ? ` (${b.active.start}\u2013${b.active.end ?? "?"})` : ""}
+          {b.fate ? ` ${'\u2014'} ${b.fate}` : ""}
+        </li>
+      ))}
+    </ul>
+  </body>
+</html>

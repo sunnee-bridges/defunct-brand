@@ -1,0 +1,19 @@
+{
+  "brand": "KB Toys",
+  "slug": "kb-toys",
+  "category": "Retail",
+  "country": "US",
+  "active": {
+    "start": 1922,
+    "end": 2009
+  },
+  "fate": "Liquidation",
+  "summary": "Toy retailer liquidated; brand later revived online intermittently.",
+  "notable_products": [
+    "Toy stores",
+    "Holiday catalogs"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/KB_Toys"
+  }
+}

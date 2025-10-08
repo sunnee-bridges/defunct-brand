@@ -1,0 +1,35 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Redirect no-trailing-slash to trailing-slash for brand & category
+[[redirects]]
+  from = "/brand/:slug"
+  to = "/brand/:slug/"
+  status = 301
+
+[[redirects]]
+  from = "/category/:slug"
+  to = "/category/:slug/"
+  status = 301
+
+# --- Headers ---
+
+# Serve HTML explicitly as UTF-8 (prevents mojibake like Â / â€“)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Content-Type = "text/html; charset=utf-8"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "no-referrer-when-downgrade"
+
+# JSON files (your brand data) as UTF-8 too
+[[headers]]
+  for = "/**/*.json"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"
+    X-Content-Type-Options = "nosniff"

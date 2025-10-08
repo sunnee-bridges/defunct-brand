@@ -1,0 +1,19 @@
+{
+  "brand": "Pebble",
+  "slug": "pebble",
+  "category": "Wearables",
+  "country": "US",
+  "active": {
+    "start": 2012,
+    "end": 2016
+  },
+  "fate": "Acquired/Discontinued",
+  "summary": "Smartwatch pioneer acquired by Fitbit; products discontinued.",
+  "notable_products": [
+    "Pebble",
+    "Pebble Time"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Pebble_(watch)"
+  }
+}

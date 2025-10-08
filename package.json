@@ -1,0 +1,14 @@
+{
+  "name": "defunct-brands",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "data": "node scripts/build-data.mjs",
+    "dev": "astro dev",
+    "build": "npm run data && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^4.14.0"
+  }
+}

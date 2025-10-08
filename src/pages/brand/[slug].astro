@@ -1,0 +1,41 @@
+---
+/** Build-time: enumerate all brand slugs and pass each brand as a prop */
+export async function getStaticPaths() {
+  const modules = import.meta.glob("/content/brands/*.json", { eager: true });
+  return Object.entries(modules).map(([p, mod]) => {
+    const file = p.split("/").pop() || "";
+    const slug = file.replace(/\.json$/i, "");
+    // @ts-ignore default export is the JSON object
+    const brand = (mod as any).default ?? mod;
+    return { params: { slug }, props: { brand } };
+  });
+}
+
+const { brand } = Astro.props;
+
+const title = `What Happened to ${brand.brand}? (Timeline & Fate)`;
+const desc =
+  `${brand.brand}: ${brand.fate || "Defunct"}; active ${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}. ${brand.summary ?? ""}`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+  </head>
+  <body style="font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem;">
+    <a href="/">← All Brands</a>
+    <h1>What Happened to {brand.brand}?</h1>
+
+    <p><strong>At a glance:</strong>
+      {brand.active?.start ? ` Founded: ${brand.active.start}.` : "" }
+      {brand.active?.end ? ` Defunct: ${brand.active.end}.` : "" }
+      {brand.fate ? ` Fate: ${brand.fate}.` : "" }
+      {brand.category ? ` Category: ${brand.category}.` : "" }
+      {brand.country ? ` Country: ${brand.country}.` : "" }
+    </p>
+
+    {brand.summary && <p>{brand.summary}</p>}
+  </body>
+</html>

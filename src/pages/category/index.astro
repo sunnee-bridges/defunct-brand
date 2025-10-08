@@ -1,0 +1,32 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import { slugify } from "../../lib/slug.js";
+
+const dir = path.join(Astro.cwd, "content", "brands");
+const files = fs.readdirSync(dir).filter(f => f.endsWith(".json"));
+const brands = files.map(f => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")));
+
+const counts = new Map();
+for (const b of brands) counts.set(b.category, (counts.get(b.category) || 0) + 1);
+const categories = Array.from(counts.entries()).sort((a,b)=>a[0].localeCompare(b[0]));
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Browse by Category • Defunct Brands</title>
+    <meta name="description" content="Browse defunct brands by category: electronics, retail, toys, and more." />
+  </head>
+  <body style="font-family: system-ui, sans-serif; max-width: 920px; margin: 2rem auto; padding: 0 1rem;">
+    <nav><a href="/">← Home</a></nav>
+    <h1>Browse by Category</h1>
+    <ul>
+      {categories.map(([label, n]) => (
+        <li>
+          <a href={`/category/${slugify(label)}/`}>{label}</a> ({n})
+        </li>
+      ))}
+    </ul>
+  </body>
+</html>

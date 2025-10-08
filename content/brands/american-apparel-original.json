@@ -1,0 +1,19 @@
+{
+  "brand": "American Apparel (original company)",
+  "slug": "american-apparel-original",
+  "category": "Retail",
+  "country": "US",
+  "active": {
+    "start": 1989,
+    "end": 2017
+  },
+  "fate": "Bankruptcy/brand sold",
+  "summary": "Original company went bankrupt; brand acquired and continues online.",
+  "notable_products": [
+    "Apparel",
+    "Retail stores"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/American_Apparel"
+  }
+}

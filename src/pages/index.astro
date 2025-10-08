@@ -1,0 +1,36 @@
+---
+import { slugify } from "../lib/slug.js";
+
+// Load all brand JSON files at build time (no fs)
+const modules = await Astro.glob("/content/brands/*.json");
+const brands = modules.map((m) => m.default);
+
+// Build category list
+const cats = Array.from(new Set(brands.map((b) => b.category))).sort();
+---
+
+<!-- If you use a layout, make sure it has: <meta charset="utf-8" /> as the first tag in <head> -->
+
+<h1>Defunct Brands Archive</h1>
+
+<p>Browse by category:
+  {cats.map((c, i) => (
+    <>
+      {i ? " " : ""}{i ? <>&middot; </> : ""}<a href={`/category/${slugify(c)}/`}>{c}</a>
+    </>
+  ))}
+</p>
+
+<ul>
+  {brands
+    .sort((a, b) => a.brand.localeCompare(b.brand))
+    .map((b) => (
+      <li>
+        <a href={`/brand/${b.slug}/`}>{b.brand}</a>
+        {b.active?.start && (
+          <> ({b.active.start}&ndash;{b.active.end ?? "?"})</>
+        )}
+        {b.fate && <> &mdash; {b.fate}</>}
+      </li>
+    ))}
+</ul>

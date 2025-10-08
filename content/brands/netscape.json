@@ -1,0 +1,19 @@
+{
+  "brand": "Netscape",
+  "slug": "netscape",
+  "category": "Software/Internet",
+  "country": "US",
+  "active": {
+    "start": 1994,
+    "end": 2008
+  },
+  "fate": "Discontinued",
+  "summary": "Browser pioneer; development ended, code continued as Mozilla.",
+  "notable_products": [
+    "Navigator",
+    "Communicator"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Netscape"
+  }
+}
