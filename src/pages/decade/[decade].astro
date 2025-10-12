@@ -1,0 +1,143 @@
+---
+import Base from "../../layouts/Base.astro";
+
+/* ---------- Runtime helpers ---------- */
+function runtimeParseYear(v: unknown): number | undefined {
+  if (v == null) return undefined;
+  const m = String(v).match(/\d{3,4}/);
+  if (!m) return undefined;
+  const n = parseInt(m[0], 10);
+  return Number.isFinite(n) ? n : undefined;
+}
+function decadeStartFromParam(p: string | undefined): number | null {
+  if (!p) return null;
+  const m = p.match(/^(\d{3,4})s$/i);
+  return m ? parseInt(m[1], 10) : null;
+}
+const decadeLabel = (start: number) => `${start}s`;
+const inDecade = (year: number | undefined, start: number) =>
+  typeof year === "number" && year >= start && year <= start + 9;
+
+/* ---------- Build-time: generate only existing decades ---------- */
+export async function getStaticPaths() {
+  const parseYear = (v: unknown): number | undefined => {
+    if (v == null) return undefined;
+    const m = String(v).match(/\d{3,4}/);
+    if (!m) return undefined;
+    const n = parseInt(m[0], 10);
+    return Number.isFinite(n) ? n : undefined;
+  };
+
+  const mods = import.meta.glob("/content/brands/*.json", { eager: true });
+  const brands: any[] = Object.values(mods).map((m: any) => m.default ?? m);
+
+  const byDecade: Record<string, any[]> = {};
+  for (const b of brands) {
+    const endY = parseYear(b?.active?.end);
+    const startY = parseYear(b?.active?.start);
+    const y = endY ?? startY;
+    if (y == null) continue;
+    const start = Math.floor(y / 10) * 10;
+    const key = `${start}s`;
+    (byDecade[key] ||= []).push(b);
+  }
+
+  return Object.keys(byDecade)
+    .sort((a, b) => parseInt(a) - parseInt(b))
+    .map((dec) => ({
+      params: { decade: dec }, // e.g. "2020s"
+      props: {
+        decade: dec,
+        start: parseInt(dec, 10),
+        items: byDecade[dec]
+          .slice()
+          .sort((a, b) => (a.brand || "").localeCompare(b.brand || "")),
+      },
+    }));
+}
+
+/* ---------- Runtime props + safe fallback ---------- */
+const mods = import.meta.glob("/content/brands/*.json", { eager: true });
+const allBrands: any[] = Object.values(mods).map((m: any) => m.default ?? m);
+
+let { decade, start, items } = Astro.props as {
+  decade?: string; start?: number; items?: any[];
+};
+
+/* Compute from param if this route wasn't prebuilt for any reason */
+if (!decade) {
+  const s = decadeStartFromParam(Astro.params.decade) ?? NaN;
+  start = s;
+  decade = Number.isFinite(s) ? decadeLabel(s) : "Decade";
+  items = Number.isFinite(s)
+    ? allBrands
+        .filter((b) => inDecade(runtimeParseYear(b?.active?.end) ?? runtimeParseYear(b?.active?.start), s))
+        .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""))
+    : [];
+}
+
+/* ---------- 404 guard ---------- */
+const isInvalidSlug = !Number.isFinite(start);
+const isEmptyDecade = (items?.length ?? 0) === 0;
+const isNotFound = isInvalidSlug || isEmptyDecade;
+if (isNotFound) {
+  Astro.response.status = 404;
+}
+
+const title = isNotFound ? "Page not found" : `Defunct Brands in the ${decade}`;
+const desc  = isNotFound
+  ? "Try another page or jump to a random brand."
+  : `Explore ${items!.length} brands from the ${decade}.`;
+const canonical = isNotFound
+  ? new URL("/decade/", Astro.url).toString()
+  : new URL(`/decade/${decade}/`, Astro.url).toString();
+---
+
+<Base title={title} description={desc}>
+  <fragment slot="head">
+    <link rel="canonical" href={canonical} />
+    {isNotFound && <meta name="robots" content="noindex,follow" />}
+  </fragment>
+
+  <nav class="mb-4 flex flex-wrap gap-2">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/decade/" class="chip focus-ring">All decades</a>
+    <a href="#" data-random class="btn-primary focus-ring">Random</a>
+  </nav>
+
+  {isNotFound ? (
+    <>
+      <h1 class="text-2xl md:text-3xl font-bold mb-2">Page not found</h1>
+      <p class="text-slate-600 dark:text-slate-300">Try another page or jump to a random brand.</p>
+      <div class="mt-4 flex gap-2">
+        <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+        <a href="/category/" class="chip focus-ring">Categories</a>
+        <a href="/decade/" class="chip focus-ring">Decades</a>
+        <a href="#" data-random class="btn-primary focus-ring">Random</a>
+      </div>
+    </>
+  ) : (
+    <>
+      <h1 class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands in the {decade}</h1>
+      <p class="text-slate-600 dark:text-slate-300 mb-4">{desc}</p>
+
+      <ul class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
+        {items!.map((b: any) => (
+          <li
+            class="rounded-xl p-4 border shadow-sm hover:shadow-md transition
+                   bg-white border-gray-200
+                   dark:bg-slate-900 dark:border-slate-700 dark:shadow-none"
+          >
+            <h3 class="text-base font-semibold mb-1 text-slate-900 dark:text-slate-100">
+              <a href={`/brand/${b.slug}/`} class="hover:underline focus-ring">{b.brand}</a>
+            </h3>
+            <div class="text-sm text-gray-600 dark:text-slate-300">
+              {b.active?.start ?? ""}{b.active?.start ? '\u2013' : ''}{b.active?.start ? (b.active?.end ?? '?') : ''}{b.fate ? ` \u2014 ${b.fate}` : ""}
+            </div>
+            <div class="text-xs text-gray-500 dark:text-slate-400 mt-1">{b.category}</div>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</Base>

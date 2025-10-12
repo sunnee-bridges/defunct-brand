@@ -1,36 +1,144 @@
 ---
+import Base from "../layouts/Base.astro";
 import { slugify } from "../lib/slug.js";
 
-// Load all brand JSON files at build time (no fs)
-const modules = await Astro.glob("/content/brands/*.json");
-const brands = modules.map((m) => m.default);
+/* Load all brand JSON at build-time (eager) */
+const modules = import.meta.glob("/content/brands/*.json", { eager: true });
+const brands: any[] = Object.values(modules).map((m: any) => m.default ?? m);
 
-// Build category list
-const cats = Array.from(new Set(brands.map((b) => b.category))).sort();
+/* Helpers */
+const toYear = (v: unknown): number | undefined => {
+  if (v == null) return undefined;
+  const m = String(v).match(/\d{3,4}/);   // handles "2012", 2012, "2012?", "2012–"
+  if (!m) return undefined;
+  const n = parseInt(m[0], 10);
+  return Number.isFinite(n) ? n : undefined;
+};
+const decadeStart = (y: number) => Math.floor(y / 10) * 10;
+
+/* Categories & Fates */
+const categories: string[] = Array.from(new Set(brands.map((b) => b.category))).sort();
+const fates: string[] = Array.from(new Set(brands.map((b) => b.fate).filter(Boolean))).sort();
+
+/* AVAILABLE decades only (prefer end year, fallback to start) */
+const decadeSet = new Set<number>();
+for (const b of brands) {
+  const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
+  if (y !== undefined) decadeSet.add(decadeStart(y));
+}
+const availableDecadeLabels: string[] = [...decadeSet].sort((a,b)=>a-b).map(d => `${d}s`);
+const totalDecades = availableDecadeLabels.length;
+
+/* Featured: most recently ended first (fallback to start) */
+const featured = brands
+  .slice()
+  .sort((a, b) => {
+    const ay = toYear(a?.active?.end) ?? toYear(a?.active?.start) ?? 0;
+    const by = toYear(b?.active?.end) ?? toYear(b?.active?.start) ?? 0;
+    return by - ay;
+  })
+  .slice(0, 12);
+
+/* Useful paths */
+const currentPath = Astro.url.pathname;
 ---
 
-<!-- If you use a layout, make sure it has: <meta charset="utf-8" /> as the first tag in <head> -->
+<Base title="Defunct Brands Archive — Browse" description="Browse discontinued and defunct brands by category, A–Z, decade, and fate.">
+  <!-- Categories -->
+  <section class="mt-6" role="region" aria-label="Browse by category">
+    <h2 class="text-lg font-semibold mb-2">Browse by Category</h2>
+    <nav class="flex flex-wrap gap-2" role="navigation" aria-label="Categories">
+      {categories.map((c) => {
+        const href = `/category/${slugify(c)}/`;
+        const isCurrent = currentPath.startsWith(href);
+        return (
+          <a
+            href={href}
+            class="chip focus-ring aria-[current=page]:ring-2 aria-[current=page]:ring-indigo-500"
+            aria-current={isCurrent ? "page" : undefined}
+          >
+            {c}
+          </a>
+        );
+      })}
+    </nav>
+  </section>
 
-<h1>Defunct Brands Archive</h1>
+  <!-- Decades (compact preview) -->
+  <section class="mt-6" role="region" aria-label="Browse by decade">
+    <h2 class="text-lg font-semibold mb-2">Browse by Decade</h2>
+    <p class="text-gray-600 dark:text-slate-300 text-sm mb-1">
+      Explore brands by the decade they ended (or started when unknown).
+    </p>
 
-<p>Browse by category:
-  {cats.map((c, i) => (
-    <>
-      {i ? " " : ""}{i ? <>&middot; </> : ""}<a href={`/category/${slugify(c)}/`}>{c}</a>
-    </>
-  ))}
-</p>
+    <nav class="flex flex-wrap gap-2 items-center" role="navigation" aria-label="Decades">
+      {availableDecadeLabels.slice(0, 6).map((label) => {
+        const href = `/decade/${label}/`;
+        const isCurrent = currentPath === href;
+        return (
+          <a
+            href={href}
+            class="chip focus-ring aria-[current=page]:ring-2 aria-[current=page]:ring-indigo-500"
+            aria-current={isCurrent ? "page" : undefined}
+          >
+            {label}
+          </a>
+        );
+      })}
 
-<ul>
-  {brands
-    .sort((a, b) => a.brand.localeCompare(b.brand))
-    .map((b) => (
-      <li>
-        <a href={`/brand/${b.slug}/`}>{b.brand}</a>
-        {b.active?.start && (
-          <> ({b.active.start}&ndash;{b.active.end ?? "?"})</>
-        )}
-        {b.fate && <> &mdash; {b.fate}</>}
-      </li>
-    ))}
-</ul>
+      <!-- Keep "View all" always visible -->
+      <a
+        href="/decade/"
+        class="btn-primary focus-ring"
+        aria-label={`View all decades${totalDecades ? ` (${totalDecades} available)` : ""}`}
+        title="View all decades"
+      >
+        View all &raquo;
+      </a>
+    </nav>
+  </section>
+
+  <!-- Featured grid -->
+  <section class="mt-6 lg:mt-8" role="region" aria-label="Recently defunct brands">
+    <h2 class="text-lg font-semibold mb-2">Recently Defunct (featured)</h2>
+
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5">
+      {featured.map((b) => (
+        <article class="card group">
+          <h3 class="text-lg font-semibold leading-snug line-clamp-2 mb-1 text-slate-900/95 dark:text-slate-100">
+            <a href={`/brand/${b.slug}/`} class="hover:underline focus-ring stretched-link">
+              {b.brand}
+            </a>
+          </h3>
+
+          <div class="text-sm text-gray-600 dark:text-slate-300">
+            {b.active?.start ?? ""}{b.active?.start ? '\u2013' : ''}{b.active?.start ? (b.active?.end ?? '?') : ''}{b.fate ? ` \u2014 ${b.fate}` : ""}
+          </div>
+
+          <div class="text-xs text-gray-500 dark:text-slate-400 mt-1">
+            {b.category}
+          </div>
+        </article>
+
+      ))}
+    </div>
+  </section>
+
+  <!-- Idle prefetch of a couple brand pages for snappier nav (optional) -->
+  <script is:inline>
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        const urls = Array.from(document.querySelectorAll('a[href^="/brand/"]'))
+          .slice(0, 3)
+          .map(a => a.getAttribute('href'))
+          .filter(Boolean);
+        urls.forEach(u => {
+          const link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = u;
+          document.head.appendChild(link);
+        });
+      });
+    }
+  </script>
+</Base>

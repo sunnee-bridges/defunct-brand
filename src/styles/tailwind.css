@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === Accessibility & helpers === */
+@layer utilities {
+  /* Visible, color-appropriate focus ring */
+  .focus-ring {
+    @apply focus:outline-none
+           focus-visible:ring-2 focus-visible:ring-indigo-500
+           focus-visible:ring-offset-2 focus-visible:ring-offset-white
+           dark:focus-visible:ring-offset-slate-900;
+  }
+
+  /* Stretched link: make whole card clickable */
+  .stretched-link { position: static; }
+  .stretched-link::after {
+    content: "";
+    position: absolute;   /* stretches to nearest positioned ancestor (the card) */
+    inset: 0;
+    pointer-events: auto;
+    background: transparent;
+    z-index: 10;
+    transition: none;     /* never animate the overlay */
+  }
+}
+
+@layer components {
+  /* Reusable chip + button */
+  .chip {
+    @apply px-3 py-1.5 rounded-full border text-sm no-underline
+           bg-white text-slate-900 border-slate-300
+           hover:bg-slate-100
+           dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-800
+           motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none;
+  }
+  .btn-primary {
+    @apply px-3 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm no-underline
+           motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none;
+  }
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus-ring bg-white text-indigo-700 px-3 py-1 rounded
+           absolute top-2 left-2 z-50;
+  }
+
+  /* Reusable card style: slightly stronger border in light mode, hover bg, full-tile focus ring */
+  .card {
+    @apply relative rounded-xl p-4 border border-slate-200 bg-white
+           motion-safe:transition-shadow motion-safe:duration-200 motion-reduce:transition-none
+           shadow-[0_1px_0_rgba(0,0,0,0.04)]
+           hover:bg-slate-50 hover:border-slate-300 hover:shadow-md
+           dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 dark:shadow-none
+           focus-within:ring-2 focus-within:ring-indigo-500
+           focus-within:ring-offset-2 focus-within:ring-offset-white
+           dark:focus-within:ring-offset-slate-900;
+  }
+}
+
+/* Base transitions + reduced motion */
+@layer base {
+  body { @apply transition-opacity duration-300 ease-out; }
+  .fade-out { opacity: 0; }
+}
+
+/* Respect OS dark mode tokens you set */
+@media (prefers-color-scheme: dark) {
+  html { color-scheme: dark; }
+  :root {
+    --fg:#f3f4f6; --muted:#cbd5e1; --line:#334155;
+    --pill:#0f172a; --pillHover:#111827;
+  }
+  body { background:#0b0b0f; color:var(--fg); }
+  .pill { color:#e5e7eb; border-color:#475569; }
+  .tag.bad  { color:#fecaca;  background:#3f1a1a; border-color:#7f1d1d; }
+  .tag.ok   { color:#bbf7d0;  background:#052e1c; border-color:#14532d; }
+  .tag.warn { color:#fde68a;  background:#3a2a05; border-color:#713f12; }
+  .list { border-top-color: var(--line); }
+  .row  { border-bottom-color: var(--line); }
+}
+
+/* Prefer reduced motion: disable smooth scroll and heavy transitions */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+}
+
+/* Optional: boost contrast for users who ask for it */
+@media (prefers-contrast: more) {
+  .card { border-color: #94a3b8; /* slate-400 */ box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+}

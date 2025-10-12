@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+
+/* Load all brand JSON at build-time (eager) */
+const modules = import.meta.glob("/content/brands/*.json", { eager: true });
+const brands: any[] = Object.values(modules).map((m: any) => m.default ?? m);
+
+/* Helpers */
+const toYear = (v: unknown): number | undefined => {
+  if (v == null) return undefined;
+  const m = String(v).match(/\d{3,4}/);
+  if (!m) return undefined;
+  const n = parseInt(m[0], 10);
+  return Number.isFinite(n) ? n : undefined;
+};
+const decadeStart = (y: number) => Math.floor(y / 10) * 10;
+const labelOf = (start: number) => `${start}s`;
+
+/* Build map: decade label -> count (prefer end year, fallback start) */
+const counts = new Map<string, number>();
+for (const b of brands) {
+  const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
+  if (y == null) continue;
+  const start = decadeStart(y);
+  const label = labelOf(start);
+  counts.set(label, (counts.get(label) ?? 0) + 1);
+}
+
+/* Sorted available decades (labels like "1940s", "1950s", ...) */
+const decades = [...counts.keys()].sort((a, b) => parseInt(a) - parseInt(b));
+
+/* SEO bits */
+const pageTitle = "Browse by Decade • Defunct Brands";
+const pageDesc =
+  decades.length
+    ? `Browse defunct brands by decade (${decades[0]}–${decades[decades.length - 1]}).`
+    : "Browse defunct brands by decade.";
+const canonical = new URL("/decade/", Astro.url).toString();
+
+/* JSON-LD ItemList for the list of decades */
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": decades.map((d, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: d,
+    url: new URL(`/decade/${d}/`, Astro.url).toString(),
+    numberOfItems: counts.get(d) ?? 0
+  }))
+};
+---
+
+<Base title={pageTitle} description={pageDesc}>
+  <fragment slot="head">
+    <link rel="canonical" href={canonical} />
+    <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
+  </fragment>
+
+
+  <!-- Breadcrumb-ish chips -->
+  <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <span class="chip opacity-70 cursor-default" aria-current="page">Decades</span>
+  </nav>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-1">Browse by Decade</h1>
+  <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">
+    Explore brands by the decade they ended (or started when unknown).
+  </p>
+
+  {decades.length === 0 ? (
+    <p class="text-slate-600 dark:text-slate-400">No decades available yet.</p>
+  ) : (
+    /* Card grid of decades */
+    <ul class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4 mt-4">
+      {decades.map((d) => (
+        <li>
+          <article
+            class="relative group rounded-xl p-4 border transition
+                   bg-white border-gray-200 hover:bg-slate-50
+                   dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                   focus-within:ring-2 ring-indigo-500"
+          >
+            <h2 class="text-lg font-semibold leading-snug mb-1 text-slate-900 dark:text-slate-100">
+              <a href={`/decade/${d}/`} class="hover:underline focus-ring stretched-link" aria-label={`View ${d} brands`}>
+                {d}
+              </a>
+            </h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300">
+              {counts.get(d)} {counts.get(d) === 1 ? "brand" : "brands"}
+            </p>
+          </article>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>

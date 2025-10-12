@@ -1,0 +1,164 @@
+---
+import "../styles/tailwind.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+export interface Props { title?: string; description?: string; }
+
+const {
+  title = "Defunct Brands Archive",
+  description = "Browse discontinued and defunct brands by category, A–Z, decade, and fate."
+} = Astro.props;
+
+/** 🔧 Use the SAME loader as index.astro */
+const modules = await Astro.glob("/content/brands/*.json");
+const fileSlugs = modules
+  .map((m: any) => {
+    const data = m.default ?? m;
+    // prefer data.slug if present; else fall back to filename slug baked by Astro
+    return data?.slug || (data?.slug ?? "");
+  })
+  .filter(Boolean);
+
+const FALLBACK_SLUG = fileSlugs[0] || "aim"; // or any known slug
+---
+
+
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Allow pages to inject extra SEO -->
+    <slot name="head" />
+     <script is:inline>
+      (function () {
+        const KEY = 'theme';
+        const saved = localStorage.getItem(KEY);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        // Tailwind uses .dark on root for dark styles
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        document.documentElement.dataset.theme = theme; // optional data attr for non-TW CSS
+      })();
+    </script>
+
+    <!-- Optional: better mobile address-bar color per theme -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
+  </head>
+  <body class="min-h-full bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100">
+    <!-- Skip link for keyboard users -->
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!-- Pass precomputed slugs + fallback to header/footer -->
+    <Header allSlugs={fileSlugs} fallbackSlug={FALLBACK_SLUG} />
+
+    <main id="main" class="max-w-[1040px] mx-auto px-4" aria-labelledby="brand-title">
+      <slot />
+    </main>
+
+    <Footer fallbackSlug={FALLBACK_SLUG} />
+
+    <!-- Embed slugs globally so any page can use them -->
+  <script type="application/json" id="__brand_slugs_json">{JSON.stringify(fileSlugs)}</script>
+<script is:inline>
+  (function(){
+    try {
+      window.__SLUGS = JSON.parse(document.getElementById('__brand_slugs_json')?.textContent || '[]');
+    } catch(e) { window.__SLUGS = []; }
+    console.log('[Random:init] slugs=', Array.isArray(window.__SLUGS) ? window.__SLUGS.length : 0);
+  })();
+</script>
+
+<!-- Put these at the bottom of Base.astro, before </body> -->
+<script is:inline>
+  (function(){
+    // Load slugs from sessionStorage or embed/fetch as needed
+    async function ensureSlugs() {
+      try {
+        // 1) try session cache
+        var cached = sessionStorage.getItem('__BRAND_SLUGS__');
+        if (cached) {
+          window.__SLUGS = JSON.parse(cached);
+          if (Array.isArray(window.__SLUGS) && window.__SLUGS.length) return window.__SLUGS;
+        }
+      } catch(_) {}
+
+      // 2) try embedded JSON (if you left it in the layout)
+      try {
+        var el = document.getElementById('__brand_slugs_json');
+        if (el && el.textContent) {
+          window.__SLUGS = JSON.parse(el.textContent);
+          if (Array.isArray(window.__SLUGS) && window.__SLUGS.length) {
+            sessionStorage.setItem('__BRAND_SLUGS__', JSON.stringify(window.__SLUGS));
+            return window.__SLUGS;
+          }
+        }
+      } catch(_) {}
+
+      // 3) fetch from endpoint (authoritative)
+      try {
+        var res = await fetch('/brand-slugs.json', { credentials: 'same-origin' });
+        if (res.ok) {
+          var data = await res.json();
+          if (Array.isArray(data) && data.length) {
+            window.__SLUGS = data;
+            try { sessionStorage.setItem('__BRAND_SLUGS__', JSON.stringify(data)); } catch(_) {}
+            return data;
+          }
+        }
+      } catch(_) {}
+
+      // 4) last resort: harvest visible links (works on listing pages)
+      var seen = Object.create(null), found = [];
+      document.querySelectorAll('a[href^="/brand/"]').forEach(function(a){
+        var m = (a.getAttribute('href')||"").match(/^\/brand\/([^\/?#]+)\/?/);
+        if (m && m[1] && !seen[m[1]]) { seen[m[1]] = 1; found.push(m[1]); }
+      });
+      window.__SLUGS = found;
+      return found;
+    }
+
+    function pickOtherThanCurrent(list) {
+      var cur = (location.pathname.match(/^\/brand\/([^\/?#]+)\/?/) || [,""])[1];
+      var pool = list.filter(function(s){ return s && s !== cur; });
+      if (!pool.length) pool = list.slice();
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    // Delegated click; supports sync or async slug load
+    document.addEventListener('click', async function (e) {
+      var a = e.target && (e.target.closest?.('[data-random], #random-brand'));
+      if (!a) return;
+
+      // Load slugs if needed
+      var slugs = Array.isArray(window.__SLUGS) ? window.__SLUGS : [];
+      if (!slugs.length) slugs = await ensureSlugs();
+      console.log('[Random:slugs]', slugs.length);
+
+      if (slugs.length) {
+        e.preventDefault();
+         // 🔊 Announce
+        var live = document.getElementById('live-region');
+        if (live) live.textContent = 'Loading a random brand…';
+
+        var pick = pickOtherThanCurrent(slugs);
+        console.log('[Random:navigate] ->', pick);
+        if (pick) {
+          try { document.body.classList.add('fade-out'); } catch(_) {}
+          setTimeout(function(){ location.href = '/brand/' + pick + '/'; }, 100);
+        }
+      }
+    }, false);
+
+    // Prewarm cache on first page view (non-blocking)
+    ensureSlugs().then(function(s){ console.log('[Random:init]', s.length); });
+  })();
+</script>
+
+
+  </body>
+</html>

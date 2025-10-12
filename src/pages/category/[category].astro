@@ -4,9 +4,7 @@ import { slugify } from "../../lib/slug.js";
 /** Build-time: enumerate all categories and precompute the items for each */
 export async function getStaticPaths() {
   const modules = import.meta.glob("/content/brands/*.json", { eager: true });
-  // Collect brands
   const brands = Object.values(modules).map((mod: any) => mod.default ?? mod);
-  // Unique categories
   const cats = Array.from(new Set(brands.map((b: any) => b.category))).sort();
 
   return cats.map((label) => {
@@ -22,6 +20,32 @@ const { label, items, allCats } = Astro.props;
 
 const title = `Defunct Brands in ${label}`;
 const desc = `Explore ${items.length} defunct or discontinued brands in ${label}.`;
+const canonical = Astro.url.toString();
+
+/** SEO JSON-LD: Breadcrumbs and ItemList */
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": new URL("/", Astro.url).toString() },
+    { "@type": "ListItem", "position": 2, "name": "Categories", "item": new URL("/#categories", Astro.url).toString() },
+    { "@type": "ListItem", "position": 3, "name": label, "item": canonical }
+  ]
+};
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": title,
+  "itemListOrder": "http://schema.org/ItemListOrderAscending",
+  "numberOfItems": items.length,
+  "itemListElement": items.map((b: any, i: number) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "url": new URL(`/brand/${b.slug}/`, Astro.url).toString(),
+    "name": b.brand
+  }))
+};
 ---
 
 <html lang="en">
@@ -29,28 +53,199 @@ const desc = `Explore ${items.length} defunct or discontinued brands in ${label}
     <meta charset="utf-8" />
     <title>{title}</title>
     <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={desc} />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)}></script>
+    <script type="application/ld+json" set:html={JSON.stringify(itemListLd)}></script>
+
+    <!-- Minimal CSS (no framework) -->
+    <style>
+      :root {
+        --fg:#111; --muted:#666; --line:#e5e7eb; --pill:#f3f4f6; --pillHover:#e5e7eb;
+        --bad:#b91c1c; --ok:#15803d; --warn:#a16207;
+      }
+      html { color-scheme: light dark; }
+      body {
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+        margin: 0; color: var(--fg);
+      }
+      .wrap { max-width: 980px; margin: 2rem auto; padding: 0 1rem; }
+      header a { text-decoration: none; }
+      h1 { line-height: 1.2; margin: .5rem 0 1rem; }
+      .subtle { color: var(--muted); }
+      /* Category pills */
+      .pillbar { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 1.25rem; }
+      .pill {
+        display:inline-block; padding:.35rem .65rem; border-radius:999px;
+        background:var(--pill); color:#222; font-size:.9rem; text-decoration:none; border:1px solid var(--line);
+      }
+      .pill[aria-current="page"] { font-weight:600; outline:2px solid #c7d2fe; }
+      .pill:hover { background:var(--pillHover); }
+      /* Controls */
+      .controls { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; margin:1rem 0; }
+      .controls input[type="search"], .controls select {
+        padding:.5rem .6rem; border:1px solid var(--line); border-radius:.5rem; font:inherit;
+      }
+      .srch { flex: 1 1 240px; }
+      /* List */
+      .list { margin: 1rem 0 2rem; padding: 0; list-style:none; border-top:1px solid var(--line); }
+      .row { display:flex; gap:.75rem; justify-content:space-between; align-items:baseline;
+             padding:.65rem 0; border-bottom:1px solid var(--line); }
+      .row a { font-weight:600; text-decoration:none; }
+      .meta { color:var(--muted); font-size:.95rem; }
+      .tag { font-size:.85rem; padding:.15rem .4rem; border-radius:.35rem; border:1px solid var(--line); }
+      .tag.bad { color:var(--bad); border-color:#fecaca; background:#fef2f2; }
+      .tag.ok { color:var(--ok); border-color:#bbf7d0; background:#f0fdf4; }
+      .tag.warn { color:var(--warn); border-color:#fde68a; background:#fffbeb; }
+      /* Breadcrumbs */
+      nav.breadcrumbs { font-size:.9rem; margin-bottom:.5rem; }
+      nav.breadcrumbs a { color: inherit; text-decoration: none; }
+      nav.breadcrumbs span.sep { margin: 0 .35rem; color: var(--muted); }
+      /* Sticky aside on wide screens */
+      @media (min-width: 900px) {
+        .grid { display:grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items:start; }
+        aside { position: sticky; top: 1.25rem; }
+      }
+    </style>
   </head>
-  <body style="font-family: system-ui, sans-serif; max-width: 920px; margin: 2rem auto; padding: 0 1rem;">
-    <nav><a href="/">← Home</a></nav>
-    <h1>{title}</h1>
 
-    <p style="color:#666">
-      Browse categories:
-      {allCats.map((c: string, i: number) => (
-        <>
-          {i ? " " : ""}{i ? <>&middot; </> : ""}<a href={`/category/${slugify(c)}/`}>{c}</a>
-        </>
-      ))}
-    </p>
+  <body>
+    <a href="#content" class="subtle" style="position:absolute;left:-9999px;">Skip to content</a>
+    <div class="wrap">
+      <header>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a><span class="sep">/</span>
+          <a href="/#categories">Categories</a><span class="sep">/</span>
+          <span aria-current="page">{label}</span>
+        </nav>
+        <h1>{title}</h1>
+        <p class="subtle">{desc}</p>
+      </header>
 
-    <ul>
-      {items.map((b: any) => (
-        <li style="margin:.35rem 0;">
-          <a href={`/brand/${b.slug}/`}>{b.brand}</a>
-          {b.active?.start ? ` (${b.active.start}\u2013${b.active.end ?? "?"})` : ""}
-          {b.fate ? ` ${'\u2014'} ${b.fate}` : ""}
-        </li>
-      ))}
-    </ul>
+      <div class="grid">
+        <main id="content">
+          <!-- Controls -->
+          <div class="controls" role="region" aria-label="List controls">
+            <label for="q" class="subtle" style="position:relative; top:2px;">Search</label>
+            <input id="q" class="srch" type="search" placeholder="Search brands…" inputmode="search" />
+
+            <label for="fate" class="subtle" style="position:relative; top:2px;">Status</label>
+            <select id="fate" aria-label="Filter by status">
+              <option value="">All statuses</option>
+              <option value="Bankruptcy">Bankruptcy</option>
+              <option value="Acquired">Acquired</option>
+              <option value="Merged">Merged</option>
+              <option value="Discontinued">Discontinued</option>
+            </select>
+
+            <label for="sort" class="subtle" style="position:relative; top:2px;">Sort</label>
+            <select id="sort" aria-label="Sort list">
+              <option value="alpha">A → Z</option>
+              <option value="start-asc">Oldest founded</option>
+              <option value="end-desc">Most recent closure</option>
+            </select>
+          </div>
+
+          <!-- List -->
+          <ul class="list" id="brandList">
+            {items.map((b: any) => {
+              const start = b?.active?.start ?? "";
+              const end = b?.active?.end ?? "";
+              const fate = b?.fate ?? "";
+              const statusClass = fate.match(/bankrupt/i) ? "bad" : fate.match(/acquir|acquired/i) ? "ok" : fate ? "warn" : "";
+              return (
+                <li class="row"
+                    data-brand={b.brand.toLowerCase()}
+                    data-fate={fate.toLowerCase()}
+                    data-start={start || "0"}
+                    data-end={end || "0"}>
+                  <div>
+                    <a href={`/brand/${b.slug}/`}>{b.brand}</a>
+                    <span class="meta">
+                      {start ? ` (${start}\u2013${end || "?"})` : ""}
+                    </span>
+                  </div>
+                  <div>
+                    {fate && <span class={`tag ${statusClass}`}>{fate}</span>}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <p class="subtle" id="emptyState" style="display:none;">No brands match your filters.</p>
+        </main>
+
+        <aside aria-labelledby="catHeading">
+          <h2 id="catHeading" style="margin:.25rem 0 .5rem;">Browse categories</h2>
+          <div class="pillbar" role="list" aria-label="Categories">
+            {allCats.map((c: string) => {
+              const href = `/category/${slugify(c)}/`;
+              const current = slugify(c) === slugify(label);
+              return (
+                <a role="listitem" href={href} class="pill" aria-current={current ? "page" : undefined}>{c}</a>
+              );
+            })}
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Lightweight client-side UX (no framework) -->
+    <script>
+      const $ = (s)=>document.querySelector(s);
+      const $$ = (s)=>Array.from(document.querySelectorAll(s));
+      const list = $("#brandList");
+      const empty = $("#emptyState");
+      const q = $("#q");
+      const fateSel = $("#fate");
+      const sortSel = $("#sort");
+
+      function applyFilters() {
+        const term = (q.value || "").trim().toLowerCase();
+        const fate = (fateSel.value || "").toLowerCase();
+
+        let visible = 0;
+        $$("#brandList > li").forEach(li => {
+          const matchesText = li.dataset.brand.includes(term);
+          const matchesFate = !fate || (li.dataset.fate || "").includes(fate);
+          const show = matchesText && matchesFate;
+          li.style.display = show ? "" : "none";
+          if (show) visible++;
+        });
+        empty.style.display = visible ? "none" : "";
+      }
+
+      function applySort() {
+        const mode = sortSel.value;
+        const rows = $$("#brandList > li").filter(li => li.style.display !== "none");
+        const cmpAlpha = (a,b)=>a.dataset.brand.localeCompare(b.dataset.brand);
+        const num = (v)=>parseInt(v || "0", 10);
+
+        rows.sort((a,b)=>{
+          if (mode === "alpha") return cmpAlpha(a,b);
+          if (mode === "start-asc") return num(a.dataset.start) - num(b.dataset.start) || cmpAlpha(a,b);
+          if (mode === "end-desc") return num(b.dataset.end) - num(a.dataset.end) || cmpAlpha(a,b);
+          return 0;
+        });
+        rows.forEach(r => list.appendChild(r));
+      }
+
+      q.addEventListener("input", ()=>{ applyFilters(); applySort(); });
+      fateSel.addEventListener("change", ()=>{ applyFilters(); applySort(); });
+      sortSel.addEventListener("change", applySort);
+
+      // Initial
+      applyFilters(); applySort();
+    </script>
   </body>
 </html>

@@ -1,41 +1,88 @@
 ---
-/** Build-time: enumerate all brand slugs and pass each brand as a prop */
+import Base from "../../layouts/Base.astro";
+
 export async function getStaticPaths() {
   const modules = import.meta.glob("/content/brands/*.json", { eager: true });
   return Object.entries(modules).map(([p, mod]) => {
     const file = p.split("/").pop() || "";
     const slug = file.replace(/\.json$/i, "");
-    // @ts-ignore default export is the JSON object
     const brand = (mod as any).default ?? mod;
     return { params: { slug }, props: { brand } };
   });
 }
 
 const { brand } = Astro.props;
+const pageTitle = `What Happened to ${brand.brand}? (Timeline & Fate)`;
+const pageDesc = `${brand.brand}: ${brand.fate || "Defunct"}; active ${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}. ${brand.summary ?? ""}`;
 
-const title = `What Happened to ${brand.brand}? (Timeline & Fate)`;
-const desc =
-  `${brand.brand}: ${brand.fate || "Defunct"}; active ${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}. ${brand.summary ?? ""}`;
+const canonical = Astro.site
+  ? new URL(`/brand/${brand.slug}/`, Astro.site).href
+  : `/brand/${brand.slug}/`;
+
+// JSON-LD: Brand
+const brandLd = {
+  "@context": "https://schema.org",
+  "@type": "Brand",
+  "name": brand.brand,
+  "description": brand.summary || undefined,
+  "foundingDate": brand.active?.start || undefined,
+  "dissolutionDate": brand.active?.end || undefined,
+  "category": brand.category || undefined
+};
+
+// JSON-LD: Breadcrumbs
+const breadcrumbsLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": Astro.site ? new URL("/", Astro.site).href : "/" },
+    { "@type": "ListItem", "position": 2, "name": "A–Z",  "item": Astro.site ? new URL("/az/", Astro.site).href : "/az/" },
+    { "@type": "ListItem", "position": 3, "name": brand.brand, "item": canonical }
+  ]
+};
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>{title}</title>
-    <meta name="description" content={desc} />
-  </head>
-  <body style="font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem;">
-    <a href="/">← All Brands</a>
-    <h1>What Happened to {brand.brand}?</h1>
+<Base title={pageTitle} description={pageDesc}>
 
-    <p><strong>At a glance:</strong>
-      {brand.active?.start ? ` Founded: ${brand.active.start}.` : "" }
-      {brand.active?.end ? ` Defunct: ${brand.active.end}.` : "" }
-      {brand.fate ? ` Fate: ${brand.fate}.` : "" }
-      {brand.category ? ` Category: ${brand.category}.` : "" }
-      {brand.country ? ` Country: ${brand.country}.` : "" }
-    </p>
+  {/* 👉 SEO head slot */}
+  <Fragment slot="head">
+    <link rel="canonical" href={canonical} />
 
-    {brand.summary && <p>{brand.summary}</p>}
-  </body>
-</html>
+    {/* Open Graph */}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+
+    {/* Twitter */}
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:card" content="summary" />
+
+    {/* Structured data */}
+    <script type="application/ld+json">
+      {JSON.stringify(brandLd)}
+    </script>
+    <script type="application/ld+json">
+      {JSON.stringify(breadcrumbsLd)}
+    </script>
+  </Fragment>
+
+  {/* Page content */}
+  <nav class="flex flex-wrap items-center gap-2 my-3">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="#" data-random rel="nofollow" class="px-3 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm no-underline">Random</a>
+  </nav>
+
+  <h1 id="brand-title" class="text-2xl md:text-3xl font-bold mb-2">What Happened to {brand.brand}?</h1>
+
+  <p class="text-gray-800 dark:text-slate-200">
+    <strong>At a glance:</strong>
+    {brand.active?.start ? ` Founded: ${brand.active.start}.` : "" }
+    {brand.active?.end ? ` Defunct: ${brand.active.end}.` : "" }
+    {brand.fate ? ` Fate: ${brand.fate}.` : "" }
+    {brand.category ? ` Category: ${brand.category}.` : "" }
+    {brand.country ? ` Country: ${brand.country}.` : "" }
+  </p>
+
+  {brand.summary && <p class="mt-3 text-gray-700 dark:text-slate-300">{brand.summary}</p>}
+</Base>

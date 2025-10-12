@@ -1,32 +1,37 @@
 ---
-import fs from "node:fs";
-import path from "node:path";
+import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
-const dir = path.join(Astro.cwd, "content", "brands");
-const files = fs.readdirSync(dir).filter(f => f.endsWith(".json"));
-const brands = files.map(f => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")));
+/** Load all brand JSON at build time */
+const modules = import.meta.glob("/content/brands/*.json", { eager: true });
+const brands = Object.values(modules).map((m: any) => m.default ?? m);
 
-const counts = new Map();
-for (const b of brands) counts.set(b.category, (counts.get(b.category) || 0) + 1);
-const categories = Array.from(counts.entries()).sort((a,b)=>a[0].localeCompare(b[0]));
+/** Build category counts */
+const counts = new Map<string, number>();
+for (const b of brands) {
+  if (!b?.category) continue;
+  counts.set(b.category, (counts.get(b.category) || 0) + 1);
+}
+
+/** Sorted categories */
+const categories = Array.from(counts.entries())
+  .sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Browse by Category • Defunct Brands</title>
-    <meta name="description" content="Browse defunct brands by category: electronics, retail, toys, and more." />
-  </head>
-  <body style="font-family: system-ui, sans-serif; max-width: 920px; margin: 2rem auto; padding: 0 1rem;">
-    <nav><a href="/">← Home</a></nav>
-    <h1>Browse by Category</h1>
-    <ul>
-      {categories.map(([label, n]) => (
-        <li>
-          <a href={`/category/${slugify(label)}/`}>{label}</a> ({n})
-        </li>
-      ))}
-    </ul>
-  </body>
-</html>
+<Base title="Browse by Category • Defunct Brands" description="Browse defunct brands by category.">
+  <nav class="mb-4">
+    <a href="/" class="chip focus-ring">← Home</a>
+  </nav>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-3">Browse by Category</h1>
+
+  <ul class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2">
+    {categories.map(([label, n]) => (
+      <li>
+        <a href={`/category/${slugify(label)}/`} class="chip focus-ring">
+          {label} <span class="text-gray-500">({n})</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Base>

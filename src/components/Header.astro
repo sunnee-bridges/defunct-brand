@@ -1,0 +1,112 @@
+---
+const links = [
+  { href: "/category/", label: "Categories", match: (p: string) => p.startsWith("/category/") },
+  { href: "/az/",       label: "A–Z",        match: (p: string) => p.startsWith("/az/") },
+  { href: "/decade/",   label: "Decades",    match: (p: string) => p.startsWith("/decade/") },
+];
+
+const path = Astro.url.pathname;
+const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
+---
+
+<header class="max-w-[1040px] mx-auto px-4">
+  <!-- Top row: title + theme toggle -->
+  <div class="mt-8 flex items-center justify-between gap-4">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold">🕰️ Defunct Brands Archive</h1>
+      <p class="text-gray-600 dark:text-slate-300 mt-1">
+        Explore by category, A&ndash;Z, decade, or fate. No typing required.
+      </p>
+    </div>
+
+    <!-- Theme toggle -->
+    <button
+      id="themeToggleBtn"
+      type="button"
+      class="shrink-0 px-3 py-1 rounded border border-slate-300 dark:border-slate-600
+             text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800
+             hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus-visible:ring-2
+             focus-visible:ring-indigo-500"
+      aria-label="Toggle color theme"
+      aria-pressed="false"
+      data-icon="🌓"
+    >
+      🌓 <span class="ml-1 hidden sm:inline">Theme</span>
+    </button>
+  </div>
+
+  <!-- Primary nav -->
+  <nav role="navigation" aria-label="Primary" class="flex flex-wrap items-center gap-3 mt-5 mb-6">
+    {links.map((l) => {
+      const isCurrent = l.match(path);
+      return (
+        <a
+          href={l.href}
+          class={`chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
+          aria-current={isCurrent ? "page" : undefined}
+        >
+          {l.label}
+        </a>
+      );
+    })}
+
+    <!-- Real href as no-JS fallback; delegated JS will hijack -->
+    <a
+      href={`/brand/${fallbackSlug}/`}
+      class="btn-primary focus-ring"
+      data-random
+      onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
+    >
+      Random
+    </a>
+  </nav>
+</header>
+
+<!-- Small inline script to sync the toggle label/state and call the global setter -->
+<script is:inline>
+  (function () {
+    const KEY = 'theme';
+    const btn = document.getElementById('themeToggleBtn');
+    if (!btn) return;
+
+    function currentTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+
+    function setStateFromTheme(theme) {
+      // Update aria + (optional) text if you want “Dark/Light”
+      btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      // You can also reflect the state in the label if desired:
+      // btn.lastElementChild && (btn.lastElementChild.textContent = theme === 'dark' ? 'Light' : 'Dark');
+    }
+
+    function setTheme(next) {
+      // Prefer the global helper if Base.astro provided it
+      if (window.toggleTheme) {
+        const cur = currentTheme();
+        if (cur !== next) window.toggleTheme();
+      } else {
+        // Local fallback: apply Tailwind .dark and persist
+        document.documentElement.classList.toggle('dark', next === 'dark');
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem(KEY, next); } catch (_) {}
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', next === 'dark' ? '#0b0b0f' : '#ffffff');
+      }
+      setStateFromTheme(next);
+    }
+
+    // Initialize state on load
+    setStateFromTheme(currentTheme());
+
+    // Click toggles between themes
+    btn.addEventListener('click', function () {
+      const next = currentTheme() === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+
+    // If other parts of the app change theme, keep the button in sync
+    const mo = new MutationObserver(() => setStateFromTheme(currentTheme()));
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  })();
+</script>

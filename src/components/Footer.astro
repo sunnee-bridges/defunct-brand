@@ -1,0 +1,28 @@
+---
+const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
+---
+<footer class="max-w-[1040px] mx-auto px-4 mt-10 mb-8 text-sm text-slate-600 dark:text-slate-400">
+  <div class="border-t border-slate-200 dark:border-slate-700 pt-4 flex flex-wrap items-center gap-3 justify-between">
+    <p>Data sources: Wikipedia (summarized). Built with Astro + Tailwind.</p>
+
+    <!-- CTA row: visible on small screens, hidden on md+ -->
+    <nav class="flex gap-3 md:hidden">
+      <a href="/az/" class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none">
+        Browse A&ndash;Z
+      </a>
+
+      <a
+        href={`/brand/${fallbackSlug}/`}
+        class="btn-primary focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none"
+        aria-label="Go to a random brand"
+        data-random
+        onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
+      >
+        Random
+      </a>
+    </nav>
+  </div>
+
+  <!-- 🔊 Screen-reader live announcements -->
+  <div id="live-region" aria-live="polite" class="sr-only"></div>
+</footer>
