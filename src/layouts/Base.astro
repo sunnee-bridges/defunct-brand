@@ -10,19 +10,21 @@ const {
   description = "Browse discontinued and defunct brands by category, A–Z, decade, and fate."
 } = Astro.props;
 
-/** 🔧 Use the SAME loader as index.astro */
+/** 🔧 Same loader as index.astro */
 const modules = await Astro.glob("/content/brands/*.json");
 const fileSlugs = modules
   .map((m: any) => {
     const data = m.default ?? m;
-    // prefer data.slug if present; else fall back to filename slug baked by Astro
     return data?.slug || (data?.slug ?? "");
   })
   .filter(Boolean);
 
-const FALLBACK_SLUG = fileSlugs[0] || "aim"; // or any known slug
----
+const FALLBACK_SLUG = fileSlugs[0] || "aim";
 
+/* Inline seed (first N slugs) + a simple version key for cache */
+const INLINE_SEED = fileSlugs.slice(0, 64);
+const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SEED[INLINE_SEED.length - 1] || ""}`;
+---
 
 <html lang="en" class="h-full">
   <head>
@@ -33,132 +35,146 @@ const FALLBACK_SLUG = fileSlugs[0] || "aim"; // or any known slug
 
     <!-- Allow pages to inject extra SEO -->
     <slot name="head" />
-     <script is:inline>
+
+    <!-- Theme boot -->
+    <script is:inline>
       (function () {
         const KEY = 'theme';
         const saved = localStorage.getItem(KEY);
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const theme = saved || (prefersDark ? 'dark' : 'light');
-        // Tailwind uses .dark on root for dark styles
         if (theme === 'dark') document.documentElement.classList.add('dark');
-        document.documentElement.dataset.theme = theme; // optional data attr for non-TW CSS
+        document.documentElement.dataset.theme = theme;
       })();
     </script>
 
     <!-- Optional: better mobile address-bar color per theme -->
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
+
+    <!-- Tiny list of slugs (seed) + version for cache -->
+    <script id="__brand_slugs_inline" type="application/json" data-ver={BRAND_INDEX_VER}>
+      {JSON.stringify(INLINE_SEED)}
+    </script>
+
+    <!-- Hint the browser it may fetch the tiny text list soon -->
+    <link rel="preload" href="/brand-slugs.txt" as="fetch" crossorigin="anonymous" />
   </head>
+
   <body class="min-h-full bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100">
     <!-- Skip link for keyboard users -->
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <!-- Pass precomputed slugs + fallback to header/footer -->
+    <!-- Header -->
     <Header allSlugs={fileSlugs} fallbackSlug={FALLBACK_SLUG} />
 
     <main id="main" class="max-w-[1040px] mx-auto px-4" aria-labelledby="brand-title">
       <slot />
     </main>
 
+    <!-- Footer -->
     <Footer fallbackSlug={FALLBACK_SLUG} />
 
-    <!-- Embed slugs globally so any page can use them -->
-  <script type="application/json" id="__brand_slugs_json">{JSON.stringify(fileSlugs)}</script>
-<script is:inline>
-  (function(){
-    try {
-      window.__SLUGS = JSON.parse(document.getElementById('__brand_slugs_json')?.textContent || '[]');
-    } catch(e) { window.__SLUGS = []; }
-    console.log('[Random:init] slugs=', Array.isArray(window.__SLUGS) ? window.__SLUGS.length : 0);
-  })();
-</script>
+    <!-- 🔊 Screen-reader live announcements (Footer also includes one; keeping here is harmless) -->
+    <div id="live-region" aria-live="polite" class="sr-only"></div>
 
-<!-- Put these at the bottom of Base.astro, before </body> -->
-<script is:inline>
-  (function(){
-    // Load slugs from sessionStorage or embed/fetch as needed
-    async function ensureSlugs() {
-      try {
-        // 1) try session cache
-        var cached = sessionStorage.getItem('__BRAND_SLUGS__');
-        if (cached) {
-          window.__SLUGS = JSON.parse(cached);
-          if (Array.isArray(window.__SLUGS) && window.__SLUGS.length) return window.__SLUGS;
+    <!-- Random loader: no JSON parsing, uses /brand-slugs.txt + localStorage cache + idle warmup -->
+    <script is:inline>
+      (function () {
+        const INLINE = document.getElementById("__brand_slugs_inline");
+        const VER = INLINE?.getAttribute("data-ver") || "v1";
+        const KEY = "__BRAND_SLUGS__";
+
+        function setCache(list) {
+          try { localStorage.setItem(KEY, JSON.stringify({ v: VER, l: list })); } catch {}
         }
-      } catch(_) {}
+        function getCache() {
+          try {
+            const x = JSON.parse(localStorage.getItem(KEY) || "null");
+            if (x && x.v === VER && Array.isArray(x.l) && x.l.length) return x.l;
+          } catch {}
+          return null;
+        }
 
-      // 2) try embedded JSON (if you left it in the layout)
-      try {
-        var el = document.getElementById('__brand_slugs_json');
-        if (el && el.textContent) {
-          window.__SLUGS = JSON.parse(el.textContent);
-          if (Array.isArray(window.__SLUGS) && window.__SLUGS.length) {
-            sessionStorage.setItem('__BRAND_SLUGS__', JSON.stringify(window.__SLUGS));
-            return window.__SLUGS;
+        async function fetchTxt() {
+          const r = await fetch("/brand-slugs.txt", { cache: "force-cache", credentials: "same-origin" });
+          if (!r.ok) throw new Error("fetch failed");
+          const text = await r.text();
+          return text.split("\n").map(s => s.trim()).filter(Boolean);
+        }
+
+        async function ensureSlugs() {
+          // 1) localStorage cache
+          const cached = getCache();
+          if (cached) return cached;
+
+          // 2) inline seed (first 64 slugs), then upgrade in background
+          if (INLINE?.textContent) {
+            try {
+              const seed = JSON.parse(INLINE.textContent);
+              if (Array.isArray(seed) && seed.length) {
+                setCache(seed);
+                fetchTxt().then(list => list.length && setCache(list)).catch(() => {});
+                return seed;
+              }
+            } catch {}
           }
-        }
-      } catch(_) {}
 
-      // 3) fetch from endpoint (authoritative)
-      try {
-        var res = await fetch('/brand-slugs.json', { credentials: 'same-origin' });
-        if (res.ok) {
-          var data = await res.json();
-          if (Array.isArray(data) && data.length) {
-            window.__SLUGS = data;
-            try { sessionStorage.setItem('__BRAND_SLUGS__', JSON.stringify(data)); } catch(_) {}
-            return data;
+          // 3) tiny text endpoint
+          try {
+            const list = await fetchTxt();
+            if (list.length) { setCache(list); return list; }
+          } catch {}
+
+          // 4) last resort: scrape visible links
+          const seen = new Set(), out = [];
+          document.querySelectorAll('a[href^="/brand/"]').forEach(a => {
+            const m = (a.getAttribute('href') || '').match(/^\/brand\/([^\/?#]+)\/?/);
+            if (m && m[1] && !seen.has(m[1])) { seen.add(m[1]); out.push(m[1]); }
+          });
+          return out;
+        }
+
+        function pickOther(list) {
+          const cur = (location.pathname.match(/^\/brand\/([^\/?#]+)\/?/) || [,""])[1];
+          const pool = list.length > 1 ? list.filter(s => s !== cur) : list;
+          return pool[(Math.random() * pool.length) | 0];
+        }
+
+        // Delegated click; supports sync or async slug load
+        document.addEventListener("click", async function (e) {
+          const a = e.target && (e.target.closest?.("[data-random], #random-brand"));
+          if (!a) return;
+
+          e.preventDefault();
+
+          const live = document.getElementById("live-region");
+          if (live) live.textContent = "Loading a random brand…";
+
+          try {
+            const slugs = await ensureSlugs();
+            const pick = pickOther(slugs);
+            if (pick) {
+              try { document.body.classList.add("fade-out"); } catch {}
+              setTimeout(() => { location.href = "/brand/" + pick + "/"; }, 80);
+            }
+          } catch {
+            const href = a.getAttribute("href");
+            if (href) location.href = href;
           }
-        }
-      } catch(_) {}
+        }, false);
 
-      // 4) last resort: harvest visible links (works on listing pages)
-      var seen = Object.create(null), found = [];
-      document.querySelectorAll('a[href^="/brand/"]').forEach(function(a){
-        var m = (a.getAttribute('href')||"").match(/^\/brand\/([^\/?#]+)\/?/);
-        if (m && m[1] && !seen[m[1]]) { seen[m[1]] = 1; found.push(m[1]); }
-      });
-      window.__SLUGS = found;
-      return found;
-    }
+        // Prewarm cache on first page view (non-blocking)
+        const warm = () => { ensureSlugs().catch(() => {}); };
+        if ("requestIdleCallback" in window) requestIdleCallback(warm);
+        else setTimeout(warm, 250);
 
-    function pickOtherThanCurrent(list) {
-      var cur = (location.pathname.match(/^\/brand\/([^\/?#]+)\/?/) || [,""])[1];
-      var pool = list.filter(function(s){ return s && s !== cur; });
-      if (!pool.length) pool = list.slice();
-      return pool[Math.floor(Math.random() * pool.length)];
-    }
-
-    // Delegated click; supports sync or async slug load
-    document.addEventListener('click', async function (e) {
-      var a = e.target && (e.target.closest?.('[data-random], #random-brand'));
-      if (!a) return;
-
-      // Load slugs if needed
-      var slugs = Array.isArray(window.__SLUGS) ? window.__SLUGS : [];
-      if (!slugs.length) slugs = await ensureSlugs();
-      console.log('[Random:slugs]', slugs.length);
-
-      if (slugs.length) {
-        e.preventDefault();
-         // 🔊 Announce
-        var live = document.getElementById('live-region');
-        if (live) live.textContent = 'Loading a random brand…';
-
-        var pick = pickOtherThanCurrent(slugs);
-        console.log('[Random:navigate] ->', pick);
-        if (pick) {
-          try { document.body.classList.add('fade-out'); } catch(_) {}
-          setTimeout(function(){ location.href = '/brand/' + pick + '/'; }, 100);
-        }
-      }
-    }, false);
-
-    // Prewarm cache on first page view (non-blocking)
-    ensureSlugs().then(function(s){ console.log('[Random:init]', s.length); });
-  })();
-</script>
-
-
+        // Optional: expose for console testing or inline onclick fallbacks
+        window.__goRandomBrand = function(ev){ ev?.preventDefault?.(); ensureSlugs().then(slugs => {
+          const pick = pickOther(slugs || []);
+          if (pick) location.href = "/brand/" + pick + "/";
+        }); };
+      })();
+    </script>
   </body>
 </html>
