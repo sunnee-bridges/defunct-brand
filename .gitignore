@@ -6,3 +6,8 @@ node_modules/
 dist/
 build/
 .vscode/
+content/brands/*.json
+!content/brands/*.public.json
+content/brands_src/
+content/brands_private/
+

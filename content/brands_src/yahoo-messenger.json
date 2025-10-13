@@ -1,0 +1,19 @@
+{
+  "brand": "Yahoo! Messenger",
+  "slug": "yahoo-messenger",
+  "category": "Software/Internet",
+  "country": "US",
+  "active": {
+    "start": 1998,
+    "end": 2018
+  },
+  "fate": "Discontinued",
+  "summary": "Once-popular IM service discontinued in 2018.",
+  "notable_products": [
+    "Instant messaging",
+    "Chat"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Yahoo!_Messenger"
+  }
+}

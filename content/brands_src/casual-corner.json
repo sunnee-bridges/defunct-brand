@@ -1,0 +1,18 @@
+{
+  "brand": "Casual Corner",
+  "slug": "casual-corner",
+  "category": "Retail",
+  "country": "US",
+  "active": {
+    "start": 1950,
+    "end": 2005
+  },
+  "fate": "Liquidation",
+  "summary": "Women's apparel retail chain closed in 2005.",
+  "notable_products": [
+    "Women's apparel stores"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Casual_Corner"
+  }
+}
