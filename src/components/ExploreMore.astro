@@ -1,0 +1,115 @@
+---
+/** Props:
+ *  - brand: {
+ *      brand: string
+ *      slug: string
+ *      category?: string
+ *      active?: { start?: number|string, end?: number|string }
+ *      fate?: string
+ *    }
+ */
+
+export interface Props { brand: any; }
+const { brand } = Astro.props;
+
+// Read affiliate IDs from env (configure in .env)
+// AMAZON_TAG=yourtag-20
+// EBAY_CAMPID=5338xxxxxxx
+// EBAY_CUSTOMID=defunct-archive  (optional)
+const AMAZON_TAG   = import.meta.env.AMAZON_TAG   || "YOUR_AMAZON_TAG";
+const EBAY_CAMPID  = import.meta.env.EBAY_CAMPID  || "YOUR_EBAY_CAMPID";
+const EBAY_CUSTOM  = import.meta.env.EBAY_CUSTOMID || "defunct-archive";
+
+const bname = String(brand?.brand || "").trim();
+const category = (brand?.category || "").toString().trim();
+
+// Craft search phrases (lightly opinionated)
+const qBase   = bname;
+const qVintage= [bname, "vintage"].filter(Boolean).join(" ");
+const qAds    = [bname, "advertising poster"].filter(Boolean).join(" ");
+const qBooks  = [bname, "history book"].filter(Boolean).join(" ");
+
+// Encoders
+const enc = encodeURIComponent;
+
+// Amazon search (affiliate)
+const amazonUrl = `https://www.amazon.com/s?k=${enc(qBooks)}&tag=${enc(AMAZON_TAG)}`;
+
+// eBay Partner Network search (affiliate)
+// Docs: https://partnernetwork.ebay.com/
+// Basic pattern: https://www.ebay.com/sch/i.html?_nkw=QUERY&campid=XXXXXX&customid=YOURSTR
+const ebayVintageUrl = `https://www.ebay.com/sch/i.html?_nkw=${enc(qVintage)}&campid=${enc(EBAY_CAMPID)}&customid=${enc(EBAY_CUSTOM)}`;
+const ebayAdsUrl     = `https://www.ebay.com/sch/i.html?_nkw=${enc(qAds)}&campid=${enc(EBAY_CAMPID)}&customid=${enc(EBAY_CUSTOM)}`;
+
+// Optional Wikipedia/article search (non-affiliate, helpful for users)
+const wikiUrl = `https://en.wikipedia.org/w/index.php?search=${enc(qBase)}`;
+---
+
+<section class="mt-6" aria-labelledby="explore-more">
+  <h2 id="explore-more" class="text-lg font-semibold mb-2">Explore more</h2>
+  <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">
+    Related books, memorabilia, and resources about <strong class="text-slate-900 dark:text-slate-100">{bname}</strong>.
+  </p>
+
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
+    <!-- Books (Amazon) -->
+    <article class="card">
+      <h3 class="text-base font-semibold leading-snug mb-1 text-slate-900/95 dark:text-slate-100">
+        Books &amp; documentaries
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-2 line-clamp-2">
+        Find histories, biographies, and documentaries mentioning {bname}.
+      </p>
+      <a
+        href={amazonUrl}
+        class="btn-primary focus-ring"
+        target="_blank" rel="nofollow sponsored noopener"
+        aria-label={`Search Amazon for books about ${bname}`}
+      >
+        Search on Amazon
+      </a>
+    </article>
+
+    <!-- Vintage items (eBay) -->
+    <article class="card">
+      <h3 class="text-base font-semibold leading-snug mb-1 text-slate-900/95 dark:text-slate-100">
+        Vintage items &amp; memorabilia
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-2 line-clamp-2">
+        Posters, ads, merch, packaging and more from the {bname} era.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <a
+          href={ebayVintageUrl}
+          class="chip focus-ring"
+          target="_blank" rel="nofollow sponsored noopener"
+          aria-label={`Search eBay for vintage ${bname} items`}
+        >
+          eBay: “{bname} vintage”
+        </a>
+        <a
+          href={ebayAdsUrl}
+          class="chip focus-ring"
+          target="_blank" rel="nofollow sponsored noopener"
+          aria-label={`Search eBay for ${bname} advertising posters`}
+        >
+          eBay: “{bname} advertising”
+        </a>
+      </div>
+    </article>
+
+    <!-- Reference (non-affiliate) -->
+    <article class="card">
+      <h3 class="text-base font-semibold leading-snug mb-1 text-slate-900/95 dark:text-slate-100">
+        Reference &amp; research
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-2 line-clamp-2">
+        Dig deeper into primary sources, press coverage, and catalogs.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <a href={wikiUrl} class="chip focus-ring" target="_blank" rel="nofollow noopener">Wikipedia</a>
+        <a href={`/az/`} class="chip focus-ring">Browse A–Z</a>
+      </div>
+    </article>
+  </div>
+</section>

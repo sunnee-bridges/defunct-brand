@@ -11,11 +11,13 @@ const {
 } = Astro.props;
 
 /** 🔧 Same loader as index.astro */
-const modules = await Astro.glob("/content/brands/*.json");
-const fileSlugs = modules
-  .map((m: any) => {
-    const data = m.default ?? m;
-    return data?.slug || (data?.slug ?? "");
+const mods = import.meta.glob("/content/brands/*.json", { eager: true }) as Record<string, any>;
+
+const fileSlugs: string[] = Object.entries(mods)
+  .map(([p, mod]) => {
+    const data = (mod as any).default ?? mod;
+    // prefer explicit slug; else derive from filename
+    return data?.slug ?? (p.split("/").pop() || "").replace(/\.json$/i, "");
   })
   .filter(Boolean);
 

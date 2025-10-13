@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "data": "node scripts/build-data.mjs",
+    "slugs": "node scripts/build-slugs.mjs",
+    "data:csv": "node scripts/build-csv.mjs",
     "dev": "npm run data && astro dev",
     "build": "npm run data && astro build",
     "preview": "astro preview"

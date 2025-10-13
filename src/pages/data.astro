@@ -1,0 +1,188 @@
+---
+// src/pages/data.astro
+import Base from "../layouts/Base.astro";
+
+/* ---------- ENV + helpers ---------- */
+const DEV = import.meta.env.DEV;
+
+// Accept either a full URL or a bare "paypal.me/..." and normalize to https
+const RAW_ENV = (import.meta.env.PUBLIC_CHECKOUT_URL || "").trim(); // e.g. "paypal.me/wynpenstudios/1"
+const NORMALIZED_ENV = RAW_ENV && !/^https?:\/\//i.test(RAW_ENV) ? `https://${RAW_ENV}` : RAW_ENV || "https://paypal.me/wynpenstudios/1";
+
+// Final checkout URL: use env if present, else your example fallback
+const CHECKOUT_URL = NORMALIZED_ENV || "https://paypal.me/wynpenstudios/1";
+
+// Show PayPal indicator if link points to PayPal
+const IS_PAYPAL = /paypal(\.me|\.com)/i.test(CHECKOUT_URL);
+const PROVIDER = IS_PAYPAL ? "PayPal" : "Checkout";
+
+// Visible price label (customize via env if you like)
+const PRICE_LABEL = import.meta.env.PUBLIC_PRICE_LABEL || "$1";
+
+// CSV files produced by your build script (already working for you)
+const latestCsvHref = "/data/brands-latest.csv";
+const sampleCsvHref = "/data/brands-sample.csv";
+
+/* Schema table rows */
+const schema: Array<[string, string, string]> = [
+  ["brand","string","Brand name"],
+  ["slug","string","URL-safe unique key"],
+  ["category","string","Primary category (e.g., Consumer electronics)"],
+  ["country","string|null","Primary country/market (if known)"],
+  ["active_start","int|null","Year founded/started"],
+  ["active_end","int|null","Year ended (if known)"],
+  ["fate","string|null","Outcome (e.g., Bankrupt, Acquired)"],
+  ["summary","string|null","One–two sentence summary"],
+  ["notable_products","string","Semicolon-separated list"],
+  ["wikipedia_url","string|null","Source link if available"],
+  ["last_updated","date","ISO date of export (YYYY-MM-DD)"],
+  ["dataset_version","string","Version tag (YYYYMMDD)"],
+];
+---
+
+<Base title="Defunct Brands Dataset • CSV Downloads"
+      description="Download the Defunct Brands dataset as CSV. Clean, structured data of discontinued brands with category, active years, and fate.">
+
+  <nav class="mb-4 flex flex-wrap gap-2">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/az/" class="chip focus-ring">A–Z</a>
+    <a href="/decade/" class="chip focus-ring">Decades</a>
+  </nav>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands Dataset</h1>
+  <p class="text-slate-700 dark:text-slate-300 mb-4">
+    A cleaned CSV of brands, categories, active years, and fate.
+  </p>
+
+  <div class="grid gap-4 md:grid-cols-2 md:gap-4 lg:gap-6">
+    <!-- Free sample -->
+    <section class="rounded-xl border p-4 bg-white/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-700">
+      <h2 class="text-lg font-semibold mb-2">Free sample (100 rows)</h2>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+        Try a small slice for evaluation and non-commercial use.
+      </p>
+      <a class="btn-primary focus-ring" href={sampleCsvHref} download aria-label="Download sample CSV (100 rows)">
+        Download sample CSV
+      </a>
+    </section>
+
+    <!-- Full dataset -->
+    <section class="rounded-xl border p-4 bg-white/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-700">
+      <h2 class="text-lg font-semibold mb-2">Full dataset (CSV)</h2>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+        One-time purchase; includes commercial license.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Buy button with improved PayPal logo -->
+        <a
+          href={CHECKOUT_URL}
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium no-underline focus-ring transition-colors"
+          target="_blank"
+          rel="nofollow noopener"
+          aria-label={`Buy full CSV for ${PRICE_LABEL} via PayPal`}
+          title={`Buy full CSV — ${PRICE_LABEL} (via PayPal)`}
+        >
+          <!-- Improved PayPal logo with better visibility -->
+          <svg
+            class="h-5 w-auto shrink-0"
+            viewBox="0 0 48 32"
+            fill="none"
+            aria-hidden="true"
+            role="img"
+          >
+            <!-- White background for contrast -->
+            <rect width="48" height="32" rx="4" fill="white" opacity="0.95"/>
+            
+            <!-- PayPal P (dark blue) -->
+            <path 
+              d="M14 8h6.5c3.8 0 6.2 2 5.6 5.5-.6 3.4-3.4 5.5-7.3 5.5h-2.1l-.9 4.5h-3.2L14 8z" 
+              fill="#003087"
+            />
+            
+            <!-- PayPal P overlay (light blue) -->
+            <path 
+              d="M20.8 10c2.4 0 3.6 1.2 3.3 3-.3 2-2.2 3-4.5 3h-2.2l.9-6h2.5z" 
+              fill="#009CDE"
+            />
+            
+            <!-- Second P for "PayPal" -->
+            <path 
+              d="M26.5 8h6.5c3.8 0 6.2 2 5.6 5.5-.6 3.4-3.4 5.5-7.3 5.5h-2.1l-.9 4.5h-3.2L26.5 8z" 
+              fill="#003087"
+            />
+            
+            <path 
+              d="M33.3 10c2.4 0 3.6 1.2 3.3 3-.3 2-2.2 3-4.5 3h-2.2l.9-6h2.5z" 
+              fill="#009CDE"
+            />
+          </svg>
+
+          <span>Buy full CSV — {PRICE_LABEL}</span>
+        </a>
+
+        <!-- Optional "View latest" link -->
+        <a 
+          href={latestCsvHref} 
+          class="chip focus-ring text-xs" 
+          rel="nofollow"
+          title="Preview the latest dataset structure"
+        >
+          View latest
+        </a>
+      </div>
+
+      <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">
+        Secure checkout via PayPal. You'll receive a download link immediately after purchase.
+      </p>
+    </section>
+  </div>
+
+  <!-- Schema -->
+  <h2 class="text-lg font-semibold mt-8 lg:mt-10 mb-2">Schema</h2>
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b border-slate-200 dark:border-slate-700">
+          <th class="text-left py-1 pr-3">Column</th>
+          <th class="text-left py-1 pr-3">Type</th>
+          <th class="text-left py-1">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {schema.map(([name, type, desc]) => (
+          <tr class="border-b border-slate-100 dark:border-slate-800">
+            <td class="py-1 pr-3 font-medium">{name}</td>
+            <td class="py-1 pr-3 text-slate-600 dark:text-slate-400">{type}</td>
+            <td class="py-1">{desc}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <section class="mt-6 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+    <details>
+      <summary class="cursor-pointer font-medium">What's the file format?</summary>
+      <div class="mt-1">UTF-8 CSV with header row. New columns (if any) append to the end to preserve backward compatibility.</div>
+    </details>
+    <details>
+      <summary class="cursor-pointer font-medium">How often do you update?</summary>
+      <div class="mt-1">Ad-hoc as new brands are added. Buyers can opt into annual updates.</div>
+    </details>
+    <details>
+      <summary class="cursor-pointer font-medium">Commercial usage?</summary>
+      <div class="mt-1">Yes for the full CSV (no raw redistribution). The sample is non-commercial.</div>
+    </details>
+  </section>
+
+  <p class="mt-6 text-xs text-slate-600 dark:text-slate-400">
+    <strong>License:</strong> Free sample under CC BY-NC 4.0. Full CSV under commercial license (no raw redistribution).
+  </p>
+
+  {DEV && (
+    <p class="mt-4 text-xs text-slate-500">
+      DEBUG • CHECKOUT_URL=<code>{CHECKOUT_URL}</code> • IS_PAYPAL=<code>{String(IS_PAYPAL)}</code> • RAW_ENV=<code>{RAW_ENV || "(none)"}</code>
+    </p>
+  )}
+</Base>

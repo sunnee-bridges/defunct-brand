@@ -1,0 +1,70 @@
+import Stripe from "stripe";
+import crypto from "node:crypto";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-06-20" });
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!; // from Stripe dashboard
+const DOWNLOAD_SECRET = process.env.DATA_DOWNLOAD_SECRET!; // same as make-token
+const DATA_VERSION = process.env.DATASET_VERSION || new Date().toISOString().slice(0,10).replace(/-/g,"");
+// optional: `RESEND_API_KEY` if using Resend
+
+function mkToken(email: string, version: string, ttlMin = 60) {
+  const payload = { e: email, v: version, x: Math.floor(Date.now()/1000) + ttlMin*60 };
+  const p64 = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  const sig = crypto.createHmac("sha256", DOWNLOAD_SECRET).update(p64).digest("base64url");
+  return `${p64}.${sig}`;
+}
+
+async function sendEmail(to: string, url: string) {
+  // Use any mailer (Resend example):
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return;
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type":"application/json" },
+    body: JSON.stringify({
+      from: "Defunct Brands <downloads@yourdomain.com>",
+      to: [to],
+      subject: "Your dataset download link",
+      html: `
+        <p>Thanks for your purchase!</p>
+        <p><a href="${new URL(`/data/download?token=${encodeURIComponent(url.split('=')[1])}`, process.env.SITE_URL || 'http://localhost:4321').href}">Click here to download</a> (link expires in 60 minutes).</p>
+        <p>If it expires, reply to this email and we’ll reissue a link.</p>
+      `
+    })
+  });
+  if (!res.ok) console.error("Email send failed", await res.text());
+}
+
+export async function POST({ request }: { request: Request }) {
+  const sig = request.headers.get("stripe-signature") || "";
+  const raw = await request.text();
+
+  let event: Stripe.Event;
+  try {
+    event = stripe.webhooks.constructEvent(raw, sig, endpointSecret);
+  } catch (err: any) {
+    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
+  }
+
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+
+    // Buyers’ email (prefer customer_details, fallback to client_reference_id if you set it)
+    const email = session.customer_details?.email || session.customer_email;
+    if (!email) return new Response("No email", { status: 200 });
+
+    // Optional: validate purchased product/price via line_items if needed
+    // const li = await stripe.checkout.sessions.listLineItems(session.id);
+
+    // Build token & URL
+    const token = mkToken(email, DATA_VERSION, 60);
+    const url = `/data/download?token=${token}`;
+
+    // Email the link (or include in success page)
+    await sendEmail(email, url);
+
+    return new Response("ok", { status: 200 });
+  }
+
+  return new Response("ignored", { status: 200 });
+}

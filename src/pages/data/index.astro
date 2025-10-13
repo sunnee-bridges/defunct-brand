@@ -1,0 +1,79 @@
+---
+import Base from "../../layouts/Base.astro";
+
+const CHECKOUT_URL = import.meta.env.PUBLIC_CHECKOUT_URL || "#";
+const latestHref = "/data/brands-latest.csv";
+const sampleHref = "/data/brands-sample.csv";
+
+const schema = [
+  { name: "brand",            type: "string", desc: "Brand name" },
+  { name: "slug",             type: "string", desc: "URL-safe unique key" },
+  { name: "category",         type: "string", desc: "Primary category" },
+  { name: "country",          type: "string|null", desc: "Country of origin" },
+  { name: "active_start",     type: "int|null", desc: "Year founded/started" },
+  { name: "active_end",       type: "int|null", desc: "Year ended (if known)" },
+  { name: "fate",             type: "string|null", desc: "Outcome (e.g., acquired, bankrupt)" },
+  { name: "summary",          type: "string|null", desc: "One–two sentence summary" },
+  { name: "notable_products", type: "string", desc: "Semicolon-separated list" },
+  { name: "wikipedia_url",    type: "string|null", desc: "Source link" },
+  { name: "last_updated",     type: "date", desc: "ISO date of export" },
+  { name: "dataset_version",  type: "string", desc: "Version tag (YYYYMMDD)" }
+];
+---
+
+<Base title="Defunct Brands Dataset (CSV)" description="Download a cleaned, regularly updated dataset of defunct brands with years, category, and fate.">
+  <nav class="mb-4 flex flex-wrap gap-2">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/az/" class="chip focus-ring">A–Z</a>
+    <a href="/decade/" class="chip focus-ring">Decades</a>
+  </nav>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands Dataset</h1>
+  <p class="text-slate-600 dark:text-slate-300 mb-3">A cleaned CSV of brands, categories, active years, and fate.</p>
+
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+    <article class="card">
+      <h2 class="text-lg font-semibold mb-1">Free sample (100 rows)</h2>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Try a small slice for evaluation and non-commercial use.</p>
+      <a href={sampleHref} class="btn-primary focus-ring" download>Download sample CSV</a>
+    </article>
+
+    <article class="card">
+      <h2 class="text-lg font-semibold mb-1">Full dataset (CSV)</h2>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">One-time purchase; includes commercial license.</p>
+      <div class="flex gap-2">
+        <a href={CHECKOUT_URL} class="btn-primary focus-ring">Buy full CSV</a>
+        <a href={latestHref} class="chip focus-ring" rel="nofollow">View latest (if public)</a>
+      </div>
+      <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+        Prefer private delivery? We’ll email a short-lived link after checkout.
+      </p>
+    </article>
+  </div>
+
+  <h2 class="text-lg font-semibold mt-6 mb-2">Schema</h2>
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm border-separate border-spacing-y-1">
+      <thead>
+        <tr class="text-left">
+          <th class="px-2 py-1">Column</th>
+          <th class="px-2 py-1">Type</th>
+          <th class="px-2 py-1">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {schema.map((c) => (
+          <tr class="align-top">
+            <td class="px-2 py-1 font-medium">{c.name}</td>
+            <td class="px-2 py-1 text-slate-600 dark:text-slate-300">{c.type}</td>
+            <td class="px-2 py-1 text-slate-600 dark:text-slate-300">{c.desc}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="mt-4 text-xs text-slate-500 dark:text-slate-400">
+    <strong>License:</strong> Free sample under CC BY-NC 4.0. Full CSV under commercial license (no raw redistribution).
+  </p>
+</Base>

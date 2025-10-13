@@ -124,21 +124,4 @@ const currentPath = Astro.url.pathname;
     </div>
   </section>
 
-  <!-- Idle prefetch of a couple brand pages for snappier nav (optional) -->
-  <script is:inline>
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => {
-        const urls = Array.from(document.querySelectorAll('a[href^="/brand/"]'))
-          .slice(0, 3)
-          .map(a => a.getAttribute('href'))
-          .filter(Boolean);
-        urls.forEach(u => {
-          const link = document.createElement('link');
-          link.rel = 'prefetch';
-          link.href = u;
-          document.head.appendChild(link);
-        });
-      });
-    }
-  </script>
 </Base>
