@@ -4,11 +4,17 @@
   "type": "module",
   "scripts": {
     "data": "node scripts/build-data.mjs",
+    "make:public": "node scripts/make-public-brands.mjs",
     "slugs": "node scripts/build-slugs.mjs",
     "data:csv": "node scripts/build-csv.mjs",
-    "dev": "npm run data && astro dev",
+    "dev": "concurrently -k -n WATCH,DEV -c auto,auto \"npm:watch:public\" \"netlify dev\"",
+    "prebuild": "npm run make:public",
     "build": "npm run data && astro build",
-    "preview": "astro preview"
+    "predev": "npm run make:public",
+    "watch:public": "chokidar \"content/brands_src/*.json\" -c \"npm run make:public\"",
+    "preview": "astro preview",
+    "prepare": "husky",
+    "test": "echo \"(no tests)\" && exit 0"
   },
   "dependencies": {
     "astro": "^4.14.0"
@@ -17,6 +23,9 @@
     "@astrojs/tailwind": "^6.0.2",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.19",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.2.1",
+    "netlify-cli": "^21.6.0",
     "tailwindcss": "^3.4.18"
   }
 }

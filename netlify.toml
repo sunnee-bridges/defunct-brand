@@ -5,6 +5,27 @@
 [build.environment]
   NODE_VERSION = "20"
 
+
+# Tell Netlify where functions are and how to bundle them
+[functions]
+  node_bundler = "esbuild"
+  directory = "netlify/functions"
+
+
+# API route → serverless function
+[[redirects]]
+  from = "/api/brands"
+  to = "/.netlify/functions/brands-get"
+  status = 200
+  force = true
+
+
+[[redirects]]
+  from = "/api/hello"
+  to = "/.netlify/functions/hello"
+  status = 200
+  force = true
+
 # Redirect no-trailing-slash to trailing-slash for brand & category
 [[redirects]]
   from = "/brand/:slug"

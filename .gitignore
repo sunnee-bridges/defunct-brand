@@ -11,3 +11,6 @@ content/brands/*.json
 content/brands_src/
 content/brands_private/
 
+
+# Local Netlify folder
+.netlify
