@@ -2,10 +2,9 @@
 const { S3Client, HeadObjectCommand } = require("@aws-sdk/client-s3");
 const { STSClient, GetCallerIdentityCommand } = require("@aws-sdk/client-sts");
 
-
 exports.handler = async () => {
-  const region = process.env.AWS_REGION || "us-east-1";
-
+  const region = "us-east-1";
+  
   // Debug: Check what Netlify sees (don't log actual secrets!)
   console.log("Has S3_ACCESS_KEY_ID:", !!process.env.S3_ACCESS_KEY_ID);
   console.log("Has S3_SECRET_ACCESS_KEY:", !!process.env.S3_SECRET_ACCESS_KEY);
@@ -27,6 +26,8 @@ exports.handler = async () => {
       accessKeyId: process.env.S3_ACCESS_KEY_ID,
       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
     },
+    forcePathStyle: false,
+    useArnRegion: true
   });
   
   const sts = new STSClient({
