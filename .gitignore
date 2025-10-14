@@ -10,7 +10,7 @@ content/brands/*.json
 !content/brands/*.public.json
 content/brands_src/
 content/brands_private/
-
+exports/
 
 # Local Netlify folder
 .netlify

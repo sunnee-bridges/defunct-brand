@@ -6,17 +6,23 @@
     "data": "node scripts/build-data.mjs",
     "make:public": "node scripts/make-public-brands.mjs",
     "slugs": "node scripts/build-slugs.mjs",
-    "data:csv": "node scripts/build-csv.mjs",
-    "dev": "concurrently -k -n WATCH,DEV -c auto,auto \"npm:watch:public\" \"netlify dev\"",
+    "data:csv": "cross-env CSV_SOURCE=content/brands_src CSV_OUT=full-dataset.csv node scripts/build-csv.mjs",
+    "data:csv:sample": "cross-env CSV_SOURCE=content/brands CSV_OUT=sample.csv node scripts/build-csv.mjs",
+    "dev": "concurrently -k -n WATCH,DEV -c auto,auto \"npm:watch:public\" \"npx netlify dev\"",
     "prebuild": "npm run make:public",
     "build": "npm run data && astro build",
     "predev": "npm run make:public",
     "watch:public": "chokidar \"content/brands_src/*.json\" -c \"npm run make:public\"",
     "preview": "astro preview",
     "prepare": "husky",
-    "test": "echo \"(no tests)\" && exit 0"
+    "test": "echo \"(no tests)\" && exit 0",
+    "upload:csv": "aws s3 cp exports/full-dataset.csv s3://vanishedbrands-private/exports/full-dataset.csv",
+    "publish:csv": "npm run data:csv && npm run upload:csv"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.908.0",
+    "@aws-sdk/client-sts": "^3.908.0",
+    "@aws-sdk/s3-request-presigner": "^3.908.0",
     "astro": "^4.14.0"
   },
   "devDependencies": {
@@ -25,6 +31,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^9.2.1",
+    "cross-env": "^7.0.3",
     "husky": "^9.1.7",
     "netlify-cli": "^21.6.0",
     "tailwindcss": "^3.4.18"
