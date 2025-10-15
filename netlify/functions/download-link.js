@@ -37,7 +37,7 @@ function tooManyResp() {
 
 // --- S3 client ---
 const s3 = new S3Client({
-  region: process.env.AWS_REGION || "us-east-1",
+  region: process.env.S3_REGION || "us-east-1",
   credentials: (process.env.S3_ACCESS_KEY_ID && process.env.S3_SECRET_ACCESS_KEY)
     ? { accessKeyId: process.env.S3_ACCESS_KEY_ID, secretAccessKey: process.env.S3_SECRET_ACCESS_KEY }
     : undefined,
