@@ -1,71 +1,73 @@
 // netlify/functions/paypal-create-order.js
-
 const PAYPAL_ENV = (process.env.PAYPAL_ENV || "sandbox").toLowerCase();
-const BASE = PAYPAL_ENV === "live" ? "https://api-m.paypal.com" : "https://api-m.sandbox.paypal.com";
+const BASE = PAYPAL_ENV === "live"
+  ? "https://api-m.paypal.com"
+  : "https://api-m.sandbox.paypal.com";
 
-// --- best-effort in-memory rate limit (per process) ---
-const buckets = new Map(); // { ip -> { count, ts } }
-const LIMIT = Number(process.env.RATE_LIMIT_PER_MIN || 20);       // requests per window
-const WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS || 60_000); // window length
-
+// simple in-memory throttle (optional; keep if you already had it)
+const buckets = new Map();
+const LIMIT = Number(process.env.RATE_LIMIT_PER_MIN || 20);
+const WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS || 60_000);
 function tooMany(event) {
   const h = event.headers || {};
-  const ip =
-    h["x-nf-client-connection-ip"] ||
-    (h["x-forwarded-for"] ? h["x-forwarded-for"].split(",")[0].trim() : null) ||
-    h["client-ip"] ||
-    "unknown";
-
+  const ip = h["x-nf-client-connection-ip"]
+    || (h["x-forwarded-for"] ? h["x-forwarded-for"].split(",")[0].trim() : null)
+    || h["client-ip"] || "unknown";
   const now = Date.now();
   const b = buckets.get(ip) || { count: 0, ts: now };
   if (now - b.ts > WINDOW_MS) { b.count = 0; b.ts = now; }
-  b.count += 1;
-  buckets.set(ip, b);
-
+  b.count += 1; buckets.set(ip, b);
   return b.count > LIMIT;
 }
-
 function tooManyResp() {
-  return {
-    statusCode: 429,
-    headers: {
-      "Content-Type": "application/json",
-      "Retry-After": String(Math.ceil(WINDOW_MS / 1000)),
-    },
-    body: JSON.stringify({ error: "Too many requests. Please wait a minute and try again." }),
-  };
+  return { statusCode: 429, headers: { "Content-Type": "application/json" },
+           body: JSON.stringify({ error: "Too many requests. Try again shortly." }) };
 }
 
-// --- PayPal helper ---
 async function getAccessToken() {
   const id = process.env.PAYPAL_CLIENT_ID;
   const sec = process.env.PAYPAL_CLIENT_SECRET;
   if (!id || !sec) throw new Error("Missing PayPal credentials");
-
   const res = await fetch(`${BASE}/v1/oauth2/token`, {
     method: "POST",
     headers: {
       "Authorization": "Basic " + Buffer.from(`${id}:${sec}`).toString("base64"),
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/x-www-form-urlencoded"
     },
-    body: "grant_type=client_credentials",
+    body: "grant_type=client_credentials"
   });
   if (!res.ok) throw new Error(`PayPal token error ${res.status}: ${await res.text()}`);
   const j = await res.json();
   return j.access_token;
 }
 
-// --- Handler ---
+function json(status, body) {
+  return { statusCode: status, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) };
+}
+
+// Build your public origin (supports Netlify previews, custom domains, etc.)
+function getOrigin(event) {
+  const h = event.headers || {};
+  const proto = (h["x-forwarded-proto"] || "https").split(",")[0].trim();
+  const host  = (h["x-forwarded-host"]  || h["host"] || "").split(",")[0].trim();
+  return `${proto}://${host}`;
+}
+
 exports.handler = async (event) => {
   if (tooMany(event)) return tooManyResp();
 
   try {
+    // Optional: allow POST; GET also fine since no sensitive inputs here
+    const origin = getOrigin(event);
+    const returnUrl = `${origin}/buy`;   // where PayPal should send the buyer AFTER approval
+    const cancelUrl = `${origin}/data`;  // where to send if the buyer cancels
+
     const access = await getAccessToken();
 
-    // set your price here
+    // set your price/description here
     const purchase_units = [{
       amount: { currency_code: "USD", value: "9.00" },
-      description: "Vanished Brands CSV",
+      description: "Vanished Brands CSV"
     }];
 
     const r = await fetch(`${BASE}/v2/checkout/orders`, {
@@ -78,8 +80,10 @@ exports.handler = async (event) => {
           shipping_preference: "NO_SHIPPING",
           user_action: "PAY_NOW",
           brand_name: "Vanished Brands",
-        },
-      }),
+          return_url: returnUrl,
+          cancel_url: cancelUrl
+        }
+      })
     });
 
     const data = await r.json();
@@ -89,7 +93,3 @@ exports.handler = async (event) => {
     return json(500, { error: String(e?.message || e) });
   }
 };
-
-function json(status, body) {
-  return { statusCode: status, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) };
-}
