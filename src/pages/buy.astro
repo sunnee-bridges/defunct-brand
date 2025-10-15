@@ -1,9 +1,10 @@
 ---
-// src/pages/buy.astro
+// src/pages/buy.astro — SDK-free PayPal redirect flow
 
 const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
+
 const title = "Buy the Full CSV";
 const price = "9.00"; // USD
 const PAYPAL_HOST = ENV === "live" ? "www.paypal.com" : "www.sandbox.paypal.com";
@@ -14,14 +15,6 @@ const PAYPAL_HOST = ENV === "live" ? "www.paypal.com" : "www.sandbox.paypal.com"
     <meta charset="utf-8" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    {CLIENT_ID && (
-      <script
-        src={`https://www.paypal.com/sdk/js?client-id=${CLIENT_ID}&currency=USD&intent=capture&components=buttons&disable-funding=paylater,card,credit`}
-        defer
-      />
-    )}
-
     <style>
       :root{--fg:#111827;--muted:#6b7280;}
       @media (prefers-color-scheme: dark){:root{--fg:#e5e7eb;--muted:#9ca3af;}}
@@ -31,10 +24,10 @@ const PAYPAL_HOST = ENV === "live" ? "www.paypal.com" : "www.sandbox.paypal.com"
       .link{color:#2563eb;text-decoration:underline;}
       #result{margin-top:1rem}
       .note{font-size:.875rem;margin-top:.5rem}
-      .pp-box{margin-top:.75rem}
-      .fallback{margin-top:.5rem}
-      .btn-fallback{display:inline-block;padding:.5rem .75rem;border-radius:.5rem;border:1px solid #d1d5db;background:#fff;text-decoration:none}
-      .btn-fallback:hover{background:#f3f4f6}
+      .row{margin:.75rem 0}
+      .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem .9rem;border-radius:.75rem;border:1px solid #d1d5db;background:#fff;text-decoration:none;font-weight:600}
+      .btn:hover{background:#f3f4f6}
+      .hidden{display:none}
     </style>
   </head>
   <body>
@@ -42,148 +35,107 @@ const PAYPAL_HOST = ENV === "live" ? "www.paypal.com" : "www.sandbox.paypal.com"
       <h1>{title}</h1>
       <p>Get instant access to the full dataset (CSV). Price: <strong>${price} USD</strong>.</p>
 
-      {!CLIENT_ID ? (
-        <p style="color:#b91c1c">
-          Missing PayPal client ID. Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) in your env and redeploy.
-        </p>
-      ) : (
-        <div class="pp-box">
-          <div id="paypal-loading" aria-live="polite">Loading…</div>
-          <div id="paypal-btns"></div>
-          <div id="result" class="note muted"></div>
+      <div class="row">
+        <button id="checkout" class="btn" type="button" aria-label="Checkout with PayPal">
+          <!-- simple PayPal wordmark -->
+          <svg width="24" height="24" viewBox="0 0 48 32" aria-hidden="true"><rect width="48" height="32" rx="4" fill="#fff"/><path d="M14 8h6.5c3.8 0 6.2 2 5.6 5.5-.6 3.4-3.4 5.5-7.3 5.5h-2.1l-.9 4.5h-3.2L14 8z" fill="#003087"/><path d="M20.8 10c2.4 0 3.6 1.2 3.3 3-.3 2-2.2 3-4.5 3h-2.2l.9-6h2.5z" fill="#009CDE"/></svg>
+          <span>Checkout with PayPal</span>
+        </button>
+        <span id="loading" class="muted hidden" aria-live="polite">Loading…</span>
+      </div>
 
-          <div class="fallback">
-            <a href="#" id="direct-checkout" class="btn-fallback">Having trouble? Try direct PayPal checkout</a>
-          </div>
+      <div id="result" class="note muted"></div>
 
-          <p class="note muted">ENV: {ENV} • CLIENT_ID: {CLIENT_ID.slice(0,10)}…</p>
-          <p class="note muted">Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.</p>
-        </div>
-      )}
+      <!-- tiny env hint; remove later -->
+      <p class="note muted">ENV: {ENV} • CLIENT_ID: {CLIENT_ID ? CLIENT_ID.slice(0,10) + "…" : "(none)"}</p>
+      <p class="note muted">Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.</p>
     </div>
 
-    {CLIENT_ID && (
-      <script is:inline>
-        (function(){
-          var PAYPAL_HOST = {JSON.stringify(PAYPAL_HOST)};
+    <script is:inline>
+      (function(){
+        var PAYPAL_HOST = {JSON.stringify(PAYPAL_HOST)};
 
-          function $(id){ return document.getElementById(id); }
-          function hideLoading(text){
-            var el = $("paypal-loading");
-            if (!el) return;
-            if (typeof text === "string") el.textContent = text;
-            el.style.display = "none";
-          }
-          function setResult(text){
-            var el = $("result");
-            if (!el) return;
-            el.textContent = text || "";
-          }
-          function httpJSON(url, opts){
-            return fetch(url, opts || {}).then(function(r){
-              return r.json().then(function(data){ return { ok: r.ok, status: r.status, data: data }; })
-                .catch(function(){ return { ok: r.ok, status: r.status, data: null }; });
-            });
-          }
+        function $(id){ return document.getElementById(id); }
+        function show(el){ if (el) el.classList.remove('hidden'); }
+        function hide(el){ if (el) el.classList.add('hidden'); }
+        function setResult(t){ var r=$('result'); if (r) r.textContent = t || ''; }
+        function httpJSON(url, opts){
+          return fetch(url, opts || {}).then(function(r){
+            return r.json().then(function(data){ return { ok:r.ok, status:r.status, data:data }; })
+              .catch(function(){ return { ok:r.ok, status:r.status, data:null }; });
+          });
+        }
 
-          function directCheckout(ev){
-            if (ev && ev.preventDefault) ev.preventDefault();
-            setResult("Opening PayPal…");
-            httpJSON("/.netlify/functions/paypal-create-order").then(function(res){
-              if (!res.ok || !res.data || !res.data.id) {
-                setResult("Create order failed (HTTP " + res.status + "). Please refresh and try again.");
+        // 1) Create order → redirect to PayPal
+        function startCheckout(){
+          hide($('result')); setResult('');
+          show($('loading'));
+          httpJSON('/.netlify/functions/paypal-create-order').then(function(res){
+            if (!res.ok || !res.data || !res.data.id) {
+              hide($('loading'));
+              setResult('Create order failed (HTTP ' + res.status + '). Please retry.');
+              return;
+            }
+            var token = res.data.id;
+            // Redirect to PayPal hosted checkout
+            window.location.href = 'https://' + PAYPAL_HOST + '/checkoutnow?token=' + encodeURIComponent(token);
+          }).catch(function(){
+            hide($('loading')); setResult('Network error creating order.');
+          });
+        }
+
+        // 2) On return from PayPal (?token=ORDER_ID), capture + deliver
+        function handleReturn(){
+          var qs = new URLSearchParams(window.location.search);
+          var orderID = qs.get('token'); // PayPal returns "token" = Order ID
+          if (!orderID) return;
+
+          hide($('checkout')); show($('loading'));
+          setResult('Finalizing payment…');
+
+          httpJSON('/.netlify/functions/paypal-capture-order', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ orderID: orderID })
+          }).then(function(cap){
+            if (!cap.ok || !cap.data || !cap.data.ok || !cap.data.token) {
+              hide($('loading'));
+              var msg = (cap.data && cap.data.error) ? cap.data.error : ('Capture failed (HTTP ' + cap.status + ').');
+              setResult(msg);
+              return;
+            }
+            return httpJSON('/.netlify/functions/download-link', {
+              method:'POST',
+              headers:{'Content-Type':'application/json'},
+              body: JSON.stringify({ token: cap.data.token })
+            }).then(function(dl){
+              hide($('loading'));
+              if (!dl.ok || !dl.data || !dl.data.url) {
+                var msg2 = (dl.data && dl.data.error) ? dl.data.error : ('Download link error (HTTP ' + dl.status + ').');
+                setResult(msg2);
                 return;
               }
-              var token = res.data.id;
-              window.location.href = "https://" + PAYPAL_HOST + "/checkoutnow?token=" + encodeURIComponent(token);
+              // Show the download link
+              var a = document.createElement('a');
+              a.href = dl.data.url;
+              a.textContent = 'Click to download your CSV';
+              a.className = 'link';
+              a.rel = 'noopener';
+              var res = $('result'); if (res){ res.innerHTML=''; res.appendChild(a); }
+              // Optional: remove query params so refresh is clean
+              try { window.history.replaceState({}, '', window.location.pathname); } catch(e){}
             });
-          }
-
-          window.addEventListener("load", function(){
-            var btn = $("direct-checkout");
-            if (btn) btn.addEventListener("click", directCheckout);
-
-            var fallbackTimer = setTimeout(function(){ hideLoading(); }, 8000);
-
-            function renderButtons(){
-              if (!window.paypal || !window.paypal.Buttons) return false;
-
-              window.paypal.Buttons({
-                style: { layout: "vertical", shape: "rect", color: "gold", label: "paypal" },
-                fundingSource: window.paypal.FUNDING.PAYPAL,
-
-                onInit: function(){ hideLoading(); setResult(""); },
-
-                createOrder: function(){
-                  return httpJSON("/.netlify/functions/paypal-create-order").then(function(res){
-                    if (!res.ok || !res.data || !res.data.id) {
-                      setResult("Create order failed (HTTP " + res.status + "). You can also try the direct checkout link below.");
-                      throw new Error("createOrder failed");
-                    }
-                    return res.data.id;
-                  });
-                },
-
-                onApprove: function(data){
-                  setResult("Finalizing payment…");
-                  return httpJSON("/.netlify/functions/paypal-capture-order", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ orderID: data && data.orderID })
-                  }).then(function(cap){
-                    if (!cap.ok || !cap.data || !cap.data.ok || !cap.data.token) {
-                      hideLoading();
-                      var msg = (cap.data && cap.data.error) ? cap.data.error : ("Capture failed (HTTP " + cap.status + ").");
-                      setResult(msg + " You can also try the direct checkout link below.");
-                      return;
-                    }
-                    return httpJSON("/.netlify/functions/download-link", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ token: cap.data.token })
-                    }).then(function(dl){
-                      hideLoading();
-                      if (!dl.ok || !dl.data || !dl.data.url) {
-                        var msg2 = (dl.data && dl.data.error) ? dl.data.error : ("Download link error (HTTP " + dl.status + ").");
-                        setResult(msg2);
-                        return;
-                      }
-                      var a = document.createElement("a");
-                      a.href = dl.data.url;
-                      a.textContent = "Click to download your CSV";
-                      a.className = "link";
-                      a.rel = "noopener";
-                      var result = $("result");
-                      if (result) { result.innerHTML = ""; result.appendChild(a); }
-                    });
-                  });
-                },
-
-                onError: function(err){
-                  hideLoading();
-                  var msg = err && err.message ? err.message : String(err);
-                  setResult("PayPal error: " + msg + ". You can also try the direct checkout link below.");
-                }
-              }).render("#paypal-btns").then(function(){
-                clearTimeout(fallbackTimer); hideLoading();
-              }).catch(function(){
-                clearTimeout(fallbackTimer); hideLoading();
-              });
-
-              return true;
-            }
-
-            // Try now; if SDK not ready yet, poll briefly (2s total)
-            if (!renderButtons()){
-              var tries = 0;
-              var iv = setInterval(function(){
-                tries += 1;
-                if (renderButtons() || tries > 20) { clearInterval(iv); }
-              }, 100);
-            }
+          }).catch(function(){
+            hide($('loading')); setResult('Network error during capture.');
           });
-        })();
-      </script>
-    )}
+        }
+
+        window.addEventListener('load', function(){
+          handleReturn(); // if coming back from PayPal
+          var btn = $('checkout');
+          if (btn) btn.addEventListener('click', startCheckout);
+        });
+      })();
+    </script>
   </body>
 </html>
