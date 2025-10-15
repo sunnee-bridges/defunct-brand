@@ -3,6 +3,7 @@ const links = [
   { href: "/category/", label: "Categories", match: (p: string) => p.startsWith("/category/") },
   { href: "/az/",       label: "A–Z",        match: (p: string) => p.startsWith("/az/") },
   { href: "/decade/",   label: "Decades",    match: (p: string) => p.startsWith("/decade/") },
+  { href: "/data/",     label: "Data (CSV)", match: (p: string) => p.startsWith("/data/") },
 ];
 
 const path = Astro.url.pathname;

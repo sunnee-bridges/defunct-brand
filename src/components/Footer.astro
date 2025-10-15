@@ -5,15 +5,32 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
   <div class="border-t border-slate-200 dark:border-slate-700 pt-4 flex flex-wrap items-center gap-3 justify-between">
     <p>Data sources: Wikipedia (summarized). Built with Astro + Tailwind.</p>
 
-    <!-- CTA row: visible on small screens, hidden on md+ -->
+    <!-- CTA row: visible on small screens -->
     <nav class="flex gap-3 md:hidden">
       <a href="/az/" class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none">
         Browse A&ndash;Z
       </a>
-
+      <a href="/data/" class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none">
+        Data (CSV)
+      </a>
       <a
         href={`/brand/${fallbackSlug}/`}
         class="btn-primary focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none"
+        aria-label="Go to a random brand"
+        data-random
+        onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
+      >
+        Random
+      </a>
+    </nav>
+
+    <!-- CTA row: visible on md+ screens -->
+    <nav class="hidden md:flex gap-3">
+      <a href="/az/" class="chip focus-ring">Browse A&ndash;Z</a>
+      <a href="/data/" class="chip focus-ring">Data (CSV)</a>
+      <a
+        href={`/brand/${fallbackSlug}/`}
+        class="btn-primary focus-ring"
         aria-label="Go to a random brand"
         data-random
         onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
