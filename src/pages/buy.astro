@@ -1,9 +1,11 @@
 ---
 // src/pages/buy.astro
 
+// Prefer public var; fall back to server var so the page still works if PUBLIC_ was forgotten
 const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
+
 const title = "Buy the Full CSV";
 const price = "9.00"; // USD
 ---
@@ -16,7 +18,7 @@ const price = "9.00"; // USD
 
     {CLIENT_ID && (
       <script
-        src={`https://www.paypal.com/sdk/js?client-id=${CLIENT_ID}&currency=USD&intent=capture&components=buttons`}
+        src={`https://www.paypal.com/sdk/js?client-id=${CLIENT_ID}&currency=USD&intent=capture&components=buttons&disable-funding=paylater,card,credit`}
         defer
       />
     )}
@@ -31,6 +33,7 @@ const price = "9.00"; // USD
       #result{margin-top:1rem}
       .note{font-size:.875rem;margin-top:.5rem}
       .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+      .pp-box{margin-top:.75rem}
     </style>
   </head>
   <body>
@@ -47,14 +50,18 @@ const price = "9.00"; // USD
           Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) in your env and redeploy.
         </p>
       ) : (
-        <>
+        <div class="pp-box">
           <div id="paypal-loading" aria-live="polite">Loading…</div>
           <div id="paypal-btns"></div>
           <div id="result" class="note muted"></div>
+
+          <!-- (Temporary) tiny env hint; remove in production if you like -->
+          <p class="note muted">ENV: {ENV} • CLIENT_ID: {CLIENT_ID.slice(0,10)}…</p>
+
           <p class="note muted">
             Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.
           </p>
-        </>
+        </div>
       )}
     </div>
 
@@ -84,13 +91,17 @@ const price = "9.00"; // USD
           // Fallback if SDK blocked by extensions; hide after ~8s
           const fallbackTimer = setTimeout(() => hideLoading(), 8000);
 
+          // If SDK hasn't attached yet, render() will still run once it's ready
           if (!window.paypal || !window.paypal.Buttons) {
-            // SDK will hydrate shortly; render() will also call hideLoading
-            return;
+            // no-op; render below handles it once available
           }
 
           paypal.Buttons({
             style: { layout: 'vertical', shape: 'rect', color: 'gold', label: 'paypal' },
+
+            // Force PayPal funding (not cards) and avoid popup blockers by allowing redirect if needed
+            fundingSource: paypal.FUNDING.PAYPAL,
+            onClick: (_, actions) => actions.redirect(), // helps in environments that block popups/3rd-party cookies
 
             onInit() {
               hideLoading();
@@ -99,9 +110,9 @@ const price = "9.00"; // USD
 
             async createOrder() {
               // Ask server to create the Order
-              const { ok, data } = await httpJSON('/.netlify/functions/paypal-create-order');
+              const { ok, status, data } = await httpJSON('/.netlify/functions/paypal-create-order');
               if (!ok || !data?.id) {
-                setResult('Could not create order. Please refresh and try again.');
+                setResult(`Create order failed (HTTP ${status}). Please refresh and try again.`);
                 throw new Error('createOrder failed');
               }
               return data.id;
