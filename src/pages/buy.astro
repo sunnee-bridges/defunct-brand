@@ -4,7 +4,6 @@
 const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
-
 const title = "Buy the Full CSV";
 const price = "9.00"; // USD
 const PAYPAL_HOST = ENV === "live" ? "www.paypal.com" : "www.sandbox.paypal.com";
@@ -41,15 +40,11 @@ const PAYPAL_HOST = ENV === "live" ? "www.paypal.com" : "www.sandbox.paypal.com"
   <body>
     <div class="wrap">
       <h1>{title}</h1>
-      <p>
-        Get instant access to the full dataset (CSV). Price:
-        <strong>${price} USD</strong>.
-      </p>
+      <p>Get instant access to the full dataset (CSV). Price: <strong>${price} USD</strong>.</p>
 
       {!CLIENT_ID ? (
         <p style="color:#b91c1c">
-          Missing PayPal client ID.
-          Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) in your env and redeploy.
+          Missing PayPal client ID. Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) in your env and redeploy.
         </p>
       ) : (
         <div class="pp-box">
@@ -57,142 +52,137 @@ const PAYPAL_HOST = ENV === "live" ? "www.paypal.com" : "www.sandbox.paypal.com"
           <div id="paypal-btns"></div>
           <div id="result" class="note muted"></div>
 
-          <!-- Direct checkout fallback (manual redirect) -->
           <div class="fallback">
             <a href="#" id="direct-checkout" class="btn-fallback">Having trouble? Try direct PayPal checkout</a>
           </div>
 
-          <!-- (Temporary) tiny env hint; remove later -->
           <p class="note muted">ENV: {ENV} • CLIENT_ID: {CLIENT_ID.slice(0,10)}…</p>
-
-          <p class="note muted">
-            Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.
-          </p>
+          <p class="note muted">Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.</p>
         </div>
       )}
     </div>
 
     {CLIENT_ID && (
       <script is:inline>
-        const PAYPAL_HOST = {JSON.stringify(PAYPAL_HOST)};
+        (function(){
+          var PAYPAL_HOST = {JSON.stringify(PAYPAL_HOST)};
 
-        // Small helpers
-        function $(id){ return document.getElementById(id); }
-        function hideLoading(msg){
-          const el = $('paypal-loading');
-          if (!el) return;
-          if (msg !== undefined) el.textContent = msg;
-          el.style.display = 'none';
-        }
-        function setResult(text){
-          const el = $('result');
-          if (!el) return;
-          el.textContent = text || '';
-        }
-        async function httpJSON(url, opts){
-          const r = await fetch(url, opts);
-          let data = null;
-          try { data = await r.json(); } catch {}
-          return { ok: r.ok, status: r.status, data };
-        }
-
-        // Manual redirect fallback: create order on server, then go to checkoutnow
-        async function directCheckout(ev){
-          ev?.preventDefault?.();
-          setResult('Opening PayPal…');
-          const { ok, status, data } = await httpJSON('/.netlify/functions/paypal-create-order');
-          if (!ok || !data?.id) {
-            setResult(\`Create order failed (HTTP \${status}). Please refresh and try again.\`);
-            return;
+          function $(id){ return document.getElementById(id); }
+          function hideLoading(text){
+            var el = $("paypal-loading");
+            if (!el) return;
+            if (typeof text === "string") el.textContent = text;
+            el.style.display = "none";
           }
-          const token = data.id;
-          // Full-page redirect to PayPal
-          window.location.href = \`https://\${PAYPAL_HOST}/checkoutnow?token=\${encodeURIComponent(token)}\`;
-        }
-
-        window.addEventListener('load', () => {
-          const directBtn = $('direct-checkout');
-          if (directBtn) directBtn.addEventListener('click', directCheckout);
-
-          // Fallback if SDK blocked by extensions; hide after ~8s
-          const fallbackTimer = setTimeout(() => hideLoading(), 8000);
-
-          if (!window.paypal || !window.paypal.Buttons) {
-            // SDK will attach soon; render below still runs when ready
+          function setResult(text){
+            var el = $("result");
+            if (!el) return;
+            el.textContent = text || "";
+          }
+          function httpJSON(url, opts){
+            return fetch(url, opts || {}).then(function(r){
+              return r.json().then(function(data){ return { ok: r.ok, status: r.status, data: data }; })
+                .catch(function(){ return { ok: r.ok, status: r.status, data: null }; });
+            });
           }
 
-          paypal.Buttons({
-            style: { layout: 'vertical', shape: 'rect', color: 'gold', label: 'paypal' },
-
-            // Limit to PayPal funding to reduce sandbox flakiness
-            fundingSource: paypal.FUNDING.PAYPAL,
-
-            onInit() {
-              hideLoading();
-              setResult('');
-            },
-
-            async createOrder() {
-              // Ask server to create the Order
-              const { ok, status, data } = await httpJSON('/.netlify/functions/paypal-create-order');
-              if (!ok || !data?.id) {
-                setResult(\`Create order failed (HTTP \${status}). You can also try the direct checkout link below.\`);
-                throw new Error('createOrder failed');
-              }
-              return data.id;
-            },
-
-            async onApprove(data) {
-              setResult('Finalizing payment…');
-
-              // Capture on server
-              const cap = await httpJSON('/.netlify/functions/paypal-capture-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ orderID: data.orderID })
-              });
-
-              if (!cap.ok || !cap.data?.ok || !cap.data?.token) {
-                hideLoading();
-                const msg = cap.data?.error || \`Capture failed (HTTP \${cap.status}).\`;
-                setResult(msg + ' You can also try the direct checkout link below.');
+          function directCheckout(ev){
+            if (ev && ev.preventDefault) ev.preventDefault();
+            setResult("Opening PayPal…");
+            httpJSON("/.netlify/functions/paypal-create-order").then(function(res){
+              if (!res.ok || !res.data || !res.data.id) {
+                setResult("Create order failed (HTTP " + res.status + "). Please refresh and try again.");
                 return;
               }
+              var token = res.data.id;
+              window.location.href = "https://" + PAYPAL_HOST + "/checkoutnow?token=" + encodeURIComponent(token);
+            });
+          }
 
-              // Redeem token → presigned URL
-              const dl = await httpJSON('/.netlify/functions/download-link', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: cap.data.token })
+          window.addEventListener("load", function(){
+            var btn = $("direct-checkout");
+            if (btn) btn.addEventListener("click", directCheckout);
+
+            var fallbackTimer = setTimeout(function(){ hideLoading(); }, 8000);
+
+            function renderButtons(){
+              if (!window.paypal || !window.paypal.Buttons) return false;
+
+              window.paypal.Buttons({
+                style: { layout: "vertical", shape: "rect", color: "gold", label: "paypal" },
+                fundingSource: window.paypal.FUNDING.PAYPAL,
+
+                onInit: function(){ hideLoading(); setResult(""); },
+
+                createOrder: function(){
+                  return httpJSON("/.netlify/functions/paypal-create-order").then(function(res){
+                    if (!res.ok || !res.data || !res.data.id) {
+                      setResult("Create order failed (HTTP " + res.status + "). You can also try the direct checkout link below.");
+                      throw new Error("createOrder failed");
+                    }
+                    return res.data.id;
+                  });
+                },
+
+                onApprove: function(data){
+                  setResult("Finalizing payment…");
+                  return httpJSON("/.netlify/functions/paypal-capture-order", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ orderID: data && data.orderID })
+                  }).then(function(cap){
+                    if (!cap.ok || !cap.data || !cap.data.ok || !cap.data.token) {
+                      hideLoading();
+                      var msg = (cap.data && cap.data.error) ? cap.data.error : ("Capture failed (HTTP " + cap.status + ").");
+                      setResult(msg + " You can also try the direct checkout link below.");
+                      return;
+                    }
+                    return httpJSON("/.netlify/functions/download-link", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ token: cap.data.token })
+                    }).then(function(dl){
+                      hideLoading();
+                      if (!dl.ok || !dl.data || !dl.data.url) {
+                        var msg2 = (dl.data && dl.data.error) ? dl.data.error : ("Download link error (HTTP " + dl.status + ").");
+                        setResult(msg2);
+                        return;
+                      }
+                      var a = document.createElement("a");
+                      a.href = dl.data.url;
+                      a.textContent = "Click to download your CSV";
+                      a.className = "link";
+                      a.rel = "noopener";
+                      var result = $("result");
+                      if (result) { result.innerHTML = ""; result.appendChild(a); }
+                    });
+                  });
+                },
+
+                onError: function(err){
+                  hideLoading();
+                  var msg = err && err.message ? err.message : String(err);
+                  setResult("PayPal error: " + msg + ". You can also try the direct checkout link below.");
+                }
+              }).render("#paypal-btns").then(function(){
+                clearTimeout(fallbackTimer); hideLoading();
+              }).catch(function(){
+                clearTimeout(fallbackTimer); hideLoading();
               });
 
-              hideLoading();
-
-              if (!dl.ok || !dl.data?.url) {
-                const msg = dl.data?.error || \`Download link error (HTTP \${dl.status}).\`;
-                setResult(msg);
-                return;
-              }
-
-              // Render the “Click to download” link
-              const a = document.createElement('a');
-              a.href = dl.data.url;
-              a.textContent = 'Click to download your CSV';
-              a.className = 'link';
-              a.rel = 'noopener';
-              const result = $('result');
-              if (result) { result.innerHTML = ''; result.appendChild(a); }
-            },
-
-            onError(err) {
-              hideLoading();
-              setResult('PayPal error: ' + (err?.message || String(err)) + '. You can also try the direct checkout link below.');
+              return true;
             }
-          })
-          .render('#paypal-btns')
-          .then(() => { clearTimeout(fallbackTimer); hideLoading(); })
-          .catch(() => { clearTimeout(fallbackTimer); hideLoading(); });
-        });
+
+            // Try now; if SDK not ready yet, poll briefly (2s total)
+            if (!renderButtons()){
+              var tries = 0;
+              var iv = setInterval(function(){
+                tries += 1;
+                if (renderButtons() || tries > 20) { clearInterval(iv); }
+              }, 100);
+            }
+          });
+        })();
       </script>
     )}
   </body>
