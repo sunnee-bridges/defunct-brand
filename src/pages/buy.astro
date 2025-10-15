@@ -1,13 +1,13 @@
 ---
 // src/pages/buy.astro
 
-// Prefer public var; fall back to server var so the page still works if PUBLIC_ was forgotten
 const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
 
 const title = "Buy the Full CSV";
 const price = "9.00"; // USD
+const PAYPAL_HOST = ENV === "live" ? "www.paypal.com" : "www.sandbox.paypal.com";
 ---
 
 <html lang="en">
@@ -32,8 +32,10 @@ const price = "9.00"; // USD
       .link{color:#2563eb;text-decoration:underline;}
       #result{margin-top:1rem}
       .note{font-size:.875rem;margin-top:.5rem}
-      .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
       .pp-box{margin-top:.75rem}
+      .fallback{margin-top:.5rem}
+      .btn-fallback{display:inline-block;padding:.5rem .75rem;border-radius:.5rem;border:1px solid #d1d5db;background:#fff;text-decoration:none}
+      .btn-fallback:hover{background:#f3f4f6}
     </style>
   </head>
   <body>
@@ -55,7 +57,12 @@ const price = "9.00"; // USD
           <div id="paypal-btns"></div>
           <div id="result" class="note muted"></div>
 
-          <!-- (Temporary) tiny env hint; remove in production if you like -->
+          <!-- Direct checkout fallback (manual redirect) -->
+          <div class="fallback">
+            <a href="#" id="direct-checkout" class="btn-fallback">Having trouble? Try direct PayPal checkout</a>
+          </div>
+
+          <!-- (Temporary) tiny env hint; remove later -->
           <p class="note muted">ENV: {ENV} • CLIENT_ID: {CLIENT_ID.slice(0,10)}…</p>
 
           <p class="note muted">
@@ -67,6 +74,8 @@ const price = "9.00"; // USD
 
     {CLIENT_ID && (
       <script is:inline>
+        const PAYPAL_HOST = {JSON.stringify(PAYPAL_HOST)};
+
         // Small helpers
         function $(id){ return document.getElementById(id); }
         function hideLoading(msg){
@@ -87,21 +96,36 @@ const price = "9.00"; // USD
           return { ok: r.ok, status: r.status, data };
         }
 
+        // Manual redirect fallback: create order on server, then go to checkoutnow
+        async function directCheckout(ev){
+          ev?.preventDefault?.();
+          setResult('Opening PayPal…');
+          const { ok, status, data } = await httpJSON('/.netlify/functions/paypal-create-order');
+          if (!ok || !data?.id) {
+            setResult(\`Create order failed (HTTP \${status}). Please refresh and try again.\`);
+            return;
+          }
+          const token = data.id;
+          // Full-page redirect to PayPal
+          window.location.href = \`https://\${PAYPAL_HOST}/checkoutnow?token=\${encodeURIComponent(token)}\`;
+        }
+
         window.addEventListener('load', () => {
+          const directBtn = $('direct-checkout');
+          if (directBtn) directBtn.addEventListener('click', directCheckout);
+
           // Fallback if SDK blocked by extensions; hide after ~8s
           const fallbackTimer = setTimeout(() => hideLoading(), 8000);
 
-          // If SDK hasn't attached yet, render() will still run once it's ready
           if (!window.paypal || !window.paypal.Buttons) {
-            // no-op; render below handles it once available
+            // SDK will attach soon; render below still runs when ready
           }
 
           paypal.Buttons({
             style: { layout: 'vertical', shape: 'rect', color: 'gold', label: 'paypal' },
 
-            // Force PayPal funding (not cards) and avoid popup blockers by allowing redirect if needed
+            // Limit to PayPal funding to reduce sandbox flakiness
             fundingSource: paypal.FUNDING.PAYPAL,
-            onClick: (_, actions) => actions.redirect(), // helps in environments that block popups/3rd-party cookies
 
             onInit() {
               hideLoading();
@@ -112,7 +136,7 @@ const price = "9.00"; // USD
               // Ask server to create the Order
               const { ok, status, data } = await httpJSON('/.netlify/functions/paypal-create-order');
               if (!ok || !data?.id) {
-                setResult(`Create order failed (HTTP ${status}). Please refresh and try again.`);
+                setResult(\`Create order failed (HTTP \${status}). You can also try the direct checkout link below.\`);
                 throw new Error('createOrder failed');
               }
               return data.id;
@@ -130,8 +154,8 @@ const price = "9.00"; // USD
 
               if (!cap.ok || !cap.data?.ok || !cap.data?.token) {
                 hideLoading();
-                const msg = cap.data?.error || `Capture failed (HTTP ${cap.status}).`;
-                setResult(msg);
+                const msg = cap.data?.error || \`Capture failed (HTTP \${cap.status}).\`;
+                setResult(msg + ' You can also try the direct checkout link below.');
                 return;
               }
 
@@ -145,7 +169,7 @@ const price = "9.00"; // USD
               hideLoading();
 
               if (!dl.ok || !dl.data?.url) {
-                const msg = dl.data?.error || `Download link error (HTTP ${dl.status}).`;
+                const msg = dl.data?.error || \`Download link error (HTTP \${dl.status}).\`;
                 setResult(msg);
                 return;
               }
@@ -162,7 +186,7 @@ const price = "9.00"; // USD
 
             onError(err) {
               hideLoading();
-              setResult('PayPal error: ' + (err?.message || String(err)));
+              setResult('PayPal error: ' + (err?.message || String(err)) + '. You can also try the direct checkout link below.');
             }
           })
           .render('#paypal-btns')
