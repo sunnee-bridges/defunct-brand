@@ -3,38 +3,60 @@
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
-/** Build-time: enumerate all categories and precompute the items for each */
 export async function getStaticPaths() {
-  // ✅ Only curated public files
+  // Only curated public files
   const modules = import.meta.glob("/content/brands/*.public.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;
 
-  // Flatten → keep valid → de-dupe by slug
-  const seen = new Set<string>();
-  const brands = Object.values(modules)
-    .filter((b: any) => b && b.slug && b.category)
-    .filter((b: any) => {
-      const k = String(b.slug).toLowerCase();
-      if (seen.has(k)) return false;
-      seen.add(k);
-      return true;
-    });
+  // Normalize + de-dupe by canonical key
+  const bySlug = new Map<string, any>();
+  for (const raw of Object.values(modules)) {
+    const b = raw as any;
+    if (!b) continue;
+    const canonicalSlug = String(b.slug || "").trim().toLowerCase() || slugify(String(b.brand || ""));
+    if (!canonicalSlug) continue;
+    // Normalize category label too (trim)
+    if (typeof b.category === "string") b.category = b.category.trim();
+    // prefer first seen; change to overwrite if you want "last wins"
+    if (!bySlug.has(canonicalSlug)) bySlug.set(canonicalSlug, b);
+  }
+  const brands = Array.from(bySlug.values()).filter((b) => b.category);
 
-  const cats = Array.from(new Set(brands.map((b: any) => b.category))).sort();
+  // Unique, normalized categories
+  const cats = Array.from(new Set(brands.map((b) => b.category))).sort();
 
   return cats.map((label) => {
     const catSlug = slugify(label);
+    // Build item list for this category (de-dupe again defensively)
+    const seen = new Set<string>();
     const items = brands
-      .filter((b: any) => slugify(b.category) === catSlug)
-      .sort((a: any, b: any) => a.brand.localeCompare(b.brand));
+      .filter((b) => slugify(b.category) === catSlug)
+      .filter((b) => {
+        const k = (String(b.slug || "").trim().toLowerCase()) || slugify(String(b.brand || ""));
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      })
+      .sort((a, b) => a.brand.localeCompare(b.brand));
 
     return { params: { category: catSlug }, props: { label, items, allCats: cats } };
   });
 }
 
+
 const { label, items, allCats } = Astro.props;
+
+// Final guard: ensure unique by slug at render time too
+const _seen = new Set<string>();
+const uniqueItems = items.filter((b: any) => {
+  const k = (String(b.slug || "").trim().toLowerCase()) || slugify(String(b.brand || ""));
+  if (!k || _seen.has(k)) return false;
+  _seen.add(k);
+  return true;
+});
+
 
 /* ---------------- SEO / Canonical / JSON-LD ---------------- */
 const pageTitle = `Defunct Brands in ${label}`;
@@ -158,7 +180,7 @@ const itemListLd = {
 
         <!-- Brand list -->
         <ul id="brandList" class="list-none m-0 p-0 border-t border-slate-200 dark:border-slate-800">
-          {items.map((b: any) => {
+          {uniqueItems.map((b: any) => {
             const start = b?.active?.start ?? "";
             const end = b?.active?.end ?? "";
             const fate = b?.fate ?? "";
