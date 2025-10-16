@@ -71,122 +71,92 @@ const itemListLd = {
     <!-- Minimal CSS (no framework) -->
     <style>
       :root{
-        /* Light theme */
-        --fg:#111827;            /* gray-900 */
-        --muted:#4b5563;         /* gray-600 */
-        --bg:#ffffff;
-        --line:#e5e7eb;          /* gray-200 */
-        --pill:#ffffff;          /* chip bg */
-        --pillHover:#f8fafc;     /* slate-50 */
-        --ring:#2563eb;          /* blue-600 */
-        --ringOffset:#ffffff;
+        /* Light */
+        --fg:#111827; --muted:#4b5563; --bg:#ffffff; --line:#e5e7eb;
+        --pill:#ffffff; --pillHover:#f8fafc;
+        --ring:#2563eb; --ringOffset:#ffffff;
 
-        --field-bg:#ffffff;
-        --field-fg:#111827;
-        --field-ph:#6b7280;
-        --field-border:#cbd5e1;  /* slate-300 */
+        --field-bg:#ffffff; --field-fg:#111827; --field-ph:#6b7280; --field-border:#cbd5e1;
 
-        --badge-ok-bg:#f0fdf4;   /* emerald-50 */
-        --badge-ok-fg:#065f46;   /* emerald-700 */
-        --badge-ok-br:#bbf7d0;
-
-        --badge-bad-bg:#fef2f2;  /* red-50 */
-        --badge-bad-fg:#991b1b;  /* red-800 */
-        --badge-bad-br:#fecaca;
-
-        --badge-warn-bg:#fffbeb; /* amber-50 */
-        --badge-warn-fg:#92400e; /* amber-800 */
-        --badge-warn-br:#fde68a;
+        --badge-ok-bg:#f0fdf4; --badge-ok-fg:#065f46; --badge-ok-br:#bbf7d0;
+        --badge-bad-bg:#fef2f2; --badge-bad-fg:#991b1b; --badge-bad-br:#fecaca;
+        --badge-warn-bg:#fffbeb; --badge-warn-fg:#92400e; --badge-warn-br:#fde68a;
       }
-
       @media (prefers-color-scheme: dark){
         :root{
-          /* Dark theme */
-          --fg:#e5e7eb;            /* slate-200 */
-          --muted:#cbd5e1;         /* slate-300 */
-          --bg:#0b0b0f;
-          --line:#1f2937;          /* gray-800 */
-          --pill:#121418;          /* chip bg */
-          --pillHover:#15181e;
-          --ring:#60a5fa;          /* blue-400 */
-          --ringOffset:#0b0b0f;
+          /* Dark */
+          --fg:#e5e7eb; --muted:#cbd5e1; --bg:#0b0b0f; --line:#1f2937;
+          --pill:#121418; --pillHover:#15181e;
+          --ring:#60a5fa; --ringOffset:#0b0b0f;
 
-          --field-bg:#1a1f24;
-          --field-fg:#f1f5f9;
-          --field-ph:#94a3b8;
-          --field-border:#334155;
+          --field-bg:#1a1f24; --field-fg:#f1f5f9; --field-ph:#94a3b8; --field-border:#334155;
 
-          --badge-ok-bg:rgba(16,185,129,.15);
-          --badge-ok-fg:#a7f3d0;
-          --badge-ok-br:#065f46;
-
-          --badge-bad-bg:rgba(239,68,68,.12);
-          --badge-bad-fg:#fecaca;
-          --badge-bad-br:#7f1d1d;
-
-          --badge-warn-bg:rgba(245,158,11,.14);
-          --badge-warn-fg:#fde68a;
-          --badge-warn-br:#78350f;
+          --badge-ok-bg:rgba(16,185,129,.15); --badge-ok-fg:#a7f3d0; --badge-ok-br:#065f46;
+          --badge-bad-bg:rgba(239,68,68,.12); --badge-bad-fg:#fecaca; --badge-bad-br:#7f1d1d;
+          --badge-warn-bg:rgba(245,158,11,.14); --badge-warn-fg:#fde68a; --badge-warn-br:#78350f;
         }
       }
 
       html { color-scheme: light dark; background: var(--bg); }
-      body {
+      body { margin: 0; color: var(--fg); background: var(--bg);
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-        margin: 0; color: var(--fg); background: var(--bg);
       }
       .wrap { max-width: 1040px; margin: 2rem auto; padding: 0 1rem; }
+
+      /* Top chip nav (Home / A–Z / Decades) */
+      .chipbar { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:.5rem; }
+      .chip {
+        display:inline-flex; align-items:center; gap:.4rem;
+        padding:.4rem .75rem; border-radius:999px; border:1px solid var(--line);
+        background:var(--pill); color:var(--fg); font-size:.9rem; font-weight:500;
+        text-decoration:none; box-shadow: 0 1px 0 rgba(0,0,0,.04);
+        transition: background-color .15s ease;
+      }
+      .chip:hover { background: var(--pillHover); }
+      .chip:focus-visible { outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset); }
+
       header a { text-decoration: none; }
       h1 { line-height: 1.2; margin: .5rem 0 1rem; }
       .subtle { color: var(--muted); }
 
-      /* Top chip nav (matches /data) */
-      .chipbar { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:.5rem; }
-      .chip {
-        display:inline-flex; align-items:center; gap:.4rem;
-        padding:.4rem .75rem; border-radius:999px;
-        border:1px solid var(--line);
-        background: var(--pill);
-        color: var(--fg);
-        font-size:.9rem; font-weight:500;
-        text-decoration:none;
-        box-shadow: 0 1px 0 rgba(0,0,0,.04);
-        transition: background-color .15s ease;
+      /* Controls + mobile filters */
+      .controls-wrap { margin: 1rem 0 .25rem; }
+      .filters-toggle {
+        display:none;
+        border:1px solid var(--line); background:var(--pill); color:var(--fg);
+        padding:.45rem .75rem; border-radius:.6rem; font:inherit; cursor:pointer;
       }
-      .chip:hover { background: var(--pillHover); }
-      .chip:focus-visible {
-        outline: none;
-        box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset);
-      }
+      .filters-toggle:focus-visible { outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset); }
 
-      /* Category pills (right sidebar) */
-      .pillbar { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 1.25rem; }
-      .pill {
-        display:inline-block; padding:.35rem .65rem; border-radius:999px;
-        background:var(--pill); color:var(--fg); font-size:.9rem; text-decoration:none; border:1px solid var(--line);
-        transition: background-color .15s ease;
-      }
-      .pill:hover { background:var(--pillHover); }
-      .pill[aria-current="page"] { font-weight:600; outline:2px solid var(--ring); outline-offset:2px; }
-
-      /* Controls */
-      .controls { display:flex; flex-wrap:wrap; gap:.65rem 1rem; align-items:center; margin:1rem 0; }
+      .controls { display:flex; flex-wrap:wrap; gap:.65rem 1rem; align-items:center; margin:.75rem 0; }
       .controls label { font-size:.92rem; color: var(--muted); }
       .controls input[type="search"], .controls select {
         padding:.55rem .65rem; border:1px solid var(--field-border); border-radius:.6rem; font:inherit;
         background: var(--field-bg); color: var(--field-fg);
       }
       .controls input::placeholder { color: var(--field-ph); }
-      .controls input:focus, .controls select:focus {
-        outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset);
-      }
+      .controls input:focus, .controls select:focus { outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset); }
       .srch { flex: 1 1 260px; min-width: 220px; }
+
+      /* Active filter chips */
+      .active-chips { display:flex; flex-wrap:wrap; gap:.5rem; margin:.25rem 0 1rem; }
+      .chip-active {
+        display:inline-flex; align-items:center; gap:.4rem;
+        padding:.25rem .55rem; border-radius:999px; border:1px solid var(--line);
+        background:var(--pill); color:var(--fg); font-size:.85rem;
+      }
+      .chip-active button {
+        appearance:none; border:0; background:transparent; color:inherit; cursor:pointer;
+        padding:.1rem .2rem; border-radius:.35rem;
+      }
+      .chip-active button:focus-visible { outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset); }
 
       /* List */
       .list { margin: 1rem 0 2rem; padding: 0; list-style:none; border-top:1px solid var(--line); }
       .row { display:flex; gap:.75rem; justify-content:space-between; align-items:baseline;
-             padding:.8rem 0; border-bottom:1px solid var(--line); }
+             padding:.85rem 0; border-bottom:1px solid var(--line); }
       .row a { font-weight:600; text-decoration:none; color: var(--fg); }
+      .row a:hover { text-decoration: underline; text-underline-offset: 2px; }
       .meta { color:var(--muted); font-size:.95rem; }
       .tag { font-size:.85rem; padding:.15rem .45rem; border-radius:.45rem; border:1px solid var(--line); }
       .tag.bad { color:var(--badge-bad-fg); border-color:var(--badge-bad-br); background:var(--badge-bad-bg); }
@@ -196,10 +166,25 @@ const itemListLd = {
       /* Breadcrumbs */
       nav.breadcrumbs { font-size:.9rem; margin-bottom:.5rem; color: var(--muted); }
 
+      /* Right sidebar pills */
+      .pillbar { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 1.25rem; }
+      .pill {
+        display:inline-block; padding:.35rem .65rem; border-radius:999px;
+        background:var(--pill); color:var(--fg); font-size:.9rem; text-decoration:none; border:1px solid var(--line);
+        transition: background-color .15s ease;
+      }
+      .pill:hover { background:var(--pillHover); }
+      .pill.current { font-weight:600; outline:2px solid var(--ring); outline-offset:2px; pointer-events:none; }
+
       /* Grid / sticky aside */
       @media (min-width: 900px) {
         .grid { display:grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items:start; }
         aside { position: sticky; top: 1.25rem; }
+      }
+      /* Mobile: collapse filters under a toggle */
+      @media (max-width: 899px){
+        .filters-toggle{ display:inline-flex; align-items:center; gap:.4rem; }
+        .controls[hidden]{ display:none !important; }
       }
     </style>
   </head>
@@ -226,26 +211,35 @@ const itemListLd = {
 
       <div class="grid">
         <main id="content">
-          <!-- Controls -->
-          <div class="controls" role="region" aria-label="List controls">
-            <label for="q">Search</label>
-            <input id="q" class="srch" type="search" placeholder="Search brands…" inputmode="search" />
+          <!-- Controls (with mobile toggle) -->
+          <div class="controls-wrap">
+            <button id="filtersToggle" class="filters-toggle" aria-expanded="false" aria-controls="controls">
+              Filters
+            </button>
 
-            <label for="fate">Status</label>
-            <select id="fate" aria-label="Filter by status">
-              <option value="">All statuses</option>
-              <option value="Bankruptcy">Bankruptcy</option>
-              <option value="Acquired">Acquired</option>
-              <option value="Merged">Merged</option>
-              <option value="Discontinued">Discontinued</option>
-            </select>
+            <div id="controls" class="controls" hidden>
+              <label for="q">Search</label>
+              <input id="q" class="srch" type="search" placeholder={`Search brands in ${label}…`} inputmode="search" />
 
-            <label for="sort">Sort</label>
-            <select id="sort" aria-label="Sort list">
-              <option value="alpha">A → Z</option>
-              <option value="start-asc">Oldest founded</option>
-              <option value="end-desc">Most recent closure</option>
-            </select>
+              <label for="fate">Status</label>
+              <select id="fate" aria-label="Filter by status">
+                <option value="">All statuses</option>
+                <option value="Acquired">Acquired</option>
+                <option value="Bankruptcy">Bankrupt</option>
+                <option value="Merged">Merged</option>
+                <option value="Discontinued">Discontinued</option>
+              </select>
+
+              <label for="sort">Sort</label>
+              <select id="sort" aria-label="Sort list">
+                <option value="alpha">A → Z</option>
+                <option value="start-asc">Oldest founded</option>
+                <option value="end-desc">Most recent closure</option>
+              </select>
+            </div>
+
+            <!-- Active filters appear here -->
+            <div id="activeChips" class="active-chips" aria-live="polite"></div>
           </div>
 
           <!-- List -->
@@ -258,14 +252,12 @@ const itemListLd = {
               return (
                 <li class="row"
                     data-brand={b.brand.toLowerCase()}
-                    data-fate={fate.toLowerCase()}
+                    data-fate={(fate || "").toLowerCase()}
                     data-start={start || "0"}
                     data-end={end || "0"}>
                   <div>
                     <a href={`/brand/${b.slug}/`}>{b.brand}</a>
-                    <span class="meta">
-                      {start ? ` (${start}\u2013${end || "?"})` : ""}
-                    </span>
+                    <span class="meta">{start ? ` (${start}\u2013${end || "?"})` : ""}</span>
                   </div>
                   <div>
                     {fate && <span class={`tag ${statusClass}`}>{fate}</span>}
@@ -274,7 +266,11 @@ const itemListLd = {
               );
             })}
           </ul>
-          <p class="subtle" id="emptyState" style="display:none;">No brands match your filters.</p>
+
+          <div id="emptyBlock" class="subtle" style="display:none; margin-top:.5rem;">
+            No matches. Try clearing filters or searching fewer terms.
+            <button id="clearAll" style="margin-left:.5rem; border:1px solid var(--line); background:var(--pill); color:var(--fg); padding:.25rem .5rem; border-radius:.5rem; cursor:pointer;">Clear all</button>
+          </div>
         </main>
 
         <aside aria-labelledby="catHeading">
@@ -282,9 +278,11 @@ const itemListLd = {
           <div class="pillbar" role="list" aria-label="Categories">
             {allCats.map((c: string) => {
               const href = `/category/${slugify(c)}/`;
-              const current = slugify(c) === slugify(label);
-              return (
-                <a role="listitem" href={href} class="pill" aria-current={current ? "page" : undefined}>{c}</a>
+              const isCurrent = slugify(c) === slugify(label);
+              return isCurrent ? (
+                <span role="listitem" class="pill current" aria-current="page">{c}</span>
+              ) : (
+                <a role="listitem" href={href} class="pill">{c}</a>
               );
             })}
           </div>
@@ -292,16 +290,66 @@ const itemListLd = {
       </div>
     </div>
 
-    <!-- Lightweight client-side UX (no framework) -->
+    <!-- Lightweight client UX -->
     <script>
       const $ = (s)=>document.querySelector(s);
       const $$ = (s)=>Array.from(document.querySelectorAll(s));
       const list = $("#brandList");
-      const empty = $("#emptyState");
+      const emptyBlock = $("#emptyBlock");
       const q = $("#q");
       const fateSel = $("#fate");
       const sortSel = $("#sort");
+      const chips = $("#activeChips");
+      const filtersToggle = $("#filtersToggle");
+      const controls = $("#controls");
+      const clearAllBtn = $("#clearAll");
 
+      /* -------- URL State -------- */
+      const params = new URLSearchParams(location.search);
+      if (params.has("q")) q.value = params.get("q") || "";
+      if (params.has("status")) fateSel.value = params.get("status") || "";
+      if (params.has("sort")) sortSel.value = params.get("sort") || "alpha";
+
+      function pushURL(){
+        const p = new URLSearchParams();
+        if (q.value.trim()) p.set("q", q.value.trim());
+        if (fateSel.value) p.set("status", fateSel.value);
+        if (sortSel.value && sortSel.value !== "alpha") p.set("sort", sortSel.value);
+        const qs = p.toString();
+        history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
+      }
+
+      /* -------- Render active chips -------- */
+      function renderChips(){
+        chips.innerHTML = "";
+        const fr = document.createDocumentFragment();
+
+        if (q.value.trim()){
+          const el = document.createElement("span");
+          el.className = "chip-active";
+          el.innerHTML = `<strong>Search:</strong> ${escapeHtml(q.value.trim())} <button aria-label="Clear search">✕</button>`;
+          el.querySelector("button").onclick = () => { q.value = ""; onChange(); q.focus(); };
+          fr.appendChild(el);
+        }
+        if (fateSel.value){
+          const el = document.createElement("span");
+          el.className = "chip-active";
+          el.innerHTML = `<strong>Status:</strong> ${escapeHtml(fateSel.value)} <button aria-label="Clear status filter">✕</button>`;
+          el.querySelector("button").onclick = () => { fateSel.value = ""; onChange(); fateSel.focus(); };
+          fr.appendChild(el);
+        }
+        if (fr.childNodes.length){
+          const clear = document.createElement("button");
+          clear.textContent = "Clear all";
+          clear.className = "chip-active";
+          clear.style.cursor = "pointer";
+          clear.onclick = () => { q.value = ""; fateSel.value=""; sortSel.value="alpha"; onChange(); };
+          fr.appendChild(clear);
+        }
+        chips.appendChild(fr);
+      }
+
+      /* -------- Filtering & sorting -------- */
       function applyFilters() {
         const term = (q.value || "").trim().toLowerCase();
         const fate = (fateSel.value || "").toLowerCase();
@@ -314,7 +362,7 @@ const itemListLd = {
           li.style.display = show ? "" : "none";
           if (show) visible++;
         });
-        empty.style.display = visible ? "none" : "";
+        emptyBlock.style.display = visible ? "none" : "";
       }
 
       function applySort() {
@@ -332,12 +380,44 @@ const itemListLd = {
         rows.forEach(r => list.appendChild(r));
       }
 
-      q.addEventListener("input", ()=>{ applyFilters(); applySort(); });
-      fateSel.addEventListener("change", ()=>{ applyFilters(); applySort(); });
-      sortSel.addEventListener("change", applySort);
+      function onChange(){
+        applyFilters(); applySort(); renderChips(); pushURL();
+      }
 
-      // Initial
-      applyFilters(); applySort();
+      /* -------- Mobile filters toggle -------- */
+      function setFiltersVisible(v){
+        if (v){ controls.removeAttribute("hidden"); filtersToggle.setAttribute("aria-expanded","true"); }
+        else { controls.setAttribute("hidden",""); filtersToggle.setAttribute("aria-expanded","false"); }
+      }
+      filtersToggle.addEventListener("click", ()=>{
+        const open = filtersToggle.getAttribute("aria-expanded") === "true";
+        setFiltersVisible(!open);
+      });
+      // Show controls by default on desktop
+      if (window.matchMedia("(min-width: 900px)").matches) setFiltersVisible(true);
+
+      /* -------- Keyboard niceties -------- */
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "/" && document.activeElement?.tagName !== "INPUT"){
+          e.preventDefault(); q.focus();
+        } else if (e.key === "Escape"){
+          if (q.value){ q.value=""; onChange(); }
+        }
+      });
+
+      clearAllBtn?.addEventListener("click", ()=>{ q.value=""; fateSel.value=""; sortSel.value="alpha"; onChange(); });
+
+      q.addEventListener("input", onChange);
+      fateSel.addEventListener("change", onChange);
+      sortSel.addEventListener("change", onChange);
+
+      // Initial render
+      onChange();
+
+      /* -------- helpers -------- */
+      function escapeHtml(s){
+        return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+      }
     </script>
   </body>
 </html>
