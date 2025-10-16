@@ -1,26 +1,10 @@
 ---
 import { slugify } from "../../lib/slug.js";
 
-//** Build-time: enumerate all categories and precompute the items for each */
+/** Build-time: enumerate all categories and precompute the items for each */
 export async function getStaticPaths() {
-  // ✅ Only load curated/public files, not both
-  const modules = import.meta.glob("/content/brands/*.public.json", {
-    eager: true,
-    import: "default",
-  }) as Record<string, any>;
-
-  // Optional: drop items missing a category
-  const all = Object.values(modules).filter((b: any) => b?.category);
-
-  // Safety: de-dupe by slug (belt-and-suspenders)
-  const seen = new Set<string>();
-  const brands = all.filter((b: any) => {
-    const key = String(b.slug || "").toLowerCase();
-    if (!key || seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-
+  const modules = import.meta.glob("/content/brands/*.json", { eager: true });
+  const brands = Object.values(modules).map((mod: any) => mod.default ?? mod);
   const cats = Array.from(new Set(brands.map((b: any) => b.category))).sort();
 
   return cats.map((label) => {
@@ -28,11 +12,9 @@ export async function getStaticPaths() {
     const items = brands
       .filter((b: any) => slugify(b.category) === catSlug)
       .sort((a: any, b: any) => a.brand.localeCompare(b.brand));
-
     return { params: { category: catSlug }, props: { label, items, allCats: cats } };
   });
 }
-
 
 const { label, items, allCats } = Astro.props;
 
@@ -217,15 +199,32 @@ const itemListLd = {
         <a href="/decade/" class="chip">Decades</a>
       </nav>
 
-      <header>
+      <header class="cat-header">
+        <!-- Subtle breadcrumb -->
         <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a> <span class="sep">/</span>
-          <a href="/#categories">Categories</a> <span class="sep">/</span>
-          <span aria-current="page" style="color:var(--fg);">{label}</span>
+          <a href="/">Home</a>
+          <span class="sep">/</span>
+          <a href="/#categories">Categories</a>
+          <span class="sep">/</span>
+          <span aria-current="page">{label}</span>
         </nav>
-        <h1>{title}</h1>
-        <p class="subtle">{desc}</p>
+
+        <!-- Single concise H1 + count badge -->
+        <div class="title-row">
+          <h1 class="h1">
+            {label} — defunct brands
+          </h1>
+          <span class="count-badge" aria-label={`${items.length} brands`}>
+            {items.length}
+          </span>
+        </div>
+
+        <!-- Optional microcopy (hide on mobile to reduce clutter) -->
+        <p class="subtle tagline">
+          Browse brands, filter, and sort. (A–Z by default)
+        </p>
       </header>
+
 
       <div class="grid">
         <main id="content">
