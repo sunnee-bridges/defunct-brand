@@ -1,458 +1,208 @@
 ---
+// src/pages/category/[category].astro
+import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
 /** Build-time: enumerate all categories and precompute the items for each */
 export async function getStaticPaths() {
-  // ✅ Only load curated/public files, not both
+  // ✅ Only curated public files
   const modules = import.meta.glob("/content/brands/*.public.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;
 
-  // Optional: drop items missing a category
-  const all = Object.values(modules).filter((b: any) => b?.category);
+  // Normalize & de-dupe by canonical slug
+  const bySlug = new Map<string, any>();
+  for (const raw of Object.values(modules)) {
+    const b = raw as any;
+    if (!b) continue;
+    const key =
+      String(b.slug || "").trim().toLowerCase() ||
+      slugify(String(b.brand || ""));
+    if (!key) continue;
+    if (typeof b.category === "string") b.category = b.category.trim();
+    if (!b.category) continue;
+    if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
+  }
+  const brands = Array.from(bySlug.values());
 
-  // Safety: de-dupe by slug (belt-and-suspenders)
-  const seen = new Set<string>();
-  const brands = all.filter((b: any) => {
-    const key = String(b.slug || "").toLowerCase();
-    if (!key || seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+  // Unique category labels (sorted)
+  const cats = Array.from(new Set(brands.map((b) => b.category))).sort();
 
-  const cats = Array.from(new Set(brands.map((b: any) => b.category))).sort();
-
+  // Page props per category
   return cats.map((label) => {
     const catSlug = slugify(label);
+
+    // Items for this category (defensive de-dupe again)
+    const seen = new Set<string>();
     const items = brands
-      .filter((b: any) => slugify(b.category) === catSlug)
-      .sort((a: any, b: any) => a.brand.localeCompare(b.brand));
+      .filter((b) => slugify(b.category) === catSlug)
+      .filter((b) => {
+        const k =
+          String(b.slug || "").trim().toLowerCase() ||
+          slugify(String(b.brand || ""));
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      })
+      .sort((a, b) => a.brand.localeCompare(b.brand));
 
     return { params: { category: catSlug }, props: { label, items, allCats: cats } };
   });
 }
 
-
+/** Props from getStaticPaths */
 const { label, items, allCats } = Astro.props;
 
-const title = `Defunct Brands in ${label}`;
-const desc = `Explore ${items.length} defunct or discontinued brands in ${label}.`;
-const canonical = Astro.url.toString();
+/** Final render-time guard (belt & suspenders) */
+const _seen = new Set<string>();
+const uniqueItems = items.filter((b: any) => {
+  const k =
+    String(b.slug || "").trim().toLowerCase() ||
+    slugify(String(b.brand || ""));
+  if (!k || _seen.has(k)) return false;
+  _seen.add(k);
+  return true;
+});
 
-/** SEO JSON-LD: Breadcrumbs and ItemList */
+/* ---------------- SEO / Canonical / JSON-LD ---------------- */
+const title = `Defunct Brands in ${label}`;
+const description = `Explore ${uniqueItems.length} defunct or discontinued brands in ${label}.`;
+
+const categoryPath = `/category/${slugify(label)}/`;
+const canonical = Astro.site ? new URL(categoryPath, Astro.site).href : categoryPath;
+
 const breadcrumbLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": new URL("/", Astro.url).toString() },
-    { "@type": "ListItem", "position": 2, "name": "Categories", "item": new URL("/#categories", Astro.url).toString() },
-    { "@type": "ListItem", "position": 3, "name": label, "item": canonical }
-  ]
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
+    { "@type": "ListItem", position: 2, name: "Categories", item: Astro.site ? new URL("/#categories", Astro.site).href : "/#categories" },
+    { "@type": "ListItem", position: 3, name: label, item: canonical },
+  ],
 };
 
 const itemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": title,
-  "itemListOrder": "http://schema.org/ItemListOrderAscending",
-  "numberOfItems": items.length,
-  "itemListElement": items.map((b: any, i: number) => ({
+  name: title,
+  itemListOrder: "http://schema.org/ItemListOrderAscending",
+  numberOfItems: uniqueItems.length,
+  itemListElement: uniqueItems.map((b: any, i: number) => ({
     "@type": "ListItem",
-    "position": i + 1,
-    "url": new URL(`/brand/${b.slug}/`, Astro.url).toString(),
-    "name": b.brand
-  }))
+    position: i + 1,
+    url: Astro.site
+      ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
+      : `/brand/${encodeURIComponent(b.slug)}/`,
+    name: b.brand,
+  })),
 };
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>{title}</title>
-    <meta name="description" content={desc} />
-    <link rel="canonical" href={canonical} />
+<Base title={title} description={description}>
+  <!-- Match index.astro: simple nav block -->
+  <nav class="mb-4">
+    <a href="/" class="chip focus-ring">← Home</a>
+  </nav>
 
-    <!-- Open Graph / Twitter -->
-    <meta property="og:type" content="website" />
+  <!-- Compact header to avoid repetition -->
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">
+    {label} — defunct brands
+    <span class="ml-2 align-middle inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 text-xs font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+      {uniqueItems.length}
+    </span>
+  </h1>
+  <p class="text-slate-700 dark:text-slate-300 mb-3">
+    Browse brands, filter, and sort. A–Z by default.
+  </p>
+
+  <!-- Optional: quick controls (kept minimal to match index.astro’s simplicity) -->
+  <div class="mb-3 flex flex-wrap items-center gap-3">
+    <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
+    <input id="q" type="search"
+           class="w-full md:w-auto flex-1 rounded-md border border-slate-300 bg-white text-slate-900 placeholder-slate-400 px-3 py-2 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+           placeholder={`Search brands in ${label}…`} inputmode="search" />
+    <label for="sort" class="text-sm text-slate-600 dark:text-slate-300">Sort</label>
+    <select id="sort"
+            class="rounded-md border border-slate-300 bg-white text-slate-900 px-3 py-2 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+      <option value="alpha">A → Z</option>
+      <option value="start-asc">Oldest founded</option>
+      <option value="end-desc">Most recent closure</option>
+    </select>
+  </div>
+
+  <!-- List -->
+  <ul id="brandList" class="m-0 p-0 list-none border-t border-slate-200 dark:border-slate-800">
+    {uniqueItems.map((b: any) => {
+      const start = b?.active?.start ?? "";
+      const end = b?.active?.end ?? "";
+      const fate = b?.fate ?? "";
+      return (
+        <li class="flex justify-between items-baseline gap-3 py-3 border-b border-slate-200 dark:border-slate-800">
+          <div class="min-w-0">
+            <a class="font-semibold text-slate-900 dark:text-slate-100 underline-offset-2 hover:underline focus-ring rounded"
+               href={`/brand/${encodeURIComponent(b.slug)}/`}>{b.brand}</a>
+            <span class="ml-1 text-sm text-slate-600 dark:text-slate-400">
+              {start ? ` (${start}\u2013${end || "?"})` : ""}{fate ? ` • ${fate}` : ""}
+            </span>
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+
+  <!-- SEO tags into <head> via Base’s slot -->
+  <Fragment slot="head">
+    <link rel="canonical" href={canonical} />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={desc} />
+    <meta property="og:description" content={description} />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
+    <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
+  </Fragment>
 
-    <!-- JSON-LD -->
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)}></script>
-    <script type="application/ld+json" set:html={JSON.stringify(itemListLd)}></script>
+  <!-- Tiny client helpers (optional) -->
+  <script>
+    const $ = (s)=>document.querySelector(s);
+    const $$ = (s)=>Array.from(document.querySelectorAll(s));
+    const list = $("#brandList");
+    const q = $("#q");
+    const sortSel = $("#sort");
 
-    <!-- Minimal CSS (no framework) -->
-    <style>
-      :root{
-        /* Light */
-        --fg:#111827; --muted:#4b5563; --bg:#ffffff; --line:#e5e7eb;
-        --pill:#ffffff; --pillHover:#f8fafc;
-        --ring:#2563eb; --ringOffset:#ffffff;
-
-        --field-bg:#ffffff; --field-fg:#111827; --field-ph:#6b7280; --field-border:#cbd5e1;
-
-        --badge-ok-bg:#f0fdf4; --badge-ok-fg:#065f46; --badge-ok-br:#bbf7d0;
-        --badge-bad-bg:#fef2f2; --badge-bad-fg:#991b1b; --badge-bad-br:#fecaca;
-        --badge-warn-bg:#fffbeb; --badge-warn-fg:#92400e; --badge-warn-br:#fde68a;
-      }
-      @media (prefers-color-scheme: dark){
-        :root{
-          /* Dark */
-          --fg:#e5e7eb; --muted:#cbd5e1; --bg:#0b0b0f; --line:#1f2937;
-          --pill:#121418; --pillHover:#15181e;
-          --ring:#60a5fa; --ringOffset:#0b0b0f;
-
-          --field-bg:#1a1f24; --field-fg:#f1f5f9; --field-ph:#94a3b8; --field-border:#334155;
-
-          --badge-ok-bg:rgba(16,185,129,.15); --badge-ok-fg:#a7f3d0; --badge-ok-br:#065f46;
-          --badge-bad-bg:rgba(239,68,68,.12); --badge-bad-fg:#fecaca; --badge-bad-br:#7f1d1d;
-          --badge-warn-bg:rgba(245,158,11,.14); --badge-warn-fg:#fde68a; --badge-warn-br:#78350f;
-        }
-      }
-
-      html { color-scheme: light dark; background: var(--bg); }
-      body { margin: 0; color: var(--fg); background: var(--bg);
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-      }
-      .wrap { max-width: 1040px; margin: 2rem auto; padding: 0 1rem; }
-
-      /* Top chip nav (Home / A–Z / Decades) */
-      .chipbar { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:.5rem; }
-      .chip {
-        display:inline-flex; align-items:center; gap:.4rem;
-        padding:.4rem .75rem; border-radius:999px; border:1px solid var(--line);
-        background:var(--pill); color:var(--fg); font-size:.9rem; font-weight:500;
-        text-decoration:none; box-shadow: 0 1px 0 rgba(0,0,0,.04);
-        transition: background-color .15s ease;
-      }
-      .chip:hover { background: var(--pillHover); }
-      .chip:focus-visible { outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset); }
-
-      header a { text-decoration: none; }
-      h1 { line-height: 1.2; margin: .5rem 0 1rem; }
-      .subtle { color: var(--muted); }
-
-      /* Controls + mobile filters */
-      .controls-wrap { margin: 1rem 0 .25rem; }
-      .filters-toggle {
-        display:none;
-        border:1px solid var(--line); background:var(--pill); color:var(--fg);
-        padding:.45rem .75rem; border-radius:.6rem; font:inherit; cursor:pointer;
-      }
-      .filters-toggle:focus-visible { outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset); }
-
-      .controls { display:flex; flex-wrap:wrap; gap:.65rem 1rem; align-items:center; margin:.75rem 0; }
-      .controls label { font-size:.92rem; color: var(--muted); }
-      .controls input[type="search"], .controls select {
-        padding:.55rem .65rem; border:1px solid var(--field-border); border-radius:.6rem; font:inherit;
-        background: var(--field-bg); color: var(--field-fg);
-      }
-      .controls input::placeholder { color: var(--field-ph); }
-      .controls input:focus, .controls select:focus { outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset); }
-      .srch { flex: 1 1 260px; min-width: 220px; }
-
-      /* Active filter chips */
-      .active-chips { display:flex; flex-wrap:wrap; gap:.5rem; margin:.25rem 0 1rem; }
-      .chip-active {
-        display:inline-flex; align-items:center; gap:.4rem;
-        padding:.25rem .55rem; border-radius:999px; border:1px solid var(--line);
-        background:var(--pill); color:var(--fg); font-size:.85rem;
-      }
-      .chip-active button {
-        appearance:none; border:0; background:transparent; color:inherit; cursor:pointer;
-        padding:.1rem .2rem; border-radius:.35rem;
-      }
-      .chip-active button:focus-visible { outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset); }
-
-      /* List */
-      .list { margin: 1rem 0 2rem; padding: 0; list-style:none; border-top:1px solid var(--line); }
-      .row { display:flex; gap:.75rem; justify-content:space-between; align-items:baseline;
-             padding:.85rem 0; border-bottom:1px solid var(--line); }
-      .row a { font-weight:600; text-decoration:none; color: var(--fg); }
-      .row a:hover { text-decoration: underline; text-underline-offset: 2px; }
-      .meta { color:var(--muted); font-size:.95rem; }
-      .tag { font-size:.85rem; padding:.15rem .45rem; border-radius:.45rem; border:1px solid var(--line); }
-      .tag.bad { color:var(--badge-bad-fg); border-color:var(--badge-bad-br); background:var(--badge-bad-bg); }
-      .tag.ok { color:var(--badge-ok-fg); border-color:var(--badge-ok-br); background:var(--badge-ok-bg); }
-      .tag.warn { color:var(--badge-warn-fg); border-color:var(--badge-warn-br); background:var(--badge-warn-bg); }
-
-      /* Breadcrumbs */
-      nav.breadcrumbs { font-size:.9rem; margin-bottom:.5rem; color: var(--muted); }
-
-      /* Right sidebar pills */
-      .pillbar { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 1.25rem; }
-      .pill {
-        display:inline-block; padding:.35rem .65rem; border-radius:999px;
-        background:var(--pill); color:var(--fg); font-size:.9rem; text-decoration:none; border:1px solid var(--line);
-        transition: background-color .15s ease;
-      }
-      .pill:hover { background:var(--pillHover); }
-      .pill.current { font-weight:600; outline:2px solid var(--ring); outline-offset:2px; pointer-events:none; }
-
-      /* Grid / sticky aside */
-      @media (min-width: 900px) {
-        .grid { display:grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items:start; }
-        aside { position: sticky; top: 1.25rem; }
-      }
-      /* Mobile: collapse filters under a toggle */
-      @media (max-width: 899px){
-        .filters-toggle{ display:inline-flex; align-items:center; gap:.4rem; }
-        .controls[hidden]{ display:none !important; }
-      }
-    </style>
-  </head>
-
-  <body>
-    <a href="#content" class="subtle" style="position:absolute;left:-9999px;">Skip to content</a>
-    <div class="wrap">
-      <!-- Chip nav to match /data -->
-      <nav class="chipbar" aria-label="Section navigation">
-        <a href="/" class="chip"><span aria-hidden="true">←</span> Home</a>
-        <a href="/az/" class="chip">A–Z</a>
-        <a href="/decade/" class="chip">Decades</a>
-      </nav>
-
-      <header class="cat-header">
-        <!-- Subtle breadcrumb -->
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a>
-          <span class="sep">/</span>
-          <a href="/#categories">Categories</a>
-          <span class="sep">/</span>
-          <span aria-current="page">{label}</span>
-        </nav>
-
-        <!-- Single concise H1 + count badge -->
-        <div class="title-row">
-          <h1 class="h1">
-            {label} — defunct brands
-          </h1>
-          <span class="count-badge" aria-label={`${items.length} brands`}>
-            {items.length}
-          </span>
-        </div>
-
-        <!-- Optional microcopy (hide on mobile to reduce clutter) -->
-        <p class="subtle tagline">
-          Browse brands, filter, and sort. (A–Z by default)
-        </p>
-      </header>
-
-
-      <div class="grid">
-        <main id="content">
-          <!-- Controls (with mobile toggle) -->
-          <div class="controls-wrap">
-            <button id="filtersToggle" class="filters-toggle" aria-expanded="false" aria-controls="controls">
-              Filters
-            </button>
-
-            <div id="controls" class="controls" hidden>
-              <label for="q">Search</label>
-              <input id="q" class="srch" type="search" placeholder={`Search brands in ${label}…`} inputmode="search" />
-
-              <label for="fate">Status</label>
-              <select id="fate" aria-label="Filter by status">
-                <option value="">All statuses</option>
-                <option value="Acquired">Acquired</option>
-                <option value="Bankruptcy">Bankrupt</option>
-                <option value="Merged">Merged</option>
-                <option value="Discontinued">Discontinued</option>
-              </select>
-
-              <label for="sort">Sort</label>
-              <select id="sort" aria-label="Sort list">
-                <option value="alpha">A → Z</option>
-                <option value="start-asc">Oldest founded</option>
-                <option value="end-desc">Most recent closure</option>
-              </select>
-            </div>
-
-            <!-- Active filters appear here -->
-            <div id="activeChips" class="active-chips" aria-live="polite"></div>
-          </div>
-
-          <!-- List -->
-          <ul class="list" id="brandList">
-            {items.map((b: any) => {
-              const start = b?.active?.start ?? "";
-              const end = b?.active?.end ?? "";
-              const fate = b?.fate ?? "";
-              const statusClass = fate.match(/bankrupt/i) ? "bad" : fate.match(/acquir|acquired/i) ? "ok" : fate ? "warn" : "";
-              return (
-                <li class="row"
-                    data-brand={b.brand.toLowerCase()}
-                    data-fate={(fate || "").toLowerCase()}
-                    data-start={start || "0"}
-                    data-end={end || "0"}>
-                  <div>
-                    <a href={`/brand/${b.slug}/`}>{b.brand}</a>
-                    <span class="meta">{start ? ` (${start}\u2013${end || "?"})` : ""}</span>
-                  </div>
-                  <div>
-                    {fate && <span class={`tag ${statusClass}`}>{fate}</span>}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-
-          <div id="emptyBlock" class="subtle" style="display:none; margin-top:.5rem;">
-            No matches. Try clearing filters or searching fewer terms.
-            <button id="clearAll" style="margin-left:.5rem; border:1px solid var(--line); background:var(--pill); color:var(--fg); padding:.25rem .5rem; border-radius:.5rem; cursor:pointer;">Clear all</button>
-          </div>
-        </main>
-
-        <aside aria-labelledby="catHeading">
-          <h2 id="catHeading" style="margin:.25rem 0 .5rem;">Browse categories</h2>
-          <div class="pillbar" role="list" aria-label="Categories">
-            {allCats.map((c: string) => {
-              const href = `/category/${slugify(c)}/`;
-              const isCurrent = slugify(c) === slugify(label);
-              return isCurrent ? (
-                <span role="listitem" class="pill current" aria-current="page">{c}</span>
-              ) : (
-                <a role="listitem" href={href} class="pill">{c}</a>
-              );
-            })}
-          </div>
-        </aside>
-      </div>
-    </div>
-
-    <!-- Lightweight client UX -->
-    <script>
-      const $ = (s)=>document.querySelector(s);
-      const $$ = (s)=>Array.from(document.querySelectorAll(s));
-      const list = $("#brandList");
-      const emptyBlock = $("#emptyBlock");
-      const q = $("#q");
-      const fateSel = $("#fate");
-      const sortSel = $("#sort");
-      const chips = $("#activeChips");
-      const filtersToggle = $("#filtersToggle");
-      const controls = $("#controls");
-      const clearAllBtn = $("#clearAll");
-
-      /* -------- URL State -------- */
-      const params = new URLSearchParams(location.search);
-      if (params.has("q")) q.value = params.get("q") || "";
-      if (params.has("status")) fateSel.value = params.get("status") || "";
-      if (params.has("sort")) sortSel.value = params.get("sort") || "alpha";
-
-      function pushURL(){
-        const p = new URLSearchParams();
-        if (q.value.trim()) p.set("q", q.value.trim());
-        if (fateSel.value) p.set("status", fateSel.value);
-        if (sortSel.value && sortSel.value !== "alpha") p.set("sort", sortSel.value);
-        const qs = p.toString();
-        history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
-      }
-
-      /* -------- Render active chips -------- */
-      function renderChips(){
-        chips.innerHTML = "";
-        const fr = document.createDocumentFragment();
-
-        if (q.value.trim()){
-          const el = document.createElement("span");
-          el.className = "chip-active";
-          el.innerHTML = `<strong>Search:</strong> ${escapeHtml(q.value.trim())} <button aria-label="Clear search">✕</button>`;
-          el.querySelector("button").onclick = () => { q.value = ""; onChange(); q.focus(); };
-          fr.appendChild(el);
-        }
-        if (fateSel.value){
-          const el = document.createElement("span");
-          el.className = "chip-active";
-          el.innerHTML = `<strong>Status:</strong> ${escapeHtml(fateSel.value)} <button aria-label="Clear status filter">✕</button>`;
-          el.querySelector("button").onclick = () => { fateSel.value = ""; onChange(); fateSel.focus(); };
-          fr.appendChild(el);
-        }
-        if (fr.childNodes.length){
-          const clear = document.createElement("button");
-          clear.textContent = "Clear all";
-          clear.className = "chip-active";
-          clear.style.cursor = "pointer";
-          clear.onclick = () => { q.value = ""; fateSel.value=""; sortSel.value="alpha"; onChange(); };
-          fr.appendChild(clear);
-        }
-        chips.appendChild(fr);
-      }
-
-      /* -------- Filtering & sorting -------- */
-      function applyFilters() {
-        const term = (q.value || "").trim().toLowerCase();
-        const fate = (fateSel.value || "").toLowerCase();
-
-        let visible = 0;
-        $$("#brandList > li").forEach(li => {
-          const matchesText = li.dataset.brand.includes(term);
-          const matchesFate = !fate || (li.dataset.fate || "").includes(fate);
-          const show = matchesText && matchesFate;
-          li.style.display = show ? "" : "none";
-          if (show) visible++;
-        });
-        emptyBlock.style.display = visible ? "none" : "";
-      }
-
-      function applySort() {
-        const mode = sortSel.value;
-        const rows = $$("#brandList > li").filter(li => li.style.display !== "none");
-        const cmpAlpha = (a,b)=>a.dataset.brand.localeCompare(b.dataset.brand);
-        const num = (v)=>parseInt(v || "0", 10);
-
-        rows.sort((a,b)=>{
-          if (mode === "alpha") return cmpAlpha(a,b);
-          if (mode === "start-asc") return num(a.dataset.start) - num(b.dataset.start) || cmpAlpha(a,b);
-          if (mode === "end-desc") return num(b.dataset.end) - num(a.dataset.end) || cmpAlpha(a,b);
-          return 0;
-        });
-        rows.forEach(r => list.appendChild(r));
-      }
-
-      function onChange(){
-        applyFilters(); applySort(); renderChips(); pushURL();
-      }
-
-      /* -------- Mobile filters toggle -------- */
-      function setFiltersVisible(v){
-        if (v){ controls.removeAttribute("hidden"); filtersToggle.setAttribute("aria-expanded","true"); }
-        else { controls.setAttribute("hidden",""); filtersToggle.setAttribute("aria-expanded","false"); }
-      }
-      filtersToggle.addEventListener("click", ()=>{
-        const open = filtersToggle.getAttribute("aria-expanded") === "true";
-        setFiltersVisible(!open);
+    function applyFilters() {
+      const term = (q.value || "").trim().toLowerCase();
+      $$("#brandList > li").forEach(li => {
+        const txt = (li.textContent || "").toLowerCase();
+        li.style.display = !term || txt.includes(term) ? "" : "none";
       });
-      // Show controls by default on desktop
-      if (window.matchMedia("(min-width: 900px)").matches) setFiltersVisible(true);
+    }
 
-      /* -------- Keyboard niceties -------- */
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "/" && document.activeElement?.tagName !== "INPUT"){
-          e.preventDefault(); q.focus();
-        } else if (e.key === "Escape"){
-          if (q.value){ q.value=""; onChange(); }
-        }
+    function applySort() {
+      const mode = sortSel.value;
+      const rows = $$("#brandList > li").filter(li => li.style.display !== "none");
+      const getName = (li)=> (li.querySelector("a")?.textContent || "").toLowerCase();
+      const getYear = (li, which)=> {
+        const t = li.textContent || "";
+        const m = t.match(/\((\d{3,4})\u2013(\?|\d{3,4})\)/);
+        if (!m) return 0;
+        return which === "start" ? parseInt(m[1],10) : (m[2] === "?" ? 0 : parseInt(m[2],10));
+      };
+
+      rows.sort((a,b)=>{
+        if (mode === "alpha") return getName(a).localeCompare(getName(b));
+        if (mode === "start-asc") return getYear(a,"start") - getYear(b,"start") || getName(a).localeCompare(getName(b));
+        if (mode === "end-desc") return getYear(b,"end") - getYear(a,"end") || getName(a).localeCompare(getName(b));
+        return 0;
       });
+      rows.forEach(r => list.appendChild(r));
+    }
 
-      clearAllBtn?.addEventListener("click", ()=>{ q.value=""; fateSel.value=""; sortSel.value="alpha"; onChange(); });
-
-      q.addEventListener("input", onChange);
-      fateSel.addEventListener("change", onChange);
-      sortSel.addEventListener("change", onChange);
-
-      // Initial render
-      onChange();
-
-      /* -------- helpers -------- */
-      function escapeHtml(s){
-        return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-      }
-    </script>
-  </body>
-</html>
+    function onChange(){ applyFilters(); applySort(); }
+    q.addEventListener("input", onChange);
+    sortSel.addEventListener("change", onChange);
+    onChange();
+  </script>
+</Base>
