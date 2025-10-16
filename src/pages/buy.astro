@@ -1,204 +1,158 @@
 ---
-/* /src/pages/buy.astro */
-import "../styles/tailwind.css";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+// /src/pages/buy.astro
+import Base from "../layouts/Base.astro";
 
 const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
 
 const title = "Buy the Full CSV";
-const description =
-  "Secure checkout via PayPal. Receive a one-time download link after purchase.";
+const description = "Secure checkout via PayPal. Receive a one-time download link after purchase.";
 const price = "9.00"; // USD
 ---
 
-<html lang="en" class="h-full">
-  <head>
-    <meta charset="utf-8" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Allow pages to inject extra SEO if needed -->
-    <slot name="head" />
-
-    <!-- Theme boot (same as other pages) -->
-    <script is:inline>
-      (function () {
-        const KEY = 'theme';
-        const saved = localStorage.getItem(KEY);
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = saved || (prefersDark ? 'dark' : 'light');
-        if (theme === 'dark') document.documentElement.classList.add('dark');
-        document.documentElement.dataset.theme = theme;
-      })();
-    </script>
-
-    <!-- Mobile address-bar color per theme -->
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
-
+<Base title={title} description={description}>
+  {/* Head slot: load PayPal SDK + tiny CSS fix for wrappers */}
+  <Fragment slot="head">
     {CLIENT_ID && (
       <script
         src={`https://www.paypal.com/sdk/js?client-id=${CLIENT_ID}&currency=USD&intent=capture&components=buttons`}
         defer
       />
     )}
-
-    <!-- Make PayPal's injected wrappers transparent (outside the iframe) -->
     <style>
+      {`
+      /* Make PayPal's injected wrappers transparent (outside the iframe) */
       #paypal-btns > div,
       #paypal-btns .paypal-buttons,
       #paypal-btns .paypal-button-row,
       #paypal-btns .paypal-button-container,
       #paypal-btns iframe { background: transparent !important; }
+      `}
     </style>
+  </Fragment>
 
-    <!-- Minor non-Tailwind tweaks -->
-    <style>
-      .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-      .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem .75rem;border-radius:.375rem;background:#111827;color:#fff;z-index:50}
-    </style>
-  </head>
+  {/* Nav chips (same pattern as /data) */}
+  <nav class="mb-4 flex flex-wrap gap-2">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/az/" class="chip focus-ring">A–Z</a>
+    <a href="/decade/" class="chip focus-ring">Decades</a>
+  </nav>
 
-  <body class="min-h-full bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100">
-    <!-- Skip link for keyboard users -->
-    <a href="#main" class="skip-link">Skip to content</a>
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
+  <p class="text-slate-700 dark:text-slate-300 mb-4">
+    Get instant access to the full dataset (CSV). Price:
+    <strong class="font-semibold text-slate-900 dark:text-slate-100">${price} USD</strong>.
+  </p>
 
-    <!-- Site header -->
-    <Header />
+  {!CLIENT_ID ? (
+    <p class="text-red-600 dark:text-red-400">
+      Missing PayPal client ID.
+      Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) in your env and redeploy.
+    </p>
+  ) : (
+    <>
+      {/* Always-white checkout card so PayPal's light iframe looks intentional */}
+      <section class="rounded-xl border p-4 bg-white shadow-sm text-slate-900 border-slate-200 dark:border-slate-700">
+        <h2 class="sr-only">Payment</h2>
 
-    <main id="main" class="max-w-[1040px] mx-auto px-4 py-8 sm:py-10">
-      <!-- Local nav: Home link chip -->
-      <nav aria-label="Breadcrumb" class="mb-4">
-        <a
-          href="/"
-          class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/80 px-3 py-1.5 text-sm font-medium text-gray-900 shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white
-                 dark:border-slate-700 dark:bg-[#121418] dark:text-slate-100 dark:hover:bg-[#15181e] dark:focus:ring-blue-400 dark:focus:ring-offset-[#0b0b0f]"
-        >
-          <span aria-hidden="true">←</span> Home
-        </a>
-      </nav>
+        <div id="paypal-loading" role="status" aria-live="polite"
+             class="text-sm text-slate-600 text-center">Loading…</div>
 
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">{title}</h1>
-      <p class="mt-2 text-base sm:text-lg text-gray-600 dark:text-slate-300">
-        Get instant access to the full dataset (CSV). Price:
-        <strong class="font-semibold text-gray-900 dark:text-slate-100">${price} USD</strong>.
+        {/* Center the PayPal buttons */}
+        <div class="mt-3 flex justify-center">
+          <div id="paypal-btns" class="w-full max-w-[480px]"></div>
+        </div>
+      </section>
+
+      {/* Result / notes */}
+      <div id="result" class="mt-4 text-sm text-slate-700 dark:text-slate-300"></div>
+      <p class="mt-2 text-sm text-slate-700 dark:text-slate-300">
+        Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.
       </p>
+      <p class="mt-1 text-center text-xs text-slate-500 dark:text-slate-400">
+        Powered by <span class="font-semibold">PayPal</span>
+      </p>
+    </>
+  )}
 
-      {!CLIENT_ID ? (
-        <p class="mt-4 text-red-600 dark:text-red-400">
-          Missing PayPal client ID.
-          Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) in your env and redeploy.
-        </p>
-      ) : (
-        <>
-          <!-- Always-white checkout card so the PayPal iframe blends in on any theme -->
-          <section class="mt-6 rounded-2xl border border-gray-200 bg-white p-4 sm:p-6 shadow-sm text-gray-900">
-            <h2 class="sr-only">Payment</h2>
+  {CLIENT_ID && (
+    <script is:inline>
+      {`
+      // Helpers
+      function $(id){ return document.getElementById(id); }
+      function hideLoading(msg){
+        const el = $('paypal-loading');
+        if (!el) return;
+        if (msg !== undefined) el.textContent = msg;
+        el.style.display = 'none';
+      }
+      function setResult(text){
+        const el = $('result');
+        if (!el) return;
+        el.textContent = text || '';
+      }
+      async function httpJSON(url, opts){
+        const r = await fetch(url, opts);
+        let data = null;
+        try { data = await r.json(); } catch {}
+        return { ok: r.ok, status: r.status, data };
+      }
 
-            <div id="paypal-loading" role="status" aria-live="polite"
-                 class="text-sm text-gray-600 text-center">Loading…</div>
+      window.addEventListener('load', () => {
+        const fallbackTimer = setTimeout(() => hideLoading(), 8000);
+        if (!window.paypal || !window.paypal.Buttons) return;
 
-            <!-- Center the PayPal buttons -->
-            <div class="mt-3 flex justify-center">
-              <div id="paypal-btns" class="w-full max-w-[480px]"></div>
-            </div>
-          </section>
+        paypal.Buttons({
+          // Keep PayPal light, remove internal tagline bar
+          style: { layout: 'vertical', shape: 'rect', color: 'gold', label: 'paypal', tagline: false },
 
-          <!-- Result / notes -->
-          <div id="result" class="mt-4 text-sm text-gray-600 dark:text-slate-300"></div>
-          <p class="mt-2 text-sm text-gray-600 dark:text-slate-300">
-            Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.
-          </p>
-          <p class="mt-1 text-center text-xs text-gray-500 dark:text-slate-400">
-            Powered by <span class="font-semibold">PayPal</span>
-          </p>
-        </>
-      )}
-    </main>
+          onInit() { hideLoading(); setResult(''); },
 
-    <!-- Footer -->
-    <Footer />
+          async createOrder() {
+            const { ok, data } = await httpJSON('/.netlify/functions/paypal-create-order');
+            if (!ok || !data?.id) { setResult('Could not create order. Please refresh and try again.'); throw new Error('createOrder failed'); }
+            return data.id;
+          },
 
-    {CLIENT_ID && (
-      <script is:inline>
-        // Helpers
-        function $(id){ return document.getElementById(id); }
-        function hideLoading(msg){
-          const el = $('paypal-loading');
-          if (!el) return;
-          if (msg !== undefined) el.textContent = msg;
-          el.style.display = 'none';
-        }
-        function setResult(text){
-          const el = $('result');
-          if (!el) return;
-          el.textContent = text || '';
-        }
-        async function httpJSON(url, opts){
-          const r = await fetch(url, opts);
-          let data = null;
-          try { data = await r.json(); } catch {}
-          return { ok: r.ok, status: r.status, data };
-        }
+          async onApprove(data) {
+            setResult('Finalizing payment…');
 
-        window.addEventListener('load', () => {
-          const fallbackTimer = setTimeout(() => hideLoading(), 8000);
-          if (!window.paypal || !window.paypal.Buttons) return;
+            const cap = await httpJSON('/.netlify/functions/paypal-capture-order', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ orderID: data.orderID })
+            });
 
-          paypal.Buttons({
-            // Keep PayPal light, remove internal tagline bar
-            style: { layout: 'vertical', shape: 'rect', color: 'gold', label: 'paypal', tagline: false },
+            if (!cap.ok || !cap.data?.ok || !cap.data?.token) {
+              hideLoading(); setResult(cap.data?.error || \`Capture failed (HTTP \${cap.status}).\`); return;
+            }
 
-            onInit() { hideLoading(); setResult(''); },
+            const dl = await httpJSON('/.netlify/functions/download-link', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token: cap.data.token })
+            });
 
-            async createOrder() {
-              const { ok, data } = await httpJSON('/.netlify/functions/paypal-create-order');
-              if (!ok || !data?.id) { setResult('Could not create order. Please refresh and try again.'); throw new Error('createOrder failed'); }
-              return data.id;
-            },
+            hideLoading();
 
-            async onApprove(data) {
-              setResult('Finalizing payment…');
+            if (!dl.ok || !dl.data?.url) { setResult(dl.data?.error || \`Download link error (HTTP \${dl.status}).\`); return; }
 
-              const cap = await httpJSON('/.netlify/functions/paypal-capture-order', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ orderID: data.orderID })
-              });
+            const a = document.createElement('a');
+            a.href = dl.data.url;
+            a.textContent = 'Click to download your CSV';
+            a.className = 'underline text-blue-600 dark:text-blue-300 hover:no-underline focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-blue-400 focus:ring-offset-white dark:focus:ring-offset-[#0b0b0f] rounded';
+            a.rel = 'noopener';
 
-              if (!cap.ok || !cap.data?.ok || !cap.data?.token) {
-                hideLoading(); setResult(cap.data?.error || `Capture failed (HTTP ${cap.status}).`); return;
-              }
+            const result = $('result');
+            if (result) { result.innerHTML = ''; result.appendChild(a); }
+          },
 
-              const dl = await httpJSON('/.netlify/functions/download-link', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: cap.data.token })
-              });
-
-              hideLoading();
-
-              if (!dl.ok || !dl.data?.url) { setResult(dl.data?.error || `Download link error (HTTP ${dl.status}).`); return; }
-
-              const a = document.createElement('a');
-              a.href = dl.data.url;
-              a.textContent = 'Click to download your CSV';
-              a.className = 'underline text-blue-600 dark:text-blue-300 hover:no-underline focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-blue-400 focus:ring-offset-white dark:focus:ring-offset-[#0b0b0f] rounded';
-              a.rel = 'noopener';
-
-              const result = $('result');
-              if (result) { result.innerHTML = ''; result.appendChild(a); }
-            },
-
-            onError(err) { hideLoading(); setResult('PayPal error: ' + (err?.message || String(err))); }
-          })
-          .render('#paypal-btns')
-          .then(() => { clearTimeout(fallbackTimer); hideLoading(); })
-          .catch(() => { clearTimeout(fallbackTimer); hideLoading(); });
-        });
-      </script>
-    )}
-  </body>
-</html>
+          onError(err) { hideLoading(); setResult('PayPal error: ' + (err?.message || String(err))); }
+        })
+        .render('#paypal-btns')
+        .then(() => { clearTimeout(fallbackTimer); hideLoading(); })
+        .catch(() => { clearTimeout(fallbackTimer); hideLoading(); });
+      });
+      `}
+    </script>
+  )}
+</Base>
