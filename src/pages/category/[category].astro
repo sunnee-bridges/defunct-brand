@@ -70,48 +70,133 @@ const itemListLd = {
 
     <!-- Minimal CSS (no framework) -->
     <style>
-      :root {
-        --fg:#111; --muted:#666; --line:#e5e7eb; --pill:#f3f4f6; --pillHover:#e5e7eb;
-        --bad:#b91c1c; --ok:#15803d; --warn:#a16207;
+      :root{
+        /* Light theme */
+        --fg:#111827;            /* gray-900 */
+        --muted:#4b5563;         /* gray-600 */
+        --bg:#ffffff;
+        --line:#e5e7eb;          /* gray-200 */
+        --pill:#ffffff;          /* chip bg */
+        --pillHover:#f8fafc;     /* slate-50 */
+        --ring:#2563eb;          /* blue-600 */
+        --ringOffset:#ffffff;
+
+        --field-bg:#ffffff;
+        --field-fg:#111827;
+        --field-ph:#6b7280;
+        --field-border:#cbd5e1;  /* slate-300 */
+
+        --badge-ok-bg:#f0fdf4;   /* emerald-50 */
+        --badge-ok-fg:#065f46;   /* emerald-700 */
+        --badge-ok-br:#bbf7d0;
+
+        --badge-bad-bg:#fef2f2;  /* red-50 */
+        --badge-bad-fg:#991b1b;  /* red-800 */
+        --badge-bad-br:#fecaca;
+
+        --badge-warn-bg:#fffbeb; /* amber-50 */
+        --badge-warn-fg:#92400e; /* amber-800 */
+        --badge-warn-br:#fde68a;
       }
-      html { color-scheme: light dark; }
+
+      @media (prefers-color-scheme: dark){
+        :root{
+          /* Dark theme */
+          --fg:#e5e7eb;            /* slate-200 */
+          --muted:#cbd5e1;         /* slate-300 */
+          --bg:#0b0b0f;
+          --line:#1f2937;          /* gray-800 */
+          --pill:#121418;          /* chip bg */
+          --pillHover:#15181e;
+          --ring:#60a5fa;          /* blue-400 */
+          --ringOffset:#0b0b0f;
+
+          --field-bg:#1a1f24;
+          --field-fg:#f1f5f9;
+          --field-ph:#94a3b8;
+          --field-border:#334155;
+
+          --badge-ok-bg:rgba(16,185,129,.15);
+          --badge-ok-fg:#a7f3d0;
+          --badge-ok-br:#065f46;
+
+          --badge-bad-bg:rgba(239,68,68,.12);
+          --badge-bad-fg:#fecaca;
+          --badge-bad-br:#7f1d1d;
+
+          --badge-warn-bg:rgba(245,158,11,.14);
+          --badge-warn-fg:#fde68a;
+          --badge-warn-br:#78350f;
+        }
+      }
+
+      html { color-scheme: light dark; background: var(--bg); }
       body {
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-        margin: 0; color: var(--fg);
+        margin: 0; color: var(--fg); background: var(--bg);
       }
-      .wrap { max-width: 980px; margin: 2rem auto; padding: 0 1rem; }
+      .wrap { max-width: 1040px; margin: 2rem auto; padding: 0 1rem; }
       header a { text-decoration: none; }
       h1 { line-height: 1.2; margin: .5rem 0 1rem; }
       .subtle { color: var(--muted); }
-      /* Category pills */
+
+      /* Top chip nav (matches /data) */
+      .chipbar { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:.5rem; }
+      .chip {
+        display:inline-flex; align-items:center; gap:.4rem;
+        padding:.4rem .75rem; border-radius:999px;
+        border:1px solid var(--line);
+        background: var(--pill);
+        color: var(--fg);
+        font-size:.9rem; font-weight:500;
+        text-decoration:none;
+        box-shadow: 0 1px 0 rgba(0,0,0,.04);
+        transition: background-color .15s ease;
+      }
+      .chip:hover { background: var(--pillHover); }
+      .chip:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset);
+      }
+
+      /* Category pills (right sidebar) */
       .pillbar { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 1.25rem; }
       .pill {
         display:inline-block; padding:.35rem .65rem; border-radius:999px;
-        background:var(--pill); color:#222; font-size:.9rem; text-decoration:none; border:1px solid var(--line);
+        background:var(--pill); color:var(--fg); font-size:.9rem; text-decoration:none; border:1px solid var(--line);
+        transition: background-color .15s ease;
       }
-      .pill[aria-current="page"] { font-weight:600; outline:2px solid #c7d2fe; }
       .pill:hover { background:var(--pillHover); }
+      .pill[aria-current="page"] { font-weight:600; outline:2px solid var(--ring); outline-offset:2px; }
+
       /* Controls */
-      .controls { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; margin:1rem 0; }
+      .controls { display:flex; flex-wrap:wrap; gap:.65rem 1rem; align-items:center; margin:1rem 0; }
+      .controls label { font-size:.92rem; color: var(--muted); }
       .controls input[type="search"], .controls select {
-        padding:.5rem .6rem; border:1px solid var(--line); border-radius:.5rem; font:inherit;
+        padding:.55rem .65rem; border:1px solid var(--field-border); border-radius:.6rem; font:inherit;
+        background: var(--field-bg); color: var(--field-fg);
       }
-      .srch { flex: 1 1 240px; }
+      .controls input::placeholder { color: var(--field-ph); }
+      .controls input:focus, .controls select:focus {
+        outline:none; box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ringOffset);
+      }
+      .srch { flex: 1 1 260px; min-width: 220px; }
+
       /* List */
       .list { margin: 1rem 0 2rem; padding: 0; list-style:none; border-top:1px solid var(--line); }
       .row { display:flex; gap:.75rem; justify-content:space-between; align-items:baseline;
-             padding:.65rem 0; border-bottom:1px solid var(--line); }
-      .row a { font-weight:600; text-decoration:none; }
+             padding:.8rem 0; border-bottom:1px solid var(--line); }
+      .row a { font-weight:600; text-decoration:none; color: var(--fg); }
       .meta { color:var(--muted); font-size:.95rem; }
-      .tag { font-size:.85rem; padding:.15rem .4rem; border-radius:.35rem; border:1px solid var(--line); }
-      .tag.bad { color:var(--bad); border-color:#fecaca; background:#fef2f2; }
-      .tag.ok { color:var(--ok); border-color:#bbf7d0; background:#f0fdf4; }
-      .tag.warn { color:var(--warn); border-color:#fde68a; background:#fffbeb; }
+      .tag { font-size:.85rem; padding:.15rem .45rem; border-radius:.45rem; border:1px solid var(--line); }
+      .tag.bad { color:var(--badge-bad-fg); border-color:var(--badge-bad-br); background:var(--badge-bad-bg); }
+      .tag.ok { color:var(--badge-ok-fg); border-color:var(--badge-ok-br); background:var(--badge-ok-bg); }
+      .tag.warn { color:var(--badge-warn-fg); border-color:var(--badge-warn-br); background:var(--badge-warn-bg); }
+
       /* Breadcrumbs */
-      nav.breadcrumbs { font-size:.9rem; margin-bottom:.5rem; }
-      nav.breadcrumbs a { color: inherit; text-decoration: none; }
-      nav.breadcrumbs span.sep { margin: 0 .35rem; color: var(--muted); }
-      /* Sticky aside on wide screens */
+      nav.breadcrumbs { font-size:.9rem; margin-bottom:.5rem; color: var(--muted); }
+
+      /* Grid / sticky aside */
       @media (min-width: 900px) {
         .grid { display:grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items:start; }
         aside { position: sticky; top: 1.25rem; }
@@ -122,11 +207,18 @@ const itemListLd = {
   <body>
     <a href="#content" class="subtle" style="position:absolute;left:-9999px;">Skip to content</a>
     <div class="wrap">
+      <!-- Chip nav to match /data -->
+      <nav class="chipbar" aria-label="Section navigation">
+        <a href="/" class="chip"><span aria-hidden="true">←</span> Home</a>
+        <a href="/az/" class="chip">A–Z</a>
+        <a href="/decade/" class="chip">Decades</a>
+      </nav>
+
       <header>
         <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a><span class="sep">/</span>
-          <a href="/#categories">Categories</a><span class="sep">/</span>
-          <span aria-current="page">{label}</span>
+          <a href="/">Home</a> <span class="sep">/</span>
+          <a href="/#categories">Categories</a> <span class="sep">/</span>
+          <span aria-current="page" style="color:var(--fg);">{label}</span>
         </nav>
         <h1>{title}</h1>
         <p class="subtle">{desc}</p>
@@ -136,10 +228,10 @@ const itemListLd = {
         <main id="content">
           <!-- Controls -->
           <div class="controls" role="region" aria-label="List controls">
-            <label for="q" class="subtle" style="position:relative; top:2px;">Search</label>
+            <label for="q">Search</label>
             <input id="q" class="srch" type="search" placeholder="Search brands…" inputmode="search" />
 
-            <label for="fate" class="subtle" style="position:relative; top:2px;">Status</label>
+            <label for="fate">Status</label>
             <select id="fate" aria-label="Filter by status">
               <option value="">All statuses</option>
               <option value="Bankruptcy">Bankruptcy</option>
@@ -148,7 +240,7 @@ const itemListLd = {
               <option value="Discontinued">Discontinued</option>
             </select>
 
-            <label for="sort" class="subtle" style="position:relative; top:2px;">Sort</label>
+            <label for="sort">Sort</label>
             <select id="sort" aria-label="Sort list">
               <option value="alpha">A → Z</option>
               <option value="start-asc">Oldest founded</option>
