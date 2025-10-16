@@ -1,18 +1,44 @@
 ---
-// src/pages/buy.astro
+import "../styles/tailwind.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
 const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
+
 const title = "Buy the Full CSV";
+const description = "Secure checkout via PayPal. Receive a one-time download link after purchase.";
 const price = "9.00"; // USD
+
+// If you need brand slugs here later, you can import like on the other page.
 ---
 
-<html lang="en">
+<html lang="en" class="h-full">
   <head>
     <meta charset="utf-8" />
     <title>{title}</title>
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Allow pages to inject extra SEO if needed -->
+    <slot name="head" />
+
+    <!-- Theme boot (same as other pages) -->
+    <script is:inline>
+      (function () {
+        const KEY = 'theme';
+        const saved = localStorage.getItem(KEY);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+
+    <!-- Mobile address-bar color per theme -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
 
     {CLIENT_ID && (
       <script
@@ -22,41 +48,52 @@ const price = "9.00"; // USD
     )}
 
     <style>
-      :root{--fg:#111827;--muted:#6b7280;}
-      @media (prefers-color-scheme: dark){:root{--fg:#e5e7eb;--muted:#9ca3af;}}
-      body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;margin:0;padding:2rem;color:var(--fg);}
-      .wrap{max-width:720px;margin:0 auto;}
-      .muted{color:var(--muted);}
-      .link{color:#2563eb;text-decoration:underline;}
-      #result{margin-top:1rem}
-      .note{font-size:.875rem;margin-top:.5rem}
-      .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+      /* Minor non-Tailwind tweaks */
+      .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+      .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem .75rem;border-radius:.375rem;background:#111827;color:#fff;z-index:50}
     </style>
   </head>
-  <body>
-    <div class="wrap">
-      <h1>{title}</h1>
-      <p>
+
+  <body class="min-h-full bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100">
+    <!-- Skip link for keyboard users -->
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!-- Header (keeps site nav + theme toggle behavior consistent) -->
+    <Header />
+
+    <main id="main" class="max-w-[1040px] mx-auto px-4 py-8 sm:py-10">
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">{title}</h1>
+      <p class="mt-2 text-base sm:text-lg text-gray-600 dark:text-slate-300">
         Get instant access to the full dataset (CSV). Price:
-        <strong>${price} USD</strong>.
+        <strong class="font-semibold text-gray-900 dark:text-slate-100">${price} USD</strong>.
       </p>
 
       {!CLIENT_ID ? (
-        <p style="color:#b91c1c">
+        <p class="mt-4 text-red-600 dark:text-red-400">
           Missing PayPal client ID.
           Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) in your env and redeploy.
         </p>
       ) : (
         <>
-          <div id="paypal-loading" aria-live="polite">Loading…</div>
-          <div id="paypal-btns"></div>
-          <div id="result" class="note muted"></div>
-          <p class="note muted">
+          <!-- Status -->
+          <div id="paypal-loading" role="status" aria-live="polite"
+               class="mt-4 text-sm text-gray-600 dark:text-slate-300">Loading…</div>
+
+          <!-- PayPal smart buttons mount here -->
+          <div id="paypal-btns" class="mt-3"></div>
+
+          <!-- Result area: shows the download link or errors -->
+          <div id="result" class="mt-4 text-sm text-gray-600 dark:text-slate-300"></div>
+
+          <p class="mt-2 text-sm text-gray-600 dark:text-slate-300">
             Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.
           </p>
         </>
       )}
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <Footer />
 
     {CLIENT_ID && (
       <script is:inline>
@@ -143,7 +180,7 @@ const price = "9.00"; // USD
               const a = document.createElement('a');
               a.href = dl.data.url;
               a.textContent = 'Click to download your CSV';
-              a.className = 'link';
+              a.className = 'underline text-blue-600 dark:text-blue-300 hover:no-underline focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-blue-400 focus:ring-offset-white dark:focus:ring-offset-[#0b0b0f] rounded';
               a.rel = 'noopener';
               const result = $('result');
               if (result) { result.innerHTML = ''; result.appendChild(a); }
