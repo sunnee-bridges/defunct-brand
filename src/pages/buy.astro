@@ -9,7 +9,8 @@ const CLIENT_ID =
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
 
 const title = "Buy the Full CSV";
-const description = "Secure checkout via PayPal. Receive a one-time download link after purchase.";
+const description =
+  "Secure checkout via PayPal. Receive a one-time download link after purchase.";
 const price = "9.00"; // USD
 ---
 
@@ -66,10 +67,21 @@ const price = "9.00"; // USD
     <!-- Skip link for keyboard users -->
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <!-- Header -->
+    <!-- Site header -->
     <Header />
 
     <main id="main" class="max-w-[1040px] mx-auto px-4 py-8 sm:py-10">
+      <!-- Local nav: Home link chip -->
+      <nav aria-label="Breadcrumb" class="mb-4">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/80 px-3 py-1.5 text-sm font-medium text-gray-900 shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white
+                 dark:border-slate-700 dark:bg-[#121418] dark:text-slate-100 dark:hover:bg-[#15181e] dark:focus:ring-blue-400 dark:focus:ring-offset-[#0b0b0f]"
+        >
+          <span aria-hidden="true">←</span> Home
+        </a>
+      </nav>
+
       <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">{title}</h1>
       <p class="mt-2 text-base sm:text-lg text-gray-600 dark:text-slate-300">
         Get instant access to the full dataset (CSV). Price:
@@ -84,19 +96,17 @@ const price = "9.00"; // USD
       ) : (
         <>
           <!-- Always-white checkout card so the PayPal iframe blends in on any theme -->
-         <section class="mt-6 rounded-2xl border border-gray-200 bg-white p-4 sm:p-6 shadow-sm text-gray-900">
-  <h2 class="sr-only">Payment</h2>
+          <section class="mt-6 rounded-2xl border border-gray-200 bg-white p-4 sm:p-6 shadow-sm text-gray-900">
+            <h2 class="sr-only">Payment</h2>
 
-  <div id="paypal-loading" role="status" aria-live="polite"
-       class="text-sm text-gray-600 text-center">Loading…</div>
+            <div id="paypal-loading" role="status" aria-live="polite"
+                 class="text-sm text-gray-600 text-center">Loading…</div>
 
-  <!-- Center the PayPal buttons -->
-  <div class="mt-3 flex justify-center">
-    <!-- PayPal renders into this div; we cap width and center it -->
-    <div id="paypal-btns" class="w-full max-w-[480px]"></div>
-  </div>
-</section>
-
+            <!-- Center the PayPal buttons -->
+            <div class="mt-3 flex justify-center">
+              <div id="paypal-btns" class="w-full max-w-[480px]"></div>
+            </div>
+          </section>
 
           <!-- Result / notes -->
           <div id="result" class="mt-4 text-sm text-gray-600 dark:text-slate-300"></div>
@@ -143,66 +153,46 @@ const price = "9.00"; // USD
             // Keep PayPal light, remove internal tagline bar
             style: { layout: 'vertical', shape: 'rect', color: 'gold', label: 'paypal', tagline: false },
 
-            onInit() {
-              hideLoading();
-              setResult('');
-            },
+            onInit() { hideLoading(); setResult(''); },
 
             async createOrder() {
               const { ok, data } = await httpJSON('/.netlify/functions/paypal-create-order');
-              if (!ok || !data?.id) {
-                setResult('Could not create order. Please refresh and try again.');
-                throw new Error('createOrder failed');
-              }
+              if (!ok || !data?.id) { setResult('Could not create order. Please refresh and try again.'); throw new Error('createOrder failed'); }
               return data.id;
             },
 
             async onApprove(data) {
               setResult('Finalizing payment…');
 
-              // Capture on server
               const cap = await httpJSON('/.netlify/functions/paypal-capture-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ orderID: data.orderID })
               });
 
               if (!cap.ok || !cap.data?.ok || !cap.data?.token) {
-                hideLoading();
-                const msg = cap.data?.error || `Capture failed (HTTP ${cap.status}).`;
-                setResult(msg);
-                return;
+                hideLoading(); setResult(cap.data?.error || `Capture failed (HTTP ${cap.status}).`); return;
               }
 
-              // Redeem token → presigned URL
               const dl = await httpJSON('/.netlify/functions/download-link', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token: cap.data.token })
               });
 
               hideLoading();
 
-              if (!dl.ok || !dl.data?.url) {
-                const msg = dl.data?.error || `Download link error (HTTP ${dl.status}).`;
-                setResult(msg);
-                return;
-              }
+              if (!dl.ok || !dl.data?.url) { setResult(dl.data?.error || `Download link error (HTTP ${dl.status}).`); return; }
 
-              // Render the “Click to download” link
               const a = document.createElement('a');
               a.href = dl.data.url;
               a.textContent = 'Click to download your CSV';
               a.className = 'underline text-blue-600 dark:text-blue-300 hover:no-underline focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-blue-400 focus:ring-offset-white dark:focus:ring-offset-[#0b0b0f] rounded';
               a.rel = 'noopener';
+
               const result = $('result');
               if (result) { result.innerHTML = ''; result.appendChild(a); }
             },
 
-            onError(err) {
-              hideLoading();
-              setResult('PayPal error: ' + (err?.message || String(err)));
-            }
+            onError(err) { hideLoading(); setResult('PayPal error: ' + (err?.message || String(err))); }
           })
           .render('#paypal-btns')
           .then(() => { clearTimeout(fallbackTimer); hideLoading(); })
