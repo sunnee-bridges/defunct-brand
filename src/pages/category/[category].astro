@@ -1,10 +1,26 @@
 ---
 import { slugify } from "../../lib/slug.js";
 
-/** Build-time: enumerate all categories and precompute the items for each */
+//** Build-time: enumerate all categories and precompute the items for each */
 export async function getStaticPaths() {
-  const modules = import.meta.glob("/content/brands/*.json", { eager: true });
-  const brands = Object.values(modules).map((mod: any) => mod.default ?? mod);
+  // ✅ Only load curated/public files, not both
+  const modules = import.meta.glob("/content/brands/*.public.json", {
+    eager: true,
+    import: "default",
+  }) as Record<string, any>;
+
+  // Optional: drop items missing a category
+  const all = Object.values(modules).filter((b: any) => b?.category);
+
+  // Safety: de-dupe by slug (belt-and-suspenders)
+  const seen = new Set<string>();
+  const brands = all.filter((b: any) => {
+    const key = String(b.slug || "").toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
   const cats = Array.from(new Set(brands.map((b: any) => b.category))).sort();
 
   return cats.map((label) => {
@@ -12,9 +28,11 @@ export async function getStaticPaths() {
     const items = brands
       .filter((b: any) => slugify(b.category) === catSlug)
       .sort((a: any, b: any) => a.brand.localeCompare(b.brand));
+
     return { params: { category: catSlug }, props: { label, items, allCats: cats } };
   });
 }
+
 
 const { label, items, allCats } = Astro.props;
 
