@@ -1,5 +1,4 @@
 ---
-// src/pages/decade/[decade].astro
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
@@ -20,8 +19,9 @@ const decadeStartFromParam = (p: string | undefined): number | null => {
 const inDecade = (year: number | undefined, start: number) =>
   typeof year === "number" && year >= start && year <= start + 9;
 
-/* ---------- Data loader: curated + de-duped ---------- */
-function loadDedupedPublicBrands() {
+/* ---------- Build-time: pre-generate only decades that exist ---------- */
+export async function getStaticPaths() {
+  // Inline the curated loader here so nothing is “undefined”
   const mods = import.meta.glob("/content/brands/*.public.json", {
     eager: true,
     import: "default",
@@ -37,12 +37,7 @@ function loadDedupedPublicBrands() {
     if (!key) continue;
     if (!bySlug.has(key)) bySlug.set(key, b); // first wins
   }
-  return Array.from(bySlug.values());
-}
-
-/* ---------- Build-time: pre-generate only decades that exist ---------- */
-export async function getStaticPaths() {
-  const brands = loadDedupedPublicBrands();
+  const brands: any[] = Array.from(bySlug.values());
 
   const byDecade: Record<string, any[]> = {};
   for (const b of brands) {
@@ -69,8 +64,28 @@ export async function getStaticPaths() {
     }));
 }
 
+/* ---------- Runtime: same curated+deduped loader (separate from build fn) ---------- */
+function loadDedupedPublicBrandsRuntime() {
+  const mods = import.meta.glob("/content/brands/*.public.json", {
+    eager: true,
+    import: "default",
+  }) as Record<string, any>;
+
+  const bySlug = new Map<string, any>();
+  for (const raw of Object.values(mods)) {
+    const b = raw as any;
+    if (!b) continue;
+    const key =
+      String(b.slug || "").trim().toLowerCase() ||
+      slugify(String(b.brand || ""));
+    if (!key) continue;
+    if (!bySlug.has(key)) bySlug.set(key, b);
+  }
+  return Array.from(bySlug.values());
+}
+
 /* ---------- Runtime props + safe fallback ---------- */
-const allBrands = loadDedupedPublicBrands();
+const allBrands = loadDedupedPublicBrandsRuntime();
 
 let { decade, start, items } = Astro.props as {
   decade?: string; start?: number; items?: any[];
@@ -90,12 +105,8 @@ if (!decade) {
 }
 
 /* ---------- 404 guard ---------- */
-const isInvalidSlug = !Number.isFinite(start!);
-const isEmptyDecade = (items?.length ?? 0) === 0;
-const notFound = isInvalidSlug || isEmptyDecade;
-if (notFound) {
-  Astro.response.status = 404;
-}
+const notFound = !Number.isFinite(start!) || (items?.length ?? 0) === 0;
+if (notFound) Astro.response.status = 404;
 
 /* ---------- SEO ---------- */
 const PAGE_TITLE = notFound
@@ -105,14 +116,10 @@ const PAGE_DESC = notFound
   ? "Try another page or jump to a random brand."
   : `Explore ${items!.length} brands from the ${decade}.`;
 
-const CANONICAL = (() => {
-  const base = Astro.site ? new URL("/", Astro.site).href : "/";
-  return notFound
-    ? (Astro.site ? new URL("/decade/", Astro.site).href : "/decade/")
-    : (Astro.site ? new URL(`/decade/${decade}/`, Astro.site).href : `/decade/${decade}/`);
-})();
+const CANONICAL = notFound
+  ? (Astro.site ? new URL("/decade/", Astro.site).href : "/decade/")
+  : (Astro.site ? new URL(`/decade/${decade}/`, Astro.site).href : `/decade/${decade}/`);
 
-// Breadcrumbs + capped ItemList for the decade page
 const breadcrumbsLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
