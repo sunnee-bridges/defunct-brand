@@ -1,11 +1,29 @@
 ---
+// src/pages/decade/index.astro
 import Base from "../../layouts/Base.astro";
+import { slugify } from "../../lib/slug.js";
 
-/* Load all brand JSON at build-time (eager) */
-const modules = import.meta.glob("/content/brands/*.json", { eager: true });
-const brands: any[] = Object.values(modules).map((m: any) => m.default ?? m);
+/* ---- Load curated public data & de-dupe by slug ---- */
+const modules = import.meta.glob("/content/brands/*.public.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
 
-/* Helpers */
+const bySlug = new Map<string, any>();
+for (const raw of Object.values(modules)) {
+  const b = raw as any;
+  if (!b) continue;
+  const key =
+    String(b.slug || "").trim().toLowerCase() ||
+    slugify(String(b.brand || ""));
+  if (!key) continue;
+  // normalize category (optional)
+  if (typeof b.category === "string") b.category = b.category.trim();
+  if (!bySlug.has(key)) bySlug.set(key, b); // first-wins; flip if you prefer last-wins
+}
+const brands: any[] = Array.from(bySlug.values());
+
+/* ---- Helpers ---- */
 const toYear = (v: unknown): number | undefined => {
   if (v == null) return undefined;
   const m = String(v).match(/\d{3,4}/);
@@ -16,7 +34,7 @@ const toYear = (v: unknown): number | undefined => {
 const decadeStart = (y: number) => Math.floor(y / 10) * 10;
 const labelOf = (start: number) => `${start}s`;
 
-/* Build map: decade label -> count (prefer end year, fallback start) */
+/* ---- Build map: decade label -> count (prefer end year, fallback start) ---- */
 const counts = new Map<string, number>();
 for (const b of brands) {
   const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
@@ -26,37 +44,50 @@ for (const b of brands) {
   counts.set(label, (counts.get(label) ?? 0) + 1);
 }
 
-/* Sorted available decades (labels like "1940s", "1950s", ...) */
-const decades = [...counts.keys()].sort((a, b) => parseInt(a) - parseInt(b));
+/* ---- Sorted available decades (labels like "1940s", "1950s", …) ---- */
+const decades = [...counts.keys()].sort(
+  (a, b) => parseInt(a) - parseInt(b)
+);
 
-/* SEO bits */
-const pageTitle = "Browse by Decade • Defunct Brands";
-const pageDesc =
-  decades.length
-    ? `Browse defunct brands by decade (${decades[0]}–${decades[decades.length - 1]}).`
-    : "Browse defunct brands by decade.";
-const canonical = new URL("/decade/", Astro.url).toString();
+/* ---- SEO ---- */
+const PAGE_TITLE = "Browse by Decade • Defunct Brands";
+const PAGE_DESC = decades.length
+  ? `Browse defunct brands by decade (${decades[0]}–${decades[decades.length - 1]}).`
+  : "Browse defunct brands by decade.";
+const CANONICAL = Astro.site ? new URL("/decade/", Astro.site).href : "/decade/";
 
-/* JSON-LD ItemList for the list of decades */
+/* JSON-LD ItemList for the decade list */
 const itemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "itemListElement": decades.map((d, i) => ({
+  name: "Defunct brands by decade",
+  itemListElement: decades.map((d, i) => ({
     "@type": "ListItem",
     position: i + 1,
     name: d,
-    url: new URL(`/decade/${d}/`, Astro.url).toString(),
-    numberOfItems: counts.get(d) ?? 0
-  }))
+    url: Astro.site ? new URL(`/decade/${d}/`, Astro.site).href : `/decade/${d}/`,
+    numberOfItems: counts.get(d) ?? 0,
+  })),
 };
 ---
 
-<Base title={pageTitle} description={pageDesc}>
-  <fragment slot="head">
-    <link rel="canonical" href={canonical} />
-    <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
-  </fragment>
+<Base title={PAGE_TITLE} description={PAGE_DESC}>
+  <!-- SEO head -->
+  <Fragment slot="head">
+    <link rel="canonical" href={CANONICAL} />
+    <meta name="description" content={PAGE_DESC} />
 
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={CANONICAL} />
+    <meta property="og:title" content={PAGE_TITLE} />
+    <meta property="og:description" content={PAGE_DESC} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={PAGE_TITLE} />
+    <meta name="twitter:description" content={PAGE_DESC} />
+
+    <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
+  </Fragment>
 
   <!-- Breadcrumb-ish chips -->
   <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
@@ -80,12 +111,19 @@ const itemListLd = {
             class="relative group rounded-xl p-4 border transition
                    bg-white border-gray-200 hover:bg-slate-50
                    dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                   focus-within:ring-2 ring-indigo-500"
+                   focus-within:ring-2 focus-within:ring-indigo-500
+                   focus-within:ring-offset-2 focus-within:ring-offset-white
+                   dark:focus-within:ring-offset-slate-900"
           >
-            <h2 class="text-lg font-semibold leading-snug mb-1 text-slate-900 dark:text-slate-100">
-              <a href={`/decade/${d}/`} class="hover:underline focus-ring stretched-link" aria-label={`View ${d} brands`}>
-                {d}
-              </a>
+            <!-- Full-card click -->
+            <a
+              href={`/decade/${d}/`}
+              class="stretched-link focus-ring rounded"
+              aria-label={`View ${d} brands`}
+            ></a>
+
+            <h2 class="text-lg font-semibold leading-snug mb-1 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
+              {d}
             </h2>
             <p class="text-sm text-slate-600 dark:text-slate-300">
               {counts.get(d)} {counts.get(d) === 1 ? "brand" : "brands"}
