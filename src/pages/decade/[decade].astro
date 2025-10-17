@@ -2,14 +2,14 @@
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
-/* ---------- Small helpers ---------- */
-const parseYear = (v: unknown): number | undefined => {
+/* ---------- helpers (runtime) ---------- */
+function parseYearRT(v: unknown): number | undefined {
   if (v == null) return undefined;
   const m = String(v).match(/\d{3,4}/);
   if (!m) return undefined;
   const n = parseInt(m[0], 10);
   return Number.isFinite(n) ? n : undefined;
-};
+}
 const decadeLabel = (start: number) => `${start}s`;
 const decadeStartFromParam = (p: string | undefined): number | null => {
   if (!p) return null;
@@ -19,14 +19,23 @@ const decadeStartFromParam = (p: string | undefined): number | null => {
 const inDecade = (year: number | undefined, start: number) =>
   typeof year === "number" && year >= start && year <= start + 9;
 
-/* ---------- Build-time: pre-generate only decades that exist ---------- */
+/* ---------- build-time: pre-generate only decades that exist ---------- */
 export async function getStaticPaths() {
-  // Inline the curated loader here so nothing is “undefined”
+  // define local helper here so it's always in scope for the build step
+  function parseYear(v: unknown): number | undefined {
+    if (v == null) return undefined;
+    const m = String(v).match(/\d{3,4}/);
+    if (!m) return undefined;
+    const n = parseInt(m[0], 10);
+    return Number.isFinite(n) ? n : undefined;
+  }
+
   const mods = import.meta.glob("/content/brands/*.public.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;
 
+  // curated + de-duped set
   const bySlug = new Map<string, any>();
   for (const raw of Object.values(mods)) {
     const b = raw as any;
@@ -35,7 +44,7 @@ export async function getStaticPaths() {
       String(b.slug || "").trim().toLowerCase() ||
       slugify(String(b.brand || ""));
     if (!key) continue;
-    if (!bySlug.has(key)) bySlug.set(key, b); // first wins
+    if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
   }
   const brands: any[] = Array.from(bySlug.values());
 
@@ -46,7 +55,7 @@ export async function getStaticPaths() {
     const y = endY ?? startY;
     if (y == null) continue;
     const start = Math.floor(y / 10) * 10;
-    const key = decadeLabel(start);
+    const key = `${start}s`;
     (byDecade[key] ||= []).push(b);
   }
 
@@ -64,13 +73,12 @@ export async function getStaticPaths() {
     }));
 }
 
-/* ---------- Runtime: same curated+deduped loader (separate from build fn) ---------- */
+/* ---------- runtime: load curated + de-duped set ---------- */
 function loadDedupedPublicBrandsRuntime() {
   const mods = import.meta.glob("/content/brands/*.public.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;
-
   const bySlug = new Map<string, any>();
   for (const raw of Object.values(mods)) {
     const b = raw as any;
@@ -84,7 +92,7 @@ function loadDedupedPublicBrandsRuntime() {
   return Array.from(bySlug.values());
 }
 
-/* ---------- Runtime props + safe fallback ---------- */
+/* ---------- runtime props + fallback ---------- */
 const allBrands = loadDedupedPublicBrandsRuntime();
 
 let { decade, start, items } = Astro.props as {
@@ -98,7 +106,7 @@ if (!decade) {
   items = Number.isFinite(s)
     ? allBrands
         .filter((b) =>
-          inDecade(parseYear(b?.active?.end) ?? parseYear(b?.active?.start), s)
+          inDecade(parseYearRT(b?.active?.end) ?? parseYearRT(b?.active?.start), s)
         )
         .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""))
     : [];
