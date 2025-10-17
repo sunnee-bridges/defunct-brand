@@ -35,7 +35,7 @@ export async function getStaticPaths() {
     import: "default",
   }) as Record<string, any>;
 
-  // curated + de-duped by slug/brand
+  // curated + de-duped by slug (fallback to slugified brand)
   const bySlug = new Map<string, any>();
   for (const raw of Object.values(mods)) {
     const b = raw as any;
@@ -115,6 +115,19 @@ if (!decade) {
         .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""))
     : [];
 }
+
+/* ---------- derive available categories for THIS decade ---------- */
+const normCat = (s: string) => slugify(String(s || "")).toLowerCase();
+
+const catCounts = new Map<string, number>(); // label -> count
+for (const b of (items || [])) {
+  if (!b?.category) continue;
+  const label = String(b.category).trim();
+  catCounts.set(label, (catCounts.get(label) || 0) + 1);
+}
+const catsAvailable = Array.from(catCounts.entries())
+  .map(([label, count]) => ({ label, count, key: normCat(label) }))
+  .sort((a, b) => b.count - a.count); // show most common first
 
 /* ---------- 404 guard ---------- */
 const notFound = !Number.isFinite(start!) || (items?.length ?? 0) === 0;
@@ -241,12 +254,14 @@ const itemListLd = !notFound
         </select>
       </div>
 
-      <!-- Quick chips: popular categories -->
+      <!-- Quick chips: only categories present in this decade (top 8) -->
       <div class="mb-3 flex flex-wrap gap-2" aria-live="polite" aria-describedby="quickChipsHelp">
         <span id="quickChipsHelp" class="sr-only">Quick category filters</span>
-        <button class="chip focus-ring" data-chip="Airlines" aria-pressed="false">Airlines</button>
-        <button class="chip focus-ring" data-chip="Electronics" aria-pressed="false">Electronics</button>
-        <button class="chip focus-ring" data-chip="Toys" aria-pressed="false">Toys</button>
+        {catsAvailable.slice(0, 8).map((c) => (
+          <button class="chip focus-ring" data-chip={c.key} aria-pressed="false">
+            {c.label} <span class="opacity-70">({c.count})</span>
+          </button>
+        ))}
       </div>
 
       <!-- Active filter chips -->
@@ -259,6 +274,7 @@ const itemListLd = !notFound
             data-brand={(b.brand || "").toLowerCase()}
             data-fate={(b.fate || "").toLowerCase()}
             data-cat={(b.category || "").toLowerCase()}
+            data-cat-key={normCat(b.category || "")}
             data-start={b.active?.start || "0"}
             data-end={b.active?.end || "0"}
           >
@@ -316,7 +332,7 @@ const itemListLd = !notFound
   const empty = $("#emptyBlock");
   const clearAllBtn = $("#clearAll");
 
-  // NEW: quick category chip state
+  // quick category chip (normalized key: slugified/lowercased)
   let quickCat = "";
 
   /* URL → controls */
@@ -326,7 +342,6 @@ const itemListLd = !notFound
   if (params.has("sort")) sort.value = params.get("sort") || "alpha";
   if (params.has("cat")) quickCat = (params.get("cat") || "").toLowerCase();
 
-  // reflect chip state in UI on load
   syncQuickChipsUI();
 
   function pushURL(){
@@ -358,9 +373,14 @@ const itemListLd = !notFound
       fr.appendChild(el);
     }
     if (quickCat){
+      // Derive display label from the active chip button (so counts/spacing don't leak)
+      const activeBtn = document.querySelector(`[data-chip="${quickCat}"]`);
+      const label = activeBtn
+        ? activeBtn.textContent.replace(/\(\d+\)\s*$/,'').trim()
+        : quickCat;
       const el = document.createElement("span");
       el.className = "chip inline-flex items-center gap-1";
-      el.innerHTML = `<strong>Category:</strong> ${escapeHtml(cap(quickCat))} <button aria-label="Clear category">✕</button>`;
+      el.innerHTML = `<strong>Category:</strong> ${escapeHtml(label)} <button aria-label="Clear category">✕</button>`;
       el.querySelector("button").onclick = () => { quickCat = ""; syncQuickChipsUI(); onChange(); };
       fr.appendChild(el);
     }
@@ -377,17 +397,20 @@ const itemListLd = !notFound
   function applyFilters(){
     const term = (q.value || "").trim().toLowerCase();
     const st   = (fate.value || "").toLowerCase();
-    const cat  = (quickCat || "").toLowerCase();
+    const key  = (quickCat || "").toLowerCase(); // normalized key
 
     let visible = 0;
     $$("#brandList > li").forEach(li => {
       const t = li.dataset.brand || "";
       const f = li.dataset.fate || "";
-      const c = li.dataset.cat  || "";
-      const show =
-        (!term || t.includes(term) || c.includes(term) || f.includes(term)) &&
-        (!st || f.includes(st)) &&
-        (!cat || c === cat);
+      const c = li.dataset.cat || "";
+      const k = li.dataset.catKey || ""; // normalized category key on the item
+
+      const textMatch = !term || t.includes(term) || c.includes(term) || f.includes(term);
+      const fateMatch = !st || f.includes(st);
+      const catMatch  = !key || k === key;
+
+      const show = textMatch && fateMatch && catMatch;
       li.style.display = show ? "" : "none";
       if (show) visible++;
     });
@@ -417,7 +440,7 @@ const itemListLd = !notFound
   sort.addEventListener("change", onChange);
 
   // quick chips (toggle single-select)
-  $$( '[data-chip]' ).forEach(btn => {
+  $$('[data-chip]').forEach(btn => {
     btn.addEventListener('click', () => {
       const val = (btn.getAttribute('data-chip') || '').toLowerCase();
       quickCat = (quickCat === val) ? '' : val; // toggle
@@ -427,7 +450,7 @@ const itemListLd = !notFound
   });
 
   function syncQuickChipsUI(){
-    $$( '[data-chip]' ).forEach(btn => {
+    $$('[data-chip]').forEach(btn => {
       const val = (btn.getAttribute('data-chip') || '').toLowerCase();
       const active = quickCat === val;
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
@@ -453,5 +476,4 @@ const itemListLd = !notFound
   function escapeHtml(s){
     return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   }
-  function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 </script>
