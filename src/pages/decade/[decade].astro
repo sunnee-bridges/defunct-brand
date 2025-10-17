@@ -1,8 +1,9 @@
 ---
+// src/pages/decade/[decade].astro
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
-/* ---------- helpers (runtime) ---------- */
+/* ---------- small helpers (runtime-safe) ---------- */
 function parseYearRT(v: unknown): number | undefined {
   if (v == null) return undefined;
   const m = String(v).match(/\d{3,4}/);
@@ -19,9 +20,9 @@ const decadeStartFromParam = (p: string | undefined): number | null => {
 const inDecade = (year: number | undefined, start: number) =>
   typeof year === "number" && year >= start && year <= start + 9;
 
-/* ---------- build-time: pre-generate only decades that exist ---------- */
+/* ---------- build-time: pre-generate decades that exist ---------- */
 export async function getStaticPaths() {
-  // define local helper here so it's always in scope for the build step
+  // define local helper here so it's always available in build step
   function parseYear(v: unknown): number | undefined {
     if (v == null) return undefined;
     const m = String(v).match(/\d{3,4}/);
@@ -30,12 +31,12 @@ export async function getStaticPaths() {
     return Number.isFinite(n) ? n : undefined;
   }
 
+  // curated + de-duped
   const mods = import.meta.glob("/content/brands/*.public.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;
 
-  // curated + de-duped set
   const bySlug = new Map<string, any>();
   for (const raw of Object.values(mods)) {
     const b = raw as any;
@@ -44,7 +45,7 @@ export async function getStaticPaths() {
       String(b.slug || "").trim().toLowerCase() ||
       slugify(String(b.brand || ""));
     if (!key) continue;
-    if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
+    if (!bySlug.has(key)) bySlug.set(key, b); // first wins
   }
   const brands: any[] = Array.from(bySlug.values());
 
@@ -79,6 +80,7 @@ function loadDedupedPublicBrandsRuntime() {
     eager: true,
     import: "default",
   }) as Record<string, any>;
+
   const bySlug = new Map<string, any>();
   for (const raw of Object.values(mods)) {
     const b = raw as any;
@@ -92,7 +94,7 @@ function loadDedupedPublicBrandsRuntime() {
   return Array.from(bySlug.values());
 }
 
-/* ---------- runtime props + fallback ---------- */
+/* ---------- runtime props + safe fallback ---------- */
 const allBrands = loadDedupedPublicBrandsRuntime();
 
 let { decade, start, items } = Astro.props as {
@@ -106,7 +108,10 @@ if (!decade) {
   items = Number.isFinite(s)
     ? allBrands
         .filter((b) =>
-          inDecade(parseYearRT(b?.active?.end) ?? parseYearRT(b?.active?.start), s)
+          inDecade(
+            parseYearRT(b?.active?.end) ?? parseYearRT(b?.active?.start),
+            s
+          )
         )
         .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""))
     : [];
@@ -159,6 +164,7 @@ const itemListLd = !notFound
 ---
 
 <Base title={PAGE_TITLE} description={PAGE_DESC}>
+  <!-- SEO head -->
   <Fragment slot="head">
     <link rel="canonical" href={CANONICAL} />
     <meta property="og:url" content={CANONICAL} />
@@ -174,6 +180,7 @@ const itemListLd = !notFound
     )}
   </Fragment>
 
+  <!-- Top nav chips -->
   <nav class="mb-4 flex flex-wrap gap-2">
     <a href="/" class="chip focus-ring">← Home</a>
     <a href="/decade/" class="chip focus-ring">All decades</a>
@@ -183,7 +190,9 @@ const itemListLd = !notFound
   {notFound ? (
     <>
       <h1 class="text-2xl md:text-3xl font-bold mb-2">Page not found</h1>
-      <p class="text-slate-600 dark:text-slate-300">Try another page or jump to a random brand.</p>
+      <p class="text-slate-600 dark:text-slate-300">
+        Try another page or jump to a random brand.
+      </p>
       <div class="mt-4 flex gap-2">
         <a href="/az/" class="chip focus-ring">Browse A–Z</a>
         <a href="/category/" class="chip focus-ring">Categories</a>
@@ -193,12 +202,57 @@ const itemListLd = !notFound
     </>
   ) : (
     <>
-      <h1 class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands in the {decade}</h1>
-      <p class="text-slate-600 dark:text-slate-300 mb-4">{PAGE_DESC}</p>
+      <h1 class="text-2xl md:text-3xl font-bold mb-2">
+        Defunct Brands in the {decade}
+      </h1>
+      <p class="text-slate-600 dark:text-slate-300 mb-3">{PAGE_DESC}</p>
 
-      <ul class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
+      <!-- Controls -->
+      <div class="mb-3 flex flex-wrap items-center gap-3">
+        <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
+        <input
+          id="q"
+          type="search"
+          class="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+          placeholder="Search brands…"
+          inputmode="search"
+        />
+
+        <label for="fate" class="text-sm text-slate-600 dark:text-slate-300">Status</label>
+        <select
+          id="fate"
+          class="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+        >
+          <option value="">All</option>
+          <option value="acquired">Acquired</option>
+          <option value="bankrupt">Bankrupt</option>
+          <option value="merged">Merged</option>
+          <option value="discontinued">Discontinued</option>
+        </select>
+
+        <label for="sort" class="text-sm text-slate-600 dark:text-slate-300">Sort</label>
+        <select
+          id="sort"
+          class="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+        >
+          <option value="alpha">A → Z</option>
+          <option value="start-asc">Oldest founded</option>
+          <option value="end-desc">Most recent closure</option>
+        </select>
+      </div>
+
+      <!-- Active filter chips -->
+      <div id="activeChips" class="mb-3 flex flex-wrap gap-2" aria-live="polite"></div>
+
+      <!-- List -->
+      <ul id="brandList" class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
         {items!.map((b: any) => (
-          <li>
+          <li
+            data-brand={(b.brand || "").toLowerCase()}
+            data-fate={(b.fate || "").toLowerCase()}
+            data-start={b.active?.start || "0"}
+            data-end={b.active?.end || "0"}
+          >
             <article
               class="relative group rounded-xl p-4 border transition
                      bg-white border-gray-200 hover:bg-slate-50
@@ -225,6 +279,126 @@ const itemListLd = !notFound
           </li>
         ))}
       </ul>
+
+      <!-- Empty state -->
+      <div id="emptyBlock" class="hidden mt-2 text-slate-600 dark:text-slate-300">
+        No matches. Try clearing filters or searching fewer terms.
+        <button
+          id="clearAll"
+          class="ml-2 inline-flex items-center rounded-md border border-slate-200 bg-white px-2.5 py-1 text-sm text-slate-900 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+        >
+          Clear all
+        </button>
+      </div>
     </>
   )}
 </Base>
+
+<!-- Client-side filters (no deps) -->
+<script>
+  const $  = (s)=>document.querySelector(s);
+  const $$ = (s)=>Array.from(document.querySelectorAll(s));
+
+  const list  = $("#brandList");
+  const q     = $("#q");
+  const fate  = $("#fate");
+  const sort  = $("#sort");
+  const chips = $("#activeChips");
+  const empty = $("#emptyBlock");
+  const clearAllBtn = $("#clearAll");
+
+  /* URL → controls */
+  const params = new URLSearchParams(location.search);
+  if (params.has("q")) q.value = params.get("q") || "";
+  if (params.has("status")) fate.value = params.get("status") || "";
+  if (params.has("sort")) sort.value = params.get("sort") || "alpha";
+
+  function pushURL(){
+    const p = new URLSearchParams();
+    if (q.value.trim()) p.set("q", q.value.trim());
+    if (fate.value) p.set("status", fate.value);
+    if (sort.value && sort.value !== "alpha") p.set("sort", sort.value);
+    const qs = p.toString();
+    history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
+  }
+
+  function renderChips(){
+    chips.innerHTML = "";
+    const fr = document.createDocumentFragment();
+
+    if (q.value.trim()){
+      const el = document.createElement("span");
+      el.className = "chip inline-flex items-center gap-1";
+      el.innerHTML = `<strong>Search:</strong> ${escapeHtml(q.value.trim())} <button aria-label="Clear search">✕</button>`;
+      el.querySelector("button").onclick = () => { q.value = ""; onChange(); q.focus(); };
+      fr.appendChild(el);
+    }
+    if (fate.value){
+      const el = document.createElement("span");
+      el.className = "chip inline-flex items-center gap-1";
+      el.innerHTML = `<strong>Status:</strong> ${escapeHtml(fate.value)} <button aria-label="Clear status">✕</button>`;
+      el.querySelector("button").onclick = () => { fate.value = ""; onChange(); fate.focus(); };
+      fr.appendChild(el);
+    }
+    if (fr.childNodes.length){
+      const clear = document.createElement("button");
+      clear.textContent = "Clear all";
+      clear.className = "chip focus-ring cursor-pointer";
+      clear.onclick = () => { q.value = ""; fate.value = ""; sort.value = "alpha"; onChange(); };
+      fr.appendChild(clear);
+    }
+    chips.appendChild(fr);
+  }
+
+  function applyFilters(){
+    const term = (q.value || "").trim().toLowerCase();
+    const st   = (fate.value || "").toLowerCase();
+
+    let visible = 0;
+    $$("#brandList > li").forEach(li => {
+      const t = li.dataset.brand || "";
+      const f = li.dataset.fate || "";
+      const show = (!term || t.includes(term)) && (!st || f.includes(st));
+      li.style.display = show ? "" : "none";
+      if (show) visible++;
+    });
+    empty.classList.toggle("hidden", !!visible);
+  }
+
+  function applySort(){
+    const mode = sort.value;
+    const rows = $$("#brandList > li").filter(li => li.style.display !== "none");
+    const name = (li)=> (li.dataset.brand || "");
+    const num  = (v)=> parseInt(v || "0", 10);
+
+    rows.sort((a,b)=>{
+      if (mode === "alpha") return name(a).localeCompare(name(b));
+      if (mode === "start-asc") return num(a.dataset.start)-num(b.dataset.start) || name(a).localeCompare(name(b));
+      if (mode === "end-desc") return num(b.dataset.end)-num(a.dataset.end) || name(a).localeCompare(name(b));
+      return 0;
+    });
+    rows.forEach(r => list.appendChild(r));
+  }
+
+  function onChange(){ applyFilters(); applySort(); renderChips(); pushURL(); }
+
+  // debounce search
+  let t; q.addEventListener("input", () => { clearTimeout(t); t = setTimeout(onChange, 150); });
+  fate.addEventListener("change", onChange);
+  sort.addEventListener("change", onChange);
+
+  // keyboard niceties
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "/" && document.activeElement?.tagName !== "INPUT"){ e.preventDefault(); q.focus(); }
+    else if (e.key === "Escape" && q.value){ q.value=""; onChange(); }
+  });
+
+  clearAllBtn?.addEventListener("click", ()=>{ q.value=""; fate.value=""; sort.value="alpha"; onChange(); });
+
+  // init
+  onChange();
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+</script>
