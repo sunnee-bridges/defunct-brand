@@ -22,7 +22,6 @@ const inDecade = (year: number | undefined, start: number) =>
 
 /* ---------- build-time: pre-generate decades that exist ---------- */
 export async function getStaticPaths() {
-  // define local helper here so it's always available in build step
   function parseYear(v: unknown): number | undefined {
     if (v == null) return undefined;
     const m = String(v).match(/\d{3,4}/);
@@ -31,12 +30,12 @@ export async function getStaticPaths() {
     return Number.isFinite(n) ? n : undefined;
   }
 
-  // curated + de-duped
   const mods = import.meta.glob("/content/brands/*.public.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;
 
+  // curated + de-duped by slug/brand
   const bySlug = new Map<string, any>();
   for (const raw of Object.values(mods)) {
     const b = raw as any;
@@ -208,14 +207,15 @@ const itemListLd = !notFound
       <p class="text-slate-600 dark:text-slate-300 mb-3">{PAGE_DESC}</p>
 
       <!-- Controls -->
-      <div class="mb-3 flex flex-wrap items-center gap-3">
+      <div class="mb-2 flex flex-wrap items-center gap-3">
         <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
         <input
           id="q"
           type="search"
           class="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-          placeholder="Search brands…"
+          placeholder="Search brand, category, or fate…"
           inputmode="search"
+          aria-describedby="quickChipsHelp"
         />
 
         <label for="fate" class="text-sm text-slate-600 dark:text-slate-300">Status</label>
@@ -241,6 +241,14 @@ const itemListLd = !notFound
         </select>
       </div>
 
+      <!-- Quick chips: popular categories -->
+      <div class="mb-3 flex flex-wrap gap-2" aria-live="polite" aria-describedby="quickChipsHelp">
+        <span id="quickChipsHelp" class="sr-only">Quick category filters</span>
+        <button class="chip focus-ring" data-chip="Airlines" aria-pressed="false">Airlines</button>
+        <button class="chip focus-ring" data-chip="Electronics" aria-pressed="false">Electronics</button>
+        <button class="chip focus-ring" data-chip="Toys" aria-pressed="false">Toys</button>
+      </div>
+
       <!-- Active filter chips -->
       <div id="activeChips" class="mb-3 flex flex-wrap gap-2" aria-live="polite"></div>
 
@@ -250,6 +258,7 @@ const itemListLd = !notFound
           <li
             data-brand={(b.brand || "").toLowerCase()}
             data-fate={(b.fate || "").toLowerCase()}
+            data-cat={(b.category || "").toLowerCase()}
             data-start={b.active?.start || "0"}
             data-end={b.active?.end || "0"}
           >
@@ -307,16 +316,24 @@ const itemListLd = !notFound
   const empty = $("#emptyBlock");
   const clearAllBtn = $("#clearAll");
 
+  // NEW: quick category chip state
+  let quickCat = "";
+
   /* URL → controls */
   const params = new URLSearchParams(location.search);
   if (params.has("q")) q.value = params.get("q") || "";
   if (params.has("status")) fate.value = params.get("status") || "";
   if (params.has("sort")) sort.value = params.get("sort") || "alpha";
+  if (params.has("cat")) quickCat = (params.get("cat") || "").toLowerCase();
+
+  // reflect chip state in UI on load
+  syncQuickChipsUI();
 
   function pushURL(){
     const p = new URLSearchParams();
     if (q.value.trim()) p.set("q", q.value.trim());
     if (fate.value) p.set("status", fate.value);
+    if (quickCat) p.set("cat", quickCat);
     if (sort.value && sort.value !== "alpha") p.set("sort", sort.value);
     const qs = p.toString();
     history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
@@ -340,11 +357,18 @@ const itemListLd = !notFound
       el.querySelector("button").onclick = () => { fate.value = ""; onChange(); fate.focus(); };
       fr.appendChild(el);
     }
+    if (quickCat){
+      const el = document.createElement("span");
+      el.className = "chip inline-flex items-center gap-1";
+      el.innerHTML = `<strong>Category:</strong> ${escapeHtml(cap(quickCat))} <button aria-label="Clear category">✕</button>`;
+      el.querySelector("button").onclick = () => { quickCat = ""; syncQuickChipsUI(); onChange(); };
+      fr.appendChild(el);
+    }
     if (fr.childNodes.length){
       const clear = document.createElement("button");
       clear.textContent = "Clear all";
       clear.className = "chip focus-ring cursor-pointer";
-      clear.onclick = () => { q.value = ""; fate.value = ""; sort.value = "alpha"; onChange(); };
+      clear.onclick = () => { q.value = ""; fate.value = ""; sort.value = "alpha"; quickCat = ""; syncQuickChipsUI(); onChange(); };
       fr.appendChild(clear);
     }
     chips.appendChild(fr);
@@ -353,12 +377,17 @@ const itemListLd = !notFound
   function applyFilters(){
     const term = (q.value || "").trim().toLowerCase();
     const st   = (fate.value || "").toLowerCase();
+    const cat  = (quickCat || "").toLowerCase();
 
     let visible = 0;
     $$("#brandList > li").forEach(li => {
       const t = li.dataset.brand || "";
       const f = li.dataset.fate || "";
-      const show = (!term || t.includes(term)) && (!st || f.includes(st));
+      const c = li.dataset.cat  || "";
+      const show =
+        (!term || t.includes(term) || c.includes(term) || f.includes(term)) &&
+        (!st || f.includes(st)) &&
+        (!cat || c === cat);
       li.style.display = show ? "" : "none";
       if (show) visible++;
     });
@@ -387,13 +416,36 @@ const itemListLd = !notFound
   fate.addEventListener("change", onChange);
   sort.addEventListener("change", onChange);
 
+  // quick chips (toggle single-select)
+  $$( '[data-chip]' ).forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = (btn.getAttribute('data-chip') || '').toLowerCase();
+      quickCat = (quickCat === val) ? '' : val; // toggle
+      syncQuickChipsUI();
+      onChange();
+    });
+  });
+
+  function syncQuickChipsUI(){
+    $$( '[data-chip]' ).forEach(btn => {
+      const val = (btn.getAttribute('data-chip') || '').toLowerCase();
+      const active = quickCat === val;
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      btn.classList.toggle('ring-2', active);
+      btn.classList.toggle('ring-indigo-500', active);
+      btn.classList.toggle('ring-offset-2', active);
+      btn.classList.toggle('ring-offset-white', active);
+      btn.classList.toggle('dark:ring-offset-slate-900', active);
+    });
+  }
+
   // keyboard niceties
   window.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement?.tagName !== "INPUT"){ e.preventDefault(); q.focus(); }
-    else if (e.key === "Escape" && q.value){ q.value=""; onChange(); }
+    else if (e.key === "Escape" && (q.value || quickCat || fate.value)){ q.value=""; fate.value=""; quickCat=""; syncQuickChipsUI(); onChange(); }
   });
 
-  clearAllBtn?.addEventListener("click", ()=>{ q.value=""; fate.value=""; sort.value="alpha"; onChange(); });
+  clearAllBtn?.addEventListener("click", ()=>{ q.value=""; fate.value=""; sort.value="alpha"; quickCat=""; syncQuickChipsUI(); onChange(); });
 
   // init
   onChange();
@@ -401,4 +453,5 @@ const itemListLd = !notFound
   function escapeHtml(s){
     return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   }
+  function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 </script>
