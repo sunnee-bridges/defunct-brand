@@ -133,23 +133,38 @@ const itemListLd = {
 
   <!-- List -->
   <ul id="brandList" class="m-0 p-0 list-none border-t border-slate-200 dark:border-slate-800">
-    {uniqueItems.map((b: any) => {
-      const start = b?.active?.start ?? "";
-      const end = b?.active?.end ?? "";
-      const fate = b?.fate ?? "";
-      return (
-        <li class="flex justify-between items-baseline gap-3 py-3 border-b border-slate-200 dark:border-slate-800">
-          <div class="min-w-0">
-            <a class="font-semibold text-slate-900 dark:text-slate-100 underline-offset-2 hover:underline focus-ring rounded"
-               href={`/brand/${encodeURIComponent(b.slug)}/`}>{b.brand}</a>
-            <span class="ml-1 text-sm text-slate-600 dark:text-slate-400">
-              {start ? ` (${start}\u2013${end || "?"})` : ""}{fate ? ` • ${fate}` : ""}
-            </span>
-          </div>
-        </li>
-      );
-    })}
-  </ul>
+  {uniqueItems.map((b: any) => {
+    const start = b?.active?.start ?? "";
+    const end = b?.active?.end ?? "";
+    const fate = b?.fate ?? "";
+
+    return (
+      <li
+        class="relative group cursor-pointer py-3 border-b border-slate-200 dark:border-slate-800
+               hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors"
+      >
+        {/* Full-click overlay (uses your .stretched-link helper) */}
+        <a
+          href={`/brand/${encodeURIComponent(b.slug)}/`}
+          class="stretched-link focus-ring rounded-md"
+          aria-label={`${b.brand}${start ? ` (${start}–${end || "?"})` : ""}${fate ? ` • ${fate}` : ""}`}
+        ></a>
+
+        {/* Visible row content */}
+        <div class="min-w-0 pr-2">
+          <span class="font-semibold text-slate-900 dark:text-slate-100 underline-offset-2
+                        group-hover:underline">
+            {b.brand}
+          </span>
+          <span class="ml-1 text-sm text-slate-600 dark:text-slate-400">
+            {start ? ` (${start}\u2013${end || "?"})` : ""}{fate ? ` • ${fate}` : ""}
+          </span>
+        </div>
+      </li>
+    );
+  })}
+</ul>
+
 
   <!-- SEO tags into <head> via Base’s slot -->
   <Fragment slot="head">
