@@ -2,11 +2,31 @@
 import Base from "../layouts/Base.astro";
 import { slugify } from "../lib/slug.js";
 
-/* Load all brand JSON at build-time (eager) */
-const modules = import.meta.glob("/content/brands/*.json", { eager: true });
-const brands: any[] = Object.values(modules).map((m: any) => m.default ?? m);
+/* ---------- Load curated brand JSON (ONLY *.public.json) ---------- */
+const modules = import.meta.glob("/content/brands/*.public.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
 
-/* Helpers */
+/* ---------- Normalize + de-dupe by slug (fallback: slugify(brand)) ---------- */
+const bySlug = new Map<string, any>();
+for (const raw of Object.values(modules)) {
+  const b = raw as any;
+  if (!b) continue;
+
+  const key =
+    String(b.slug || "").trim().toLowerCase() ||
+    slugify(String(b.brand || ""));
+
+  if (!key) continue;
+  if (!b.category) continue; // skip items without a category for browse UX
+
+  // first-wins; change to "last wins" by moving the has() check after set()
+  if (!bySlug.has(key)) bySlug.set(key, b);
+}
+const brands: any[] = Array.from(bySlug.values());
+
+/* ---------- Helpers ---------- */
 const toYear = (v: unknown): number | undefined => {
   if (v == null) return undefined;
   const m = String(v).match(/\d{3,4}/);   // handles "2012", 2012, "2012?", "2012–"
@@ -16,20 +36,23 @@ const toYear = (v: unknown): number | undefined => {
 };
 const decadeStart = (y: number) => Math.floor(y / 10) * 10;
 
-/* Categories & Fates */
-const categories: string[] = Array.from(new Set(brands.map((b) => b.category))).sort();
-const fates: string[] = Array.from(new Set(brands.map((b) => b.fate).filter(Boolean))).sort();
+/* ---------- Categories (unique, alpha) ---------- */
+const categories = Array.from(
+  new Set(brands.map((b) => String(b.category).trim()))
+).sort((a, b) => a.localeCompare(b));
 
-/* AVAILABLE decades only (prefer end year, fallback to start) */
+/* ---------- AVAILABLE decades only (prefer end year, fallback to start) ---------- */
 const decadeSet = new Set<number>();
 for (const b of brands) {
   const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
   if (y !== undefined) decadeSet.add(decadeStart(y));
 }
-const availableDecadeLabels: string[] = [...decadeSet].sort((a,b)=>a-b).map(d => `${d}s`);
+const availableDecadeLabels: string[] = [...decadeSet]
+  .sort((a, b) => a - b)
+  .map((d) => `${d}s`);
 const totalDecades = availableDecadeLabels.length;
 
-/* Featured: most recently ended first (fallback to start) */
+/* ---------- Featured: most recently ended first (fallback to start) ---------- */
 const featured = brands
   .slice()
   .sort((a, b) => {
@@ -39,11 +62,66 @@ const featured = brands
   })
   .slice(0, 12);
 
-/* Useful paths */
+/* ---------- SEO ---------- */
+const pageTitle = "Defunct Brands Archive — Browse";
+const pageDesc =
+  "Browse discontinued and defunct brands by category, A–Z, decade, and fate.";
+const canonical = (Astro.site ? new URL("/", Astro.site).href : "/");
+
+// JSON-LD for category list (ItemList). Keep it modest; search engines prefer concise lists.
+const categoriesItemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Browse by Category",
+  itemListOrder: "http://schema.org/ItemListOrderAscending",
+  numberOfItems: categories.length,
+  itemListElement: categories.map((label: string, i: number) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: label,
+    url: Astro.site
+      ? new URL(`/category/${slugify(label)}/`, Astro.site).href
+      : `/category/${slugify(label)}/`,
+  })),
+};
+
+// Tiny list of decades as an ItemList too
+const decadesItemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Browse by Decade",
+  itemListOrder: "http://schema.org/ItemListOrderAscending",
+  numberOfItems: availableDecadeLabels.length,
+  itemListElement: availableDecadeLabels.map((label: string, i: number) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: label,
+    url: Astro.site
+      ? new URL(`/decade/${label}/`, Astro.site).href
+      : `/decade/${label}/`,
+  })),
+};
+
 const currentPath = Astro.url.pathname;
 ---
 
-<Base title="Defunct Brands Archive — Browse" description="Browse discontinued and defunct brands by category, A–Z, decade, and fate.">
+<Base title={pageTitle} description={pageDesc}>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonical} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <script type="application/ld+json">
+      {JSON.stringify(categoriesItemListLd)}
+    </script>
+    <script type="application/ld+json">
+      {JSON.stringify(decadesItemListLd)}
+    </script>
+  </Fragment>
+
   <!-- Categories -->
   <section class="mt-6" role="region" aria-label="Browse by category">
     <h2 class="text-lg font-semibold mb-2">Browse by Category</h2>
@@ -119,9 +197,7 @@ const currentPath = Astro.url.pathname;
             {b.category}
           </div>
         </article>
-
       ))}
     </div>
   </section>
-
 </Base>
