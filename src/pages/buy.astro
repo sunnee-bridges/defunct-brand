@@ -129,18 +129,19 @@ const CANONICAL = Astro.site ? new URL("/buy", Astro.site).href : "/buy";
 
             // Explicit POST to your Netlify function (avoids some GET/CORS blockers)
             async createOrder() {
-              setText('result', '');
-              const { ok, status, data } = await httpJSON('/.netlify/functions/paypal-create-order', {
+              const { ok, status, data } = await fetch('/.netlify/functions/paypal-create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({})
-              });
+              }).then(async r => ({ ok: r.ok, status: r.status, data: await r.json().catch(()=>null) }));
+
               if (!ok || !data?.id) {
-                showError('createOrder', { status, ...data });
+                console.error('createOrder failed', status, data);
                 throw new Error('createOrder failed');
               }
               return data.id;
             },
+
 
             async onApprove(data) {
               setText('result', 'Finalizing payment…');
