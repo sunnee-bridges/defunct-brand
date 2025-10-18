@@ -12,5 +12,9 @@ content/brands_src/
 content/brands_private/
 exports/
 
+public/data/brands-*.csv
+!public/data/brands-sample.csv
+public/data/manifest.json
+
 # Local Netlify folder
 .netlify
