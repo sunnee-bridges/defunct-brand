@@ -3,21 +3,25 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "data": "node scripts/build-data.mjs",
     "make:public": "node scripts/make-public-brands.mjs",
+    "data": "node scripts/build-data.mjs",
     "slugs": "node scripts/build-slugs.mjs",
+    "data:public": "cross-env SAMPLE_ROWS=7 node scripts/build-public-csv.mjs",
+    "predev": "npm run make:public",
+    "dev": "concurrently -k -n WATCH,DEV -c auto,auto \"npm:watch:public\" \"npx netlify dev\"",
+    "watch:public": "chokidar \"content/brands_src/*.json\" -c \"npm run make:public\"",
+    "prebuild": "npm run make:public && npm run data && npm run data:public",
+    "build": "astro build",
+    "preview": "astro preview",
     "data:csv": "cross-env CSV_SOURCE=content/brands_src CSV_OUT=full-dataset.csv node scripts/build-csv.mjs",
     "data:csv:sample": "cross-env CSV_SOURCE=content/brands CSV_OUT=sample.csv node scripts/build-csv.mjs",
-    "dev": "concurrently -k -n WATCH,DEV -c auto,auto \"npm:watch:public\" \"npx netlify dev\"",
-    "prebuild": "npm run make:public",
-    "build": "npm run data && astro build",
-    "predev": "npm run make:public",
-    "watch:public": "chokidar \"content/brands_src/*.json\" -c \"npm run make:public\"",
-    "preview": "astro preview",
-    "prepare": "husky",
-    "test": "echo \"(no tests)\" && exit 0",
     "upload:csv": "aws s3 cp exports/full-dataset.csv s3://vanishedbrands-private/exports/full-dataset.csv",
-    "publish:csv": "npm run data:csv && npm run upload:csv"
+    "publish:csv": "npm run data:csv && npm run upload:csv",
+    "clean": "rimraf dist exports public/data/brands-*.csv",
+    "test": "echo \"(no tests)\" && exit 0",
+    "prepare": "husky",
+    "upload:public": "node scripts/upload-public-csv.mjs",
+    "publish:public": "npm run data:public && npm run upload:public"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.910.0",
@@ -37,6 +41,7 @@
     "cross-env": "^7.0.3",
     "husky": "^9.1.7",
     "netlify-cli": "^21.6.0",
+    "rimraf": "^5.0.10",
     "tailwindcss": "^3.4.18"
   }
 }

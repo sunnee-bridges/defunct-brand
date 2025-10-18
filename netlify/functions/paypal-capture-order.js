@@ -84,13 +84,13 @@ async function getAccessToken() {
 /* ---------------- S3 client (region-safe) ---------------- */
 // Use S3_REGION (since AWS_REGION is reserved in Netlify UI)
 const BUCKET = process.env.S3_BUCKET_NAME;
-const CSV_KEY = process.env.CSV_OBJECT_KEY || "exports/full-dataset.csv";
+// Optional, but we’ll also support manifest fallback:
+const MANIFEST_KEY = process.env.S3_MANIFEST_KEY || "exports/manifest.json";
 
 let _s3 = null;
 let _s3Region = null;
 
 function baseCredentials() {
-  // Explicit creds if provided; else default provider chain
   if (process.env.S3_ACCESS_KEY_ID && process.env.S3_SECRET_ACCESS_KEY) {
     return {
       accessKeyId: process.env.S3_ACCESS_KEY_ID,
@@ -123,12 +123,18 @@ async function getS3() {
     if (real && real !== _s3Region) {
       _s3 = new S3Client({ region: real, credentials: baseCredentials() });
       _s3Region = real;
-      // Verify once more; throw if still failing
       await _s3.send(new HeadBucketCommand({ Bucket: BUCKET }));
       return _s3;
     }
     throw e;
   }
+}
+
+async function readJSON({ Bucket, Key }) {
+  const s3 = await getS3();
+  const r = await s3.send(new GetObjectCommand({ Bucket, Key }));
+  const text = await streamToString(r.Body);
+  return JSON.parse(text);
 }
 
 /* ---------------- persistence helpers (S3) ---------------- */
@@ -153,17 +159,18 @@ async function saveOrderRow(orderID, row) {
       Key: `orders/${orderID}.json`,
       Body: JSON.stringify(row),
       ContentType: "application/json; charset=utf-8",
+      ServerSideEncryption: "AES256",
     })
   );
 }
 
-async function mintDownloadToken(orderID) {
+async function mintDownloadToken(orderID, key) {
   const token = crypto.randomUUID();
   const record = {
     token,
     createdAt: Date.now(),
     expiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24h
-    key: CSV_KEY,
+    key,
     orderID,
   };
   const s3 = await getS3();
@@ -173,6 +180,7 @@ async function mintDownloadToken(orderID) {
       Key: `tokens/${token}.json`,
       Body: JSON.stringify(record),
       ContentType: "application/json; charset=utf-8",
+      ServerSideEncryption: "AES256",
     })
   );
   return token;
@@ -186,8 +194,7 @@ exports.handler = async (event) => {
     if (event.httpMethod !== "POST") return json(405, { error: "POST only" });
     const { orderID } = JSON.parse(event.body || "{}");
     if (!orderID) return json(400, { error: "orderID required" });
-    if (!BUCKET || !CSV_KEY)
-      return json(500, { error: "Missing S3_BUCKET_NAME or CSV_OBJECT_KEY" });
+    if (!BUCKET) return json(500, { error: "Missing S3_BUCKET_NAME" });
 
     // Idempotency: already processed?
     const existing = await getExistingOrder(orderID);
@@ -208,7 +215,7 @@ exports.handler = async (event) => {
 
     const text = await res.text();
     let data = null;
-    try { data = JSON.parse(text); } catch { /* keep raw text for errors */ }
+    try { data = JSON.parse(text); } catch {} // keep raw for error logs
 
     if (!res.ok) {
       await saveOrderRow(orderID, {
@@ -238,10 +245,7 @@ exports.handler = async (event) => {
       return json(400, { ok: false, error: "Payment not completed", status });
     }
 
-    // SUCCESS → token
-    const token = await mintDownloadToken(orderID);
-
-    // Trimmed order row
+    // ---- Server-side amount & currency verification ----
     const capture = data?.purchase_units?.[0]?.payments?.captures?.[0] || null;
     const amount =
       capture?.amount?.value ||
@@ -252,23 +256,64 @@ exports.handler = async (event) => {
       data?.purchase_units?.[0]?.amount?.currency_code ||
       null;
 
+    // Expected from env (fallbacks to 9.00 USD)
+    const EXPECTED_AMOUNT   = process.env.PRICE_USD || process.env.PAYPAL_PRICE || "9.00";
+    const EXPECTED_CURRENCY = process.env.PAYPAL_CURRENCY || "USD";
+
+    if (amount !== EXPECTED_AMOUNT || currency !== EXPECTED_CURRENCY) {
+      await saveOrderRow(orderID, {
+        orderID,
+        status: "AMOUNT_MISMATCH",
+        stage: "verify_amount",
+        raw: { amount, currency, expected: { amount: EXPECTED_AMOUNT, currency: EXPECTED_CURRENCY } },
+        updatedAt: Date.now(),
+      });
+      return json(400, { ok: false, error: "Amount mismatch", amount, currency });
+    }
+
+    // ---- Resolve which CSV key to sell ----
+    // Priority: explicit env → manifest.latest
+    let csvKey = process.env.CSV_OBJECT_KEY;
+    if (!csvKey) {
+      try {
+        const manifest = await readJSON({ Bucket: BUCKET, Key: MANIFEST_KEY });
+        csvKey = manifest?.latest; // e.g. "exports/brands-latest.csv"
+      } catch {
+        // ignore; handle empty below
+      }
+    }
+    if (!csvKey) {
+      await saveOrderRow(orderID, {
+        orderID,
+        status: "CONFIG_ERROR",
+        stage: "resolve_csv_key",
+        note: "Missing CSV_OBJECT_KEY env and manifest.latest",
+        updatedAt: Date.now(),
+      });
+      return json(500, { ok: false, error: "Server not configured for CSV key." });
+    }
+
+    // SUCCESS → mint token bound to resolved key
+    const token = await mintDownloadToken(orderID, csvKey);
+
+    // Trimmed order row (minimize PII)
     const orderRow = {
       orderID,
       status: "COMPLETED",
       token,
       amount,
       currency,
-      payer: data?.payer || null,
+      payer: data?.payer
+        ? { payer_id: data.payer?.payer_id, email: data.payer?.email_address }
+        : null,
       captureId: capture?.id || null,
+      csvKey, // helpful for audits
       updatedAt: Date.now(),
       createdAt: existing?.createdAt || Date.now(),
       raw: {
         id: data?.id,
         intent: data?.intent,
         status: data?.status,
-        payer: data?.payer
-          ? { payer_id: data.payer?.payer_id, email: data.payer?.email_address }
-          : null,
       },
     };
 

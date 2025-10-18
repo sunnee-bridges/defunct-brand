@@ -6,6 +6,10 @@ const INPUT_DIR = process.env.CSV_SOURCE || "content/brands_src"; // private by 
 const OUT_DIR = "exports";
 const OUT_FILE = process.env.CSV_OUT || "full-dataset.csv";
 
+// sample controls (env-overridable)
+const SAMPLE_ROWS = parseInt(process.env.SAMPLE_ROWS || process.env.PUBLIC_SAMPLE_ROWS || "7", 10);
+const OUT_FILE_SAMPLE = process.env.CSV_OUT_SAMPLE || "sample.csv";
+
 const HEADERS = [
   "brand","slug","category","country",
   "active_start","active_end","fate","summary","wikipedia"
@@ -16,7 +20,7 @@ const q = (v = "") => {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 };
 
-const toRow = (b) => [
+const toRowArray = (b) => ([
   b.brand ?? "",
   b.slug ?? "",
   b.category ?? "",
@@ -26,14 +30,16 @@ const toRow = (b) => [
   b.fate ?? "",
   b.summary ?? "",
   b?.links?.wikipedia ?? ""
-].map(q).join(",");
+]);
+
+const toRow = (arr) => arr.map(q).join(",");
 
 (async () => {
   // read *.json from INPUT_DIR (works for either brands_src or brands)
   let files;
   try {
     files = (await fs.readdir(INPUT_DIR)).filter(f => f.endsWith(".json"));
-  } catch (e) {
+  } catch {
     console.error(`Input folder not found: ${INPUT_DIR}`);
     process.exit(1);
   }
@@ -42,15 +48,32 @@ const toRow = (b) => [
     process.exit(1);
   }
 
-  const rows = [];
+  // load + normalize
+  const objs = [];
   for (const f of files) {
     const raw = await fs.readFile(join(INPUT_DIR, f), "utf8");
     const obj = JSON.parse(raw);
-    rows.push(toRow(obj));
+    if (!obj?.brand) continue;
+    objs.push(obj);
   }
 
+  // sort deterministically by brand
+  objs.sort((a, b) => String(a.brand || "").localeCompare(String(b.brand || "")));
+
+  // build row arrays
+  const rowArrays = objs.map(toRowArray);
+  const headerLine = HEADERS.join(",");
+  const bodyLines = rowArrays.map(toRow);
+
+  // write full dataset
   await fs.mkdir(OUT_DIR, { recursive: true });
-  const csv = [HEADERS.join(","), ...rows].join("\n");
-  await fs.writeFile(join(OUT_DIR, OUT_FILE), csv, "utf8");
-  console.log(`Wrote ${join(OUT_DIR, OUT_FILE)} with ${rows.length} rows from ${INPUT_DIR}`);
+  const fullCsv = [headerLine, ...bodyLines].join("\n");
+  await fs.writeFile(join(OUT_DIR, OUT_FILE), fullCsv + "\n", "utf8");
+  console.log(`Wrote ${join(OUT_DIR, OUT_FILE)} with ${rowArrays.length} rows from ${INPUT_DIR}`);
+
+  // write sample (first N)
+  const n = Math.max(0, Math.min(SAMPLE_ROWS, rowArrays.length));
+  const sampleCsv = [headerLine, ...bodyLines.slice(0, n)].join("\n");
+  await fs.writeFile(join(OUT_DIR, OUT_FILE_SAMPLE), sampleCsv + "\n", "utf8");
+  console.log(`Wrote ${join(OUT_DIR, OUT_FILE_SAMPLE)} with ${n} rows (SAMPLE_ROWS=${SAMPLE_ROWS})`);
 })();
