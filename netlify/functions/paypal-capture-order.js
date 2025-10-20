@@ -5,6 +5,7 @@ const {
   GetObjectCommand,
   DeleteObjectCommand,
   HeadBucketCommand,
+  HeadObjectCommand,
 } = require("@aws-sdk/client-s3");
 const crypto = require("node:crypto");
 const fs = require("node:fs/promises");
@@ -146,14 +147,17 @@ async function mintDownloadToken(orderID) {
   console.log('[mintDownloadToken] CSV_KEY:', CSV_KEY);
   
   const token = crypto.randomUUID();
+  const now = Date.now();
   console.log('[mintDownloadToken] Generated token:', token);
+  console.log('[mintDownloadToken] Timestamp (ms):', now);
+  console.log('[mintDownloadToken] Timestamp (ISO):', new Date(now).toISOString());
   
   const record = {
     token,
     orderID,
     key: CSV_KEY,
-    createdAt: Date.now(),
-    expiresAt: Date.now() + 24 * 60 * 60 * 1000,
+    createdAt: now,
+    expiresAt: now + 24 * 60 * 60 * 1000,
   };
   
   const tokenKey = `tokens/${token}.json`;
@@ -167,16 +171,54 @@ async function mintDownloadToken(orderID) {
     console.log('[mintDownloadToken] Region:', _s3Region);
     
     console.log('[mintDownloadToken] Creating PutObjectCommand...');
-    const command = new PutObjectCommand({
+    const putCommand = new PutObjectCommand({
       Bucket: BUCKET,
       Key: tokenKey,
       Body: JSON.stringify(record),
       ContentType: "application/json; charset=utf-8",
     });
     
-    console.log('[mintDownloadToken] Sending command to S3...');
-    const result = await s3.send(command);
-    console.log('[mintDownloadToken] S3 PutObject response:', JSON.stringify(result));
+    console.log('[mintDownloadToken] Sending PutObjectCommand to S3...');
+    const putResult = await s3.send(putCommand);
+    console.log('[mintDownloadToken] S3 PutObject response:', JSON.stringify(putResult));
+    console.log('[mintDownloadToken] PutObject ETag:', putResult.ETag);
+    
+    // Immediately verify the object was written with correct timestamp
+    console.log('[mintDownloadToken] Verifying object with HeadObjectCommand...');
+    const headCommand = new HeadObjectCommand({
+      Bucket: BUCKET,
+      Key: tokenKey,
+    });
+    
+    const headResult = await s3.send(headCommand);
+    console.log('[mintDownloadToken] HeadObject response:', JSON.stringify(headResult, null, 2));
+    console.log('[mintDownloadToken] Verified ETag:', headResult.ETag);
+    console.log('[mintDownloadToken] Verified ContentLength:', headResult.ContentLength);
+    console.log('[mintDownloadToken] Verified LastModified:', headResult.LastModified);
+    console.log('[mintDownloadToken] Verified LastModified (ISO):', headResult.LastModified?.toISOString());
+    
+    // Compare timestamps
+    const s3Timestamp = headResult.LastModified?.getTime();
+    const createdTimestamp = record.createdAt;
+    const timeDiff = s3Timestamp ? Math.abs(s3Timestamp - createdTimestamp) : null;
+    
+    console.log('[mintDownloadToken] Timestamp comparison:');
+    console.log('[mintDownloadToken]   Created at (ms):', createdTimestamp);
+    console.log('[mintDownloadToken]   Created at (ISO):', new Date(createdTimestamp).toISOString());
+    console.log('[mintDownloadToken]   S3 LastModified (ms):', s3Timestamp);
+    console.log('[mintDownloadToken]   S3 LastModified (ISO):', headResult.LastModified?.toISOString());
+    console.log('[mintDownloadToken]   Time difference (ms):', timeDiff);
+    console.log('[mintDownloadToken]   Time difference (seconds):', timeDiff ? (timeDiff / 1000).toFixed(2) : 'N/A');
+    
+    if (timeDiff && timeDiff > 60000) { // More than 1 minute difference
+      console.warn('[mintDownloadToken] ⚠️  WARNING: Significant timestamp mismatch detected!');
+      console.warn('[mintDownloadToken]   Expected:', new Date(createdTimestamp).toISOString());
+      console.warn('[mintDownloadToken]   Got from S3:', headResult.LastModified?.toISOString());
+      console.warn('[mintDownloadToken]   Difference:', (timeDiff / 1000 / 60).toFixed(2), 'minutes');
+    } else {
+      console.log('[mintDownloadToken] ✓ Timestamp verification passed (within 1 minute tolerance)');
+    }
+    
     console.log('[mintDownloadToken] === SUCCESS ===');
     
     return token;
