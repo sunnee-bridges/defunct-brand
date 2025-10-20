@@ -7,6 +7,8 @@ const {
   HeadBucketCommand,
 } = require("@aws-sdk/client-s3");
 const crypto = require("node:crypto");
+const fs = require("node:fs/promises");
+const path = require("node:path");
 
 /* ---------- Config ---------- */
 const PAYPAL_ENV = (process.env.PUBLIC_PAYPAL_ENV || process.env.PAYPAL_ENV || "sandbox").toLowerCase();
@@ -147,6 +149,66 @@ function streamToString(stream) {
   });
 }
 
+/* ---------- Purchase Logging ---------- */
+async function logPurchase(data, event) {
+  try {
+    const h = event.headers || {};
+    const ip = h["x-nf-client-connection-ip"]
+      || (h["x-forwarded-for"] ? h["x-forwarded-for"].split(",")[0].trim() : null)
+      || h["client-ip"]
+      || "unknown";
+    
+    const logEntry = {
+      timestamp: new Date().toISOString(),
+      environment: PAYPAL_ENV,
+      orderId: data.orderID,
+      transactionId: data.captureId,
+      payerEmail: data.payer?.email || null,
+      payerId: data.payer?.payer_id || null,
+      amount: data.amount,
+      currency: data.currency,
+      status: data.status,
+      token: data.token,
+      tokenExpiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      ipAddress: ip,
+      userAgent: h["user-agent"] || "unknown",
+    };
+
+    // Log to console (captured by Netlify logs)
+    console.log("=== PURCHASE COMPLETED ===");
+    console.log(JSON.stringify(logEntry, null, 2));
+    console.log("==========================");
+
+    // Optionally log to S3 for long-term storage
+    if (process.env.ENABLE_S3_PURCHASE_LOGS === "true") {
+      const s3 = await getS3();
+      const logKey = `purchase-logs/${new Date().toISOString().split('T')[0]}/${data.orderID}.json`;
+      await s3.send(new PutObjectCommand({
+        Bucket: BUCKET,
+        Key: logKey,
+        Body: JSON.stringify(logEntry, null, 2),
+        ContentType: "application/json; charset=utf-8",
+      }));
+    }
+
+    // Optionally log to local file (useful for local dev)
+    if (process.env.NODE_ENV === "development" || process.env.ENABLE_FILE_LOGGING === "true") {
+      const logDir = path.join(process.cwd(), "data");
+      const logFile = path.join(logDir, "purchases.jsonl");
+      
+      try {
+        await fs.mkdir(logDir, { recursive: true });
+        await fs.appendFile(logFile, JSON.stringify(logEntry) + "\n");
+      } catch (err) {
+        console.error("Failed to write to local log file:", err.message);
+      }
+    }
+  } catch (err) {
+    // Don't fail the purchase if logging fails
+    console.error("Purchase logging failed:", err.message);
+  }
+}
+
 /* ---------- Handler ---------- */
 exports.handler = async (event) => {
   try {
@@ -163,6 +225,7 @@ exports.handler = async (event) => {
     // Idempotency: if already captured and token issued, return it
     const existing = await getExistingOrder(orderID);
     if (existing?.status === "COMPLETED" && existing?.token) {
+      console.log(`Order ${orderID} already processed, returning existing token`);
       return json(200, { ok: true, token: existing.token, alreadyProcessed: true });
     }
 
@@ -179,6 +242,7 @@ exports.handler = async (event) => {
 
     if (!r.ok) {
       // Save diagnostic row; surface generic error to client
+      console.error(`PayPal capture failed for order ${orderID}:`, r.status, text);
       await saveOrder(orderID, {
         orderID,
         status: data?.status || "ERROR",
@@ -197,6 +261,7 @@ exports.handler = async (event) => {
       "UNKNOWN";
 
     if (status !== "COMPLETED") {
+      console.warn(`Order ${orderID} capture status is ${status}, not COMPLETED`);
       await saveOrder(orderID, {
         orderID,
         status,
@@ -242,9 +307,12 @@ exports.handler = async (event) => {
     };
     await saveOrder(orderID, row);
 
+    // Log the successful purchase
+    await logPurchase(row, event);
+
     return json(200, { ok: true, token });
   } catch (e) {
-    // Don’t leak internals to client; log server-side instead
+    // Don't leak internals to client; log server-side instead
     console.error("[paypal-capture-order] error", e);
     return json(500, { ok: false, error: "server error" });
   }
