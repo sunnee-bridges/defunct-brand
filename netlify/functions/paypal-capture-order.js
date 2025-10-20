@@ -77,22 +77,38 @@ function baseCredentials() {
 
 /** Create S3 client; auto-correct region using HeadBucket */
 async function getS3() {
+  console.log('[getS3] Starting...');
   if (!BUCKET) throw new Error("Missing S3_BUCKET_NAME");
+  
   const wanted = process.env.S3_REGION || "us-east-1";
+  console.log('[getS3] Wanted region:', wanted);
+  console.log('[getS3] Current _s3Region:', _s3Region);
+  
   if (!_s3 || _s3Region !== wanted) {
+    console.log('[getS3] Creating new S3 client');
     _s3 = new S3Client({ region: wanted, credentials: baseCredentials() });
     _s3Region = wanted;
   }
+  
   try {
+    console.log('[getS3] Sending HeadBucketCommand for bucket:', BUCKET);
     await _s3.send(new HeadBucketCommand({ Bucket: BUCKET }));
+    console.log('[getS3] HeadBucket succeeded, returning client');
     return _s3;
   } catch (e) {
+    console.error('[getS3] HeadBucket failed:', e.message);
+    console.error('[getS3] Error code:', e.code);
+    console.error('[getS3] Error name:', e.name);
+    
     const hdrs = e?.$metadata?.httpHeaders || {};
     const real = hdrs["x-amz-bucket-region"] || hdrs["x-amz-bucket-region".toLowerCase()];
+    
     if (real && real !== _s3Region) {
+      console.log('[getS3] Detected different region:', real, 'vs', _s3Region);
       _s3 = new S3Client({ region: real, credentials: baseCredentials() });
       _s3Region = real;
       await _s3.send(new HeadBucketCommand({ Bucket: BUCKET })); // verify
+      console.log('[getS3] Region corrected, returning client');
       return _s3;
     }
     throw e;
@@ -112,6 +128,7 @@ async function getExistingOrder(orderID) {
 }
 
 async function saveOrder(orderID, row) {
+  console.log('[saveOrder] Saving order:', orderID);
   const s3 = await getS3();
   await s3.send(new PutObjectCommand({
     Bucket: BUCKET,
@@ -119,25 +136,61 @@ async function saveOrder(orderID, row) {
     Body: JSON.stringify(row),
     ContentType: "application/json; charset=utf-8",
   }));
+  console.log('[saveOrder] Order saved successfully');
 }
 
 async function mintDownloadToken(orderID) {
+  console.log('[mintDownloadToken] === START ===');
+  console.log('[mintDownloadToken] orderID:', orderID);
+  console.log('[mintDownloadToken] BUCKET:', BUCKET);
+  console.log('[mintDownloadToken] CSV_KEY:', CSV_KEY);
+  
   const token = crypto.randomUUID();
+  console.log('[mintDownloadToken] Generated token:', token);
+  
   const record = {
     token,
     orderID,
     key: CSV_KEY,
     createdAt: Date.now(),
-    expiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24h
+    expiresAt: Date.now() + 24 * 60 * 60 * 1000,
   };
-  const s3 = await getS3();
-  await s3.send(new PutObjectCommand({
-    Bucket: BUCKET,
-    Key: `tokens/${token}.json`,
-    Body: JSON.stringify(record),
-    ContentType: "application/json; charset=utf-8",
-  }));
-  return token;
+  
+  const tokenKey = `tokens/${token}.json`;
+  console.log('[mintDownloadToken] Will write to key:', tokenKey);
+  console.log('[mintDownloadToken] Record:', JSON.stringify(record));
+  
+  try {
+    console.log('[mintDownloadToken] Calling getS3()...');
+    const s3 = await getS3();
+    console.log('[mintDownloadToken] S3 client obtained');
+    console.log('[mintDownloadToken] Region:', _s3Region);
+    
+    console.log('[mintDownloadToken] Creating PutObjectCommand...');
+    const command = new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: tokenKey,
+      Body: JSON.stringify(record),
+      ContentType: "application/json; charset=utf-8",
+    });
+    
+    console.log('[mintDownloadToken] Sending command to S3...');
+    const result = await s3.send(command);
+    console.log('[mintDownloadToken] S3 PutObject response:', JSON.stringify(result));
+    console.log('[mintDownloadToken] === SUCCESS ===');
+    
+    return token;
+  } catch (error) {
+    console.error('[mintDownloadToken] === ERROR ===');
+    console.error('[mintDownloadToken] Error type:', error.constructor.name);
+    console.error('[mintDownloadToken] Error message:', error.message);
+    console.error('[mintDownloadToken] Error code:', error.code);
+    console.error('[mintDownloadToken] Error name:', error.name);
+    console.error('[mintDownloadToken] HTTP status:', error.$metadata?.httpStatusCode);
+    console.error('[mintDownloadToken] Request ID:', error.$metadata?.requestId);
+    console.error('[mintDownloadToken] Full error:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
+    throw error;
+  }
 }
 
 function streamToString(stream) {
@@ -212,6 +265,8 @@ async function logPurchase(data, event) {
 /* ---------- Handler ---------- */
 exports.handler = async (event) => {
   try {
+    console.log('[handler] Function invoked');
+    
     if (tooMany(event)) return tooManyResp();
     if (event.httpMethod !== "POST") return json(405, { error: "POST only" });
 
@@ -221,15 +276,18 @@ exports.handler = async (event) => {
 
     const { orderID } = JSON.parse(event.body || "{}");
     if (!orderID) return json(400, { error: "orderID required" });
+    
+    console.log('[handler] Processing orderID:', orderID);
 
     // Idempotency: if already captured and token issued, return it
     const existing = await getExistingOrder(orderID);
     if (existing?.status === "COMPLETED" && existing?.token) {
-      console.log(`Order ${orderID} already processed, returning existing token`);
+      console.log(`[handler] Order ${orderID} already processed, returning existing token`);
       return json(200, { ok: true, token: existing.token, alreadyProcessed: true });
     }
 
     // Capture the PayPal order
+    console.log('[handler] Capturing PayPal order...');
     const access = await getAccessToken();
     const r = await fetch(`${PAYPAL_BASE}/v2/checkout/orders/${orderID}/capture`, {
       method: "POST",
@@ -242,7 +300,7 @@ exports.handler = async (event) => {
 
     if (!r.ok) {
       // Save diagnostic row; surface generic error to client
-      console.error(`PayPal capture failed for order ${orderID}:`, r.status, text);
+      console.error(`[handler] PayPal capture failed for order ${orderID}:`, r.status, text);
       await saveOrder(orderID, {
         orderID,
         status: data?.status || "ERROR",
@@ -260,8 +318,10 @@ exports.handler = async (event) => {
       data?.purchase_units?.[0]?.payments?.captures?.[0]?.status ||
       "UNKNOWN";
 
+    console.log('[handler] Capture status:', status);
+
     if (status !== "COMPLETED") {
-      console.warn(`Order ${orderID} capture status is ${status}, not COMPLETED`);
+      console.warn(`[handler] Order ${orderID} capture status is ${status}, not COMPLETED`);
       await saveOrder(orderID, {
         orderID,
         status,
@@ -273,7 +333,15 @@ exports.handler = async (event) => {
     }
 
     // Success → mint single-use token
-    const token = await mintDownloadToken(orderID);
+    console.log('[handler] About to mint download token for orderID:', orderID);
+    let token;
+    try {
+      token = await mintDownloadToken(orderID);
+      console.log('[handler] Token minted successfully:', token);
+    } catch (tokenError) {
+      console.error('[handler] Failed to mint token:', tokenError);
+      throw tokenError;
+    }
 
     // Minimal order record (redacted)
     const capture = data?.purchase_units?.[0]?.payments?.captures?.[0] || null;
@@ -305,15 +373,20 @@ exports.handler = async (event) => {
         status: data?.status,
       },
     };
+    
+    console.log('[handler] Saving order record...');
     await saveOrder(orderID, row);
 
     // Log the successful purchase
+    console.log('[handler] Logging purchase...');
     await logPurchase(row, event);
 
+    console.log('[handler] Returning success response');
     return json(200, { ok: true, token });
   } catch (e) {
     // Don't leak internals to client; log server-side instead
-    console.error("[paypal-capture-order] error", e);
+    console.error("[handler] FATAL ERROR:", e);
+    console.error("[handler] Error stack:", e.stack);
     return json(500, { ok: false, error: "server error" });
   }
 };
