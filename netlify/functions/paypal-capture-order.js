@@ -6,6 +6,7 @@ const {
   DeleteObjectCommand,
   HeadBucketCommand,
   HeadObjectCommand,
+  ListObjectsV2Command,  // Add this
 } = require("@aws-sdk/client-s3");
 const crypto = require("node:crypto");
 const fs = require("node:fs/promises");
@@ -197,6 +198,31 @@ async function mintDownloadToken(orderID) {
     console.log('[mintDownloadToken] Verified LastModified:', headResult.LastModified);
     console.log('[mintDownloadToken] Verified LastModified (ISO):', headResult.LastModified?.toISOString());
     
+    // NEW: List all objects in tokens/ folder
+    console.log('[mintDownloadToken] Listing all objects in tokens/ folder...');
+    const { ListObjectsV2Command } = require("@aws-sdk/client-s3");
+    const listCommand = new ListObjectsV2Command({
+      Bucket: BUCKET,
+      Prefix: 'tokens/',
+      MaxKeys: 10
+    });
+    
+    const listResult = await s3.send(listCommand);
+    console.log('[mintDownloadToken] Number of objects in tokens/:', listResult.KeyCount);
+    console.log('[mintDownloadToken] Objects found:', JSON.stringify(listResult.Contents, null, 2));
+    
+    // NEW: Try to read the object back immediately
+    console.log('[mintDownloadToken] Attempting to read object back...');
+    const getCommand = new GetObjectCommand({
+      Bucket: BUCKET,
+      Key: tokenKey,
+    });
+    
+    const getResult = await s3.send(getCommand);
+    const bodyText = await streamToString(getResult.Body);
+    console.log('[mintDownloadToken] Read back body:', bodyText);
+    console.log('[mintDownloadToken] Body matches original:', bodyText === JSON.stringify(record));
+    
     // Compare timestamps
     const s3Timestamp = headResult.LastModified?.getTime();
     const createdTimestamp = record.createdAt;
@@ -210,7 +236,7 @@ async function mintDownloadToken(orderID) {
     console.log('[mintDownloadToken]   Time difference (ms):', timeDiff);
     console.log('[mintDownloadToken]   Time difference (seconds):', timeDiff ? (timeDiff / 1000).toFixed(2) : 'N/A');
     
-    if (timeDiff && timeDiff > 60000) { // More than 1 minute difference
+    if (timeDiff && timeDiff > 60000) {
       console.warn('[mintDownloadToken] ⚠️  WARNING: Significant timestamp mismatch detected!');
       console.warn('[mintDownloadToken]   Expected:', new Date(createdTimestamp).toISOString());
       console.warn('[mintDownloadToken]   Got from S3:', headResult.LastModified?.toISOString());
