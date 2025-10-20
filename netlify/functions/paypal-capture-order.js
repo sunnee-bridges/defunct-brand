@@ -6,7 +6,7 @@ const {
   DeleteObjectCommand,
   HeadBucketCommand,
   HeadObjectCommand,
-  ListObjectsV2Command,  // Add this
+  ListObjectsV2Command,
 } = require("@aws-sdk/client-s3");
 const crypto = require("node:crypto");
 const fs = require("node:fs/promises");
@@ -142,122 +142,38 @@ async function saveOrder(orderID, row) {
 }
 
 async function mintDownloadToken(orderID) {
-  console.log('[mintDownloadToken] === START ===');
-  console.log('[mintDownloadToken] orderID:', orderID);
-  console.log('[mintDownloadToken] BUCKET:', BUCKET);
-  console.log('[mintDownloadToken] CSV_KEY:', CSV_KEY);
+  console.log('[mintDownloadToken] Creating token for orderID:', orderID);
   
   const token = crypto.randomUUID();
   const now = Date.now();
-  console.log('[mintDownloadToken] Generated token:', token);
-  console.log('[mintDownloadToken] Timestamp (ms):', now);
-  console.log('[mintDownloadToken] Timestamp (ISO):', new Date(now).toISOString());
   
   const record = {
     token,
     orderID,
     key: CSV_KEY,
     createdAt: now,
-    expiresAt: now + 24 * 60 * 60 * 1000,
+    expiresAt: now + 24 * 60 * 60 * 1000, // 24 hours
+    usedAt: null,      // Track when token is used
+    useCount: 0,       // Track number of uses
   };
   
- 
-  const tokenKey = `test-tokens/${token}.json`;  // Change this line temporarily
-  console.log('[mintDownloadToken] Will write to key:', tokenKey);
-  console.log('[mintDownloadToken] Record:', JSON.stringify(record));
+  const tokenKey = `tokens/${token}.json`;
+  console.log('[mintDownloadToken] Writing token:', tokenKey);
   
   try {
-    console.log('[mintDownloadToken] Calling getS3()...');
     const s3 = await getS3();
-    console.log('[mintDownloadToken] S3 client obtained');
-    console.log('[mintDownloadToken] Region:', _s3Region);
     
-    console.log('[mintDownloadToken] Creating PutObjectCommand...');
-    const putCommand = new PutObjectCommand({
+    await s3.send(new PutObjectCommand({
       Bucket: BUCKET,
       Key: tokenKey,
       Body: JSON.stringify(record),
       ContentType: "application/json; charset=utf-8",
-    });
+    }));
     
-    console.log('[mintDownloadToken] Sending PutObjectCommand to S3...');
-    const putResult = await s3.send(putCommand);
-    console.log('[mintDownloadToken] S3 PutObject response:', JSON.stringify(putResult));
-    console.log('[mintDownloadToken] PutObject ETag:', putResult.ETag);
-    
-    // Immediately verify the object was written with correct timestamp
-    console.log('[mintDownloadToken] Verifying object with HeadObjectCommand...');
-    const headCommand = new HeadObjectCommand({
-      Bucket: BUCKET,
-      Key: tokenKey,
-    });
-    
-    const headResult = await s3.send(headCommand);
-    console.log('[mintDownloadToken] HeadObject response:', JSON.stringify(headResult, null, 2));
-    console.log('[mintDownloadToken] Verified ETag:', headResult.ETag);
-    console.log('[mintDownloadToken] Verified ContentLength:', headResult.ContentLength);
-    console.log('[mintDownloadToken] Verified LastModified:', headResult.LastModified);
-    console.log('[mintDownloadToken] Verified LastModified (ISO):', headResult.LastModified?.toISOString());
-    
-    // NEW: List all objects in tokens/ folder
-    console.log('[mintDownloadToken] Listing all objects in tokens/ folder...');
-    const { ListObjectsV2Command } = require("@aws-sdk/client-s3");
-    const listCommand = new ListObjectsV2Command({
-      Bucket: BUCKET,
-      Prefix: 'tokens/',
-      MaxKeys: 10
-    });
-    
-    const listResult = await s3.send(listCommand);
-    console.log('[mintDownloadToken] Number of objects in tokens/:', listResult.KeyCount);
-    console.log('[mintDownloadToken] Objects found:', JSON.stringify(listResult.Contents, null, 2));
-    
-    // NEW: Try to read the object back immediately
-    console.log('[mintDownloadToken] Attempting to read object back...');
-    const getCommand = new GetObjectCommand({
-      Bucket: BUCKET,
-      Key: tokenKey,
-    });
-    
-    const getResult = await s3.send(getCommand);
-    const bodyText = await streamToString(getResult.Body);
-    console.log('[mintDownloadToken] Read back body:', bodyText);
-    console.log('[mintDownloadToken] Body matches original:', bodyText === JSON.stringify(record));
-    
-    // Compare timestamps
-    const s3Timestamp = headResult.LastModified?.getTime();
-    const createdTimestamp = record.createdAt;
-    const timeDiff = s3Timestamp ? Math.abs(s3Timestamp - createdTimestamp) : null;
-    
-    console.log('[mintDownloadToken] Timestamp comparison:');
-    console.log('[mintDownloadToken]   Created at (ms):', createdTimestamp);
-    console.log('[mintDownloadToken]   Created at (ISO):', new Date(createdTimestamp).toISOString());
-    console.log('[mintDownloadToken]   S3 LastModified (ms):', s3Timestamp);
-    console.log('[mintDownloadToken]   S3 LastModified (ISO):', headResult.LastModified?.toISOString());
-    console.log('[mintDownloadToken]   Time difference (ms):', timeDiff);
-    console.log('[mintDownloadToken]   Time difference (seconds):', timeDiff ? (timeDiff / 1000).toFixed(2) : 'N/A');
-    
-    if (timeDiff && timeDiff > 60000) {
-      console.warn('[mintDownloadToken] ⚠️  WARNING: Significant timestamp mismatch detected!');
-      console.warn('[mintDownloadToken]   Expected:', new Date(createdTimestamp).toISOString());
-      console.warn('[mintDownloadToken]   Got from S3:', headResult.LastModified?.toISOString());
-      console.warn('[mintDownloadToken]   Difference:', (timeDiff / 1000 / 60).toFixed(2), 'minutes');
-    } else {
-      console.log('[mintDownloadToken] ✓ Timestamp verification passed (within 1 minute tolerance)');
-    }
-    
-    console.log('[mintDownloadToken] === SUCCESS ===');
-    
+    console.log('[mintDownloadToken] Token created successfully');
     return token;
   } catch (error) {
-    console.error('[mintDownloadToken] === ERROR ===');
-    console.error('[mintDownloadToken] Error type:', error.constructor.name);
-    console.error('[mintDownloadToken] Error message:', error.message);
-    console.error('[mintDownloadToken] Error code:', error.code);
-    console.error('[mintDownloadToken] Error name:', error.name);
-    console.error('[mintDownloadToken] HTTP status:', error.$metadata?.httpStatusCode);
-    console.error('[mintDownloadToken] Request ID:', error.$metadata?.requestId);
-    console.error('[mintDownloadToken] Full error:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
+    console.error('[mintDownloadToken] Failed to create token:', error.message);
     throw error;
   }
 }
@@ -402,7 +318,7 @@ exports.handler = async (event) => {
     }
 
     // Success → mint single-use token
-    console.log('[handler] About to mint download token for orderID:', orderID);
+    console.log('[handler] Minting download token...');
     let token;
     try {
       token = await mintDownloadToken(orderID);

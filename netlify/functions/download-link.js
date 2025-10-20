@@ -1,5 +1,5 @@
 // netlify/functions/download-link.js
-const { S3Client, GetObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, GetObjectCommand, PutObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 /* ---------- Config ---------- */
@@ -8,7 +8,7 @@ const BUCKET        = process.env.S3_BUCKET_NAME;                  // required
 const MANIFEST_KEY  = process.env.S3_MANIFEST_KEY || "exports/manifest.json";
 const CSV_FALLBACK  = process.env.CSV_OBJECT_KEY || "exports/brands-latest.csv";           
 const DOWNLOAD_TTL  = Number(process.env.DOWNLOAD_TTL_SECONDS || 900); // 15m
-const KEEP_TOKENS   = process.env.KEEP_TOKENS === "1";
+const MAX_USES      = Number(process.env.MAX_TOKEN_USES || 3); // Allow 3 downloads per token
 
 /* ---------- Tiny per-process rate limit ---------- */
 const RATE_LIMIT    = Number(process.env.RATE_LIMIT_PER_MIN || 20);
@@ -50,6 +50,15 @@ async function readJSON({ Bucket, Key }) {
   return JSON.parse(await streamToString(r.Body));
 }
 
+async function writeJSON({ Bucket, Key, data }) {
+  await s3.send(new PutObjectCommand({
+    Bucket,
+    Key,
+    Body: JSON.stringify(data),
+    ContentType: "application/json; charset=utf-8",
+  }));
+}
+
 /* ---------- Helpers ---------- */
 function corsHeaders() {
   // Adjust origin if you need to restrict
@@ -64,8 +73,8 @@ function corsHeaders() {
 const json = (status, body) => ({ statusCode: status, headers: corsHeaders(), body: JSON.stringify(body) });
 
 function isValidToken(t) {
-  // 43–128 safe chars; adjust if your token format differs
-  return typeof t === "string" && /^[A-Za-z0-9._-]{16,128}$/.test(t);
+  // UUID format: 8-4-4-4-12 hex characters with hyphens
+  return typeof t === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(t);
 }
 
 /* ---------- Handler ---------- */
@@ -79,31 +88,65 @@ exports.handler = async (event) => {
     let payload = {};
     try { payload = JSON.parse(event.body || "{}"); } catch {}
     const token = payload.token;
-    if (!isValidToken(token)) return json(400, { error: "token invalid" });
+    if (!isValidToken(token)) return json(400, { error: "Invalid token format" });
 
     // 1) Load token record
     const tokenKey = `tokens/${token}.json`;
     let record;
     try {
       record = await readJSON({ Bucket: BUCKET, Key: tokenKey });
-    } catch {
-      return json(404, { error: "token not found or already used" });
+    } catch (err) {
+      console.error("[download-link] Token not found:", token, err.message);
+      return json(404, { error: "Token not found or invalid" });
     }
 
     // 2) Expiry check (with tiny grace for clock skew)
     const now = Date.now();
     const expiresAt = Number(record.expiresAt || 0);
     if (!Number.isFinite(expiresAt) || now > (expiresAt + 5000)) { // +5s grace
-      if (!KEEP_TOKENS) { try { await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: tokenKey })); } catch {} }
-      return json(410, { error: "token expired" });
+      const expiredDate = new Date(expiresAt).toLocaleString();
+      console.warn("[download-link] Token expired:", token, "expired at:", expiredDate);
+      return json(410, { 
+        error: "Token expired",
+        expiredAt: expiredDate,
+        message: "This download link has expired. Please contact support if you need assistance."
+      });
     }
 
-    // 3) Single-use delete
-    if (!KEEP_TOKENS) {
-      try { await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: tokenKey })); } catch {}
+    // 3) Check usage limit
+    const currentUseCount = record.useCount || 0;
+    if (currentUseCount >= MAX_USES) {
+      console.warn("[download-link] Token usage limit reached:", token, "uses:", currentUseCount);
+      return json(403, { 
+        error: "Download limit reached",
+        uses: currentUseCount,
+        maxUses: MAX_USES,
+        message: `You've reached the maximum number of downloads (${MAX_USES}) for this purchase. Please contact support if you need assistance.`
+      });
     }
 
-    // 4) Resolve which CSV to serve
+    // 4) Mark token as used
+    if (!record.usedAt) {
+      record.usedAt = now;
+      console.info("[download-link] First use of token:", token);
+    } else {
+      const firstUsedDate = new Date(record.usedAt).toLocaleString();
+      console.info("[download-link] Token reuse:", token, "first used:", firstUsedDate, "count:", currentUseCount + 1);
+    }
+    
+    record.useCount = currentUseCount + 1;
+    record.lastUsedAt = now; // Track most recent use
+
+    // Save updated token record
+    try {
+      await writeJSON({ Bucket: BUCKET, Key: tokenKey, data: record });
+      console.info("[download-link] Token usage recorded:", token, "uses:", record.useCount);
+    } catch (e) {
+      console.error("[download-link] Failed to update token usage:", e.message);
+      // Continue anyway - don't block the download
+    }
+
+    // 5) Resolve which CSV to serve
     let Key = record.key || CSV_FALLBACK;
     if (!Key) {
       try {
@@ -111,9 +154,12 @@ exports.handler = async (event) => {
         if (manifest && typeof manifest.latest === "string") Key = manifest.latest;
       } catch {}
     }
-    if (!Key) return json(500, { error: "File not configured (no record.key, CSV_OBJECT_KEY, or manifest.latest)." });
+    if (!Key) {
+      console.error("[download-link] No CSV key configured");
+      return json(500, { error: "File not configured (no record.key, CSV_OBJECT_KEY, or manifest.latest)." });
+    }
 
-    // 5) Sign URL
+    // 6) Generate signed URL
     const cmd = new GetObjectCommand({
       Bucket: BUCKET,
       Key,
@@ -123,11 +169,17 @@ exports.handler = async (event) => {
     const url = await getSignedUrl(s3, cmd, { expiresIn: DOWNLOAD_TTL });
 
     // Minimal, privacy-safe log line
-    console.info(`[download-link] ok key=${Key} ttl=${DOWNLOAD_TTL}s`);
-    return json(200, { url });
+    console.info(`[download-link] Success - key=${Key} ttl=${DOWNLOAD_TTL}s uses=${record.useCount}/${MAX_USES}`);
+    
+    return json(200, { 
+      url,
+      uses: record.useCount,
+      maxUses: MAX_USES,
+      expiresAt: new Date(expiresAt).toISOString()
+    });
 
   } catch (e) {
-    console.error("[download-link] error", e && e.message ? e.message : e);
-    return json(500, { error: "internal error" });
+    console.error("[download-link] Error:", e && e.message ? e.message : e);
+    return json(500, { error: "Internal server error" });
   }
 };
