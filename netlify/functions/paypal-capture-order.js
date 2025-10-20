@@ -161,7 +161,8 @@ async function mintDownloadToken(orderID) {
     expiresAt: now + 24 * 60 * 60 * 1000,
   };
   
-  const tokenKey = `tokens/${token}.json`;
+ 
+  const tokenKey = `test-tokens/${token}.json`;  // Change this line temporarily
   console.log('[mintDownloadToken] Will write to key:', tokenKey);
   console.log('[mintDownloadToken] Record:', JSON.stringify(record));
   
