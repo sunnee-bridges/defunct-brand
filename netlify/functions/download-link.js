@@ -70,7 +70,14 @@ function corsHeaders() {
     "Content-Type": "application/json",
   };
 }
-const json = (status, body) => ({ statusCode: status, headers: corsHeaders(), body: JSON.stringify(body) });
+
+function json(status, body, extraHeaders = {}) {
+  return {
+    statusCode: status,
+    headers: { ...corsHeaders(), ...extraHeaders },
+    body: JSON.stringify(body),
+  };
+}
 
 function isValidToken(t) {
   // UUID format: 8-4-4-4-12 hex characters with hyphens
@@ -124,7 +131,7 @@ exports.handler = async (event) => {
         uses: currentUseCount,
         maxUses: MAX_USES,
         message: `You've reached the maximum number of downloads (${MAX_USES}) for this purchase. Please contact support if you need assistance.`
-      });
+      }, { "Retry-After": "86400" });
     }
 
     // 4) Mark token as used
@@ -172,12 +179,13 @@ exports.handler = async (event) => {
 
     // Minimal, privacy-safe log line
     console.info(`[download-link] Success - key=${Key} ttl=${DOWNLOAD_TTL}s uses=${record.useCount}/${MAX_USES}`);
-    
+    const last = record.useCount >= MAX_USES;
     return json(200, { 
       url,
       uses: record.useCount,
       maxUses: MAX_USES,
-      expiresAt: new Date(expiresAt).toISOString()
+      expiresAt: new Date(expiresAt).toISOString(),
+      last
     });
 
   } catch (e) {
