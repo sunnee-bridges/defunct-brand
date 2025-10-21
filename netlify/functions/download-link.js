@@ -8,7 +8,7 @@ const BUCKET        = process.env.S3_BUCKET_NAME;                  // required
 const MANIFEST_KEY  = process.env.S3_MANIFEST_KEY || "exports/manifest.json";
 const CSV_FALLBACK  = process.env.CSV_OBJECT_KEY || "exports/brands-latest.csv";           
 const DOWNLOAD_TTL  = Number(process.env.DOWNLOAD_TTL_SECONDS || 900); // 15m
-const MAX_USES      = Number(process.env.MAX_TOKEN_USES || 3); // Allow 3 downloads per token
+const MAX_USES      = Number(process.env.MAX_REDEMPTIONS || process.env.MAX_TOKEN_USES || 3);
 
 /* ---------- Tiny per-process rate limit ---------- */
 const RATE_LIMIT    = Number(process.env.RATE_LIMIT_PER_MIN || 20);
@@ -80,7 +80,9 @@ function isValidToken(t) {
 /* ---------- Handler ---------- */
 exports.handler = async (event) => {
   try {
-    if (event.httpMethod === "OPTIONS") return json(204, {});
+    if (event.httpMethod === "OPTIONS") {
+      return { statusCode: 204, headers: corsHeaders(), body: "" };
+    }
     if (!BUCKET) return json(500, { error: "Server not configured." });
     if (tooMany(event)) return json(429, { error: "Too many requests. Try again shortly." });
     if (event.httpMethod !== "POST") return json(405, { error: "POST only" });
@@ -117,7 +119,7 @@ exports.handler = async (event) => {
     const currentUseCount = record.useCount || 0;
     if (currentUseCount >= MAX_USES) {
       console.warn("[download-link] Token usage limit reached:", token, "uses:", currentUseCount);
-      return json(403, { 
+      return json(429, { 
         error: "Download limit reached",
         uses: currentUseCount,
         maxUses: MAX_USES,
