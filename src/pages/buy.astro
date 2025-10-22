@@ -92,49 +92,6 @@ const price = "9.00"; // USD
         return { ok: r.ok, status: r.status, data };
       }
 
-      // Builds a human-friendly error block (status-aware)
-      function renderDownloadError(dl){
-        var human =
-          (dl.data && (dl.data.message || dl.data.error)) ||
-          ("Download link error (HTTP " + (dl.status || "?") + ").");
-
-        if (dl.status === 429) {
-          human += " You’ve reached the maximum number of downloads for this purchase.";
-        } else if (dl.status === 410) {
-          human += " This purchase link has expired.";
-        } else if (dl.status === 404) {
-          human += " The download token could not be found.";
-        }
-
-        var support = ' If you need help, email <a class="link" href="mailto:support@vanishedbrands.com">support@vanishedbrands.com</a>.';
-
-        // Offer a one-click retry ONLY for transient 5xx
-        var retryHtml = "";
-        if (String(dl.status || "").startsWith("5")) {
-          retryHtml = `
-            <div class="mt-2">
-              <button id="retry-download" type="button"
-                class="px-3 py-1 rounded border border-slate-300 bg-white hover:bg-slate-50 text-sm">
-                Try again
-              </button>
-            </div>`;
-        }
-
-        setResultHTML(
-          '<p class="text-red-600 dark:text-red-400">' + human + support + '</p>' + retryHtml
-        );
-
-        // Wire retry if present
-        const btn = $('retry-download');
-        if (btn && window.__lastToken) {
-          btn.addEventListener('click', function(){
-            // Re-run the same redeem call with the last token
-            window.__redeemToken(window.__lastToken);
-          }, { once: true });
-        }
-      }
-
-      // ---------- Main ----------
       window.addEventListener('load', () => {
         const fallbackTimer = setTimeout(() => hideLoading(), 8000);
         if (!window.paypal || !window.paypal.Buttons) return;
@@ -171,51 +128,19 @@ const price = "9.00"; // USD
               return;
             }
 
-            // Save token globally so our retry button can reuse it if needed
-            window.__lastToken = cap.data.token;
+            // Payment captured → redirect to protected download route
+            hideLoading();
 
-            // Helper so retry can call the same redemption
-            window.__redeemToken = async function(token){
-              const dl = await httpJSON('/.netlify/functions/download-link', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token })
-              });
+            const dlPath = '/download/' + cap.data.token;
 
-              hideLoading();
+            // Visible fallback link in case navigation is blocked
+            setResultHTML(
+              '<p class="text-slate-700 dark:text-slate-300">Preparing your download… If it doesn’t start, ' +
+              '<a class="link" href="' + dlPath + '">click here</a>.</p>'
+            );
 
-              if (!dl.ok || !dl.data?.url) {
-                renderDownloadError(dl);
-                return;
-              }
-
-              const extra = dl.data.last === true
-                ? '<div class="note muted mt-2 text-sm text-slate-600 dark:text-slate-400">Heads up: that was your last allowed download for this purchase.</div>'
-                : '';
-
-              const linkHTML = `
-                <a
-                  href="${dl.data.url}"
-                  class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-sm sm:text-base font-medium no-underline focus-ring transition-colors"
-                  role="button" rel="noopener"
-                >
-                  <svg viewBox="0 0 20 20" aria-hidden="true" class="h-5 w-5">
-                    <path fill="currentColor" d="M10 2a1 1 0 0 1 1 1v7.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1 1 0 0 1-1.414 0L5.279 9.707A1 1 0 1 1 6.693 8.293L9 10.586V3a1 1 0 0 1 1-1Z"/>
-                    <path fill="currentColor" d="M4 14a2 2 0 0 0 2 2h8a2 2 0 1 0 0-4h-1a1 1 0 1 0 0 2h1a0 0 0 1 1 0 0 0 0 0H6a0 0 0 1 1 0 0 0 0 0a2 2 0 0 0-2 2Z"/>
-                  </svg>
-                  Click to download your CSV
-                </a>
-                ${extra}
-              `;
-
-              setResultHTML(linkHTML);
-
-              const resEl = $('result');
-              if (resEl) resEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            };
-
-            // First attempt to redeem
-            window.__redeemToken(cap.data.token);
+            // Navigate now
+            window.location.href = dlPath;
           },
 
           onError(err) {

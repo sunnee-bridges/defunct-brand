@@ -42,6 +42,12 @@
   to = "/category/:slug/"
   status = 301
 
+[[redirects]]
+  from = "/download/:token"
+  to = "/.netlify/functions/download-file?token=:token"
+  status = 200
+  force = true
+
 # --- Headers ---
 
 # Serve HTML explicitly as UTF-8 (prevents mojibake like Â / â€“)
