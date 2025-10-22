@@ -25,6 +25,7 @@ const price = "9.00"; // USD
       #paypal-btns .paypal-button-row,
       #paypal-btns .paypal-button-container,
       #paypal-btns iframe { background: transparent !important; }
+      .link { color:#2563eb; text-decoration:underline; }
     </style>
   </Fragment>
 
@@ -92,6 +93,7 @@ const price = "9.00"; // USD
         return { ok: r.ok, status: r.status, data };
       }
 
+      // ---------- Main ----------
       window.addEventListener('load', () => {
         const fallbackTimer = setTimeout(() => hideLoading(), 8000);
         if (!window.paypal || !window.paypal.Buttons) return;
@@ -128,19 +130,25 @@ const price = "9.00"; // USD
               return;
             }
 
-            // Payment captured → redirect to protected download route
+            // Payment captured → open protected download route in a new tab.
             hideLoading();
 
             const dlPath = '/download/' + cap.data.token;
 
-            // Visible fallback link in case navigation is blocked
+            // Show a visible fallback link (also useful if pop-ups are blocked)
             setResultHTML(
               '<p class="text-slate-700 dark:text-slate-300">Preparing your download… If it doesn’t start, ' +
-              '<a class="link" href="' + dlPath + '">click here</a>.</p>'
+              '<a class="link" href="' + dlPath + '" target="_blank" rel="noopener">click here</a>.</p>'
             );
 
-            // Navigate now
-            window.location.href = dlPath;
+            // Try to open in a new tab so /buy stays visible
+            try {
+              const w = window.open(dlPath, '_blank', 'noopener');
+              // If blocked, the link above remains for the user to click
+              if (!w) { /* popup blocked */ }
+            } catch (_) {
+              // Ignore; fallback link is visible
+            }
           },
 
           onError(err) {
