@@ -1,5 +1,4 @@
 ---
-// /src/pages/buy.astro
 import Base from "../layouts/Base.astro";
 
 const CLIENT_ID =
@@ -10,6 +9,7 @@ const title = "Buy the Full CSV";
 const description = "Secure checkout via PayPal. Receive a one-time download link after purchase.";
 const price = "9.00"; // USD
 ---
+
 <Base title={title} description={description}>
   <Fragment slot="head">
     {CLIENT_ID && (
@@ -19,7 +19,7 @@ const price = "9.00"; // USD
       />
     )}
     <style>
-      /* Keep PayPal's outer wrappers transparent (outside the iframe) */
+      /* Keep PayPal wrappers transparent so it looks good in both themes */
       #paypal-btns > div,
       #paypal-btns .paypal-buttons,
       #paypal-btns .paypal-button-row,
@@ -93,6 +93,19 @@ const price = "9.00"; // USD
         return { ok: r.ok, status: r.status, data };
       }
 
+      // Optional: build a friendly download-error block (used by retry flows)
+      function renderDownloadError(dl){
+        var human =
+          (dl.data && (dl.data.message || dl.data.error)) ||
+          ("Download link error (HTTP " + (dl.status || "?") + ").");
+
+        if (dl.status === 429) human += " You’ve reached the maximum number of downloads for this purchase.";
+        else if (dl.status === 410) human += " This purchase link has expired.";
+        else if (dl.status === 404) human += " The download token could not be found.";
+
+        setResultHTML('<p class="text-red-600 dark:text-red-400">' + human + '</p>');
+      }
+
       // ---------- Main ----------
       window.addEventListener('load', () => {
         const fallbackTimer = setTimeout(() => hideLoading(), 8000);
@@ -112,6 +125,7 @@ const price = "9.00"; // USD
             return res.data.id;
           },
 
+          // ✅ After capture, show a big green Download button AND try to open in a new tab
           async onApprove(data) {
             setResultHTML('<p class="text-slate-600 dark:text-slate-300">Finalizing payment…</p>');
 
@@ -130,25 +144,35 @@ const price = "9.00"; // USD
               return;
             }
 
-            // Payment captured → open protected download route in a new tab.
             hideLoading();
 
+            // Protected route that maps (via netlify.toml) to your function
             const dlPath = '/download/' + cap.data.token;
 
-            // Show a visible fallback link (also useful if pop-ups are blocked)
-            setResultHTML(
-              '<p class="text-slate-700 dark:text-slate-300">Preparing your download… If it doesn’t start, ' +
-              '<a class="link" href="' + dlPath + '" target="_blank" rel="noopener">click here</a>.</p>'
-            );
+            // Prominent “Download CSV” button as visible fallback
+            setResultHTML(`
+              <a
+                href="${dlPath}"
+                target="_blank" rel="noopener"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-sm sm:text-base font-medium no-underline focus-ring transition-colors"
+                role="button"
+              >
+                <svg viewBox="0 0 20 20" aria-hidden="true" class="h-5 w-5">
+                  <path fill="currentColor" d="M10 2a1 1 0 0 1 1 1v7.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1 1 0 0 1-1.414 0L5.279 9.707A1 1 0 1 1 6.693 8.293L9 10.586V3a1 1 0 0 1 1-1Z"/>
+                  <path fill="currentColor" d="M4 14a2 2 0 0 0 2 2h8a2 2 0 1 0 0-4h-1a1 1 0 1 0 0 2h1a0 0 0 1 1 0 0 0 0 0H6a0 0 0 1 1 0 0 0 0 0a2 2 0 0 0-2 2Z"/>
+                </svg>
+                Download CSV
+              </a>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                If the download doesn’t start automatically, click the button above.
+              </p>
+            `);
 
-            // Try to open in a new tab so /buy stays visible
-            try {
-              const w = window.open(dlPath, '_blank', 'noopener');
-              // If blocked, the link above remains for the user to click
-              if (!w) { /* popup blocked */ }
-            } catch (_) {
-              // Ignore; fallback link is visible
-            }
+            // Try to open in a new tab automatically; if blocked, the button above is visible
+            try { window.open(dlPath, '_blank', 'noopener'); } catch (_) {}
+
+            const resEl = $('result');
+            if (resEl) resEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
           },
 
           onError(err) {
