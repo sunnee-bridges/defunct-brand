@@ -1,10 +1,23 @@
 // netlify/functions/paypal-create-order.js
+
 const PAYPAL_ENV = (process.env.PUBLIC_PAYPAL_ENV || process.env.PAYPAL_ENV || "sandbox").toLowerCase();
 const BASE = PAYPAL_ENV === "live"
   ? "https://api-m.paypal.com"
   : "https://api-m.sandbox.paypal.com";
 
-/* --- tiny throttle --- */
+/* ---------- Pricing (server-authoritative) ----------
+ * PRICE_USD controls what PayPal shows.
+ * If not set:
+ *   - sandbox defaults to 0.01 (cheap testing)
+ *   - live    defaults to 9.00
+ * Optional: PRICE_CURRENCY (defaults to USD)
+ */
+const DEFAULT_PRICE = PAYPAL_ENV === "live" ? "9.00" : "0.01";
+const RAW_PRICE = (process.env.PRICE_USD || DEFAULT_PRICE).trim();
+const PRICE = normalizePrice(RAW_PRICE);            // always "x.xx"
+const CURRENCY = (process.env.PRICE_CURRENCY || "USD").trim().toUpperCase();
+
+/* ---------- Tiny throttle (best-effort per process) ---------- */
 const buckets = new Map();
 const LIMIT = Number(process.env.RATE_LIMIT_PER_MIN || 20);
 const WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS || 60_000);
@@ -19,15 +32,21 @@ function tooMany(event) {
   b.count += 1; buckets.set(ip, b);
   return b.count > LIMIT;
 }
+
 const json = (status, body) => ({
   statusCode: status,
-  headers: {
-    "Content-Type": "application/json",
-    "Cache-Control": "no-store",
-  },
+  headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   body: JSON.stringify(body),
 });
 
+function getOrigin(event) {
+  const h = event.headers || {};
+  const proto = (h["x-forwarded-proto"] || "https").split(",")[0].trim();
+  const host  = (h["x-forwarded-host"]  || h["host"] || "").split(",")[0].trim();
+  return `${proto}://${host}`;
+}
+
+/* ---------- PayPal helper ---------- */
 async function getAccessToken() {
   const id  = process.env.PAYPAL_CLIENT_ID;
   const sec = process.env.PAYPAL_CLIENT_SECRET;
@@ -45,35 +64,37 @@ async function getAccessToken() {
   return j.access_token;
 }
 
-function getOrigin(event) {
-  const h = event.headers || {};
-  const proto = (h["x-forwarded-proto"] || "https").split(",")[0].trim();
-  const host  = (h["x-forwarded-host"]  || h["host"] || "").split(",")[0].trim();
-  return `${proto}://${host}`;
+/* ---------- Price normalizer / guardrails ---------- */
+function normalizePrice(v) {
+  // accept "1", "1.5", "1.50", "  0.01  "
+  let n = Number(String(v).trim());
+  if (!Number.isFinite(n)) n = Number(DEFAULT_PRICE);
+  // Enforce 0.01 minimum (PayPal requires positive amounts)
+  if (n < 0.01) n = 0.01;
+  return n.toFixed(2);
 }
 
+/* ---------- Handler ---------- */
 exports.handler = async (event) => {
   try {
-    if (tooMany(event)) {
-      return json(429, { error: "Too many requests. Try again shortly." });
-    }
+    if (tooMany(event)) return json(429, { error: "Too many requests. Try again shortly." });
 
-    // Accept GET or POST (your client uses GET)
+    // Accept GET or POST
     if (event.httpMethod !== "GET" && event.httpMethod !== "POST") {
       return json(405, { error: "Method not allowed" });
     }
 
     const origin    = getOrigin(event);
-    const returnUrl = `${origin}/buy`;   // after approval
+    const returnUrl = `${origin}/buy`;   // after approval (we use JS capture, but keep these as a fallback)
     const cancelUrl = `${origin}/data`;  // if user cancels
 
-    const access = await getAccessToken();
-
+    // Build the purchase units from our server-side price
     const purchase_units = [{
-      amount: { currency_code: "USD", value: "9.00" },
+      amount: { currency_code: CURRENCY, value: PRICE },
       description: "Vanished Brands CSV",
     }];
 
+    const access = await getAccessToken();
     const r = await fetch(`${BASE}/v2/checkout/orders`, {
       method: "POST",
       headers: {
@@ -99,7 +120,13 @@ exports.handler = async (event) => {
       return json(502, { error: "create order failed" });
     }
 
-    return json(200, { id: data.id });
+    // Include price/currency/env in the response for easy debugging from the browser
+    return json(200, {
+      id: data.id,
+      price: PRICE,
+      currency: CURRENCY,
+      env: PAYPAL_ENV,
+    });
   } catch (e) {
     console.error("[create-order] error", e);
     return json(500, { error: String(e?.message || e) });
