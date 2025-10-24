@@ -1,16 +1,16 @@
 ---
-/* /src/pages/buy.astro */
+// /src/pages/buy.astro
 import Base from "../layouts/Base.astro";
 
 const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
 
-// Display-only; the server decides the real amount via PRICE_USD
+// Display-only price; server decides real amount via PRICE_USD (in your function)
 const PRICE_LABEL = import.meta.env.PUBLIC_PRICE_LABEL || "$9";
 
 const title = "Buy the Full CSV";
-const description = "Secure checkout via PayPal. Receive a one-time download link immediately after purchase.";
+const description = "Secure checkout via PayPal. Receive a one-time download link after purchase.";
 ---
 
 <Base title={title} description={description}>
@@ -30,7 +30,6 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
       #paypal-btns iframe { background: transparent !important; }
 
       .link { color:#2563eb; text-decoration:underline; }
-
       .btn {
         display:inline-flex; align-items:center; gap:.5rem;
         padding:.5rem 1rem; border-radius:9999px;
@@ -70,9 +69,10 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
     <>
       <section class="rounded-xl border p-4 bg-white shadow-sm text-slate-900 border-slate-200 dark:border-slate-700">
         <h2 class="sr-only">Payment</h2>
-        <div id="paypal-loading" role="status" aria-live="polite" class="text-sm text-slate-600 text-center">
-          Loading…
-        </div>
+
+        <div id="paypal-loading" role="status" aria-live="polite"
+             class="text-sm text-slate-600 text-center">Loading…</div>
+
         <div class="mt-3 flex justify-center">
           <div id="paypal-btns" class="w-full max-w-[480px]"></div>
         </div>
@@ -109,64 +109,77 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         return { ok: r.ok, status: r.status, data };
       }
 
-      function renderButton(token, remainingLineHtml){
+      function renderButton(token, remainingLineHtml = ""){
         const dlPath = '/download/' + token;
+        const icon = `
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+            <path fill="currentColor"
+              d="M3 16.5V18a2.25 2.25 0 0 0 2.25 2.25h13.5A2.25 2.25 0 0 0 21 18v-1.5a.75.75 0 0 0-1.5 0V18c0 .414-.336.75-.75.75H5.25A.75.75 0 0 1 4.5 18v-1.5a.75.75 0 0 0-1.5 0ZM12.75 3a.75.75 0 0 0-1.5 0v9.19l-3.22-3.22a.75.75 0 1 0-1.06 1.06l4.5 4.5a.75.75 0 0 0 1.06 0l4.5-4.5a.75.75 0 1 0-1.06-1.06l-3.22 3.22V3Z"/>
+          </svg>
+        `;
 
-        // Inline SVG from Heroicons (no arc flags → avoids the previous path error)
-        var icon =
-          '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">' +
-          '<path fill="currentColor" d="M3 16.5V18a2.25 2.25 0 0 0 2.25 2.25h13.5A2.25 2.25 0 0 0 21 18v-1.5a.75.75 0 0 0-1.5 0V18c0 .414-.336.75-.75.75H5.25A.75.75 0 0 1 4.5 18v-1.5a.75.75 0 0 0-1.5 0ZM12.75 3a.75.75 0 0 0-1.5 0v9.19l-3.22-3.22a.75.75 0 1 0-1.06 1.06l4.5 4.5a.75.75 0 0 0 1.06 0l4.5-4.5a.75.75 0 1 0-1.06-1.06l-3.22 3.22V3Z"/>' +
-          '</svg>';
+        setHTML('result', `
+          <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
+            <div class="ok">✅ Download ready.</div>
+            ${remainingLineHtml}
+            <div class="mt-3">
+              <a id="btn-download" href="${dlPath}" class="btn" role="button">
+                ${icon}
+                <span>Download CSV</span>
+              </a>
+            </div>
+            <div class="note muted mt-3">
+              Having trouble? <a class="link" href="mailto:support@vanishedbrands.com">Resend link</a>
+            </div>
+          </div>
+        `);
 
-        var extra = remainingLineHtml || "";
+        // Attach click handler: redeem via POST (increments useCount), then open S3 URL
+        const btn = $('btn-download');
+        if (btn) {
+          btn.addEventListener('click', async (ev) => {
+            ev.preventDefault();
+            if (btn.getAttribute('aria-disabled') === 'true') return;
+            btn.setAttribute('aria-disabled', 'true');
+            const prev = btn.innerHTML;
+            btn.innerHTML = 'Preparing…';
 
-        var html = '' +
-          '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">' +
-            '<div class="ok">✅ Preparing your download…</div>' +
-            extra +
-            '<div class="mt-3">' +
-              '<a id="btn-download" href="' + dlPath + '" target="_blank" rel="noopener" class="btn" role="button">' +
-                icon +
-                '<span>Download CSV</span>' +
-              '</a>' +
-            '</div>' +
-            '<div class="note muted mt-3">' +
-              'Having trouble? <a class="link" href="mailto:support@vanishedbrands.com">Resend link</a>' +
-            '</div>' +
-          '</div>';
+            try {
+              const res = await httpJSON('/.netlify/functions/download-link', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+              });
 
-        setHTML('result', html);
+              if (!res.ok || !res.data?.url) {
+                setHTML('result', '<p class="err">Could not prepare download. Please try again.</p>');
+                return;
+              }
 
-        var resEl = $('result');
-        if (resEl) resEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+              // Update remaining line based on this redemption
+              const remaining = Math.max(0, res.data.maxUses - res.data.uses);
+              const expires = res.data.expiresAt ? new Date(res.data.expiresAt).toLocaleString() : '';
+              const lastNote = res.data.last ? '<div class="note muted mt-1">That was your last allowed download.</div>' : '';
 
-      // Non-consuming peek for remaining/expiry
-      async function peekRemaining(token){
-        var url = '/.netlify/functions/download-link?peek=1&token=' + encodeURIComponent(token);
-        var r = await httpJSON(url, { method: 'GET', headers: { Accept: 'application/json' } });
-        if (!r.ok || !r.data) return null;
+              renderButton(token, `
+                <div class="note muted mt-1">
+                  Remaining downloads: <strong>${remaining}</strong> of <strong>${res.data.maxUses}</strong>.
+                  ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
+                </div>
+                ${lastNote}
+              `);
 
-        var maxUses = r.data.maxUses || 0;
-        var uses = r.data.uses || 0;
-        var remaining = (typeof r.data.remaining === 'number')
-          ? r.data.remaining
-          : Math.max(0, maxUses - uses);
-        var expires = r.data.expiresAt ? new Date(r.data.expiresAt).toLocaleString() : "";
-
-        var expiresText = expires ? ' Link valid until <time>' + expires + '</time>.' : '';
-        var lastNote = r.data.last
-          ? '<div class="note muted mt-1">Heads up: that was your last allowed download.</div>'
-          : '';
-
-        var line = '' +
-          '<div class="note muted mt-1">' +
-            'Remaining downloads: <strong>' + remaining + '</strong> of <strong>' + maxUses + '</strong>.' +
-            expiresText +
-          '</div>' +
-          lastNote;
-
-        return { line: line, remaining: remaining, info: r.data };
+              // Open file in a new tab
+              window.open(res.data.url, '_blank', 'noopener');
+            } finally {
+              const refreshedBtn = $('btn-download');
+              if (refreshedBtn) {
+                refreshedBtn.removeAttribute('aria-disabled');
+                refreshedBtn.innerHTML = prev; // restore label (renderButton re-created it anyway)
+              }
+            }
+          });
+        }
       }
 
       // ---------- Main (PayPal) ----------
@@ -207,23 +220,37 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
             hideLoading();
 
             const token = cap.data.token;
-            const dlPath = '/download/' + token;
 
-            // 1) Render the button immediately (visible fallback)
-            renderButton(token, '');
+            // First redemption via POST to increment useCount and get the actual S3 URL + counts
+            const first = await httpJSON('/.netlify/functions/download-link', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token })
+            });
 
-            // 2) Auto-open the download in a new tab (counts as one use)
-            try { window.open(dlPath, '_blank', 'noopener'); } catch(_) {}
-
-            // 3) Update the “Remaining” line WITHOUT consuming a use
-            try {
-              const rem = await peekRemaining(token);
-              if (rem && typeof rem.line === 'string') {
-                renderButton(token, rem.line);
-              }
-            } catch (_) {
-              // ignore background errors; the button is already visible
+            if (!first.ok || !first.data?.url) {
+              setHTML('result', '<p class="err">Could not prepare download. Please try again.</p>');
+              return;
             }
+
+            const remaining = Math.max(0, first.data.maxUses - first.data.uses);
+            const expires = first.data.expiresAt ? new Date(first.data.expiresAt).toLocaleString() : '';
+            const lastNote = first.data.last ? '<div class="note muted mt-1">Heads up: that was your last allowed download.</div>' : '';
+
+            // Render green button with the *correct* remaining line
+            renderButton(token, `
+              <div class="note muted mt-1">
+                Remaining downloads: <strong>${remaining}</strong> of <strong>${first.data.maxUses}</strong>.
+                ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
+              </div>
+              ${lastNote}
+            `);
+
+            // Auto-open the first S3 URL (already redeemed)
+            try { window.open(first.data.url, '_blank', 'noopener'); } catch (_) {}
+
+            const resEl = $('result');
+            if (resEl) resEl.scrollIntoView({ behavior:'smooth', block:'center' });
           },
 
           onError(err) {
