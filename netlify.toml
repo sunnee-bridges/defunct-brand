@@ -44,7 +44,7 @@
 
 [[redirects]]
   from = "/download/:token"
-  to = "/.netlify/functions/download-file?token=:token"
+  to = "/.netlify/functions/download-link?token=:token&redirect=1"
   status = 200
   force = true
 
