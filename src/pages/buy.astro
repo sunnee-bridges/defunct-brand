@@ -212,14 +212,38 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
             try { window.open(dlPath, '_blank', 'noopener'); } catch(_) {}
 
             // 3) Background: fetch counts & expiry and update the “Remaining” line
-            try {
-              const rem = await fetchRemaining(token);
-              if (rem && typeof rem.line === 'string') {
-                renderButton(token, rem.line);
-              }
-            } catch (_) {
-              // Ignore background errors; the button is already visible
-            }
+            // 3) Background: fetch counts & expiry WITHOUT consuming a use
+try {
+  const url =
+    '/.netlify/functions/download-link?peek=1&token=' +
+    encodeURIComponent(token);
+
+  const peek = await httpJSON(url, {
+    method: 'GET',
+    headers: { Accept: 'application/json' }
+  });
+
+  if (peek.ok && peek.data) {
+    const remaining =
+      (peek.data.remaining ?? (peek.data.maxUses - (peek.data.uses || 0)));
+    const expires = peek.data.expiresAt
+      ? new Date(peek.data.expiresAt).toLocaleString()
+      : '';
+    const lastNote = peek.data.last
+      ? '<div class="note muted mt-1">Heads up: that was your last allowed download.</div>'
+      : '';
+
+    renderButton(token, `
+      <div class="note muted mt-1">
+        Remaining downloads: <strong>${remaining}</strong> of
+        <strong>${peek.data.maxUses}</strong>.
+        ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
+      </div>
+      ${lastNote}
+    `);
+  }
+} catch (_) { /* ignore background errors */ }
+
 
             // Make sure the success UI is visible
             const resEl = $('result');
