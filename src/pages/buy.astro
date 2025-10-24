@@ -36,15 +36,15 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         background:#059669; color:#fff; text-decoration:none;
         transition:background-color .15s ease-in-out, opacity .15s;
       }
-     .btn:hover { background:#047857; }
-     .btn:active { background:#065f46; }
-     .btn[aria-disabled="true"] { opacity:.6; pointer-events:none; }
+      .btn:hover { background:#047857; }
+      .btn:active { background:#065f46; }
+      .btn[aria-disabled="true"] { opacity:.6; pointer-events:none; }
 
-     .muted { color:#6b7280; }
-     .ok { color:#065f46; }
-     .err { color:#b91c1c; }
-     .note { font-size:.875rem; }
-     .chip { border:1px solid #cbd5e1; padding:.25rem .5rem; border-radius:9999px; }
+      .muted { color:#6b7280; }
+      .ok { color:#065f46; }
+      .err { color:#b91c1c; }
+      .note { font-size:.875rem; }
+      .chip { border:1px solid #cbd5e1; padding:.25rem .5rem; border-radius:9999px; }
     </style>
   </Fragment>
 
@@ -109,59 +109,51 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         return { ok: r.ok, status: r.status, data };
       }
 
-      ffunction renderButton(token, remainingLineHtml = ""){
-  const dlPath = '/download/' + token;
-  // Heroicons "ArrowDownTray" (no arc commands; widely compatible)
-  const icon = `
-    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
-      <path fill="currentColor"
-        d="M3 16.5V18a2.25 2.25 0 0 0 2.25 2.25h13.5A2.25 2.25 0 0 0 21 18v-1.5a.75.75 0 0 0-1.5 0V18c0 .414-.336.75-.75.75H5.25A.75.75 0 0 1 4.5 18v-1.5a.75.75 0 0 0-1.5 0ZM12.75 3a.75.75 0 0 0-1.5 0v9.19l-3.22-3.22a.75.75 0 1 0-1.06 1.06l4.5 4.5a.75.75 0 0 0 1.06 0l4.5-4.5a.75.75 0 1 0-1.06-1.06l-3.22 3.22V3Z"/>
-    </svg>
-  `;
+      function renderButton(token, remainingLineHtml = ""){
+        const dlPath = '/download/' + token;
+        // Heroicons ArrowDownTray (no arc commands)
+        const icon = `
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+            <path fill="currentColor"
+              d="M3 16.5V18a2.25 2.25 0 0 0 2.25 2.25h13.5A2.25 2.25 0 0 0 21 18v-1.5a.75.75 0 0 0-1.5 0V18c0 .414-.336.75-.75.75H5.25A.75.75 0 0 1 4.5 18v-1.5a.75.75 0 0 0-1.5 0ZM12.75 3a.75.75 0 0 0-1.5 0v9.19l-3.22-3.22a.75.75 0 1 0-1.06 1.06l4.5 4.5a.75.75 0 0 0 1.06 0l4.5-4.5a.75.75 0 1 0-1.06-1.06l-3.22 3.22V3Z"/>
+          </svg>
+        `;
 
-  document.getElementById('result').innerHTML = `
-    <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
-      <div class="ok">✅ Preparing your download…</div>
-      ${remainingLineHtml}
-      <div class="mt-3">
-        <a id="btn-download" href="${dlPath}" target="_blank" rel="noopener" class="btn" role="button">
-          ${icon}
-          <span>Download CSV</span>
-        </a>
-      </div>
-      <div class="note muted mt-3">
-        Having trouble? <a class="link" href="mailto:support@vanishedbrands.com">Resend link</a>
-      </div>
-    </div>
-  `;
-}
+        setHTML('result', `
+          <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
+            <div class="ok">✅ Preparing your download…</div>
+            ${remainingLineHtml}
+            <div class="mt-3">
+              <a id="btn-download" href="${dlPath}" target="_blank" rel="noopener" class="btn" role="button">
+                ${icon}
+                <span>Download CSV</span>
+              </a>
+            </div>
+            <div class="note muted mt-3">
+              Having trouble? <a class="link" href="mailto:support@vanishedbrands.com">Resend link</a>
+            </div>
+          </div>
+        `);
+      }
 
-
+      // Optional helper (kept if you still want the background “peek”)
       async function fetchRemaining(token){
-        // Hit the JSON POST endpoint to get counts & expiry; this consumes a use (your current function behavior).
-        const dl = await httpJSON('/.netlify/functions/download-link', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token })
-        });
-        if (!dl.ok || !dl.data?.url) return null;
+        const url = '/.netlify/functions/download-link?peek=1&token=' + encodeURIComponent(token);
+        const peek = await httpJSON(url, { method: 'GET', headers: { Accept: 'application/json' } });
+        if (!peek.ok || !peek.data) return null;
 
-        const remaining = Math.max(0, dl.data.maxUses - dl.data.uses);
-        const expires = dl.data.expiresAt ? new Date(dl.data.expiresAt).toLocaleString() : null;
-        const lastNote = dl.data.last === true
-          ? `<div class="note muted mt-1">Heads up: that was your last allowed download.</div>`
-          : '';
+        const remaining = (peek.data.remaining ?? (peek.data.maxUses - (peek.data.uses || 0)));
+        const expires = peek.data.expiresAt ? new Date(peek.data.expiresAt).toLocaleString() : "";
+        const lastNote = peek.data.last ? '<div class="note muted mt-1">Heads up: that was your last allowed download.</div>' : '';
 
         return {
           line: `
             <div class="note muted mt-1">
-              Remaining downloads: <strong>${remaining}</strong> of <strong>${dl.data.maxUses}</strong>.
-              ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
+              Remaining downloads: <strong>${remaining}</strong> of <strong>${peek.data.maxUses}</strong>.
+              ${expires ? \` Link valid until <time>\${expires}</time>.\` : ""}
             </div>
             ${lastNote}
-          `,
-          remaining,
-          info: dl.data,
+          `
         };
       }
 
@@ -211,39 +203,13 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
             // 2) Auto-open the download in a new tab
             try { window.open(dlPath, '_blank', 'noopener'); } catch(_) {}
 
-            // 3) Background: fetch counts & expiry and update the “Remaining” line
             // 3) Background: fetch counts & expiry WITHOUT consuming a use
-try {
-  const url =
-    '/.netlify/functions/download-link?peek=1&token=' +
-    encodeURIComponent(token);
-
-  const peek = await httpJSON(url, {
-    method: 'GET',
-    headers: { Accept: 'application/json' }
-  });
-
-  if (peek.ok && peek.data) {
-    const remaining =
-      (peek.data.remaining ?? (peek.data.maxUses - (peek.data.uses || 0)));
-    const expires = peek.data.expiresAt
-      ? new Date(peek.data.expiresAt).toLocaleString()
-      : '';
-    const lastNote = peek.data.last
-      ? '<div class="note muted mt-1">Heads up: that was your last allowed download.</div>'
-      : '';
-
-    renderButton(token, `
-      <div class="note muted mt-1">
-        Remaining downloads: <strong>${remaining}</strong> of
-        <strong>${peek.data.maxUses}</strong>.
-        ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
-      </div>
-      ${lastNote}
-    `);
-  }
-} catch (_) { /* ignore background errors */ }
-
+            try {
+              const rem = await fetchRemaining(token);
+              if (rem && typeof rem.line === 'string') {
+                renderButton(token, rem.line);
+              }
+            } catch (_) {}
 
             // Make sure the success UI is visible
             const resEl = $('result');
