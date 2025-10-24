@@ -40,7 +40,7 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
       .btn[aria-disabled="true"] { opacity:.6; pointer-events:none; }
 
       .muted { color:#6b7280; }
-      .ok { color:#065f46; }
+      .ok { font-weight:600; } /* color handled by Tailwind utilities in markup */
       .err { color:#b91c1c; }
       .note { font-size:.875rem; }
       .chip { border:1px solid #cbd5e1; padding:.25rem .5rem; border-radius:9999px; }
@@ -108,7 +108,73 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         return { ok: r.ok, status: r.status, data };
       }
 
-      // Render the success card with the green download button (same-tab link)
+      // ---------- Inline "limit reached" alert ----------
+      function showLimitInline({ message, uses, maxUses } = {}) {
+        const host = document.getElementById('limit-inline');
+        if (!host) return;
+        host.innerHTML = `
+          <div class="mt-3 rounded-lg border border-rose-300 bg-rose-50 p-3 text-rose-800
+                      dark:border-rose-800/60 dark:bg-rose-900/20 dark:text-rose-200">
+            <div class="font-semibold">Download limit reached</div>
+            <p class="mt-1 text-sm">\${message || "You've reached the maximum number of downloads."}</p>
+            \${(uses != null && maxUses != null)
+              ? \`<p class="mt-1 text-xs opacity-80">Attempts used: \${uses} of \${maxUses}</p>\`
+              : ``}
+            <div class="mt-2">
+              <a class="link underline dark:text-sky-300"
+                 href="mailto:support@vanishedbrands.com?subject=Help%20with%20download%20limit">
+                Contact support
+              </a>
+            </div>
+          </div>
+        `;
+        host.classList.remove('hidden');
+        host.scrollIntoView({ behavior:'smooth', block:'center' });
+      }
+
+      // Non-consuming check (your Netlify function should support ?peek=1)
+      async function checkDownloadAllowed(token) {
+        const url = '/.netlify/functions/download-link?peek=1&token=' + encodeURIComponent(token);
+        const r = await httpJSON(url, { method: 'GET', headers: { 'Accept': 'application/json' } });
+        if (!r.ok || !r.data) return { allowed: false, message: 'Could not verify download.' };
+
+        const d = r.data;
+        const uses = d.uses ?? 0;
+        const maxUses = d.maxUses ?? 0;
+        const remaining = d.remaining ?? Math.max(0, maxUses - uses);
+
+        if (d.error || d.allowed === false || remaining <= 0 || uses >= maxUses) {
+          return { allowed: false, message: d.message || d.error || "You've reached the maximum number of downloads.", uses, maxUses };
+        }
+        return { allowed: true, remaining, uses, maxUses };
+      }
+
+      // Fetch remaining counts/expiry WITHOUT consuming a use
+      async function peekRemaining(token){
+        const url = '/.netlify/functions/download-link?peek=1&token=' + encodeURIComponent(token);
+        const r = await httpJSON(url, { method:'GET', headers:{ 'Accept':'application/json' }});
+        if (!r.ok || !r.data) return null;
+
+        const remaining = (r.data.remaining != null)
+          ? r.data.remaining
+          : Math.max(0, (r.data.maxUses || 0) - (r.data.uses || 0));
+        const expires = r.data.expiresAt ? new Date(r.data.expiresAt).toLocaleString() : "";
+        const lastNote = r.data.last
+          ? '<div class="note mt-1 text-slate-600 dark:text-zinc-400">Heads up: that was your last allowed download.</div>'
+          : '';
+
+        return {
+          line: `
+            <div class="note mt-1 text-slate-600 dark:text-zinc-400">
+              Remaining downloads: <strong>\${remaining}</strong> of <strong>\${r.data.maxUses}</strong>.
+              \${expires ? \` Link valid until <time>\${expires}</time>.\` : ""}
+            </div>
+            \${lastNote}
+          `
+        };
+      }
+
+      // ---------- Renderer for the download card with inline alert host ----------
       function renderButton(token, remainingLineHtml = ""){
         const dlPath = '/download/' + token;
         const icon = `
@@ -120,63 +186,47 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
 
         setHTML('result', `
           <div class="rounded-lg border border-slate-600 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
-            <div class="ok">✅ Preparing your download…</div>
-            ${remainingLineHtml}
+            <div class="ok text-slate-800 dark:text-slate-200">✅ Preparing your download…</div>
+            \${remainingLineHtml || ''}
             <div class="mt-3">
-              <a id="btn-download" href="${dlPath}" class="btn inline-flex items-center gap-2 rounded-2xl px-3 py-2
-              bg-sky-600 text-white hover:bg-sky-700
-              focus:outline-none focus:ring-2 focus:ring-sky-400
-              dark:bg-sky-500 dark:hover:bg-sky-400" role="button" rel="noopener">
-                ${icon}
+              <a id="btn-download" href="\${dlPath}"
+                 class="btn inline-flex items-center gap-2 rounded-2xl px-3 py-2
+                        bg-sky-600 text-white hover:bg-sky-700
+                        focus:outline-none focus:ring-2 focus:ring-sky-400
+                        dark:bg-sky-500 dark:hover:bg-sky-400"
+                 role="button" rel="noopener">
+                \${icon}
                 <span>Download CSV</span>
               </a>
             </div>
-            <div class="note muted mt-3 text-slate-600 dark:text-zinc-400">
+            <div id="limit-inline" class="hidden"></div>
+            <div class="note mt-3 text-slate-600 dark:text-zinc-400">
               Having trouble? <a class="link underline decoration-slate-400/60 hover:decoration-transparent dark:text-sky-300" href="mailto:support@vanishedbrands.com">Resend link</a>
             </div>
           </div>
         `);
 
-        // Debounce the button to avoid double-clicks wasting uses
         const btn = $('btn-download');
         if (btn) {
-          let inFlight = false;
-          btn.addEventListener('click', (ev) => {
-            if (inFlight) { ev.preventDefault(); return; }
-            inFlight = true;
-            btn.setAttribute('aria-disabled', 'true');
-            setTimeout(() => { inFlight = false; btn.removeAttribute('aria-disabled'); }, 2500);
+          btn.addEventListener('click', async (ev) => {
+            ev.preventDefault();
+            if (btn.dataset.busy === '1') return;
+            btn.dataset.busy = '1';
+            btn.setAttribute('aria-disabled','true');
+
+            const chk = await checkDownloadAllowed(token);
+            if (!chk.allowed) {
+              showLimitInline(chk); // inline message; no navigation
+            } else {
+              window.location.href = dlPath; // proceed with real download
+            }
+
+            setTimeout(() => { btn.dataset.busy=''; btn.removeAttribute('aria-disabled'); }, 1200);
           });
         }
 
         const resEl = $('result');
         if (resEl) resEl.scrollIntoView({ behavior:'smooth', block:'center' });
-      }
-
-      // Fetch remaining counts/expiry WITHOUT consuming a use
-      async function peekRemaining(token){
-        // Your download-link function must support: GET ?peek=1&token=...
-        const url = '/.netlify/functions/download-link?peek=1&token=' + encodeURIComponent(token);
-        const r = await httpJSON(url, { method:'GET', headers:{ 'Accept':'application/json' }});
-        if (!r.ok || !r.data) return null;
-
-        const remaining = (r.data.remaining != null)
-          ? r.data.remaining
-          : Math.max(0, (r.data.maxUses || 0) - (r.data.uses || 0));
-        const expires = r.data.expiresAt ? new Date(r.data.expiresAt).toLocaleString() : "";
-        const lastNote = r.data.last
-          ? '<div class="note muted mt-1">Heads up: that was your last allowed download.</div>'
-          : '';
-
-        return {
-          line: `
-            <div class="note muted mt-1">
-              Remaining downloads: <strong>${remaining}</strong> of <strong>${r.data.maxUses}</strong>.
-              ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
-            </div>
-            ${lastNote}
-          `
-        };
       }
 
       // ---------- Main (PayPal) ----------
@@ -222,27 +272,30 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
             // 1) Render the visible button immediately (same-tab link)
             renderButton(token, '');
 
-            // 2) AUTO-DOWNLOAD with popup-primer (new tab first, else same-tab fallback)
-            // Open a blank tab synchronously (gesture context), then navigate it when URL is ready
-            let primer = null;
-            try { primer = window.open('', '_blank', 'noopener'); } catch(_) {}
-            try {
-              if (primer && !primer.closed) {
-                primer.location = dlPath;   // new-tab auto download
-              } else {
-                // Final fallback: same-tab navigation if opener was blocked
+            // 2) Check limit before auto-downloading
+            const chk = await checkDownloadAllowed(token);
+            if (!chk.allowed) {
+              showLimitInline(chk); // inline message; no navigation
+            } else {
+              // Allowed → try new-tab primer, fall back to same tab
+              let primer = null;
+              try { primer = window.open('', '_blank', 'noopener'); } catch(_) {}
+              try {
+                if (primer && !primer.closed) {
+                  primer.location = dlPath;
+                } else {
+                  window.location.href = dlPath;
+                }
+              } catch (_) {
                 window.location.href = dlPath;
               }
-            } catch (_) {
-              // If anything odd happens with the primer, fall back to same-tab navigation
-              window.location.href = dlPath;
             }
 
-            // 3) Background peek: show remaining count without consuming a use
+            // 3) Background peek to update remaining line (non-consuming)
             try {
               const peek = await peekRemaining(token);
               if (peek && peek.line) renderButton(token, peek.line);
-            } catch (_) { /* ignore background errors */ }
+            } catch (_) { /* ignore */ }
           },
 
           onError(err) {
