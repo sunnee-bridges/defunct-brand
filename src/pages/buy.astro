@@ -21,7 +21,7 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         defer
       />
     )}
-    <style>
+    <style is:global>
       /* Keep PayPal wrappers transparent so it looks good in both themes */
       #paypal-btns > div,
       #paypal-btns .paypal-buttons,
@@ -34,13 +34,17 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         display:inline-flex; align-items:center; gap:.5rem;
         padding:.5rem 1rem; border-radius:9999px;
         background:#059669; color:#fff; text-decoration:none;
+        transition:background-color .15s ease-in-out, opacity .15s;
       }
-      .btn[aria-disabled="true"] { opacity:.6; pointer-events:none; }
-      .muted { color: #6b7280; }
-      .ok { color: #065f46; }
-      .err { color: #b91c1c; }
-      .note { font-size:.875rem; }
-      .chip { border:1px solid #cbd5e1; padding:.25rem .5rem; border-radius:9999px; }
+     .btn:hover { background:#047857; }
+     .btn:active { background:#065f46; }
+     .btn[aria-disabled="true"] { opacity:.6; pointer-events:none; }
+
+     .muted { color:#6b7280; }
+     .ok { color:#065f46; }
+     .err { color:#b91c1c; }
+     .note { font-size:.875rem; }
+     .chip { border:1px solid #cbd5e1; padding:.25rem .5rem; border-radius:9999px; }
     </style>
   </Fragment>
 
