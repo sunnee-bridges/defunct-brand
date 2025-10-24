@@ -1,12 +1,11 @@
 ---
-// /src/pages/buy.astro
 import Base from "../layouts/Base.astro";
 
 const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
 
-// Display-only price; server decides real amount via PRICE_USD (in your function)
+// Display-only; server controls the real price via PRICE_USD
 const PRICE_LABEL = import.meta.env.PUBLIC_PRICE_LABEL || "$9";
 
 const title = "Buy the Full CSV";
@@ -22,7 +21,7 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
       />
     )}
     <style is:global>
-      /* Keep PayPal wrappers transparent so it looks good in both themes */
+      /* Make PayPal wrappers transparent so it looks good in light/dark */
       #paypal-btns > div,
       #paypal-btns .paypal-buttons,
       #paypal-btns .paypal-button-row,
@@ -109,6 +108,7 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         return { ok: r.ok, status: r.status, data };
       }
 
+      // Render the success card with the green download button (same-tab link)
       function renderButton(token, remainingLineHtml = ""){
         const dlPath = '/download/' + token;
         const icon = `
@@ -120,10 +120,10 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
 
         setHTML('result', `
           <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
-            <div class="ok">✅ Download ready.</div>
+            <div class="ok">✅ Preparing your download…</div>
             ${remainingLineHtml}
             <div class="mt-3">
-              <a id="btn-download" href="${dlPath}" class="btn" role="button">
+              <a id="btn-download" href="${dlPath}" class="btn" role="button" rel="noopener">
                 ${icon}
                 <span>Download CSV</span>
               </a>
@@ -134,52 +134,46 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
           </div>
         `);
 
-        // Attach click handler: redeem via POST (increments useCount), then open S3 URL
+        // Debounce the button to avoid double-clicks wasting uses
         const btn = $('btn-download');
         if (btn) {
-          btn.addEventListener('click', async (ev) => {
-            ev.preventDefault();
-            if (btn.getAttribute('aria-disabled') === 'true') return;
+          let inFlight = false;
+          btn.addEventListener('click', (ev) => {
+            if (inFlight) { ev.preventDefault(); return; }
+            inFlight = true;
             btn.setAttribute('aria-disabled', 'true');
-            const prev = btn.innerHTML;
-            btn.innerHTML = 'Preparing…';
-
-            try {
-              const res = await httpJSON('/.netlify/functions/download-link', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token })
-              });
-
-              if (!res.ok || !res.data?.url) {
-                setHTML('result', '<p class="err">Could not prepare download. Please try again.</p>');
-                return;
-              }
-
-              // Update remaining line based on this redemption
-              const remaining = Math.max(0, res.data.maxUses - res.data.uses);
-              const expires = res.data.expiresAt ? new Date(res.data.expiresAt).toLocaleString() : '';
-              const lastNote = res.data.last ? '<div class="note muted mt-1">That was your last allowed download.</div>' : '';
-
-              renderButton(token, `
-                <div class="note muted mt-1">
-                  Remaining downloads: <strong>${remaining}</strong> of <strong>${res.data.maxUses}</strong>.
-                  ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
-                </div>
-                ${lastNote}
-              `);
-
-              // Open file in a new tab
-              window.open(res.data.url, '_blank', 'noopener');
-            } finally {
-              const refreshedBtn = $('btn-download');
-              if (refreshedBtn) {
-                refreshedBtn.removeAttribute('aria-disabled');
-                refreshedBtn.innerHTML = prev; // restore label (renderButton re-created it anyway)
-              }
-            }
+            setTimeout(() => { inFlight = false; btn.removeAttribute('aria-disabled'); }, 2500);
           });
         }
+
+        const resEl = $('result');
+        if (resEl) resEl.scrollIntoView({ behavior:'smooth', block:'center' });
+      }
+
+      // Fetch remaining counts/expiry WITHOUT consuming a use
+      async function peekRemaining(token){
+        // Your download-link function must support: GET ?peek=1&token=...
+        const url = '/.netlify/functions/download-link?peek=1&token=' + encodeURIComponent(token);
+        const r = await httpJSON(url, { method:'GET', headers:{ 'Accept':'application/json' }});
+        if (!r.ok || !r.data) return null;
+
+        const remaining = (r.data.remaining != null)
+          ? r.data.remaining
+          : Math.max(0, (r.data.maxUses || 0) - (r.data.uses || 0));
+        const expires = r.data.expiresAt ? new Date(r.data.expiresAt).toLocaleString() : "";
+        const lastNote = r.data.last
+          ? '<div class="note muted mt-1">Heads up: that was your last allowed download.</div>'
+          : '';
+
+        return {
+          line: `
+            <div class="note muted mt-1">
+              Remaining downloads: <strong>${remaining}</strong> of <strong>${r.data.maxUses}</strong>.
+              ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
+            </div>
+            ${lastNote}
+          `
+        };
       }
 
       // ---------- Main (PayPal) ----------
@@ -220,37 +214,32 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
             hideLoading();
 
             const token = cap.data.token;
+            const dlPath = '/download/' + token;
 
-            // First redemption via POST to increment useCount and get the actual S3 URL + counts
-            const first = await httpJSON('/.netlify/functions/download-link', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ token })
-            });
+            // 1) Render the visible button immediately (same-tab link)
+            renderButton(token, '');
 
-            if (!first.ok || !first.data?.url) {
-              setHTML('result', '<p class="err">Could not prepare download. Please try again.</p>');
-              return;
+            // 2) AUTO-DOWNLOAD with popup-primer (new tab first, else same-tab fallback)
+            // Open a blank tab synchronously (gesture context), then navigate it when URL is ready
+            let primer = null;
+            try { primer = window.open('', '_blank', 'noopener'); } catch(_) {}
+            try {
+              if (primer && !primer.closed) {
+                primer.location = dlPath;   // new-tab auto download
+              } else {
+                // Final fallback: same-tab navigation if opener was blocked
+                window.location.href = dlPath;
+              }
+            } catch (_) {
+              // If anything odd happens with the primer, fall back to same-tab navigation
+              window.location.href = dlPath;
             }
 
-            const remaining = Math.max(0, first.data.maxUses - first.data.uses);
-            const expires = first.data.expiresAt ? new Date(first.data.expiresAt).toLocaleString() : '';
-            const lastNote = first.data.last ? '<div class="note muted mt-1">Heads up: that was your last allowed download.</div>' : '';
-
-            // Render green button with the *correct* remaining line
-            renderButton(token, `
-              <div class="note muted mt-1">
-                Remaining downloads: <strong>${remaining}</strong> of <strong>${first.data.maxUses}</strong>.
-                ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
-              </div>
-              ${lastNote}
-            `);
-
-            // Auto-open the first S3 URL (already redeemed)
-            try { window.open(first.data.url, '_blank', 'noopener'); } catch (_) {}
-
-            const resEl = $('result');
-            if (resEl) resEl.scrollIntoView({ behavior:'smooth', block:'center' });
+            // 3) Background peek: show remaining count without consuming a use
+            try {
+              const peek = await peekRemaining(token);
+              if (peek && peek.line) renderButton(token, peek.line);
+            } catch (_) { /* ignore background errors */ }
           },
 
           onError(err) {
