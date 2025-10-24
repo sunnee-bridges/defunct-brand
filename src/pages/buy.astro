@@ -174,6 +174,21 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         };
       }
 
+      // Poll a few times AFTER a download begins, to catch the server//'s increment
+      async function refreshRemaining(token, attempts = 4, delayMs = 1500) {
+        for (let i = 0; i < attempts; i++) {
+          await new Promise(r => setTimeout(r, delayMs));
+          try {
+            const peek = await peekRemaining(token);
+            if (peek && peek.line) {
+              // Re-render card with updated "Remaining…" line
+              renderButton(token, peek.line);
+              break;
+            }
+          } catch {}
+        }
+      }
+
       // ---------- Renderer for the download card with inline alert host ----------
       function renderButton(token, remainingLineHtml = ""){
         const dlPath = '/download/' + token;
@@ -218,7 +233,10 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
             if (!chk.allowed) {
               showLimitInline(chk); // inline message; no navigation
             } else {
-              window.location.href = dlPath; // proceed with real download
+              // Start real download
+              window.location.href = dlPath;
+              // Poll afterwards to update the "Remaining…" line
+              refreshRemaining(token);
             }
 
             setTimeout(() => { btn.dataset.busy=''; btn.removeAttribute('aria-disabled'); }, 1200);
@@ -289,13 +307,9 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
               } catch (_) {
                 window.location.href = dlPath;
               }
+              // Poll afterwards to update the "Remaining…" line
+              refreshRemaining(token);
             }
-
-            // 3) Background peek to update remaining line (non-consuming)
-            try {
-              const peek = await peekRemaining(token);
-              if (peek && peek.line) renderButton(token, peek.line);
-            } catch (_) { /* ignore */ }
           },
 
           onError(err) {
