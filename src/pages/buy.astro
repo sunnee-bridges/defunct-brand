@@ -145,7 +145,6 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
               <div class="space-y-2">
                 <a
                   href="${dlPath}"
-                  target="_blank" rel="noopener"
                   class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-sm sm:text-base font-medium no-underline focus-ring transition-colors"
                   role="button"
                   id="download-btn"
@@ -163,8 +162,7 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
               </div>
             `);
 
-            // Try to open in a new tab automatically; if blocked, the button/link above is visible
-            try { window.open(dlPath, '_blank', 'noopener'); } catch (_) {}
+            window.location.href = dlPath;
 
             // For analytics/debug: record the token used
             window.__lastToken = token;

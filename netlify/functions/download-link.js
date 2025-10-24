@@ -59,7 +59,7 @@ async function writeJSON({ Bucket, Key, data }) {
 /* ---------- Helpers ---------- */
 function corsHeaders(methods = "GET, POST, OPTIONS") {
   return {
-    "Access-Control-Allow-Origin": "*", // tighten to your origin in prod
+    "Access-Control-Allow-Origin": "*",       // tighten to your origin in prod
     "Access-Control-Allow-Methods": methods,
     "Access-Control-Allow-Headers": "Content-Type",
     "Cache-Control": "no-store",
@@ -78,10 +78,37 @@ const redirect = (location) => ({
 
 function normalizeToken(t) {
   if (typeof t !== "string") return "";
-  return t.trim().replace(/^\/+|\/+$/g, ""); // trim and strip leading/trailing slashes
+  return t.trim().replace(/^\/+|\/+$/g, "");
 }
 function isValidToken(t) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(t);
+}
+
+/** Extract token from:
+ *  - query string:   ?token=<uuid>
+ *  - path:           /download/<uuid> (via redirect rule)
+ *  - rawUrl (fallback)
+ */
+function getTokenFromEvent(event) {
+  // 1) query string
+  const qsToken = normalizeToken(event.queryStringParameters?.token || "");
+  if (isValidToken(qsToken)) return qsToken;
+
+  // 2) path segment (/download/<uuid> or /.netlify/functions/download-link/<uuid>)
+  const path = String(event.path || "");
+  const m =
+    path.match(/\/download\/([0-9a-f-]{36})$/i) ||
+    path.match(/\/\.netlify\/functions\/download-link\/([0-9a-f-]{36})$/i);
+  if (m && isValidToken(m[1])) return m[1];
+
+  // 3) rawUrl fallback
+  const raw = String(event.rawUrl || "");
+  const m2 =
+    raw.match(/\/download\/([0-9a-f-]{36})(?:\?|#|$)/i) ||
+    raw.match(/\/\.netlify\/functions\/download-link\/([0-9a-f-]{36})(?:\?|#|$)/i);
+  if (m2 && isValidToken(m2[1])) return m2[1];
+
+  return "";
 }
 
 /* ---------- Handler ---------- */
@@ -93,16 +120,14 @@ exports.handler = async (event) => {
     if (!BUCKET) return json(500, { error: "Server not configured." });
     if (tooMany(event)) return json(429, { error: "Too many requests. Try again shortly." });
 
-    // Accept both:
-    // - GET  /.netlify/functions/download-link?token=...
-    // - POST /.netlify/functions/download-link  { token: "..." }
+    // Accept GET (path or query) and POST (JSON)
     let token = "";
     if (event.httpMethod === "GET") {
-      token = normalizeToken(event.queryStringParameters?.token || "");
+      token = getTokenFromEvent(event);
     } else if (event.httpMethod === "POST") {
       let payload = {};
       try { payload = JSON.parse(event.body || "{}"); } catch {}
-      token = normalizeToken(payload.token || "");
+      token = normalizeToken(payload.token || getTokenFromEvent(event));
     } else {
       return json(405, { error: "Method not allowed" }, { "Allow": "GET, POST, OPTIONS" });
     }
@@ -177,13 +202,13 @@ exports.handler = async (event) => {
     const url = await getSignedUrl(s3, cmd, { expiresIn: DOWNLOAD_TTL });
     const last = record.useCount >= MAX_USES;
 
-    // If GET: redirect to the S3 URL so the Network tab shows /download/<token> → 302 → S3
+    // GET: redirect so the Network tab shows /download/<token> → 302 → S3
     if (event.httpMethod === "GET") {
       console.info(`[download-link] Redirecting GET to S3. uses=${record.useCount}/${MAX_USES}`);
       return redirect(url);
     }
 
-    // If POST: return JSON (current behavior)
+    // POST: return JSON (existing behavior)
     return json(200, {
       url,
       uses: record.useCount,
