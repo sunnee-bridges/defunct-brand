@@ -105,27 +105,33 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         return { ok: r.ok, status: r.status, data };
       }
 
-      function renderButton(token, remainingLineHtml = ""){
-        const dlPath = '/download/' + token;
-        setHTML('result', `
-          <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
-            <div class="ok">✅ Preparing your download…</div>
-            ${remainingLineHtml}
-            <div class="mt-3">
-              <a id="btn-download" href="${dlPath}" target="_blank" rel="noopener" class="btn" role="button">
-                <svg viewBox="0 0 20 20" aria-hidden="true" width="20" height="20">
-                  <path fill="currentColor" d="M10 2a1 1 0 0 1 1 1v7.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1 1 0 0 1-1.414 0L5.279 9.707A1 1 0 1 1 6.693 8.293L9 10.586V3a1 1 0 0 1 1-1Z"/>
-                  <path fill="currentColor" d="M4 14a2 2 0 0 0 2 2h8a2 2 0 1 0 0-4h-1a1 1 0 1 0 0 2h1H6a2 2 0 0 0-2 2Z"/>
-                </svg>
-                Download CSV
-              </a>
-            </div>
-            <div class="note muted mt-3">
-              Having trouble? <a class="link" href="mailto:support@vanishedbrands.com">Resend link</a>
-            </div>
-          </div>
-        `);
-      }
+      ffunction renderButton(token, remainingLineHtml = ""){
+  const dlPath = '/download/' + token;
+  // Heroicons "ArrowDownTray" (no arc commands; widely compatible)
+  const icon = `
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+      <path fill="currentColor"
+        d="M3 16.5V18a2.25 2.25 0 0 0 2.25 2.25h13.5A2.25 2.25 0 0 0 21 18v-1.5a.75.75 0 0 0-1.5 0V18c0 .414-.336.75-.75.75H5.25A.75.75 0 0 1 4.5 18v-1.5a.75.75 0 0 0-1.5 0ZM12.75 3a.75.75 0 0 0-1.5 0v9.19l-3.22-3.22a.75.75 0 1 0-1.06 1.06l4.5 4.5a.75.75 0 0 0 1.06 0l4.5-4.5a.75.75 0 1 0-1.06-1.06l-3.22 3.22V3Z"/>
+    </svg>
+  `;
+
+  document.getElementById('result').innerHTML = `
+    <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
+      <div class="ok">✅ Preparing your download…</div>
+      ${remainingLineHtml}
+      <div class="mt-3">
+        <a id="btn-download" href="${dlPath}" target="_blank" rel="noopener" class="btn" role="button">
+          ${icon}
+          <span>Download CSV</span>
+        </a>
+      </div>
+      <div class="note muted mt-3">
+        Having trouble? <a class="link" href="mailto:support@vanishedbrands.com">Resend link</a>
+      </div>
+    </div>
+  `;
+}
+
 
       async function fetchRemaining(token){
         // Hit the JSON POST endpoint to get counts & expiry; this consumes a use (your current function behavior).
