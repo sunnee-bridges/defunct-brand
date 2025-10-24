@@ -6,7 +6,7 @@ const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
 
-// Display-only price label; server decides real amount via PRICE_USD
+// Display-only price; server decides real amount via PRICE_USD
 const PRICE_LABEL = import.meta.env.PUBLIC_PRICE_LABEL || "$9";
 
 const title = "Buy the Full CSV";
@@ -28,6 +28,7 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
       #paypal-btns .paypal-button-row,
       #paypal-btns .paypal-button-container,
       #paypal-btns iframe { background: transparent !important; }
+
       .link { color:#2563eb; text-decoration:underline; }
       .btn {
         display:inline-flex; align-items:center; gap:.5rem;
@@ -64,20 +65,22 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
     <>
       <section class="rounded-xl border p-4 bg-white shadow-sm text-slate-900 border-slate-200 dark:border-slate-700">
         <h2 class="sr-only">Payment</h2>
-        <div id="paypal-loading" role="status" aria-live="polite" class="text-sm text-slate-600 text-center">
-          Loading…
-        </div>
+
+        <div id="paypal-loading" role="status" aria-live="polite"
+             class="text-sm text-slate-600 text-center">Loading…</div>
+
         <div class="mt-3 flex justify-center">
           <div id="paypal-btns" class="w-full max-w-[480px]"></div>
         </div>
       </section>
 
-      <!-- Success & actions area -->
+      <!-- Success / actions / messages -->
       <div id="result" class="mt-4" aria-live="polite"></div>
 
       <p class="mt-3 text-sm text-slate-700 dark:text-slate-300">
         Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.
       </p>
+
       <p class="mt-1 text-center text-xs text-slate-500 dark:text-slate-400">
         ENV: {ENV} • Powered by <span class="font-semibold">PayPal</span>
       </p>
@@ -102,107 +105,54 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         return { ok: r.ok, status: r.status, data };
       }
 
-      // Debounce helper
-      function withDebounce(fn, ms=1500){
-        let inFlight = false, lastAt = 0;
-        return async function(...args){
-          const now = Date.now();
-          if (inFlight || (now - lastAt) < ms) return;
-          inFlight = true; lastAt = now;
-          try { return await fn.apply(this, args); }
-          finally { inFlight = false; }
-        };
-      }
-
-      // Render success block with remaining counter + guarded download button
-      function renderDownloadUI({ token, uses, maxUses, last, autoMessage }){
-        const remaining = Math.max(0, (maxUses || 0) - (uses || 0));
-        const expiresLine = window.__expiresAt ? `
-          <div class="note muted">Link valid until <time>${new Date(window.__expiresAt).toLocaleString()}</time>.</div>
-        ` : '';
-
-        const startedLine = autoMessage
-          ? `<div class="ok">✅ ${autoMessage}</div>`
-          : '';
-
+      function renderButton(token, remainingLineHtml = ""){
+        const dlPath = '/download/' + token;
         setHTML('result', `
           <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
-            ${startedLine}
-            <div class="note muted mt-1">Remaining downloads: <strong>${remaining}</strong> of <strong>${maxUses}</strong></div>
-            ${expiresLine}
-
+            <div class="ok">✅ Preparing your download…</div>
+            ${remainingLineHtml}
             <div class="mt-3">
-              <button id="btn-download" type="button" class="btn" data-token="${token}">
+              <a id="btn-download" href="${dlPath}" target="_blank" rel="noopener" class="btn" role="button">
                 <svg viewBox="0 0 20 20" aria-hidden="true" width="20" height="20">
                   <path fill="currentColor" d="M10 2a1 1 0 0 1 1 1v7.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1 1 0 0 1-1.414 0L5.279 9.707A1 1 0 1 1 6.693 8.293L9 10.586V3a1 1 0 0 1 1-1Z"/>
                   <path fill="currentColor" d="M4 14a2 2 0 0 0 2 2h8a2 2 0 1 0 0-4h-1a1 1 0 1 0 0 2h1H6a2 2 0 0 0-2 2Z"/>
                 </svg>
                 Download CSV
-              </button>
+              </a>
             </div>
-
             <div class="note muted mt-3">
               Having trouble? <a class="link" href="mailto:support@vanishedbrands.com">Resend link</a>
             </div>
           </div>
         `);
-
-        // Wire the guarded click
-        const btn = $('btn-download');
-        if (!btn) return;
-        const handler = withDebounce(async () => {
-          const token = btn.getAttribute('data-token');
-          await redeemOnce({ token, confirmIfLast: true, updateUI: true, openNewTab: true });
-        }, 1500);
-        btn.addEventListener('click', handler);
       }
 
-      // Redeem once via JSON POST to get counts + URL; optionally open new tab
-      async function redeemOnce({ token, confirmIfLast=false, openNewTab=true, updateUI=false }){
-        // First, peek at counts (without auto-following redirect) via POST
+      async function fetchRemaining(token){
+        // Hit the JSON POST endpoint to get counts & expiry; this consumes a use (your current function behavior).
         const dl = await httpJSON('/.netlify/functions/download-link', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token })
         });
+        if (!dl.ok || !dl.data?.url) return null;
 
-        if (!dl.ok || !dl.data?.url) {
-          const msg = (dl.data && (dl.data.message || dl.data.error)) || ('Download link error (HTTP ' + (dl.status || '?') + ').');
-          setHTML('result', `<p class="err">${msg}</p>`);
-          return { ok:false, dl };
-        }
+        const remaining = Math.max(0, dl.data.maxUses - dl.data.uses);
+        const expires = dl.data.expiresAt ? new Date(dl.data.expiresAt).toLocaleString() : null;
+        const lastNote = dl.data.last === true
+          ? `<div class="note muted mt-1">Heads up: that was your last allowed download.</div>`
+          : '';
 
-        // If this redemption would be the *last*, ask for confirmation
-        if (confirmIfLast && dl.data.last === true) {
-          const proceed = window.confirm("This will use your last allowed download. Continue?");
-          if (!proceed) {
-            // Don't open the URL; don't consume another use.
-            // (Note: the POST has already incremented useCount; if you want preflight w/o consuming,
-            // you’d need a separate “peek” endpoint. Given current server, we consume here.)
-          }
-        }
-
-        window.__expiresAt = dl.data.expiresAt;
-
-        // Open signed URL (auto-download). Use target=_blank to avoid replacing /buy.
-        if (openNewTab) {
-          try { window.open(dl.data.url, '_blank', 'noopener'); } catch(_) {}
-        } else {
-          window.location.href = dl.data.url;
-        }
-
-        // Update the UI with fresh remaining counter
-        if (updateUI) {
-          renderDownloadUI({
-            token,
-            uses: dl.data.uses,
-            maxUses: dl.data.maxUses,
-            last: dl.data.last,
-            autoMessage: null
-          });
-        }
-
-        return { ok:true, dl };
+        return {
+          line: `
+            <div class="note muted mt-1">
+              Remaining downloads: <strong>${remaining}</strong> of <strong>${dl.data.maxUses}</strong>.
+              ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
+            </div>
+            ${lastNote}
+          `,
+          remaining,
+          info: dl.data,
+        };
       }
 
       // ---------- Main (PayPal) ----------
@@ -212,6 +162,7 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
 
         paypal.Buttons({
           style: { layout:'vertical', shape:'rect', color:'gold', label:'paypal', tagline:false },
+
           onInit(){ hideLoading(); setHTML('result', ''); },
 
           async createOrder() {
@@ -242,40 +193,22 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
             hideLoading();
 
             const token = cap.data.token;
+            const dlPath = '/download/' + token;
 
-            // Avoid accidental re-autostart if user reloads:
-            const startKey = '__auto_started_' + token;
-            const alreadyAutoStarted = sessionStorage.getItem(startKey) === '1';
+            // 1) Render the button immediately (so you always see it)
+            renderButton(token, '');
 
-            let autoMsg = '';
-            if (!alreadyAutoStarted) {
-              // Auto-start once; count will increment server-side
-              const r = await redeemOnce({ token, confirmIfLast:false, openNewTab:true, updateUI:false });
-              if (r.ok && r.dl?.data) {
-                const remaining = Math.max(0, r.dl.data.maxUses - r.dl.data.uses);
-                autoMsg = `Download started. You have ${remaining} more downloads available for the next 3 days.`;
-                sessionStorage.setItem(startKey, '1');
-                // Render UI with fresh counts
-                renderDownloadUI({
-                  token,
-                  uses: r.dl.data.uses,
-                  maxUses: r.dl.data.maxUses,
-                  last: r.dl.data.last,
-                  autoMessage: autoMsg
-                });
-              } else {
-                // Auto failed → show button with a helpful message
-                renderDownloadUI({
-                  token,
-                  uses: 0,
-                  maxUses: 3,
-                  last: false,
-                  autoMessage: 'Auto-download didn’t start. Click the button to try again.'
-                });
+            // 2) Auto-open the download in a new tab
+            try { window.open(dlPath, '_blank', 'noopener'); } catch(_) {}
+
+            // 3) Background: fetch counts & expiry and update the “Remaining” line
+            try {
+              const rem = await fetchRemaining(token);
+              if (rem && typeof rem.line === 'string') {
+                renderButton(token, rem.line);
               }
-            } else {
-              // If somehow already auto-started, just render the guarded UI
-              renderDownloadUI({ token, uses: 1, maxUses: 3, last:false, autoMessage:'' });
+            } catch (_) {
+              // Ignore background errors; the button is already visible
             }
 
             // Make sure the success UI is visible
