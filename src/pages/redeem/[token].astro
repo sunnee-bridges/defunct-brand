@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+const { token } = Astro.params; // UUID segment from the URL
+const title = "Redeem your download";
+const description = "Your download will start automatically. This page also shows how many downloads you have left.";
+---
+
+<Base title={title} description={description}>
+  <nav class="mb-4 flex flex-wrap gap-2">
+    <a href="/" class="chip focus-ring">← Home</a>
+  </nav>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">Preparing your download…</h1>
+  <p id="status" class="text-slate-700 dark:text-slate-300 mb-3">Contacting server…</p>
+
+  <div id="dl-cta" class="hidden">
+    <a id="dl-btn"
+       href="#"
+       class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-sm sm:text-base font-medium no-underline focus-ring transition-colors"
+       role="button">
+      Download CSV
+    </a>
+    <p id="remaining" class="mt-2 text-sm text-slate-600 dark:text-slate-400"></p>
+    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+      Having trouble? <a class="underline" href="mailto:support@vanishedbrands.com">Contact support</a>.
+    </p>
+  </div>
+
+  <script is:inline>
+    (function(){
+      const token = {JSON.stringify(token || "")};
+      const $ = (id) => document.getElementById(id);
+      const statusEl = $("status");
+      const cta = $("dl-cta");
+      const btn = $("dl-btn");
+      const remainingEl = $("remaining");
+
+      if (!token || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token)) {
+        statusEl.textContent = "Invalid download link.";
+        return;
+      }
+
+      async function redeemOnce() {
+        try {
+          statusEl.textContent = "Finalizing…";
+          const r = await fetch("/.netlify/functions/download-link", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token })
+          });
+          const data = await r.json().catch(() => ({}));
+
+          if (!r.ok || !data.url) {
+            const friendly =
+              (data && (data.message || data.error)) ||
+              ("Download error (HTTP " + r.status + ").");
+            statusEl.innerHTML = '<span class="text-red-600 dark:text-red-400">' + friendly + "</span>";
+            return;
+          }
+
+          // We got a signed URL + counters
+          const uses = data.uses || 0;
+          const max = data.maxUses || 3;
+          const remaining = Math.max(0, max - uses);
+          const last = !!data.last;
+          const exp = data.expiresAt ? new Date(data.expiresAt) : null;
+
+          // Update UI
+          cta.classList.remove("hidden");
+          btn.href = data.url;
+          statusEl.innerHTML = "✅ Download started.";
+          remainingEl.textContent =
+            "Remaining downloads: " + remaining +
+            (exp ? " • Expires " + exp.toLocaleString() : "");
+
+          // Auto-start once
+          try { window.open(data.url, "_blank", "noopener"); } catch {}
+        } catch (e) {
+          statusEl.innerHTML = '<span class="text-red-600 dark:text-red-400">Unexpected error.</span>';
+        }
+      }
+
+      // Guard clicks (don’t double consume)
+      let inFlight = false;
+      btn?.addEventListener("click", async (ev) => {
+        if (inFlight) { ev.preventDefault(); return; }
+        inFlight = true;
+        btn.setAttribute("aria-disabled", "true");
+        btn.classList.add("opacity-70", "pointer-events-none");
+        // Let the anchor navigate (opens in same tab unless user Cmd/Ctrl-clicks)
+        // No extra fetch here; the signed URL is direct to S3.
+      });
+
+      // Kick off the first redemption (counts as one)
+      redeemOnce();
+    })();
+  </script>
+</Base>
