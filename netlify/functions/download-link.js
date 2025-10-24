@@ -4,7 +4,7 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 /* ---------- Config ---------- */
 const REGION        = process.env.S3_REGION || "us-east-1";
-const BUCKET        = process.env.S3_BUCKET_NAME;                  // required
+const BUCKET        = process.env.S3_BUCKET_NAME;                      // required
 const MANIFEST_KEY  = process.env.S3_MANIFEST_KEY || "exports/manifest.json";
 const CSV_FALLBACK  = process.env.CSV_OBJECT_KEY || "exports/brands-latest.csv";
 const DOWNLOAD_TTL  = Number(process.env.DOWNLOAD_TTL_SECONDS || 900); // 15m
@@ -23,8 +23,7 @@ function tooMany(event) {
   const now = Date.now();
   const b = buckets.get(ip) || { count: 0, ts: now };
   if (now - b.ts > WINDOW_MS) { b.count = 0; b.ts = now; }
-  b.count += 1;
-  buckets.set(ip, b);
+  b.count += 1; buckets.set(ip, b);
   return b.count > RATE_LIMIT;
 }
 
@@ -52,78 +51,65 @@ async function readJSON({ Bucket, Key }) {
 
 async function writeJSON({ Bucket, Key, data }) {
   await s3.send(new PutObjectCommand({
-    Bucket,
-    Key,
-    Body: JSON.stringify(data),
+    Bucket, Key, Body: JSON.stringify(data),
     ContentType: "application/json; charset=utf-8",
   }));
 }
 
 /* ---------- Helpers ---------- */
-function corsHeaders() {
-  // tighten for prod if you want: set to your site origin
+function corsHeaders(methods = "GET, POST, OPTIONS") {
   return {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    "Access-Control-Allow-Origin": "*", // tighten to your origin in prod
+    "Access-Control-Allow-Methods": methods,
     "Access-Control-Allow-Headers": "Content-Type",
     "Cache-Control": "no-store",
-    "Content-Type": "application/json",
   };
 }
+const json = (status, body, extra = {}) => ({
+  statusCode: status,
+  headers: { "Content-Type": "application/json", ...corsHeaders(), ...extra },
+  body: JSON.stringify(body),
+});
+const redirect = (location) => ({
+  statusCode: 302,
+  headers: { Location: location, ...corsHeaders("GET, OPTIONS") },
+  body: "",
+});
 
-function json(status, body, extraHeaders = {}) {
-  return {
-    statusCode: status,
-    headers: { ...corsHeaders(), ...extraHeaders },
-    body: JSON.stringify(body),
-  };
+function normalizeToken(t) {
+  if (typeof t !== "string") return "";
+  return t.trim().replace(/^\/+|\/+$/g, ""); // trim and strip leading/trailing slashes
 }
-
-// Minimal 302 redirect (no JSON headers)
-function redirect(location) {
-  return {
-    statusCode: 302,
-    headers: { Location: location, "Cache-Control": "no-store" },
-    body: "",
-  };
-}
-
 function isValidToken(t) {
-  // UUID format: 8-4-4-4-12 hex characters with hyphens
-  return typeof t === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(t);
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(t);
 }
 
 /* ---------- Handler ---------- */
 exports.handler = async (event) => {
   try {
-    // CORS preflight
     if (event.httpMethod === "OPTIONS") {
       return { statusCode: 204, headers: corsHeaders(), body: "" };
     }
-
     if (!BUCKET) return json(500, { error: "Server not configured." });
     if (tooMany(event)) return json(429, { error: "Too many requests. Try again shortly." });
 
-    // Accept POST (JSON) and GET (?token=...&redirect=1)
-    const isGET  = event.httpMethod === "GET";
-    const isPOST = event.httpMethod === "POST";
-    if (!isGET && !isPOST) return json(405, { error: "Method not allowed" });
-
-    // Extract token + redirect flag
-    let token, asRedirect = false;
-
-    if (isGET) {
-      const qs = event.queryStringParameters || {};
-      token = qs.token;
-      asRedirect = qs.redirect === "1";
-    } else {
+    // Accept both:
+    // - GET  /.netlify/functions/download-link?token=...
+    // - POST /.netlify/functions/download-link  { token: "..." }
+    let token = "";
+    if (event.httpMethod === "GET") {
+      token = normalizeToken(event.queryStringParameters?.token || "");
+    } else if (event.httpMethod === "POST") {
       let payload = {};
       try { payload = JSON.parse(event.body || "{}"); } catch {}
-      token = payload.token;
-      asRedirect = Boolean(payload.redirect); // ignored for POST unless you want it
+      token = normalizeToken(payload.token || "");
+    } else {
+      return json(405, { error: "Method not allowed" }, { "Allow": "GET, POST, OPTIONS" });
     }
 
-    if (!isValidToken(token)) return json(400, { error: "Invalid token format" });
+    if (!isValidToken(token)) {
+      return json(400, { error: "Invalid token format" });
+    }
 
     // 1) Load token record
     const tokenKey = `tokens/${token}.json`;
@@ -131,7 +117,7 @@ exports.handler = async (event) => {
     try {
       record = await readJSON({ Bucket: BUCKET, Key: tokenKey });
     } catch (err) {
-      console.error("[download-link] Token not found:", token, err?.message);
+      console.error("[download-link] Token not found:", token, err.message);
       return json(404, { error: "Token not found or invalid" });
     }
 
@@ -139,7 +125,7 @@ exports.handler = async (event) => {
     const now = Date.now();
     const expiresAt = Number(record.expiresAt || 0);
     if (!Number.isFinite(expiresAt) || now > (expiresAt + 5000)) {
-      const expiredDate = new Date(expiresAt).toLocaleString();
+      const expiredDate = new Date(expiresAt).toISOString();
       console.warn("[download-link] Token expired:", token, "expired at:", expiredDate);
       return json(410, {
         error: "Token expired",
@@ -160,26 +146,18 @@ exports.handler = async (event) => {
       }, { "Retry-After": "86400" });
     }
 
-    // 4) Mark token as used (best-effort)
-    if (!record.usedAt) {
-      record.usedAt = now;
-      console.info("[download-link] First use of token:", token);
-    } else {
-      const firstUsedDate = new Date(record.usedAt).toLocaleString();
-      console.info("[download-link] Token reuse:", token, "first used:", firstUsedDate, "count:", currentUseCount + 1);
-    }
+    // 4) Mark token used (best-effort)
     record.useCount = currentUseCount + 1;
+    record.usedAt ??= now;
     record.lastUsedAt = now;
-
     try {
       await writeJSON({ Bucket: BUCKET, Key: tokenKey, data: record });
-      console.info("[download-link] Token usage recorded:", token, "uses:", record.useCount);
     } catch (e) {
-      console.error("[download-link] Failed to update token usage:", e?.message);
+      console.error("[download-link] Failed to update token usage:", e.message);
       // continue anyway
     }
 
-    // 5) Resolve which CSV to serve
+    // 5) Pick file key
     let Key = record.key || CSV_FALLBACK;
     if (!Key) {
       try {
@@ -187,12 +165,9 @@ exports.handler = async (event) => {
         if (manifest && typeof manifest.latest === "string") Key = manifest.latest;
       } catch {}
     }
-    if (!Key) {
-      console.error("[download-link] No CSV key configured");
-      return json(500, { error: "File not configured (no record.key, CSV_OBJECT_KEY, or manifest.latest)." });
-    }
+    if (!Key) return json(500, { error: "File not configured." });
 
-    // 6) Generate signed URL
+    // 6) Presign
     const cmd = new GetObjectCommand({
       Bucket: BUCKET,
       Key,
@@ -200,17 +175,15 @@ exports.handler = async (event) => {
       ResponseContentType: "text/csv; charset=utf-8",
     });
     const url = await getSignedUrl(s3, cmd, { expiresIn: DOWNLOAD_TTL });
-
-    console.info(`[download-link] Success - key=${Key} ttl=${DOWNLOAD_TTL}s uses=${record.useCount}/${MAX_USES}`);
-
     const last = record.useCount >= MAX_USES;
 
-    // If GET with ?redirect=1 → 302 to S3 so /download/... is visible in Network
-    if (isGET && asRedirect) {
+    // If GET: redirect to the S3 URL so the Network tab shows /download/<token> → 302 → S3
+    if (event.httpMethod === "GET") {
+      console.info(`[download-link] Redirecting GET to S3. uses=${record.useCount}/${MAX_USES}`);
       return redirect(url);
     }
 
-    // Otherwise return JSON (POST or plain GET)
+    // If POST: return JSON (current behavior)
     return json(200, {
       url,
       uses: record.useCount,
