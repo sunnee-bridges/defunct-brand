@@ -6,13 +6,12 @@ const CLIENT_ID =
   import.meta.env.PUBLIC_PAYPAL_CLIENT_ID || import.meta.env.PAYPAL_CLIENT_ID || "";
 const ENV = (import.meta.env.PUBLIC_PAYPAL_ENV || "sandbox").toLowerCase();
 
-// Display-only price; server decides real amount via PRICE_USD
+// Display-only; real price comes from server PRICE_USD
 const PRICE_LABEL = import.meta.env.PUBLIC_PRICE_LABEL || "$9";
 
 const title = "Buy the Full CSV";
-const description = "Secure checkout via PayPal. Receive a one-time download link after purchase.";
+const description = "Secure checkout via PayPal. Receive a one-time download link immediately after purchase.";
 ---
-
 <Base title={title} description={description}>
   <Fragment slot="head">
     {CLIENT_ID && (
@@ -22,32 +21,19 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
       />
     )}
     <style>
-      /* Keep PayPal wrappers transparent so it looks good in both themes */
       #paypal-btns > div,
       #paypal-btns .paypal-buttons,
       #paypal-btns .paypal-button-row,
       #paypal-btns .paypal-button-container,
       #paypal-btns iframe { background: transparent !important; }
-
       .link { color:#2563eb; text-decoration:underline; }
-      .btn {
-        display:inline-flex; align-items:center; gap:.5rem;
-        padding:.5rem 1rem; border-radius:9999px;
-        background:#059669; color:#fff; text-decoration:none;
-      }
-      .btn[aria-disabled="true"] { opacity:.6; pointer-events:none; }
-      .muted { color: #6b7280; }
-      .ok { color: #065f46; }
-      .err { color: #b91c1c; }
-      .note { font-size:.875rem; }
-      .chip { border:1px solid #cbd5e1; padding:.25rem .5rem; border-radius:9999px; }
     </style>
   </Fragment>
 
   <nav class="mb-4 flex flex-wrap gap-2">
-    <a href="/" class="chip">← Home</a>
-    <a href="/az/" class="chip">A–Z</a>
-    <a href="/decade/" class="chip">Decades</a>
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/az/" class="chip focus-ring">A–Z</a>
+    <a href="/decade/" class="chip focus-ring">Decades</a>
   </nav>
 
   <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
@@ -57,29 +43,26 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
   </p>
 
   {!CLIENT_ID ? (
-    <p class="err">
-      Missing PayPal client ID.
-      Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) in your env and redeploy.
+    <p class="text-red-600 dark:text-red-400">
+      Missing PayPal client ID. Set <code>PUBLIC_PAYPAL_CLIENT_ID</code> (and <code>PUBLIC_PAYPAL_ENV</code>) and redeploy.
     </p>
   ) : (
     <>
       <section class="rounded-xl border p-4 bg-white shadow-sm text-slate-900 border-slate-200 dark:border-slate-700">
         <h2 class="sr-only">Payment</h2>
-
-        <div id="paypal-loading" role="status" aria-live="polite"
-             class="text-sm text-slate-600 text-center">Loading…</div>
-
+        <div id="paypal-loading" role="status" aria-live="polite" class="text-sm text-slate-600 text-center">
+          Loading…
+        </div>
         <div class="mt-3 flex justify-center">
           <div id="paypal-btns" class="w-full max-w-[480px]"></div>
         </div>
       </section>
 
-      <!-- Success / actions / messages -->
-      <div id="result" class="mt-4" aria-live="polite"></div>
-
       <p class="mt-3 text-sm text-slate-700 dark:text-slate-300">
         Payments are processed securely by PayPal. You’ll receive a one-time download link immediately after purchase.
       </p>
+
+      <div id="result" class="mt-3" aria-live="polite"></div>
 
       <p class="mt-1 text-center text-xs text-slate-500 dark:text-slate-400">
         ENV: {ENV} • Powered by <span class="font-semibold">PayPal</span>
@@ -89,15 +72,46 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
 
   {CLIENT_ID && (
     <script is:inline>
-      // ---------- Helpers ----------
-      const $ = (id) => document.getElementById(id);
-      const setHTML = (id, html) => { const el = $(id); if (el) el.innerHTML = html; };
-      const hideLoading = (msg) => {
+      console.log("[BUY] script inline loaded");
+
+      function $(id){ return document.getElementById(id); }
+      function hideLoading(msg){
         const el = $('paypal-loading');
         if (!el) return;
         if (msg !== undefined) el.textContent = msg;
         el.style.display = 'none';
-      };
+      }
+      function setResultHTML(html){
+        const el = $('result');
+        if (!el) return;
+        el.innerHTML = html || '';
+      }
+
+      function renderButton(token, extraHTML){
+        const dlPath = '/download/' + token;
+        const html = `
+          <a
+            id="fallback-download"
+            href="${dlPath}"
+            target="_blank" rel="noopener"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-sm sm:text-base font-medium no-underline focus-ring transition-colors"
+            role="button"
+          >
+            <svg viewBox="0 0 20 20" aria-hidden="true" class="h-5 w-5">
+              <path fill="currentColor" d="M10 2a1 1 0 0 1 1 1v7.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1 1 0 0 1-1.414 0L5.279 9.707A1 1 0 1 1 6.693 8.293L9 10.586V3a1 1 0 0 1 1-1Z"/>
+              <path fill="currentColor" d="M4 14a2 2 0 0 0 2 2h8a2 2 0 1 0 0-4h-1a1 1 0 1 0 0 2h1a0 0 0 1 1 0 0 0 0 0H6a0 0 0 1 1 0 0 0 0 0a2 2 0 0 0-2 2Z"/>
+            </svg>
+            Download CSV
+          </a>
+          ${extraHTML || ""}
+          <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+            Tip: If the download didn’t start, click the button above.
+          </p>
+        `;
+        setResultHTML(html);
+        const resEl = $('result'); if (resEl) resEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
       async function httpJSON(url, opts){
         const r = await fetch(url, opts);
         let data = null;
@@ -105,125 +119,81 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
         return { ok: r.ok, status: r.status, data };
       }
 
-      function renderButton(token, remainingLineHtml = ""){
-        const dlPath = '/download/' + token;
-        setHTML('result', `
-          <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-900">
-            <div class="ok">✅ Preparing your download…</div>
-            ${remainingLineHtml}
-            <div class="mt-3">
-              <a id="btn-download" href="${dlPath}" target="_blank" rel="noopener" class="btn" role="button">
-                <svg viewBox="0 0 20 20" aria-hidden="true" width="20" height="20">
-                  <path fill="currentColor" d="M10 2a1 1 0 0 1 1 1v7.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1 1 0 0 1-1.414 0L5.279 9.707A1 1 0 1 1 6.693 8.293L9 10.586V3a1 1 0 0 1 1-1Z"/>
-                  <path fill="currentColor" d="M4 14a2 2 0 0 0 2 2h8a2 2 0 1 0 0-4h-1a1 1 0 1 0 0 2h1H6a2 2 0 0 0-2 2Z"/>
-                </svg>
-                Download CSV
-              </a>
-            </div>
-            <div class="note muted mt-3">
-              Having trouble? <a class="link" href="mailto:support@vanishedbrands.com">Resend link</a>
-            </div>
-          </div>
-        `);
-      }
-
-      async function fetchRemaining(token){
-        // Hit the JSON POST endpoint to get counts & expiry; this consumes a use (your current function behavior).
-        const dl = await httpJSON('/.netlify/functions/download-link', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token })
-        });
-        if (!dl.ok || !dl.data?.url) return null;
-
-        const remaining = Math.max(0, dl.data.maxUses - dl.data.uses);
-        const expires = dl.data.expiresAt ? new Date(dl.data.expiresAt).toLocaleString() : null;
-        const lastNote = dl.data.last === true
-          ? `<div class="note muted mt-1">Heads up: that was your last allowed download.</div>`
-          : '';
-
-        return {
-          line: `
-            <div class="note muted mt-1">
-              Remaining downloads: <strong>${remaining}</strong> of <strong>${dl.data.maxUses}</strong>.
-              ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
-            </div>
-            ${lastNote}
-          `,
-          remaining,
-          info: dl.data,
-        };
-      }
-
-      // ---------- Main (PayPal) ----------
       window.addEventListener('load', () => {
+        console.log("[BUY] window load");
         const fallbackTimer = setTimeout(() => hideLoading(), 8000);
-        if (!window.paypal || !window.paypal.Buttons) return;
+
+        if (!window.paypal || !window.paypal.Buttons) {
+          console.error("[BUY] PayPal SDK not ready");
+          return;
+        }
 
         paypal.Buttons({
-          style: { layout:'vertical', shape:'rect', color:'gold', label:'paypal', tagline:false },
+          style: { layout: 'vertical', shape: 'rect', color: 'gold', label: 'paypal', tagline: false },
 
-          onInit(){ hideLoading(); setHTML('result', ''); },
+          onInit() {
+            console.log("[BUY] onInit");
+            hideLoading(); setResultHTML('');
+          },
 
           async createOrder() {
+            console.log("[BUY] createOrder → calling function");
             const res = await httpJSON('/.netlify/functions/paypal-create-order');
+            console.log("[BUY] createOrder response", res.status, res.data);
             if (!res.ok || !res.data?.id) {
-              setHTML('result', '<p class="err">Could not create order. Please refresh and try again.</p>');
+              setResultHTML('<p class="text-red-600 dark:text-red-400">Could not create order. Please refresh and try again.</p>');
               throw new Error('createOrder failed');
             }
             return res.data.id;
           },
 
           async onApprove(data) {
-            setHTML('result', '<p class="muted">Finalizing payment…</p>');
+            console.log("[BUY] onApprove", data);
+            setResultHTML('<p class="text-slate-600 dark:text-slate-300">Finalizing payment…</p>');
 
             const cap = await httpJSON('/.netlify/functions/paypal-capture-order', {
-              method:'POST',
-              headers:{ 'Content-Type':'application/json' },
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ orderID: data.orderID })
             });
+            console.log("[BUY] capture response", cap.status, cap.data);
 
             if (!cap.ok || !cap.data?.ok || !cap.data?.token) {
               hideLoading();
-              const msg = (cap.data && cap.data.error) ? cap.data.error : ('Capture failed (HTTP ' + (cap.status || '?') + ').');
-              setHTML('result', '<p class="err">Something went wrong (capture). ' + msg + '</p>');
+              const msg = (cap && cap.data && cap.data.error)
+                ? cap.data.error
+                : ('Capture failed (HTTP ' + (cap ? cap.status : '?') + ').');
+              setResultHTML('<p class="text-red-600 dark:text-red-400">Something went wrong (capture). ' + msg + '</p>');
               return;
             }
 
-            hideLoading();
-
             const token = cap.data.token;
+            console.log("[BUY] got token", token);
+
+            // 1) Render green fallback button immediately
+            renderButton(token, '<div class="text-sm text-slate-600 dark:text-slate-400 mt-1">Download will open in a new tab…</div>');
+
+            // 2) Try to auto-open in new tab (pop-up friendly: runs in onApprove handler)
             const dlPath = '/download/' + token;
-
-            // 1) Render the button immediately (so you always see it)
-            renderButton(token, '');
-
-            // 2) Auto-open the download in a new tab
-            try { window.open(dlPath, '_blank', 'noopener'); } catch(_) {}
-
-            // 3) Background: fetch counts & expiry and update the “Remaining” line
             try {
-              const rem = await fetchRemaining(token);
-              if (rem && typeof rem.line === 'string') {
-                renderButton(token, rem.line);
-              }
-            } catch (_) {
-              // Ignore background errors; the button is already visible
+              window.open(dlPath, '_blank', 'noopener'); 
+              console.log("[BUY] opened new tab", dlPath);
+            } catch (e) {
+              console.warn("[BUY] window.open blocked", e);
             }
 
-            // Make sure the success UI is visible
-            const resEl = $('result');
-            if (resEl) resEl.scrollIntoView({ behavior:'smooth', block:'center' });
+            hideLoading();
           },
 
           onError(err) {
+            console.error("[BUY] PayPal error", err);
             hideLoading();
-            setHTML('result', '<p class="err">PayPal error: ' + (err?.message || String(err)) + '</p>');
+            setResultHTML('<p class="text-red-600 dark:text-red-400">PayPal error: ' + (err?.message || String(err)) + '</p>');
           }
         })
         .render('#paypal-btns')
-        .then(() => { clearTimeout(fallbackTimer); hideLoading(); })
-        .catch(() => { clearTimeout(fallbackTimer); hideLoading(); });
+        .then(() => { console.log("[BUY] buttons rendered"); clearTimeout(fallbackTimer); hideLoading(); })
+        .catch((e) => { console.error("[BUY] render error", e); clearTimeout(fallbackTimer); hideLoading(); });
       });
     </script>
   )}
