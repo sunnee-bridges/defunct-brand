@@ -255,6 +255,7 @@ exports.handler = async (event) => {
           Key: fileKey,
           ResponseContentDisposition: 'attachment; filename="vanished-brands.csv"',
           ResponseContentType: "text/csv; charset=utf-8",
+          ResponseCacheControl: "no-store",  
         });
         const url = await getSignedUrl(s3, cmd, { expiresIn: DOWNLOAD_TTL });
         const last = inc.uses >= inc.max;

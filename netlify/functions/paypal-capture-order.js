@@ -18,7 +18,7 @@ const PAYPAL_BASE = PAYPAL_ENV === "live"
   ? "https://api-m.paypal.com"
   : "https://api-m.sandbox.paypal.com";
 
-const BUCKET  = process.env.S3_BUCKET_NAME;                         // required
+const BUCKET  = process.env.S3_BUCKET_NAME;                              // required
 const CSV_KEY = process.env.CSV_OBJECT_KEY || "exports/full-dataset.csv"; // default key
 
 /* ---------- Tiny rate limit (per-process best-effort) ---------- */
@@ -141,39 +141,57 @@ async function saveOrder(orderID, row) {
   console.log('[saveOrder] Order saved successfully');
 }
 
+/* ---------- UPDATED: mintDownloadToken (no useCount in JSON; pre-create state) ---------- */
 async function mintDownloadToken(orderID) {
   console.log('[mintDownloadToken] Creating token for orderID:', orderID);
-  
+
   const token = crypto.randomUUID();
   const now = Date.now();
-  
+  const expiresAt = now + 24 * 60 * 60 * 1000; // 24 hours
+
+  // ✅ Only immutable token data; no usage fields here
   const record = {
     token,
     orderID,
     key: CSV_KEY,
     createdAt: now,
-    expiresAt: now + 24 * 60 * 60 * 1000, // 24 hours
-    usedAt: null,      // Track when token is used
-    useCount: 0,       // Track number of uses
+    expiresAt, // epoch ms
   };
-  
+
   const tokenKey = `tokens/${token}.json`;
-  console.log('[mintDownloadToken] Writing token:', tokenKey);
-  
+  const stateKey = `tokens-state/${token}`;
+
   try {
     const s3 = await getS3();
-    
+
+    // Token JSON (read-only for the downloader)
     await s3.send(new PutObjectCommand({
       Bucket: BUCKET,
       Key: tokenKey,
       Body: JSON.stringify(record),
       ContentType: "application/json; charset=utf-8",
     }));
-    
-    console.log('[mintDownloadToken] Token created successfully');
+
+    // Pre-create state object used by the downloader to track uses
+    const maxUses = Number(process.env.MAX_REDEMPTIONS || process.env.MAX_TOKEN_USES || 3);
+    const expIso  = new Date(expiresAt).toISOString();
+
+    await s3.send(new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: stateKey,
+      Body: "",
+      Metadata: {
+        uses: "0",
+        max:  String(maxUses),
+        exp:  expIso,
+      },
+      ContentType: "application/octet-stream",
+    }));
+
+    console.log('[mintDownloadToken] Token and state created:', { tokenKey, stateKey });
     return token;
   } catch (error) {
-    console.error('[mintDownloadToken] Failed to create token:', error.message);
+    console.error('[mintDownloadToken] Failed to create token/state:', error.message);
     throw error;
   }
 }
@@ -212,12 +230,10 @@ async function logPurchase(data, event) {
       userAgent: h["user-agent"] || "unknown",
     };
 
-    // Log to console (captured by Netlify logs)
     console.log("=== PURCHASE COMPLETED ===");
     console.log(JSON.stringify(logEntry, null, 2));
     console.log("==========================");
 
-    // Optionally log to S3 for long-term storage
     if (process.env.ENABLE_S3_PURCHASE_LOGS === "true") {
       const s3 = await getS3();
       const logKey = `purchase-logs/${new Date().toISOString().split('T')[0]}/${data.orderID}.json`;
@@ -229,11 +245,9 @@ async function logPurchase(data, event) {
       }));
     }
 
-    // Optionally log to local file (useful for local dev)
     if (process.env.NODE_ENV === "development" || process.env.ENABLE_FILE_LOGGING === "true") {
       const logDir = path.join(process.cwd(), "data");
       const logFile = path.join(logDir, "purchases.jsonl");
-      
       try {
         await fs.mkdir(logDir, { recursive: true });
         await fs.appendFile(logFile, JSON.stringify(logEntry) + "\n");
@@ -242,7 +256,6 @@ async function logPurchase(data, event) {
       }
     }
   } catch (err) {
-    // Don't fail the purchase if logging fails
     console.error("Purchase logging failed:", err.message);
   }
 }
@@ -281,10 +294,9 @@ exports.handler = async (event) => {
 
     const text = await r.text();
     let data = null;
-    try { data = JSON.parse(text); } catch { /* keep raw text for logging */ }
+    try { data = JSON.parse(text); } catch {}
 
     if (!r.ok) {
-      // Save diagnostic row; surface generic error to client
       console.error(`[handler] PayPal capture failed for order ${orderID}:`, r.status, text);
       await saveOrder(orderID, {
         orderID,
@@ -297,7 +309,6 @@ exports.handler = async (event) => {
       return json(502, { ok: false, error: "capture failed" });
     }
 
-    // Determine status from capture response
     const status =
       data?.status ||
       data?.purchase_units?.[0]?.payments?.captures?.[0]?.status ||
@@ -317,7 +328,7 @@ exports.handler = async (event) => {
       return json(400, { ok: false, error: "payment not completed", status });
     }
 
-    // Success → mint single-use token
+    // Success → mint token
     console.log('[handler] Minting download token...');
     let token;
     try {
@@ -328,7 +339,6 @@ exports.handler = async (event) => {
       throw tokenError;
     }
 
-    // Minimal order record (redacted)
     const capture = data?.purchase_units?.[0]?.payments?.captures?.[0] || null;
     const amount =
       capture?.amount?.value ||
@@ -362,14 +372,12 @@ exports.handler = async (event) => {
     console.log('[handler] Saving order record...');
     await saveOrder(orderID, row);
 
-    // Log the successful purchase
     console.log('[handler] Logging purchase...');
     await logPurchase(row, event);
 
     console.log('[handler] Returning success response');
     return json(200, { ok: true, token });
   } catch (e) {
-    // Don't leak internals to client; log server-side instead
     console.error("[handler] FATAL ERROR:", e);
     console.error("[handler] Error stack:", e.stack);
     return json(500, { ok: false, error: "server error" });
