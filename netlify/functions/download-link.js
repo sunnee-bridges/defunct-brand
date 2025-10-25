@@ -209,6 +209,8 @@ exports.handler = async (event) => {
 
     // Validate before increment
     if (expired) {
+      const tail = token.slice(-6);
+      console.warn(`[download-link] expired token=*${tail} exp=${expiresAtIso || "n/a"} uses=${uses}/${maxUses}`);
       return json(410, {
         error: "Token expired",
         message: "This download link has expired. Please contact support if you need assistance.",
@@ -219,6 +221,8 @@ exports.handler = async (event) => {
       });
     }
     if (remaining <= 0) {
+      const tail = token.slice(-6);
+      console.warn(`[download-link] limit reached token=*${tail} uses=${uses}/${maxUses}`);
       return json(429, {
         error: "Download limit reached",
         uses,
@@ -255,10 +259,14 @@ exports.handler = async (event) => {
           Key: fileKey,
           ResponseContentDisposition: 'attachment; filename="vanished-brands.csv"',
           ResponseContentType: "text/csv; charset=utf-8",
-          ResponseCacheControl: "no-store",  
+          ResponseCacheControl: "no-store",
         });
         const url = await getSignedUrl(s3, cmd, { expiresIn: DOWNLOAD_TTL });
         const last = inc.uses >= inc.max;
+
+        // --- concise success log (no URL) ---
+        const tail = token.slice(-6);
+        console.info(`[download-link] consume ok token=*${tail} uses=${inc.uses}/${inc.max} exp=${expiresAtIso || "n/a"}`);
 
         // POST → JSON (XHR); GET → 302
         if (isPOST) {
@@ -295,6 +303,8 @@ exports.handler = async (event) => {
         const expd = isExpired(parsed.exp || expiresAtIso);
 
         if (expd) {
+          const tail = token.slice(-6);
+          console.warn(`[download-link] expired (post-CAS) token=*${tail} exp=${parsed.exp || expiresAtIso || "n/a"} uses=${parsed.uses}/${parsed.max}`);
           return json(410, {
             error: "Token expired",
             message: "This download link has expired. Please contact support if you need assistance.",
@@ -302,6 +312,8 @@ exports.handler = async (event) => {
           });
         }
         if (rem <= 0) {
+          const tail = token.slice(-6);
+          console.warn(`[download-link] limit reached (post-CAS) token=*${tail} uses=${parsed.uses}/${parsed.max}`);
           return json(429, {
             error: "Download limit reached",
             message: `You've reached the maximum number of downloads (${parsed.max}). Please contact support if you need assistance.`,

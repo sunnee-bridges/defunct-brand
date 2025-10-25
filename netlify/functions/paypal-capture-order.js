@@ -20,6 +20,7 @@ const PAYPAL_BASE = PAYPAL_ENV === "live"
 
 const BUCKET  = process.env.S3_BUCKET_NAME;                              // required
 const CSV_KEY = process.env.CSV_OBJECT_KEY || "exports/full-dataset.csv"; // default key
+const TOKEN_TTL_MS = Number(process.env.TOKEN_TTL_MS || 86_400_000); // default 24h
 
 /* ---------- Tiny rate limit (per-process best-effort) ---------- */
 const buckets = new Map();
@@ -147,7 +148,7 @@ async function mintDownloadToken(orderID) {
 
   const token = crypto.randomUUID();
   const now = Date.now();
-  const expiresAt = now + 24 * 60 * 60 * 1000; // 24 hours
+  const expiresAt = now + TOKEN_TTL_MS;
 
   // ✅ Only immutable token data; no usage fields here
   const record = {
