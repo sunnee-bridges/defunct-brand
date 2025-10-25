@@ -150,29 +150,42 @@ const description = "Secure checkout via PayPal. Receive a one-time download lin
       }
 
       // Fetch remaining counts/expiry WITHOUT consuming a use
+      // Fetch remaining counts/expiry WITHOUT consuming a use
       async function peekRemaining(token){
         const url = '/.netlify/functions/download-link?peek=1&token=' + encodeURIComponent(token);
         const r = await httpJSON(url, { method:'GET', headers:{ 'Accept':'application/json' }});
         if (!r.ok || !r.data) return null;
 
+        const maxUses = r.data.maxUses ?? 0;
+        const uses    = r.data.uses ?? 0;
+
+        // Prefer server-provided remaining; else derive it.
         const remaining = (r.data.remaining != null)
           ? r.data.remaining
-          : Math.max(0, (r.data.maxUses || 0) - (r.data.uses || 0));
+          : Math.max(0, maxUses - uses);
+
         const expires = r.data.expiresAt ? new Date(r.data.expiresAt).toLocaleString() : "";
-        const lastNote = r.data.last
-          ? '<div class="note mt-1 text-slate-600 dark:text-zinc-400">Heads up: that was your last allowed download.</div>'
-          : '';
+
+        // Only show the “last allowed download” note when remaining === 0.
+        // If remaining === 1, show a softer heads-up.
+        let note = '';
+        if (remaining === 0) {
+          note = '<div class="note mt-1 text-slate-600 dark:text-zinc-400">Heads up: that was your last allowed download.</div>';
+        } else if (remaining === 1) {
+          note = '<div class="note mt-1 text-slate-600 dark:text-zinc-400">Heads up: you have 1 download left.</div>';
+        }
 
         return {
           line: `
             <div class="note mt-1 text-slate-600 dark:text-zinc-400">
-              Remaining downloads: <strong>${remaining}</strong> of <strong>${r.data.maxUses}</strong>.
+              Remaining downloads: <strong>${remaining}</strong> of <strong>${maxUses}</strong>.
               ${expires ? ` Link valid until <time>${expires}</time>.` : ""}
             </div>
-            ${lastNote}
+            ${note}
           `
         };
       }
+
 
       // Poll a few times AFTER a download begins, to catch the server//'s increment
       async function refreshRemaining(token, attempts = 4, delayMs = 1500) {
