@@ -1,19 +1,27 @@
 // netlify/functions/admin-remint-token.js
-const { S3Client, GetObjectCommand, PutObjectCommand } = require("@aws-sdk/client-s3");
+/* eslint-disable node/no-unsupported-features/es-syntax */
+const {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+  HeadObjectCommand,
+  CopyObjectCommand,
+} = require("@aws-sdk/client-s3");
 const crypto = require("node:crypto");
 
-/* ------------ Config ------------ */
-const REGION       = process.env.S3_REGION || process.env.AWS_REGION || "us-east-1";
-const BUCKET       = process.env.S3_BUCKET_NAME;
+/* ---------- Config ---------- */
+const REGION = process.env.S3_REGION || "us-east-1";
+const BUCKET = process.env.S3_BUCKET_NAME;                              // required
 const CSV_FALLBACK = process.env.CSV_OBJECT_KEY || "exports/brands-latest.csv";
-const MANIFEST_KEY = process.env.S3_MANIFEST_KEY || "exports/manifest.json";
+const ADMIN_SECRET = process.env.ADMIN_REMINT_SECRET;                    // required
+const TOKEN_TTL_MS = Number(process.env.TOKEN_TTL_MS || 86_400_000);     // default 24h
+const MAX_USES     = Number(process.env.MAX_REDEMPTIONS || process.env.MAX_TOKEN_USES || 3);
 
-const DEFAULT_TTL_HOURS = Number(process.env.REMINT_TTL_HOURS || 24);
-const MAX_USES          = Number(process.env.MAX_TOKEN_USES || 3);
+const TOKENS_JSON_PREFIX  = process.env.TOKENS_JSON_PREFIX  || "tokens/";        // tokens/<uuid>.json
+const TOKENS_STATE_PREFIX = process.env.TOKENS_STATE_PREFIX || "tokens-state/";  // tokens-state/<uuid>
+const ORDERS_PREFIX       = process.env.ORDERS_PREFIX       || "orders/";        // orders/<orderID>.json
 
-const ADMIN_SECRET = process.env.ADMIN_REMINT_SECRET; // required
-
-/* ------------ S3 client ------------ */
+/* ---------- S3 client ---------- */
 const s3 = new S3Client({
   region: REGION,
   credentials: (process.env.S3_ACCESS_KEY_ID && process.env.S3_SECRET_ACCESS_KEY)
@@ -21,18 +29,17 @@ const s3 = new S3Client({
     : undefined,
 });
 
-/* ------------ helpers ------------ */
-function corsHeaders() {
-  // keep this private; only your curl / admin panel should call it
-  return {
-    "Access-Control-Allow-Origin": "https://vanishedbrands.com", // tighten as needed
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, X-Admin-Secret",
-    "Cache-Control": "no-store",
-    "Content-Type": "application/json",
-  };
+/* ---------- Helpers ---------- */
+const json = (status, body) => ({
+  statusCode: status,
+  headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
+  body: JSON.stringify(body),
+});
+
+function isValidOrderId(id) {
+  // PayPal order IDs vary; accept reasonable ASCII without spaces
+  return typeof id === "string" && id.length >= 6 && id.length <= 64 && /^[A-Za-z0-9_-]+$/.test(id);
 }
-const json = (status, body) => ({ statusCode: status, headers: corsHeaders(), body: JSON.stringify(body) });
 
 function streamToString(stream) {
   return new Promise((res, rej) => {
@@ -43,97 +50,145 @@ function streamToString(stream) {
   });
 }
 
-async function readJSON(Key) {
-  const r = await s3.send(new GetObjectCommand({ Bucket: BUCKET, Key }));
+async function readJSON({ Bucket, Key }) {
+  const r = await s3.send(new GetObjectCommand({ Bucket, Key }));
   return JSON.parse(await streamToString(r.Body));
 }
 
-async function writeJSON(Key, data) {
+const tokenJsonKey  = (token) => `${TOKENS_JSON_PREFIX}${token}.json`;
+const tokenStateKey = (token) => `${TOKENS_STATE_PREFIX}${token}`;
+const orderKey      = (orderID) => `${ORDERS_PREFIX}${orderID}.json`;
+
+/** Create a fresh token JSON and tokens-state object */
+async function mintToken({ orderID, fileKey, ttlMs, maxUses }) {
+  const token = crypto.randomUUID();
+  const now   = Date.now();
+  const expMs = now + ttlMs;
+  const expIso = new Date(expMs).toISOString();
+
+  // Immutable token JSON (no useCount here)
+  const record = {
+    token,
+    orderID,
+    key: fileKey,
+    createdAt: now,
+    expiresAt: expMs, // epoch ms
+  };
   await s3.send(new PutObjectCommand({
     Bucket: BUCKET,
-    Key,
-    Body: JSON.stringify(data),
+    Key: tokenJsonKey(token),
+    Body: JSON.stringify(record),
     ContentType: "application/json; charset=utf-8",
   }));
+
+  // Pre-create state object used by downloader (uses/max/exp in metadata)
+  await s3.send(new PutObjectCommand({
+    Bucket: BUCKET,
+    Key: tokenStateKey(token),
+    Body: "",
+    Metadata: {
+      uses: "0",
+      max:  String(maxUses),
+      exp:  expIso,
+    },
+    ContentType: "application/octet-stream",
+  }));
+
+  return { token, expIso };
 }
 
-/** Resolve CSV key: order record may not include a `key`, so use fallback or manifest.latest */
-async function resolveCsvKey() {
-  if (CSV_FALLBACK) return CSV_FALLBACK;
+/** Best-effort revoke of a prior token by expiring its state metadata */
+async function revokeOldToken(oldToken) {
+  if (!oldToken) return false;
   try {
-    const manifest = await readJSON(MANIFEST_KEY);
-    if (manifest && typeof manifest.latest === "string") return manifest.latest;
-  } catch {}
-  return "exports/brands-latest.csv";
+    // Read existing state
+    const head = await s3.send(new HeadObjectCommand({ Bucket: BUCKET, Key: tokenStateKey(oldToken) }));
+    const etag = (head.ETag || "").replace(/"/g, "");
+    const meta = head.Metadata || {};
+    const newMeta = {
+      ...meta,
+      // expire immediately
+      exp: new Date(Date.now() - 1000).toISOString(),
+      // (optionally) force zero remaining by setting max=uses
+      max: meta.uses || meta.max || "0",
+    };
+    await s3.send(new CopyObjectCommand({
+      Bucket: BUCKET,
+      Key: tokenStateKey(oldToken),
+      CopySource: `/${BUCKET}/${encodeURIComponent(tokenStateKey(oldToken))}`,
+      MetadataDirective: "REPLACE",
+      Metadata: newMeta,
+      CopySourceIfMatch: etag,
+    }));
+    return true;
+  } catch (e) {
+    // Missing state or no permission — ignore; downloader will still respect time/uses
+    return false;
+  }
 }
 
-/* ------------ handler ------------ */
+/* ---------- Handler ---------- */
 exports.handler = async (event) => {
   try {
-    if (event.httpMethod === "OPTIONS") return json(204, {});
-    if (event.httpMethod !== "POST")   return json(405, { error: "POST only" });
+    if (event.httpMethod !== "POST") return json(405, { error: "POST only" });
+    if (!BUCKET) return json(500, { error: "Server not configured (S3_BUCKET_NAME missing)." });
+    if (!ADMIN_SECRET) return json(500, { error: "Server not configured (ADMIN_REMINT_SECRET missing)." });
 
-    if (!BUCKET)       return json(500, { error: "Server missing S3_BUCKET_NAME" });
-    if (!ADMIN_SECRET) return json(500, { error: "Server missing ADMIN_REMINT_SECRET" });
+    // Auth
+    const hdrSecret = event.headers?.["x-admin-secret"] || event.headers?.["X-Admin-Secret"] || event.headers?.["x-Admin-Secret"];
+    if (!hdrSecret || hdrSecret !== ADMIN_SECRET) return json(403, { error: "Forbidden" });
 
-    // Auth: require header
-    const hdr = event.headers || {};
-    const provided = hdr["x-admin-secret"] || hdr["X-Admin-Secret"] || hdr["x-admin-secret".toLowerCase()];
-    if (provided !== ADMIN_SECRET) return json(401, { error: "Unauthorized" });
-
-    // Input
-    let body = {};
-    try { body = JSON.parse(event.body || "{}"); } catch {}
-    const orderID = (body.orderID || "").trim();
-    const ttlHours = Number.isFinite(Number(body.ttlHours)) ? Number(body.ttlHours) : DEFAULT_TTL_HOURS;
-    const maxUses  = Number.isFinite(Number(body.maxUses))  ? Number(body.maxUses)  : MAX_USES;
-
-    if (!orderID) return json(400, { error: "orderID required" });
+    // Parse body
+    let orderID = null;
+    try { orderID = (JSON.parse(event.body || "{}")).orderID || null; } catch {}
+    if (!isValidOrderId(orderID)) return json(400, { error: "orderID required/invalid" });
 
     // Load order
-    const orderKey = `orders/${orderID}.json`;
     let order;
     try {
-      order = await readJSON(orderKey);
+      order = await readJSON({ Bucket: BUCKET, Key: orderKey(orderID) });
     } catch (e) {
-      return json(404, { error: "Order not found", orderID });
+      return json(404, { error: "order not found" });
     }
 
-    if (!order || (order.status !== "COMPLETED" && order.status !== "completed")) {
-      return json(409, { error: "Order is not COMPLETED", status: order?.status || "UNKNOWN" });
+    // Validate order status
+    const status = order?.status || order?.raw?.status || "UNKNOWN";
+    if (status !== "COMPLETED") {
+      return json(400, { error: "order not completed", status });
     }
 
-    // Determine which CSV to serve
-    const csvKey = order.key || await resolveCsvKey();
+    // Determine file key (prefer explicit in order; else fallback)
+    const fileKey = order?.key || CSV_FALLBACK;
 
-    // Create a fresh token
-    const token = crypto.randomUUID();
-    const now   = Date.now();
-    const record = {
-      token,
+    // Revoke prior token (best effort)
+    const previousToken = order?.token || null;
+    const revoked = await revokeOldToken(previousToken);
+
+    // Mint new token
+    const { token, expIso } = await mintToken({
       orderID,
-      key: csvKey,
-      createdAt: now,
-      expiresAt: now + ttlHours * 60 * 60 * 1000,
-      useCount: 0,
-      maxUses,
-      reason: "admin-remint",
-    };
+      fileKey,
+      ttlMs: TOKEN_TTL_MS,
+      maxUses: MAX_USES,
+    });
 
-    await writeJSON(`tokens/${token}.json`, record);
+    // (Optional) update order record with new token indicator — not required for functionality.
+    // If you want a history, you could write an "order-updates/" event instead of mutating orders/.
+    // Keeping orders immutable avoids churn; so we skip it here.
 
-    // (Optional) annotate order with lastRemintedAt / lastToken for audit
-    try {
-      const patched = {
-        ...order,
-        lastRemintedAt: now,
-        lastToken: token,
-      };
-      await writeJSON(orderKey, patched);
-    } catch { /* ignore audit failures */ }
+    // Concise log (no URL)
+    const tail = token.slice(-6);
+    console.info(`[admin-remint] order=${orderID} token=*${tail} exp=${expIso} max=${MAX_USES} revokedOld=${Boolean(revoked)}`);
 
-    return json(200, { ok: true, token, expiresAt: new Date(record.expiresAt).toISOString(), maxUses, key: csvKey });
+    return json(200, {
+      ok: true,
+      token,
+      expiresAt: expIso,
+      maxUses: MAX_USES,
+      key: fileKey,
+    });
   } catch (e) {
-    return json(500, { error: String(e?.message || e) });
+    console.error("[admin-remint] ERROR:", e && e.message ? e.message : e);
+    return json(500, { error: "server error" });
   }
 };
