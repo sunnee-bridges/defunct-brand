@@ -62,24 +62,27 @@ export default defineConfig({
   integrations: [
     tailwind({ config: { applyBaseStyles: true } }),
     sitemap({
-      filter: (page) => {
-        const p = toPath(page);
-        // Exclude non-canonical / utility routes
-        if (p === '/buy/') return false;
-        if (p.startsWith('/download/')) return false;
-        if (p.startsWith('/.netlify/functions/')) return false;
-        if (p.startsWith('/content/')) return false; // any raw data paths, just in case
-        return true;
-      },
-      serialize: (page) => {
-        const p = toPath(page);
-        const base = {
-          ...(typeof page === 'string' ? {} : page),
-          url: p, // give sitemap a pathname; plugin will prepend `site`
-          ...metaFor(p),
-        };
-        const lastmod = brandLastmods[p];
-        return lastmod ? { ...base, lastmod } : base;
+       entryLimit: 1,
+
+    filter: (page) => {
+      const p = toPath(page);
+      // Exclude non-canonical / utility routes
+      if (p === '/buy/') return false;
+      if (p.startsWith('/download/')) return false;
+      if (p.startsWith('/.netlify/functions/')) return false;
+      if (p.startsWith('/content/')) return false; // any raw data paths, just in case
+      return true;
+    },
+
+    serialize: (page) => {
+      const p = toPath(page);
+      const base = {
+        ...(typeof page === 'string' ? {} : page),
+        url: p, // plugin will prepend `site`
+        ...metaFor(p),
+      };
+      const lastmod = brandLastmods[p];
+      return lastmod ? { ...base, lastmod } : base;
       },
     }),
   ],
