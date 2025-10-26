@@ -1,0 +1,19 @@
+{
+  "brand": "Sears (Canada)",
+  "slug": "sears-canada",
+  "category": "Retail",
+  "country": "Canada",
+  "active": {
+    "start": 1952,
+    "end": 2018
+  },
+  "fate": "Liquidation",
+  "summary": "Canadian department store chain liquidated in 2018.",
+  "notable_products": [
+    "Department stores",
+    "Kenmore (licensed)"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Sears_Canada"
+  }
+}

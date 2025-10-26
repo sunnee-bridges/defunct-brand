@@ -1,0 +1,6 @@
+# public/robots.txt
+User-agent: *
+Allow: /
+Disallow: /download/
+Disallow: /.netlify/functions/
+Sitemap: https://vanishedbrands.com/sitemap-index.xml

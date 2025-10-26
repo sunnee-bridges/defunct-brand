@@ -1,0 +1,20 @@
+{
+  "brand": "Palm",
+  "slug": "palm",
+  "category": "Mobile devices",
+  "country": "US",
+  "active": {
+    "start": 1992,
+    "end": 2011
+  },
+  "fate": "Acquired/discontinued",
+  "summary": "Maker of PDAs/smartphones; acquired by HP; webOS devices discontinued.",
+  "notable_products": [
+    "Pilot",
+    "Treo",
+    "Pre"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Palm,_Inc."
+  }
+}
