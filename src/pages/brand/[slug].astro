@@ -13,7 +13,9 @@ export function getStaticPaths() {
   // Define the glob INSIDE this function to avoid scope issues
   const modules = import.meta.glob("/src/content/brands/*.json");
   return Object.keys(modules).map((p) => {
-    const slug = p.split("/").pop().replace(/\.json$/i, "");
+     const slug = (p.split("/").pop() || "")
+     .replace(/\.public\.json$/i, "")
+     .replace(/\.json$/i, "");
     return { params: { slug } };
   });
 }

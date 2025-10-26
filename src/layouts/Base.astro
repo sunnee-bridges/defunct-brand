@@ -17,7 +17,9 @@ const fileSlugs: string[] = Object.entries(mods)
   .map(([p, mod]) => {
     const data = (mod as any).default ?? mod;
     // prefer explicit slug; else derive from filename
-    return data?.slug ?? (p.split("/").pop() || "").replace(/\.json$/i, "");
+     return data?.slug ?? (p.split("/").pop() || "")
+     .replace(/\.public\.json$/i, "")
+     .replace(/\.json$/i, "");
   })
   .filter(Boolean);
 

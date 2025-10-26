@@ -24,7 +24,7 @@ function buildBrandLastmods() {
   const map = {};
   if (!fs.existsSync(dir)) return map;
 
-  // Stable order (not required, just nice for debugging)
+  // Stable order (nice for debugging)
   const files = fs
     .readdirSync(dir, { withFileTypes: true })
     .filter((ent) => ent.isFile())
@@ -32,15 +32,21 @@ function buildBrandLastmods() {
     .sort();
 
   for (const f of files) {
-    // Only accept plain JSON files (ignore hidden files, legacy *.public.json if any, etc.)
+    // Ignore legacy public files entirely
+    if (/\.public\.json$/i.test(f)) continue;
+    // Only accept normal JSON (no hidden files)
     if (!/^[^.].*\.json$/i.test(f)) continue;
 
-    const slug = f.replace(/\.json$/i, '');
+    const slug = f
+      .replace(/\.public\.json$/i, '')
+      .replace(/\.json$/i, '');
+
     const stat = fs.statSync(path.join(dir, f));
     map[`/brand/${encodeURIComponent(slug)}/`] = stat.mtime.toISOString();
   }
   return map;
 }
+
 
 const brandLastmods = buildBrandLastmods();
 

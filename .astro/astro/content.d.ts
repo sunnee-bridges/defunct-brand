@@ -150,18 +150,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"aim.public": {
-	id: "aim.public";
-  collection: "brands";
-  data: any
-};
 "american-apparel-original": {
 	id: "american-apparel-original";
-  collection: "brands";
-  data: any
-};
-"american-apparel-original.public": {
-	id: "american-apparel-original.public";
   collection: "brands";
   data: any
 };
@@ -170,18 +160,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"blackberry-os-phones.public": {
-	id: "blackberry-os-phones.public";
-  collection: "brands";
-  data: any
-};
 "blockbuster": {
 	id: "blockbuster";
-  collection: "brands";
-  data: any
-};
-"blockbuster.public": {
-	id: "blockbuster.public";
   collection: "brands";
   data: any
 };
@@ -190,18 +170,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"borders.public": {
-	id: "borders.public";
-  collection: "brands";
-  data: any
-};
 "casual-corner": {
 	id: "casual-corner";
-  collection: "brands";
-  data: any
-};
-"casual-corner.public": {
-	id: "casual-corner.public";
   collection: "brands";
   data: any
 };
@@ -210,18 +180,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"circuit-city.public": {
-	id: "circuit-city.public";
-  collection: "brands";
-  data: any
-};
 "compaq": {
 	id: "compaq";
-  collection: "brands";
-  data: any
-};
-"compaq.public": {
-	id: "compaq.public";
   collection: "brands";
   data: any
 };
@@ -230,18 +190,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"jet-retail.public": {
-	id: "jet-retail.public";
-  collection: "brands";
-  data: any
-};
 "kb-toys": {
 	id: "kb-toys";
-  collection: "brands";
-  data: any
-};
-"kb-toys.public": {
-	id: "kb-toys.public";
   collection: "brands";
   data: any
 };
@@ -250,18 +200,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"kodak-consumer-cameras.public": {
-	id: "kodak-consumer-cameras.public";
-  collection: "brands";
-  data: any
-};
 "lego-universe": {
 	id: "lego-universe";
-  collection: "brands";
-  data: any
-};
-"lego-universe.public": {
-	id: "lego-universe.public";
   collection: "brands";
   data: any
 };
@@ -270,18 +210,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"linens-n-things.public": {
-	id: "linens-n-things.public";
-  collection: "brands";
-  data: any
-};
 "napster-original": {
 	id: "napster-original";
-  collection: "brands";
-  data: any
-};
-"napster-original.public": {
-	id: "napster-original.public";
   collection: "brands";
   data: any
 };
@@ -290,18 +220,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"netscape.public": {
-	id: "netscape.public";
-  collection: "brands";
-  data: any
-};
 "palm": {
 	id: "palm";
-  collection: "brands";
-  data: any
-};
-"palm.public": {
-	id: "palm.public";
   collection: "brands";
   data: any
 };
@@ -310,18 +230,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"pan-am.public": {
-	id: "pan-am.public";
-  collection: "brands";
-  data: any
-};
 "pebble": {
 	id: "pebble";
-  collection: "brands";
-  data: any
-};
-"pebble.public": {
-	id: "pebble.public";
   collection: "brands";
   data: any
 };
@@ -330,18 +240,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"pets-com.public": {
-	id: "pets-com.public";
-  collection: "brands";
-  data: any
-};
 "sears-canada": {
 	id: "sears-canada";
-  collection: "brands";
-  data: any
-};
-"sears-canada.public": {
-	id: "sears-canada.public";
   collection: "brands";
   data: any
 };
@@ -350,18 +250,8 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"sega-dreamcast.public": {
-	id: "sega-dreamcast.public";
-  collection: "brands";
-  data: any
-};
 "twa": {
 	id: "twa";
-  collection: "brands";
-  data: any
-};
-"twa.public": {
-	id: "twa.public";
   collection: "brands";
   data: any
 };
@@ -370,28 +260,13 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"woolworth-us.public": {
-	id: "woolworth-us.public";
-  collection: "brands";
-  data: any
-};
 "yahoo-messenger": {
 	id: "yahoo-messenger";
   collection: "brands";
   data: any
 };
-"yahoo-messenger.public": {
-	id: "yahoo-messenger.public";
-  collection: "brands";
-  data: any
-};
 "zune": {
 	id: "zune";
-  collection: "brands";
-  data: any
-};
-"zune.public": {
-	id: "zune.public";
   collection: "brands";
   data: any
 };
