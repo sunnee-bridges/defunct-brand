@@ -62,7 +62,7 @@ export default defineConfig({
   integrations: [
     tailwind({ config: { applyBaseStyles: true } }),
     sitemap({
-       entryLimit: 1,
+       entryLimit: 5000,
 
     filter: (page) => {
       const p = toPath(page);
