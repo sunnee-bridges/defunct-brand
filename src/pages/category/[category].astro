@@ -99,7 +99,12 @@ const itemListLd = {
 };
 ---
 
-<Base title={title} description={description}>
+<Base
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={[breadcrumbLd, itemListLd]}
+>
   <!-- Match index.astro: simple nav block -->
   <nav class="mb-4">
     <a href="/" class="chip focus-ring">← Home</a>
@@ -164,20 +169,6 @@ const itemListLd = {
     );
   })}
 </ul>
-
-
-  <!-- SEO tags into <head> via Base’s slot -->
-  <Fragment slot="head">
-    <link rel="canonical" href={canonical} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
-    <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
-  </Fragment>
 
   <!-- Tiny client helpers (optional) -->
   <script>

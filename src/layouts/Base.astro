@@ -30,7 +30,14 @@ const DESC  = trim(description, 160);
 // Normalize jsonLd to an array
 const jsonLdArray: any[] = Array.isArray(jsonLd) ? jsonLd : (jsonLd ? [jsonLd] : []);
 
-/** Load curated brand JSON (used for random + seeds) */
+// Safely stringify JSON for inline <script> (avoid breaking on </script>, <, U+2028/U+2029)
+const toSafeJson = (obj: any) =>
+  JSON.stringify(obj ?? {})
+    .replace(/<\/script/gi, '<\\/script')
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028|\u2029/g, '');
+
+// Load curated brand JSON (used for random + seeds)
 const mods = import.meta.glob("/src/content/brands/*.json", { eager: true }) as Record<string, any>;
 
 const fileSlugs: string[] = Object.entries(mods)
@@ -71,12 +78,14 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <meta name="twitter:title" content={TITLE} />
     <meta name="twitter:description" content={DESC} />
 
-    <!-- JSON-LD (emit actual JSON; not literal JSX) -->
-    {jsonLdArray.map((obj) => (
-      <script type="application/ld+json" is:inline>
-        {JSON.stringify(obj)}
-      </script>
-    ))}
+    <!-- JSON-LD (safely inlined) -->
+    {
+      jsonLdArray.map((obj) => (
+        <script type="application/ld+json" is:inline>
+          {toSafeJson(obj)}
+        </script>
+      ))
+    }
 
     <!-- Allow pages to inject extra SEO / scripts -->
     <slot name="head" />
@@ -120,7 +129,7 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <!-- Footer -->
     <Footer fallbackSlug={FALLBACK_SLUG} />
 
-    <!-- 🔊 Screen-reader live announcements (Footer also includes one; keeping here is harmless) -->
+    <!-- 🔊 Screen-reader live announcements -->
     <div id="live-region" aria-live="polite" class="sr-only"></div>
 
     <!-- Random loader: no JSON parsing, uses /brand-slugs.txt + localStorage cache + idle warmup -->
@@ -215,10 +224,14 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
         else setTimeout(warm, 250);
 
         // Optional: expose for console testing or inline onclick fallbacks
-        window.__goRandomBrand = function(ev){ ev?.preventDefault?.(); ensureSlugs().then(slugs => {
-          const pick = pickOther(slugs || []);
-          if (pick) location.href = "/brand/" + pick + "/";
-        }); };
+        // @ts-ignore
+        window.__goRandomBrand = function(ev){
+          ev?.preventDefault?.();
+          ensureSlugs().then(slugs => {
+            const pick = pickOther(slugs || []);
+            if (pick) location.href = "/brand/" + pick + "/";
+          });
+        };
       })();
     </script>
   </body>

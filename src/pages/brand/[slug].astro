@@ -1,4 +1,5 @@
 ---
+// src/pages/brand/[slug].astro
 /**
  * Static generation for /brand/[slug]
  * Use import.meta.glob for both path generation and data loading.
@@ -13,9 +14,9 @@ export function getStaticPaths() {
   // Define the glob INSIDE this function to avoid scope issues
   const modules = import.meta.glob("/src/content/brands/*.json");
   return Object.keys(modules).map((p) => {
-     const slug = (p.split("/").pop() || "")
-     .replace(/\.public\.json$/i, "")
-     .replace(/\.json$/i, "");
+    const slug = (p.split("/").pop() || "")
+      .replace(/\.public\.json$/i, "") // tolerate legacy names
+      .replace(/\.json$/i, "");
     return { params: { slug } };
   });
 }
@@ -24,34 +25,31 @@ export function getStaticPaths() {
 const brandModules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
-});
+}) as Record<string, any>;
 
 /** Resolve the current brand from the preloaded map */
 const { slug } = Astro.params;
 const modKey = `/src/content/brands/${slug}.json`;
-const brand = brandModules[modKey] ?? null;
+const brand = (brandModules[modKey] as any) ?? null;
 const notFound = !brand;
 
-/* --- SEO / Canonical --- */
+/* --- SEO / Canonical (use Base props to emit tags) --- */
 let pageTitle = "Page not found";
 let pageDesc  = "Try another page or browse the full list.";
-let canonical = Astro.site ? new URL("/az", Astro.site).href : "/az";
+let canonical = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
 
-let brandLd = null;
-let breadcrumbsLd = null;
-
+let jsonLdBlocks: any[] = [];
 if (!notFound) {
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
   pageTitle = `What Happened to ${brand.brand}? (Timeline & Fate)`;
-  pageDesc  = `${brand.brand}: ${brand.fate || "Defunct"}; active ${activeStr}. ${brand.summary ?? ""}`;
+  pageDesc  = `${brand.brand}: ${brand.fate || "Defunct"}; active ${activeStr}. ${brand.summary ?? ""}`.trim();
 
-  const brandPath = `/brand/${encodeURIComponent(brand.slug || slug)}`;
+  const brandPath = `/brand/${encodeURIComponent(brand.slug || slug)}/`;
   canonical = Astro.site ? new URL(brandPath, Astro.site).href : brandPath;
 
-  // JSON-LD (computed keys avoid parser quirks)
-  brandLd = {
-    ['@context']: 'https://schema.org',
-    ['@type']: 'Brand',
+  const brandLd = {
+    ["@context"]: "https://schema.org",
+    ["@type"]: "Brand",
     name: brand.brand,
     description: brand.summary || undefined,
     foundingDate: brand.active?.start || undefined,
@@ -59,37 +57,38 @@ if (!notFound) {
     category: brand.category || undefined,
   };
 
-  breadcrumbsLd = {
-    ['@context']: 'https://schema.org',
-    ['@type']: 'BreadcrumbList',
+  const breadcrumbsLd = {
+    ["@context"]: "https://schema.org",
+    ["@type"]: "BreadcrumbList",
     itemListElement: [
-      { ['@type']: 'ListItem', position: 1, name: 'Home', item: Astro.site ? new URL('/', Astro.site).href : '/' },
-      { ['@type']: 'ListItem', position: 2, name: 'A–Z',  item: Astro.site ? new URL('/az', Astro.site).href : '/az' },
-      { ['@type']: 'ListItem', position: 3, name: brand.brand, item: canonical },
+      { ["@type"]: "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
+      { ["@type"]: "ListItem", position: 2, name: "A–Z",  item: Astro.site ? new URL("/az/", Astro.site).href : "/az/" },
+      { ["@type"]: "ListItem", position: 3, name: brand.brand, item: canonical },
     ],
   };
+
+  jsonLdBlocks = [brandLd, breadcrumbsLd];
 }
 ---
 
-<Base title={pageTitle} description={pageDesc}>
-  <Fragment slot="head">
-    <link rel="canonical" href={canonical} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={pageDesc} />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={pageDesc} />
-    <meta name="twitter:card" content="summary" />
-    {!notFound && brandLd && <script type="application/ld+json">{JSON.stringify(brandLd)}</script>}
-    {!notFound && breadcrumbsLd && <script type="application/ld+json">{JSON.stringify(breadcrumbsLd)}</script>}
-    {notFound && <meta name="robots" content="noindex,follow" />}
-  </Fragment>
+<Base
+  title={pageTitle}
+  description={pageDesc}
+  canonical={canonical}
+  jsonLd={jsonLdBlocks}
+>
+  {/* Keep robots noindex for not-found */}
+  {notFound && (
+    <Fragment slot="head">
+      <meta name="robots" content="noindex,follow" />
+    </Fragment>
+  )}
 
   {notFound ? (
     <>
       <nav class="flex flex-wrap items-center gap-2 my-3">
         <a href="/" class="chip focus-ring">← Home</a>
-        <a href="/az" class="chip focus-ring">Browse A–Z</a>
+        <a href="/az/" class="chip focus-ring">Browse A–Z</a>
       </nav>
       <h1 class="text-2xl md:text-3xl font-bold mb-2">Page not found</h1>
       <p class="text-slate-600 dark:text-slate-300">Try another page or browse the full list.</p>
@@ -98,7 +97,7 @@ if (!notFound) {
     <>
       <nav class="flex flex-wrap items-center gap-2 my-3">
         <a href="/" class="chip focus-ring">← Home</a>
-        <a href="/az" class="chip focus-ring">Browse A–Z</a>
+        <a href="/az/" class="chip focus-ring">Browse A–Z</a>
       </nav>
 
       <h1 id="brand-title" class="text-2xl md:text-3xl font-bold mb-2">
@@ -114,7 +113,9 @@ if (!notFound) {
         {brand.country ? ` Country: ${brand.country}.` : "" }
       </p>
 
-      {brand.summary && <p class="mt-3 text-gray-700 dark:text-slate-300">{brand.summary}</p>}
+      {brand.summary && (
+        <p class="mt-3 text-gray-700 dark:text-slate-300">{brand.summary}</p>
+      )}
 
       <ExploreMore brand={brand} />
       <AffiliateDisclosure />
