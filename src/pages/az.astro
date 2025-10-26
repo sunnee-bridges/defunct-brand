@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import { slugify } from "../lib/slug.js";
 
 /* Load curated data (ONLY *.public.json) and de-dupe by slug */
-const modules = import.meta.glob("/src/content/brands/*.public.json", {
+const modules = import.meta.glob("/src/content/brands_src/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, any>;

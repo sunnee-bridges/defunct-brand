@@ -4,7 +4,7 @@ import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
 /** Load curated brand JSON at build time (ONLY *.public.json) */
-const modules = import.meta.glob("/src/content/brands/*.public.json", {
+const modules = import.meta.glob("/src/content/brands_src/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, any>;

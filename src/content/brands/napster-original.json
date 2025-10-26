@@ -1,0 +1,18 @@
+{
+  "brand": "Napster (original)",
+  "slug": "napster-original",
+  "category": "Software/Internet",
+  "country": "US",
+  "active": {
+    "start": 1999,
+    "end": 2001
+  },
+  "fate": "Shut down",
+  "summary": "Original P2P music service shut down after lawsuits; brand later reused.",
+  "notable_products": [
+    "P2P music sharing"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Napster"
+  }
+}

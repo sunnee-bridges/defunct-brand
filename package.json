@@ -3,25 +3,29 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "make:public": "node scripts/make-public-brands.mjs",
-    "data": "node scripts/build-data.mjs",
+   "data": "node scripts/build-data.mjs",
     "slugs": "node scripts/build-slugs.mjs",
+
+   
     "data:public": "cross-env SAMPLE_ROWS=7 node scripts/build-public-csv.mjs",
-    "predev": "npm run make:public",
-    "dev": "concurrently -k -n WATCH,DEV -c auto,auto \"npm:watch:public\" \"npx netlify dev\"",
-    "watch:public": "chokidar \"src/content/brands_src/*.json\" -c \"npm run make:public\"",
-    "prebuild": "npm run make:public && npm run data && npm run data:public",
+
+    
+    "dev": "npx netlify dev",
+
+   
+    "prebuild": "npm run data && npm run data:public",
     "build": "astro build",
     "preview": "astro preview",
-    "data:csv": "cross-env CSV_SOURCE=src/content/brands_src CSV_OUT=full-dataset.csv node scripts/build-csv.mjs",
-    "data:csv:sample": "cross-env CSV_SOURCE=src/content/brands CSV_OUT=sample.csv node scripts/build-csv.mjs",
-    "upload:csv": "aws s3 cp exports/full-dataset.csv s3://vanishedbrands-private/exports/full-dataset.csv",
-    "publish:csv": "npm run data:csv && npm run upload:csv",
+
+  
+    "data:csv": "cross-env CSV_SOURCE=src/content/brands_src node scripts/build-csv.mjs",
+    "data:csv:sample": "cross-env CSV_SOURCE=src/content/brands_src CSV_OUT=sample.csv node scripts/build-csv.mjs",
+    "upload:csv": "aws s3 cp exports/${CSV_OUT:-full-dataset.csv} s3://vanishedbrands-private/exports/${CSV_OUT:-full-dataset.csv}",
+    "publish:csv": "node scripts/publish-csv-versioned.mjs",
+
     "clean": "rimraf dist exports public/data/brands-*.csv",
     "test": "echo \"(no tests)\" && exit 0",
-    "prepare": "husky",
-    "upload:public": "node scripts/upload-public-csv.mjs",
-    "publish:public": "npm run data:public && npm run upload:public"
+    "prepare": "husky"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.910.0",

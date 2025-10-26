@@ -1,81 +1,64 @@
 // scripts/build-public-csv.mjs
-import fs from "node:fs";
-import path from "node:path";
+import { promises as fs } from "node:fs";
+import { join } from "node:path";
 
-const ROOT = process.cwd();
-const CONTENT_DIR = path.join(ROOT, "content", "brands"); // your curated *.public.json live here
-const OUT_DIR = path.join(ROOT, "public", "data");
+const INPUT_DIR = process.env.CSV_SOURCE || "src/content/brands_src";
+const OUT_DIR = "public/data";
+const OUT_FILE = "brands-sample.csv";
+const SAMPLE_ROWS = parseInt(process.env.SAMPLE_ROWS || process.env.PUBLIC_SAMPLE_ROWS || "7", 10);
 
-const SAMPLE_ROWS = parseInt(process.env.SAMPLE_ROWS || "7", 10);
-const VERSION = new Date().toISOString().slice(0,10).replace(/-/g, ""); // YYYYMMDD
-const todayISO = new Date().toISOString().slice(0,10);
-
-if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
-
-// load only JSON files (assume they are already curated public files)
-const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith(".json"));
-if (!files.length) {
-  console.error(`No JSON files in ${CONTENT_DIR}`);
-  process.exit(1);
-}
-
-const objects = files.map(f => JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, f), "utf8")));
-
-// de-dupe by slug (first-wins)
-const seen = new Set();
-const items = [];
-for (const b of objects) {
-  const key = String(b?.slug || "").trim().toLowerCase();
-  if (!key) continue;
-  if (seen.has(key)) continue;
-  seen.add(key);
-  items.push(b);
-}
-items.sort((a,b)=>String(a.brand||"").localeCompare(String(b.brand||"")));
-
-const header = [
-  "brand","slug","category","country","active_start","active_end",
-  "fate","summary","notable_products","wikipedia_url","last_updated","dataset_version"
+const HEADERS = [
+  "brand","slug","category","country",
+  "active_start","active_end","fate","summary","wikipedia"
 ];
-const esc = v => (v == null ? "" : String(v).replace(/"/g,'""'));
-const csvRow = arr => arr.map(esc).map(s=>`"${s}"`).join(",");
 
-const rows = items.map(b => ([
-  b.brand, b.slug, b.category, b.country ?? "",
-  b.active?.start ?? "", b.active?.end ?? "",
-  b.fate ?? "", b.summary ?? "",
-  (b.notable_products || []).join("; "),
-  b.links?.wikipedia ?? "",
-  todayISO, VERSION
-]));
-
-const full = [header.join(","), ...rows.map(csvRow)].join("\n") + "\n";
-
-// write three files
-const versionedPath = path.join(OUT_DIR, `brands-${VERSION}.csv`);
-const latestPath    = path.join(OUT_DIR, "brands-latest.csv");
-const samplePath    = path.join(OUT_DIR, "brands-sample.csv");
-
-fs.writeFileSync(versionedPath, full, "utf8");
-fs.writeFileSync(latestPath, full, "utf8");
-
-// deterministic sample: first N after sort (change to shuffle if you prefer)
-const n = Math.min(Math.max(SAMPLE_ROWS, 0), rows.length);
-const sample = [header.join(","), ...rows.slice(0, n).map(csvRow)].join("\n") + "\n";
-fs.writeFileSync(samplePath, sample, "utf8");
-
-// optional manifest (handy for functions)
-const manifest = {
-  version: VERSION,
-  latestKey: "brands-latest.csv",
-  versionedKey: `brands-${VERSION}.csv`,
-  sampleKey: "brands-sample.csv",
-  generated: new Date().toISOString()
+const q = (v = "") => {
+  const s = String(v ?? "");
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 };
-fs.writeFileSync(path.join(OUT_DIR, "manifest.json"), JSON.stringify(manifest, null, 2));
+const toRowArray = (b) => ([
+  b.brand ?? "",
+  b.slug ?? "",
+  b.category ?? "",
+  b.country ?? "",
+  b?.active?.start ?? "",
+  b?.active?.end ?? "",
+  b.fate ?? "",
+  b.summary ?? "",
+  b?.links?.wikipedia ?? ""
+]);
+const toRow = (arr) => arr.map(q).join(",");
 
-console.log(`✔ Wrote:
- - public/data/brands-${VERSION}.csv
- - public/data/brands-latest.csv
- - public/data/brands-sample.csv (${n} rows + header)
- - public/data/manifest.json`);
+(async () => {
+  let files;
+  try {
+    files = (await fs.readdir(INPUT_DIR)).filter(f => f.endsWith(".json"));
+  } catch {
+    console.error(`Input folder not found: ${INPUT_DIR}`);
+    process.exit(1);
+  }
+  if (files.length === 0) {
+    console.error(`No JSON files found in ${INPUT_DIR}`);
+    process.exit(1);
+  }
+
+  const objs = [];
+  for (const f of files) {
+    const raw = await fs.readFile(join(INPUT_DIR, f), "utf8");
+    const obj = JSON.parse(raw);
+    if (!obj?.brand) continue;
+    objs.push(obj);
+  }
+
+  objs.sort((a, b) => String(a.brand || "").localeCompare(String(b.brand || "")));
+
+  const rows = objs.map(toRowArray);
+  const headerLine = HEADERS.join(",");
+  const bodyLines = rows.map(toRow);
+
+  const n = Math.max(0, Math.min(SAMPLE_ROWS, rows.length));
+  await fs.mkdir(OUT_DIR, { recursive: true });
+  const sampleCsv = [headerLine, ...bodyLines.slice(0, n)].join("\n");
+  await fs.writeFile(join(OUT_DIR, OUT_FILE), sampleCsv + "\n", "utf8");
+  console.log(`Wrote ${join(OUT_DIR, OUT_FILE)} with ${n} rows (SAMPLE_ROWS=${SAMPLE_ROWS})`);
+})();

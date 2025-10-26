@@ -30,7 +30,7 @@ export async function getStaticPaths() {
     return Number.isFinite(n) ? n : undefined;
   }
 
-  const mods = import.meta.glob("/src/content/brands/*.public.json", {
+  const mods = import.meta.glob("/src/content/brands_src/*.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;
@@ -75,7 +75,7 @@ export async function getStaticPaths() {
 
 /* ---------- runtime: load curated + de-duped set ---------- */
 function loadDedupedPublicBrandsRuntime() {
-  const mods = import.meta.glob("/src/content/brands/*.public.json", {
+  const mods = import.meta.glob("/src/content/brands_src/*.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;

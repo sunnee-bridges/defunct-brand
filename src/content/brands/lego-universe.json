@@ -1,0 +1,19 @@
+{
+  "brand": "LEGO Universe",
+  "slug": "lego-universe",
+  "category": "Video games",
+  "country": "DK",
+  "active": {
+    "start": 2010,
+    "end": 2012
+  },
+  "fate": "Shut down",
+  "summary": "MMO game closed in 2012; not the LEGO company.",
+  "notable_products": [
+    "MMO",
+    "Online game"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Lego_Universe"
+  }
+}

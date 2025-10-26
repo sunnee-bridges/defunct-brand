@@ -1,0 +1,19 @@
+{
+  "brand": "AOL Instant Messenger",
+  "slug": "aim",
+  "category": "Software/Internet",
+  "country": "US",
+  "active": {
+    "start": 1997,
+    "end": 2017
+  },
+  "fate": "Discontinued",
+  "summary": "AIM instant messaging service shut down in 2017.",
+  "notable_products": [
+    "IM",
+    "Buddy list"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/AOL_Instant_Messenger"
+  }
+}

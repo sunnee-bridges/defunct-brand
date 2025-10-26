@@ -1,20 +1,34 @@
-# Common ignores
+# Node / OS
 node_modules/
 .env
+.env.*.local
 .DS_Store
 *.log
+.vscode/
+
+# Build output
 dist/
 build/
-.vscode/
-src/content/brands/*.json
-!src/content/brands/*.public.json
+.netlify/
+
+# Astro / tooling caches (safe to ignore)
+.astro/
+.cache/
+.tmp/
+
+# Private brand sources (never commit)
 src/content/brands_src/
 src/content/brands_private/
-exports/
 
+# ⚠️ Legacy rules you no longer need (leave commented for reference)
+# src/content/brands/*.json
+# !src/content/brands/*.public.json
+
+# Local build/export artifacts
+exports/                 # where paid CSVs are built
+
+# Public data: keep the sample, ignore paid
 public/data/brands-*.csv
 !public/data/brands-sample.csv
 public/data/manifest.json
-
-# Local Netlify folder
-.netlify
+exports/

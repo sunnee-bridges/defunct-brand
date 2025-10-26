@@ -1,9 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
-npm run make:public
-# Block accidental non-public JSON commits
-if git diff --cached --name-only | grep -E '^src/content/brands/[^/]+\.json$' | grep -v '\.public\.json$' ; then
-  echo "❌ Refusing to commit non-public brand JSON in content/brands/. Use *.public.json."
+
+# Optional: run make:public only if the script exists
+if npm run 2>/dev/null | grep -q '^ *make:public'; then
+  npm run -s make:public || echo "(skip make:public)"
+else
+  echo "(skip make:public)"
+fi
+
+# Guardrails — block sensitive files from being committed
+# (Unset ALLOW_EXPORTS=1 to bypass once, e.g. ALLOW_EXPORTS=1 git commit ...)
+if git diff --cached --name-only | grep -E '^exports/' >/dev/null ; then
+  if [[ "${ALLOW_EXPORTS:-}" != "1" ]]; then
+    echo "❌ Refusing to commit exports/ artifacts."
+    echo "   These should be uploaded to S3, not stored in git."
+    exit 1
+  fi
+fi
+
+# Only allow the free sample under public/data; block paid CSVs
+if git diff --cached --name-only | grep -E '^public/data/brands-.*\.csv$' | grep -v 'brands-sample\.csv$' >/dev/null ; then
+  echo "❌ Refusing to commit paid CSVs in public/data/. Only brands-sample.csv is allowed."
   exit 1
 fi
-npm test
+
+# Keep private sources out of git
+if git diff --cached --name-only | grep -E '^src/content/brands_(src|private)/' >/dev/null ; then
+  echo "❌ Refusing to commit private brand JSON under src/content/brands_src|brands_private."
+  exit 1
+fi
+
+exit 0

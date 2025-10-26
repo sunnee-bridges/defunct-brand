@@ -18,21 +18,29 @@ function toPath(input) {
   }
 }
 
-/** Build map: "/brand/<slug>/" -> ISO lastmod from .public.json mtime */
+/** Build map: "/brand/<slug>/" -> ISO lastmod from .json mtime */
 function buildBrandLastmods() {
-  const dir = path.resolve('src/content/brands');
+  const dir = path.resolve("src/content/brands_src");
   const map = {};
   if (!fs.existsSync(dir)) return map;
 
-  for (const f of fs.readdirSync(dir)) {
-    if (!f.endsWith('.public.json')) continue;
-    const slug = f.replace(/\.public\.json$/i, '');
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const ent of entries) {
+    if (!ent.isFile()) continue;
+
+    const f = ent.name;
+    // Only accept plain JSON files (ignore hidden files, legacy *.public.json if any, etc.)
+    if (!/^[^.].*\.json$/i.test(f)) continue;
+
+    const slug = f.replace(/\.json$/i, "");
     const stat = fs.statSync(path.join(dir, f));
-    map[`/brand/${slug}/`] = stat.mtime.toISOString();
+    map[`/brand/${encodeURIComponent(slug)}/`] = stat.mtime.toISOString();
   }
   return map;
 }
+
 const brandLastmods = buildBrandLastmods();
+
 
 /** changefreq/priority per section (by pathname) */
 function metaFor(p) {

@@ -1,6 +1,6 @@
 export const prerender = true;
 export async function GET() {
-  const mods = import.meta.glob('/src/content/brands/*.json');
+  const mods = import.meta.glob('/src/content/brands_src/*.json');
   const slugs = Object.keys(mods).map((p) => (p.split('/').pop() || '').replace(/\.json$/i, ''));
   return new Response(JSON.stringify(slugs), {
     headers: {

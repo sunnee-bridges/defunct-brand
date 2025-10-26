@@ -1,0 +1,19 @@
+{
+  "brand": "Pan Am",
+  "slug": "pan-am",
+  "category": "Airline",
+  "country": "US",
+  "active": {
+    "start": 1927,
+    "end": 1991
+  },
+  "fate": "Bankruptcy",
+  "summary": "Iconic international airline ceased operations in 1991.",
+  "notable_products": [
+    "Clipper service",
+    "Pan Am logo"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Pan_American_World_Airways"
+  }
+}
