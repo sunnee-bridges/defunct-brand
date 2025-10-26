@@ -3,23 +3,46 @@ import "../styles/tailwind.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-export interface Props { title?: string; description?: string; }
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;          // optional explicit canonical override
+  jsonLd?: any | any[];        // optional JSON-LD object or array of objects
+}
 
 const {
   title = "Defunct Brands Archive",
-  description = "Browse discontinued and defunct brands by category, A–Z, decade, and fate."
+  description = "Browse discontinued and defunct brands by category, A–Z, decade, and fate.",
+  canonical: canonicalProp,
+  jsonLd = []
 } = Astro.props;
 
-/** 🔧 Same loader as index.astro */
+// Build a canonical URL from Astro.site + current pathname if not provided
+const siteOrigin = Astro.site?.origin || "https://vanishedbrands.com";
+const pathname   = Astro.url?.pathname || "/";
+const canonical  = canonicalProp || new URL(pathname, siteOrigin).toString();
+
+// Safe limits for SERP
+const trim = (s:string, n:number) => (s && s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s);
+const TITLE = trim(title, 60);
+const DESC  = trim(description, 160);
+
+// Normalize jsonLd to an array
+const jsonLdArray: any[] = Array.isArray(jsonLd) ? jsonLd : (jsonLd ? [jsonLd] : []);
+
+/** Load curated brand JSON (used for random + seeds) */
 const mods = import.meta.glob("/src/content/brands/*.json", { eager: true }) as Record<string, any>;
 
 const fileSlugs: string[] = Object.entries(mods)
   .map(([p, mod]) => {
     const data = (mod as any).default ?? mod;
-    // prefer explicit slug; else derive from filename
-     return data?.slug ?? (p.split("/").pop() || "")
-     .replace(/\.public\.json$/i, "")
-     .replace(/\.json$/i, "");
+    // Prefer explicit slug; else derive from filename
+    return (
+      data?.slug ??
+      (p.split("/").pop() || "")
+        .replace(/\.public\.json$/i, "")  // tolerate legacy names
+        .replace(/\.json$/i, "")
+    );
   })
   .filter(Boolean);
 
@@ -33,11 +56,29 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
 <html lang="en" class="h-full">
   <head>
     <meta charset="utf-8" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title>{TITLE}</title>
+    <meta name="description" content={DESC} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Allow pages to inject extra SEO -->
+    <!-- Canonical & Open Graph -->
+    <link rel="canonical" href={canonical} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={TITLE} />
+    <meta property="og:description" content={DESC} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={TITLE} />
+    <meta name="twitter:description" content={DESC} />
+
+    <!-- JSON-LD (emit actual JSON; not literal JSX) -->
+    {jsonLdArray.map((obj) => (
+      <script type="application/ld+json" is:inline>
+        {JSON.stringify(obj)}
+      </script>
+    ))}
+
+    <!-- Allow pages to inject extra SEO / scripts -->
     <slot name="head" />
 
     <!-- Theme boot -->
