@@ -6,10 +6,10 @@ node_modules/
 dist/
 build/
 .vscode/
-content/brands/*.json
-!content/brands/*.public.json
-content/brands_src/
-content/brands_private/
+src/content/brands/*.json
+!src/content/brands/*.public.json
+src/content/brands_src/
+src/content/brands_private/
 exports/
 
 public/data/brands-*.csv

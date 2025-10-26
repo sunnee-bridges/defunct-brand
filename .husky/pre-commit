@@ -2,7 +2,7 @@
 set -euo pipefail
 npm run make:public
 # Block accidental non-public JSON commits
-if git diff --cached --name-only | grep -E '^content/brands/[^/]+\.json$' | grep -v '\.public\.json$' ; then
+if git diff --cached --name-only | grep -E '^src/content/brands/[^/]+\.json$' | grep -v '\.public\.json$' ; then
   echo "❌ Refusing to commit non-public brand JSON in content/brands/. Use *.public.json."
   exit 1
 fi

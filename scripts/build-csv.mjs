@@ -2,7 +2,7 @@
 import { promises as fs } from "node:fs";
 import { join } from "node:path";
 
-const INPUT_DIR = process.env.CSV_SOURCE || "content/brands_src"; // private by default
+const INPUT_DIR = process.env.CSV_SOURCE || "src/content/brands_src"; // private by default
 const OUT_DIR = "exports";
 const OUT_FILE = process.env.CSV_OUT || "full-dataset.csv";
 

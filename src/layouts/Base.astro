@@ -11,7 +11,7 @@ const {
 } = Astro.props;
 
 /** 🔧 Same loader as index.astro */
-const mods = import.meta.glob("/content/brands/*.json", { eager: true }) as Record<string, any>;
+const mods = import.meta.glob("/src/content/brands/*.json", { eager: true }) as Record<string, any>;
 
 const fileSlugs: string[] = Object.entries(mods)
   .map(([p, mod]) => {

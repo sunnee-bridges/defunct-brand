@@ -11,7 +11,7 @@ import AffiliateDisclosure from "../../components/AffiliateDisclosure.astro";
 /** Generate paths for each brand file */
 export function getStaticPaths() {
   // Define the glob INSIDE this function to avoid scope issues
-  const modules = import.meta.glob("/content/brands/*.public.json");
+  const modules = import.meta.glob("/src/content/brands/*.public.json");
   return Object.keys(modules).map((p) => {
     const slug = p.split("/").pop().replace(/\.public\.json$/i, "");
     return { params: { slug } };
@@ -19,14 +19,14 @@ export function getStaticPaths() {
 }
 
 /** Eagerly load all brand JSON for lookup at render time */
-const brandModules = import.meta.glob("/content/brands/*.public.json", {
+const brandModules = import.meta.glob("/src/content/brands/*.public.json", {
   eager: true,
   import: "default",
 });
 
 /** Resolve the current brand from the preloaded map */
 const { slug } = Astro.params;
-const modKey = `/content/brands/${slug}.public.json`;
+const modKey = `/src/content/brands/${slug}.public.json`;
 const brand = brandModules[modKey] ?? null;
 const notFound = !brand;
 

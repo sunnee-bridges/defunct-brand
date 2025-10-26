@@ -75,7 +75,7 @@
 
 # Cache your public brand JSON lightly (so edits propagate quickly)
 [[headers]]
-  for = "/content/brands/*.public.json"
+  for = "/src/content/brands/*.public.json"
   [headers.values]
     Cache-Control = "public, max-age=300"
 
