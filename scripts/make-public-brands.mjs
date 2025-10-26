@@ -48,7 +48,10 @@ function toPublic(src) {
 /* ---------- Main ---------- */
 async function main() {
   try { await fs.access(SRC_DIR); }
-  catch { throw new Error(`Source directory not found: ${SRC_DIR}`); }
+  catch {
+    console.warn(`[make-public-brands] Source directory not found: ${SRC_DIR} — skipping generation.`);
+    return;  
+  }
 
   await fs.mkdir(DST_DIR, { recursive: true });
 
