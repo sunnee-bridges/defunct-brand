@@ -20,19 +20,22 @@ function toPath(input) {
 
 /** Build map: "/brand/<slug>/" -> ISO lastmod from .json mtime */
 function buildBrandLastmods() {
-  const dir = path.resolve("src/content/brands_src");
+  const dir = path.resolve('src/content/brands'); // curated JSON used to build brand pages
   const map = {};
   if (!fs.existsSync(dir)) return map;
 
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const ent of entries) {
-    if (!ent.isFile()) continue;
+  // Stable order (not required, just nice for debugging)
+  const files = fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((ent) => ent.isFile())
+    .map((ent) => ent.name)
+    .sort();
 
-    const f = ent.name;
+  for (const f of files) {
     // Only accept plain JSON files (ignore hidden files, legacy *.public.json if any, etc.)
     if (!/^[^.].*\.json$/i.test(f)) continue;
 
-    const slug = f.replace(/\.json$/i, "");
+    const slug = f.replace(/\.json$/i, '');
     const stat = fs.statSync(path.join(dir, f));
     map[`/brand/${encodeURIComponent(slug)}/`] = stat.mtime.toISOString();
   }
@@ -41,14 +44,13 @@ function buildBrandLastmods() {
 
 const brandLastmods = buildBrandLastmods();
 
-
 /** changefreq/priority per section (by pathname) */
 function metaFor(p) {
-  if (p === '/')                 return { changefreq: 'daily',   priority: 1.0 };
-  if (p === '/az/')              return { changefreq: 'weekly',  priority: 0.8 };
-  if (p.startsWith('/decade/'))  return { changefreq: 'weekly',  priority: 0.7 };
-  if (p.startsWith('/category/'))return { changefreq: 'monthly', priority: 0.6 };
-  if (p.startsWith('/brand/'))   return { changefreq: 'monthly', priority: 0.9 };
+  if (p === '/')                  return { changefreq: 'daily',   priority: 1.0 };
+  if (p === '/az/')               return { changefreq: 'weekly',  priority: 0.8 };
+  if (p.startsWith('/decade/'))   return { changefreq: 'weekly',  priority: 0.7 };
+  if (p.startsWith('/category/')) return { changefreq: 'monthly', priority: 0.6 };
+  if (p.startsWith('/brand/'))    return { changefreq: 'monthly', priority: 0.9 };
   return { changefreq: 'monthly', priority: 0.5 };
 }
 
@@ -62,17 +64,18 @@ export default defineConfig({
     sitemap({
       filter: (page) => {
         const p = toPath(page);
-        // Exclude utility routes
+        // Exclude non-canonical / utility routes
         if (p === '/buy/') return false;
         if (p.startsWith('/download/')) return false;
         if (p.startsWith('/.netlify/functions/')) return false;
+        if (p.startsWith('/content/')) return false; // any raw data paths, just in case
         return true;
       },
       serialize: (page) => {
         const p = toPath(page);
         const base = {
           ...(typeof page === 'string' ? {} : page),
-          url: p,                 // give sitemap a pathname; plugin will prepend site
+          url: p, // give sitemap a pathname; plugin will prepend `site`
           ...metaFor(p),
         };
         const lastmod = brandLastmods[p];

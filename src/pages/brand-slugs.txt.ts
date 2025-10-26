@@ -2,7 +2,7 @@
 export const prerender = true;
 
 export async function GET() {
-  const mods = import.meta.glob("/src/content/brands_src/*.json", { eager: true });
+  const mods = import.meta.glob("/src/content/brands/*.json", { eager: true });
   const slugs = Object.values(mods)
     .map((m: any) => (m as any).default?.slug ?? (m as any).slug)
     .filter(Boolean)

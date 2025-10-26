@@ -6,7 +6,7 @@ import { slugify } from "../../lib/slug.js";
 /** Build-time: enumerate all categories and precompute the items for each */
 export async function getStaticPaths() {
   // ✅ Only curated public files
-  const modules = import.meta.glob("/src/content/brands_src/*.json", {
+  const modules = import.meta.glob("/src/content/brands/*.json", {
     eager: true,
     import: "default",
   }) as Record<string, any>;
