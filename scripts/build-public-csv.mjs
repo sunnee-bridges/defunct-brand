@@ -2,7 +2,7 @@
 import { promises as fs } from "node:fs";
 import { join } from "node:path";
 
-const INPUT_DIR = process.env.CSV_SOURCE || "src/content/brands_src";
+const INPUT_DIR = process.env.CSV_SOURCE || "content/brands";
 const OUT_DIR = "public/data";
 const OUT_FILE = "brands-sample.csv";
 const SAMPLE_ROWS = parseInt(process.env.SAMPLE_ROWS || process.env.PUBLIC_SAMPLE_ROWS || "7", 10);
