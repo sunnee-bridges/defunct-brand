@@ -68,6 +68,21 @@ const pageDesc =
   "Browse discontinued and defunct brands by category, A–Z, decade, and fate.";
 const canonical = (Astro.site ? new URL("/", Astro.site).href : "/");
 
+// Minimal site/organization JSON-LD (no socials/email required)
+const orgLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Vanished Brands",
+  url: "https://vanishedbrands.com/",
+};
+
+const siteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Vanished Brands",
+  url: "https://vanishedbrands.com/",
+};
+
 // JSON-LD for category list (ItemList). Keep it modest; search engines prefer concise lists.
 const categoriesItemListLd = {
   "@context": "https://schema.org",
@@ -113,7 +128,7 @@ const currentPath = Astro.url.pathname;
   title={pageTitle}
   description={pageDesc}
   canonical={canonical}
-  jsonLd={[categoriesItemListLd, decadesItemListLd]}
+  jsonLd={[orgLd, siteLd, categoriesItemListLd, decadesItemListLd]}
 >
   <!-- (No extra <Fragment slot="head"> needed; Base handles SEO safely) -->
 

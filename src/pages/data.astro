@@ -30,9 +30,61 @@ const schema: Array<[string, string, string]> = [
   ["last_updated","date","ISO date of export (YYYY-MM-DD)"],
   ["dataset_version","string","Version tag (YYYYMMDD)"],
 ];
+
+// --- SEO helpers ---
+const pageTitle = "Defunct Brands Dataset • CSV Downloads";
+const pageDesc  = "Download the Defunct Brands dataset as CSV. Clean, structured data of discontinued brands with category, active years, and fate.";
+const path      = "/data/";
+const canonical = Astro.site ? new URL(path, Astro.site).href : path;
+
+// Dataset JSON-LD (pure JSON; emitted via <script type="application/ld+json">)
+const datasetLd = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Defunct Brands Dataset (CSV)",
+  "description": "Structured dataset of discontinued/defunct brands with category, country, active years, fate, and summary. Free sample available; full dataset offered commercially.",
+  "url": canonical,
+  "creator": {
+    "@type": "Organization",
+    "name": "Vanished Brands",
+    "url": "https://vanishedbrands.com/"
+  },
+  "license": "https://vanishedbrands.com/terms/",
+  "isAccessibleForFree": true,
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "Sample CSV",
+      "encodingFormat": "text/csv",
+      "contentUrl": `https://vanishedbrands.com${sampleCsvHref}`
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Full CSV (commercial license)",
+      "encodingFormat": "text/csv",
+      "contentUrl": `https://vanishedbrands.com${BUY_PATH}`,
+      "requiresSubscription": true
+    }
+  ]
+};
 ---
-<Base title="Defunct Brands Dataset • CSV Downloads"
-      description="Download the Defunct Brands dataset as CSV. Clean, structured data of discontinued brands with category, active years, and fate.">
+
+<Base title={pageTitle} description={pageDesc}>
+  <!-- Put SEO (canonical/OG/Twitter) + Dataset JSON-LD into the head -->
+  <Fragment slot="head">
+    <link rel="canonical" href={canonical} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+
+    <!-- Dataset JSON-LD -->
+    <script type="application/ld+json" is:inline>
+      {JSON.stringify(datasetLd)}
+    </script>
+  </Fragment>
 
   <nav class="mb-4 flex flex-wrap gap-2">
     <a href="/" class="chip focus-ring">← Home</a>
