@@ -79,13 +79,10 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <meta name="twitter:description" content={DESC} />
 
     <!-- JSON-LD (safely inlined) -->
-    {
-      jsonLdArray.map((obj) => (
-        <script type="application/ld+json" is:inline>
-          {toSafeJson(obj)}
-        </script>
-      ))
-    }
+    {jsonLdArray.map((obj) => (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(obj)} />
+    ))}
+
 
     <!-- Allow pages to inject extra SEO / scripts -->
     <slot name="head" />
@@ -107,9 +104,14 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
 
     <!-- Tiny list of slugs (seed) + version for cache -->
-    <script id="__brand_slugs_inline" type="application/json" data-ver={BRAND_INDEX_VER}>
-      {JSON.stringify(INLINE_SEED)}
-    </script>
+    <script
+      id="__brand_slugs_inline"
+      type="application/json"
+      data-ver={BRAND_INDEX_VER}
+      is:inline
+      set:html={JSON.stringify(INLINE_SEED)}
+    />
+
 
     <!-- Hint the browser it may fetch the tiny text list soon -->
     <link rel="preload" href="/brand-slugs.txt" as="fetch" crossorigin="anonymous" />
