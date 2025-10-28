@@ -53,13 +53,22 @@
   status = 410
   force = true
 
-# Unknown brand paths → hard 404 page
-# (after the 410 rules above)
+# Non-slash → slash (place BEFORE the /brand/* 404)
+[[redirects]]
+  from = "/brand/:slug"
+  to   = "/brand/:slug/"
+  status = 301
+
+[[redirects]]
+  from = "/category/:slug"
+  to   = "/category/:slug/"
+  status = 301
+
+# Unknown brand paths → hard 404 page (NO force=true)
 [[redirects]]
   from = "/brand/*"
   to = "/404.html"
   status = 404
-  force = true
 
 # Download route proxy -> function
 [[redirects]]
@@ -115,7 +124,7 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Public sample CSV: serve correctly & allow moderate caching
+# Public sample CSV
 [[headers]]
   for = "/data/brands-sample.csv"
   [headers.values]
