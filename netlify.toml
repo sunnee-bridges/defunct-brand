@@ -11,6 +11,7 @@
   directory = "netlify/functions"
 
 # ---------- Redirects ----------
+
 # API routes
 [[redirects]]
   from = "/api/brands"
@@ -31,36 +32,37 @@
   status = 301
   force = true
 
-# --- IMPORTANT: remove trailing-slash normalizers (they caused loops) ---
-# [[redirects]]
-#   from = "/brand/:slug"
-#   to = "/brand/:slug/"
-#   status = 301
-#
-# [[redirects]]
-#   from = "/category/:slug"
-#   to = "/category/:slug/"
-#   status = 301
+# --- Brand-specific status handling ---
 
-# Legacy leaked slugs like /brand/foo.public → mark Gone (helps deindex)
+# 410 for intentionally removed legacy slugs (*.public)
 [[redirects]]
-  from = "/brand/:slug.public"
-  to = "/404.html"
+  from = "/brand/*.public"
+  to = "/410.html"
   status = 410
+  force = true
 
 [[redirects]]
-  from = "/brand/:slug.public/"
-  to = "/404.html"
+  from = "/brand/*.public/"
+  to = "/410.html"
   status = 410
+  force = true
 
-# Unknown brand/category paths → hard 404 (valid static files still win)
+# Trailing slash consistency for brand & category
+# (runs after the specific 410s above)
+[[redirects]]
+  from = "/brand/:slug"
+  to = "/brand/:slug/"
+  status = 301
+
+[[redirects]]
+  from = "/category/:slug"
+  to = "/category/:slug/"
+  status = 301
+
+# Unknown brand paths → hard 404 page
+# (put this AFTER the 410 and 301 rules above)
 [[redirects]]
   from = "/brand/*"
-  to = "/404.html"
-  status = 404
-
-[[redirects]]
-  from = "/category/*"
   to = "/404.html"
   status = 404
 
@@ -71,13 +73,15 @@
   status = 200
   force = true
 
-# Global catch-all 404
+# Global catch-all to real 404 page
+# (keep this LAST)
 [[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404
 
 # ---------- Headers ----------
+
 # Serve HTML as UTF-8
 [[headers]]
   for = "/*.html"
@@ -86,6 +90,17 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "DENY"
     Referrer-Policy = "no-referrer-when-downgrade"
+
+# Explicit robots for error documents
+[[headers]]
+  for = "/404.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
+
+[[headers]]
+  for = "/410.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
 
 # JSON as UTF-8
 [[headers]]
@@ -132,12 +147,6 @@
   [headers.values]
     Content-Type = "application/xml; charset=utf-8"
     Cache-Control = "public, max-age=3600"
-
-# 404 page: ensure it's not indexed but links can be followed
-[[headers]]
-  for = "/404.html"
-  [headers.values]
-    X-Robots-Tag = "noindex, follow"
 
 # ---------- Deploy Preview SEO guard ----------
 [context.deploy-preview]
