@@ -5,6 +5,12 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# ⬇️ Disable Netlify's Pretty URLs (stops auto / → / redirects)
+[build.processing]
+  skip_processing = false
+[build.processing.html]
+  pretty_urls = false
+
 # ---------- Serverless functions ----------
 [functions]
   node_bundler = "esbuild"
@@ -32,52 +38,40 @@
   status = 301
   force = true
 
-# --- Brand-specific status handling (ORDER MATTERS) ---
+# --- Brand-specific status handling ---
 
 # 410 for intentionally removed legacy slugs (*.public)
 [[redirects]]
   from = "/brand/*.public"
-  to   = "/410.html"
+  to = "/410.html"
   status = 410
   force = true
 
 [[redirects]]
   from = "/brand/*.public/"
-  to   = "/410.html"
+  to = "/410.html"
   status = 410
   force = true
 
-# 301: ensure trailing slash for brand & category (one hop)
-[[redirects]]
-  from = "/brand/:slug"
-  to   = "/brand/:slug/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/category/:slug"
-  to   = "/category/:slug/"
-  status = 301
-  force = true
-
-# Unknown brand paths → hard 404 page (after 410 & 301)
+# Unknown brand paths → hard 404 page
+# (after the 410 rules above)
 [[redirects]]
   from = "/brand/*"
-  to   = "/404.html"
+  to = "/404.html"
   status = 404
   force = true
 
 # Download route proxy -> function
 [[redirects]]
   from = "/download/:token"
-  to   = "/.netlify/functions/download-link/:token"
+  to = "/.netlify/functions/download-link/:token"
   status = 200
   force = true
 
-# Global catch-all to real 404 page (keep LAST)
+# Global catch-all to real 404 page (LAST)
 [[redirects]]
   from = "/*"
-  to   = "/404.html"
+  to = "/404.html"
   status = 404
 
 # ---------- Headers ----------
@@ -126,7 +120,7 @@
   for = "/data/brands-sample.csv"
   [headers.values]
     Content-Type = "text/csv; charset=utf-8"
-    Cache-Control = "public, max-age=604800" # 7 days
+    Cache-Control = "public, max-age=604800"
 
 # Keep utility/buy pages out of search
 [[headers]]
