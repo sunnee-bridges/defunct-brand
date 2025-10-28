@@ -66,36 +66,57 @@ const uniqueItems = items.filter((b: any) => {
 });
 
 /* ---------------- SEO / Canonical / JSON-LD ---------------- */
+const categorySlug = slugify(label);
+const categoryPath = `/category/${categorySlug}/`;
+const siteOrigin = Astro.site?.origin || "https://vanishedbrands.com";
+const canonical = Astro.site ? new URL(categoryPath, Astro.site).href : categoryPath;
+
 const title = `Defunct Brands in ${label}`;
 const description = `Explore ${uniqueItems.length} defunct or discontinued brands in ${label}.`;
 
-const categoryPath = `/category/${slugify(label)}/`;
-const canonical = Astro.site ? new URL(categoryPath, Astro.site).href : categoryPath;
+// Stable @id helpers
+const id = (p: string) => `${siteOrigin}${p.replace(/^\//, "/")}`;
 
+// Breadcrumbs with @id & urls
 const breadcrumbLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
+  "@id": id(`${categoryPath}#breadcrumbs`),
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
-    { "@type": "ListItem", position: 2, name: "Categories", item: Astro.site ? new URL("/#categories", Astro.site).href : "/#categories" },
+    { "@type": "ListItem", position: 1, name: "Home", item: id("/") },
+    { "@type": "ListItem", position: 2, name: "Categories", item: id("/#categories") },
     { "@type": "ListItem", position: 3, name: label, item: canonical },
   ],
 };
 
+// ItemList for brands in this category (with @id & url on the list)
 const itemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
+  "@id": id(`${categoryPath}#itemlist`),
+  url: canonical,
   name: title,
   itemListOrder: "http://schema.org/ItemListOrderAscending",
   numberOfItems: uniqueItems.length,
   itemListElement: uniqueItems.map((b: any, i: number) => ({
     "@type": "ListItem",
     position: i + 1,
+    name: b.brand,
     url: Astro.site
       ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
       : `/brand/${encodeURIComponent(b.slug)}/`,
-    name: b.brand,
   })),
+};
+
+// NEW: CollectionPage describing this category page, pointing to the ItemList
+const collectionPageLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": id(categoryPath),
+  url: canonical,
+  name: title,
+  description,
+  mainEntity: { "@id": itemListLd["@id"] }, // reference the ItemList above
 };
 ---
 
@@ -103,7 +124,7 @@ const itemListLd = {
   title={title}
   description={description}
   canonical={canonical}
-  jsonLd={[breadcrumbLd, itemListLd]}
+  jsonLd={[collectionPageLd, breadcrumbLd, itemListLd]}
 >
   <!-- Match index.astro: simple nav block -->
   <nav class="mb-4">

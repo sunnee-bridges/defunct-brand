@@ -1,22 +1,40 @@
 ---
 const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
 ---
-<footer class="max-w-[1040px] mx-auto px-4 mt-10 mb-8 text-sm text-slate-600 dark:text-slate-400">
+<footer class="max-w-[1040px] mx-auto px-4 mt-10 mb-8 text-sm text-slate-600 dark:text-slate-400" role="contentinfo">
+  <!-- Visually hidden site descriptor (SEO + a11y, no UI change) -->
+  <p class="sr-only">
+    VanishedBrands — an archive of discontinued and defunct brands, with timelines, categories, decades,
+    and a downloadable CSV dataset for research and journalism.
+  </p>
+
   <div class="border-t border-slate-200 dark:border-slate-700 pt-4 flex flex-wrap items-center gap-3 justify-between">
 
-
     <!-- CTA row: visible on small screens -->
-    <nav class="flex gap-3 md:hidden">
-      <a href="/az/" class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none">
+    <nav class="flex gap-3 md:hidden" aria-label="Footer quick links">
+      <a
+        href="/az/"
+        class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none"
+        title="Browse all brands A–Z"
+        aria-label="Browse all defunct brands A to Z"
+      >
         Browse A&ndash;Z
       </a>
-      <a href="/data/" class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none">
+
+      <a
+        href="/data/"
+        class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none"
+        title="Download the Defunct Brands CSV dataset"
+        aria-label="Defunct Brands CSV dataset"
+      >
         Data (CSV)
       </a>
+
       <a
         href={`/brand/${fallbackSlug}/`}
         class="btn-primary focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none"
-        aria-label="Go to a random brand"
+        aria-label="Go to a random brand page"
+        title="Random defunct brand"
         data-random
         onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
       >
@@ -25,13 +43,30 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
     </nav>
 
     <!-- CTA row: visible on md+ screens -->
-    <nav class="hidden md:flex gap-3">
-      <a href="/az/" class="chip focus-ring">Browse A&ndash;Z</a>
-      <a href="/data/" class="chip focus-ring">Data (CSV)</a>
+    <nav class="hidden md:flex gap-3" aria-label="Footer quick links (desktop)">
+      <a
+        href="/az/"
+        class="chip focus-ring"
+        title="Browse all brands A–Z"
+        aria-label="Browse all defunct brands A to Z"
+      >
+        Browse A&ndash;Z
+      </a>
+
+      <a
+        href="/data/"
+        class="chip focus-ring"
+        title="Download the Defunct Brands CSV dataset"
+        aria-label="Defunct Brands CSV dataset"
+      >
+        Data (CSV)
+      </a>
+
       <a
         href={`/brand/${fallbackSlug}/`}
         class="btn-primary focus-ring"
-        aria-label="Go to a random brand"
+        aria-label="Go to a random brand page"
+        title="Random defunct brand"
         data-random
         onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
       >
@@ -42,4 +77,10 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
 
   <!-- 🔊 Screen-reader live announcements -->
   <div id="live-region" aria-live="polite" class="sr-only"></div>
+
+  <!-- Optional: tiny, invisible discoverability links (don’t change UI) -->
+  <div class="sr-only">
+    <a href="/sitemap-index.xml">Sitemap</a>
+    <a href="/robots.txt">Robots.txt</a>
+  </div>
 </footer>

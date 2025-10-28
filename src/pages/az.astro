@@ -2,7 +2,7 @@
 import Base from "../layouts/Base.astro";
 import { slugify } from "../lib/slug.js";
 
-/* Load curated data (ONLY *.public.json) and de-dupe by slug */
+/* Load curated data and de-dupe by slug */
 const modules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
@@ -23,7 +23,6 @@ const firstLetter = (s: string = "") => {
   const ch = (s[0] || "").toUpperCase();
   return /[A-Z]/.test(ch) ? ch : "#";
 };
-/* Safe anchor ids (avoid # and odd chars) */
 const anchorIdFor = (L: string) => (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
 
 /* Sort/group */
@@ -42,6 +41,8 @@ const total = sorted.length;
 const PAGE_TITLE = "Browse A–Z • Defunct Brands";
 const PAGE_DESC = "Browse all discontinued and defunct brands alphabetically. Clean, structured entries with timelines and outcomes.";
 const CANONICAL = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
+
+/** JSON-LD: Breadcrumb + ItemList (cap to avoid huge scripts) */
 const LD_MAX = 100;
 const ldItems = sorted.slice(0, LD_MAX).map((b: any, i: number) => ({
   "@type": "ListItem",
@@ -51,30 +52,37 @@ const ldItems = sorted.slice(0, LD_MAX).map((b: any, i: number) => ({
     ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
     : `/brand/${encodeURIComponent(b.slug)}/`,
 }));
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
+    { "@type": "ListItem", position: 2, name: "A–Z", item: CANONICAL },
+  ],
+};
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Defunct Brands A–Z",
+  itemListOrder: "http://schema.org/ItemListOrderAscending",
+  numberOfItems: Math.min(total, LD_MAX), // keep consistent with ldItems length
+  itemListElement: ldItems,
+};
 ---
 
-<Base title={PAGE_TITLE} description={PAGE_DESC}>
-  <Fragment slot="head">
-    <link rel="canonical" href={CANONICAL} />
-    <meta name="description" content={PAGE_DESC} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={CANONICAL} />
-    <meta property="og:title" content={PAGE_TITLE} />
-    <meta property="og:description" content={PAGE_DESC} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={PAGE_TITLE} />
-    <meta name="twitter:description" content={PAGE_DESC} />
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        name: "Defunct Brands A–Z",
-        itemListOrder: "http://schema.org/ItemListOrderAscending",
-        numberOfItems: total,
-        itemListElement: ldItems,
-      })}
-    </script>
-  </Fragment>
+<Base
+  title={PAGE_TITLE}
+  description={PAGE_DESC}
+  canonical={CANONICAL}
+  jsonLd={[breadcrumbLd, itemListLd]}
+>
+  <!-- Accessible, indexable intro (hidden visually; no UI change) -->
+  <p class="sr-only">
+    Defunct Brands A–Z index. Explore discontinued brands alphabetically with quick links to
+    brand timelines, categories, and outcomes.
+  </p>
 
   <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
     <a href="/" class="chip focus-ring">← Home</a>
@@ -92,7 +100,7 @@ const ldItems = sorted.slice(0, LD_MAX).map((b: any, i: number) => ({
     })}
   </div>
 
-  <!-- Letter groups: use <div role="region"> instead of <section> -->
+  <!-- Letter groups -->
   <div class="space-y-6">
     {letters.map((L) => {
       const anchor = anchorIdFor(L);
@@ -114,7 +122,6 @@ const ldItems = sorted.slice(0, LD_MAX).map((b: any, i: number) => ({
                          focus-within:ring-offset-2 focus-within:ring-offset-white
                          dark:focus-within:ring-offset-slate-900"
                 >
-                  <!-- Full-card click -->
                   <a
                     href={`/brand/${encodeURIComponent(b.slug)}/`}
                     class="stretched-link focus-ring rounded"

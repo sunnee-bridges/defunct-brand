@@ -21,7 +21,6 @@ for (const raw of Object.values(modules)) {
   if (!key) continue;
   if (!b.category) continue; // skip items without a category for browse UX
 
-  // first-wins; change to "last wins" by moving the has() check after set()
   if (!bySlug.has(key)) bySlug.set(key, b);
 }
 const brands: any[] = Array.from(bySlug.values());
@@ -29,7 +28,7 @@ const brands: any[] = Array.from(bySlug.values());
 /* ---------- Helpers ---------- */
 const toYear = (v: unknown): number | undefined => {
   if (v == null) return undefined;
-  const m = String(v).match(/\d{3,4}/);   // handles "2012", 2012, "2012?", "2012–"
+  const m = String(v).match(/\d{3,4}/);
   if (!m) return undefined;
   const n = parseInt(m[0], 10);
   return Number.isFinite(n) ? n : undefined;
@@ -68,7 +67,7 @@ const pageDesc =
   "Browse discontinued and defunct brands by category, A–Z, decade, and fate.";
 const canonical = (Astro.site ? new URL("/", Astro.site).href : "/");
 
-// Minimal site/organization JSON-LD (no socials/email required)
+// Minimal site/organization JSON-LD
 const orgLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -83,7 +82,7 @@ const siteLd = {
   url: "https://vanishedbrands.com/",
 };
 
-// JSON-LD for category list (ItemList). Keep it modest; search engines prefer concise lists.
+// ItemLists already present
 const categoriesItemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -100,7 +99,6 @@ const categoriesItemListLd = {
   })),
 };
 
-// Tiny list of decades as an ItemList too
 const decadesItemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -117,20 +115,47 @@ const decadesItemListLd = {
   })),
 };
 
+/* ---------- NEW: small FAQPage JSON-LD (no UI) ---------- */
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is Vanished Brands?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text:
+          "An archive of discontinued and defunct brands with timelines, categories, and a purchasable CSV dataset for research.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I download the dataset?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text:
+          "Yes. A free sample CSV is available, and the full dataset can be purchased securely via PayPal.",
+      },
+    },
+  ],
+};
+
 const currentPath = Astro.url.pathname;
 ---
 
-<!--
-  Pass canonical + JSON-LD to Base so it can safely inline them (with escaping)
-  and avoid duplicate meta tags. No need to emit meta/JSON-LD again via slot="head".
--->
 <Base
   title={pageTitle}
   description={pageDesc}
   canonical={canonical}
-  jsonLd={[orgLd, siteLd, categoriesItemListLd, decadesItemListLd]}
+  jsonLd={[orgLd, siteLd, categoriesItemListLd, decadesItemListLd, faqLd]}  /* ← added faqLd */
 >
-  <!-- (No extra <Fragment slot="head"> needed; Base handles SEO safely) -->
+  <!-- Invisible intro: keyword context for crawlers & screen readers -->
+  <p class="sr-only">
+    Explore defunct and discontinued brands by category, decade, and A–Z index.
+    Each brand page summarizes the timeline, fate, and key facts. A downloadable CSV dataset
+    is available for analysts, researchers, and journalists.
+  </p>
 
   <!-- Categories -->
   <section class="mt-6" role="region" aria-label="Browse by category">
@@ -144,6 +169,7 @@ const currentPath = Astro.url.pathname;
             href={href}
             class="chip focus-ring aria-[current=page]:ring-2 aria-[current=page]:ring-indigo-500"
             aria-current={isCurrent ? "page" : undefined}
+            title={`Defunct brands in ${c}`}               /* ← descriptive title w/o UI change */
           >
             {c}
           </a>
@@ -168,13 +194,13 @@ const currentPath = Astro.url.pathname;
             href={href}
             class="chip focus-ring aria-[current=page]:ring-2 aria-[current=page]:ring-indigo-500"
             aria-current={isCurrent ? "page" : undefined}
+            title={`Defunct brands from the ${label}`}     /* ← descriptive title */
           >
             {label}
           </a>
         );
       })}
 
-      <!-- Keep "View all" always visible -->
       <a
         href="/decade/"
         class="btn-primary focus-ring"
@@ -194,7 +220,11 @@ const currentPath = Astro.url.pathname;
       {featured.map((b) => (
         <article class="card group">
           <h3 class="text-lg font-semibold leading-snug line-clamp-2 mb-1 text-slate-900/95 dark:text-slate-100">
-            <a href={`/brand/${b.slug}/`} class="hover:underline focus-ring stretched-link">
+            <a
+              href={`/brand/${b.slug}/`}
+              class="hover:underline focus-ring stretched-link"
+              title={`What happened to ${b.brand}?`}       /* ← descriptive title */
+            >
               {b.brand}
             </a>
           </h3>

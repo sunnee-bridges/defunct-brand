@@ -8,13 +8,15 @@ export interface Props {
   description?: string;
   canonical?: string;          // optional explicit canonical override
   jsonLd?: any | any[];        // optional JSON-LD object or array of objects
+  includeDefaultSchema?: boolean; // set false to disable Organization/WebSite schema
 }
 
 const {
   title = "Defunct Brands Archive",
   description = "Browse discontinued and defunct brands by category, A–Z, decade, and fate.",
   canonical: canonicalProp,
-  jsonLd = []
+  jsonLd = [],
+  includeDefaultSchema = true,
 } = Astro.props;
 
 // Build a canonical URL from Astro.site + current pathname if not provided
@@ -27,15 +29,38 @@ const trim = (s:string, n:number) => (s && s.length > n ? s.slice(0, n - 1).trim
 const TITLE = trim(title, 60);
 const DESC  = trim(description, 160);
 
-// Normalize jsonLd to an array
-const jsonLdArray: any[] = Array.isArray(jsonLd) ? jsonLd : (jsonLd ? [jsonLd] : []);
-
 // Safely stringify JSON for inline <script> (avoid breaking on </script>, <, U+2028/U+2029)
 const toSafeJson = (obj: any) =>
   JSON.stringify(obj ?? {})
     .replace(/<\/script/gi, '<\\/script')
     .replace(/</g, '\\u003c')
     .replace(/\u2028|\u2029/g, '');
+
+// Default site-wide schema (minimal, no social needed)
+const ORG_NAME = "Vanished Brands";
+const defaultSchema = includeDefaultSchema
+  ? [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: ORG_NAME,
+        url: siteOrigin,
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: ORG_NAME,
+        url: siteOrigin,
+        // Add SearchAction later if you publish a real /search?q=... endpoint
+      },
+    ]
+  : [];
+
+// Normalize jsonLd to an array and append defaults
+const jsonLdArray: any[] = [
+  ...(Array.isArray(jsonLd) ? jsonLd : (jsonLd ? [jsonLd] : [])),
+  ...defaultSchema,
+];
 
 // Load curated brand JSON (used for random + seeds)
 const mods = import.meta.glob("/src/content/brands/*.json", { eager: true }) as Record<string, any>;
@@ -67,6 +92,8 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <meta name="description" content={DESC} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
     <!-- Canonical & Open Graph -->
     <link rel="canonical" href={canonical} />
     <meta property="og:url" content={canonical} />
@@ -80,9 +107,8 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
 
     <!-- JSON-LD (safely inlined) -->
     {jsonLdArray.map((obj) => (
-      <script type="application/ld+json" is:inline set:html={JSON.stringify(obj)} />
+      <script type="application/ld+json" is:inline set:html={toSafeJson(obj)} />
     ))}
-
 
     <!-- Allow pages to inject extra SEO / scripts -->
     <slot name="head" />
@@ -109,17 +135,17 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
       type="application/json"
       data-ver={BRAND_INDEX_VER}
       is:inline
-      set:html={JSON.stringify(INLINE_SEED)}
+      set:html={toSafeJson(INLINE_SEED)}
     />
-
 
     <!-- Hint the browser it may fetch the tiny text list soon -->
     <link rel="preload" href="/brand-slugs.txt" as="fetch" crossorigin="anonymous" />
+
+    <!-- Favicons -->
     <link rel="icon" href="/favicon.ico?v=2" sizes="any" type="image/x-icon" />
     <link rel="icon" href="/favicon-32x32.png?v=2" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon-16x16.png?v=2" type="image/png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
-
   </head>
 
   <body class="min-h-full bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100">
@@ -165,11 +191,9 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
         }
 
         async function ensureSlugs() {
-          // 1) localStorage cache
           const cached = getCache();
           if (cached) return cached;
 
-          // 2) inline seed (first 64 slugs), then upgrade in background
           if (INLINE?.textContent) {
             try {
               const seed = JSON.parse(INLINE.textContent);
@@ -181,13 +205,11 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
             } catch {}
           }
 
-          // 3) tiny text endpoint
           try {
             const list = await fetchTxt();
             if (list.length) { setCache(list); return list; }
           } catch {}
 
-          // 4) last resort: scrape visible links
           const seen = new Set(), out = [];
           document.querySelectorAll('a[href^="/brand/"]').forEach(a => {
             const m = (a.getAttribute('href') || '').match(/^\/brand\/([^\/?#]+)\/?/);
@@ -202,11 +224,9 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
           return pool[(Math.random() * pool.length) | 0];
         }
 
-        // Delegated click; supports sync or async slug load
         document.addEventListener("click", async function (e) {
           const a = e.target && (e.target.closest?.("[data-random], #random-brand"));
           if (!a) return;
-
           e.preventDefault();
 
           const live = document.getElementById("live-region");
@@ -225,12 +245,10 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
           }
         }, false);
 
-        // Prewarm cache on first page view (non-blocking)
         const warm = () => { ensureSlugs().catch(() => {}); };
         if ("requestIdleCallback" in window) requestIdleCallback(warm);
         else setTimeout(warm, 250);
 
-        // Optional: expose for console testing or inline onclick fallbacks
         // @ts-ignore
         window.__goRandomBrand = function(ev){
           ev?.preventDefault?.();

@@ -39,23 +39,61 @@ let pageDesc  = "Try another page or browse the full list.";
 let canonical = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
 
 let jsonLdBlocks: any[] = [];
+let extraHead: any = null; // we'll render OG/Twitter meta via Base's <slot name="head">
+
 if (!notFound) {
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
+
+  // Title/description tuned for intent (“what happened to …”)
   pageTitle = `What Happened to ${brand.brand}? (Timeline & Fate)`;
   pageDesc  = `${brand.brand}: ${brand.fate || "Defunct"}; active ${activeStr}. ${brand.summary ?? ""}`.trim();
 
   const brandPath = `/brand/${encodeURIComponent(brand.slug || slug)}/`;
   canonical = Astro.site ? new URL(brandPath, Astro.site).href : brandPath;
 
+  // ---- OG/Twitter image
+  // If you generate per-brand OG images, set a predictable path; else fall back to a site-wide image.
+  // Example per-brand: `/og/brand/<slug>.png` — only referenced; won’t 404 if you don’t create them yet.
+  const siteOrigin = Astro.site?.origin || "https://vanishedbrands.com";
+  const perBrandOg  = `/og/brand/${encodeURIComponent(brand.slug || slug)}.png`;
+  const siteOg      = `/og/site.png`;
+  const ogImage     = new URL(perBrandOg, siteOrigin).toString();
+  const ogImageAlt  = `What happened to ${brand.brand}?`;
+  const twitterCard = "summary_large_image";
+
+  // ---- Enriched Brand JSON-LD
+  // Add url + sameAs (e.g., Wikipedia) if available.
+  const sameAs: string[] = [];
+  if (brand?.links?.wikipedia) sameAs.push(String(brand.links.wikipedia));
+
   const brandLd = {
     ["@context"]: "https://schema.org",
     ["@type"]: "Brand",
     name: brand.brand,
     description: brand.summary || undefined,
+    url: canonical,
+    sameAs: sameAs.length ? sameAs : undefined,
     foundingDate: brand.active?.start || undefined,
     dissolutionDate: brand.active?.end || undefined,
     category: brand.category || undefined,
   };
+
+  // A WebPage node tying to the brand as mainEntity helps some SEO analyzers
+  const webPageLd = {
+    ["@context"]: "https://schema.org",
+    ["@type"]: "WebPage",
+    url: canonical,
+    name: pageTitle,
+    description: pageDesc,
+    mainEntity: { ["@id"]: canonical + "#brand" },
+    primaryImageOfPage: {
+      ["@type"]: "ImageObject",
+      url: ogImage,
+    },
+  };
+
+  // Give the Brand @id so WebPage.mainEntity can point to it
+  (brandLd as any)["@id"] = canonical + "#brand";
 
   const breadcrumbsLd = {
     ["@context"]: "https://schema.org",
@@ -67,7 +105,27 @@ if (!notFound) {
     ],
   };
 
-  jsonLdBlocks = [brandLd, breadcrumbsLd];
+  jsonLdBlocks = [brandLd, webPageLd, breadcrumbsLd];
+
+  // Extra head meta (no UI change)
+  extraHead = (
+    <Fragment slot="head">
+      {/* Rich result friendly preview hints */}
+      <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+      {/* OG / Twitter */}
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Vanished Brands" />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:alt" content={ogImageAlt} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+
+      <meta name="twitter:card" content={twitterCard} />
+      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image:alt" content={ogImageAlt} />
+    </Fragment>
+  );
 }
 ---
 
@@ -83,6 +141,9 @@ if (!notFound) {
       <meta name="robots" content="noindex,follow" />
     </Fragment>
   )}
+
+  {/* Extra meta for valid pages (no UI change) */}
+  {!notFound && extraHead}
 
   {notFound ? (
     <>
