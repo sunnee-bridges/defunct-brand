@@ -31,18 +31,18 @@
   status = 301
   force = true
 
-# Trailing slash consistency for brand & category
-[[redirects]]
-  from = "/brand/:slug"
-  to = "/brand/:slug/"
-  status = 301
+# --- IMPORTANT: remove trailing-slash normalizers (they caused loops) ---
+# [[redirects]]
+#   from = "/brand/:slug"
+#   to = "/brand/:slug/"
+#   status = 301
+#
+# [[redirects]]
+#   from = "/category/:slug"
+#   to = "/category/:slug/"
+#   status = 301
 
-[[redirects]]
-  from = "/category/:slug"
-  to = "/category/:slug/"
-  status = 301
-
-# Legacy leaked slugs like /brand/foo.public/ → return 410 (Gone)
+# Legacy leaked slugs like /brand/foo.public → mark Gone (helps deindex)
 [[redirects]]
   from = "/brand/:slug.public"
   to = "/404.html"
@@ -53,8 +53,7 @@
   to = "/404.html"
   status = 410
 
-# If a /brand/* or /category/* path doesn’t exist, return a real 404.
-# (No `force = true` so existing files still win.)
+# Unknown brand/category paths → hard 404 (valid static files still win)
 [[redirects]]
   from = "/brand/*"
   to = "/404.html"
@@ -72,7 +71,7 @@
   status = 200
   force = true
 
-# Global catch-all 404 for anything else that misses files/re-writes
+# Global catch-all 404
 [[redirects]]
   from = "/*"
   to = "/404.html"
@@ -87,13 +86,6 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "DENY"
     Referrer-Policy = "no-referrer-when-downgrade"
-
-# Specific 404 page: make sure it’s non-indexable (belt & suspenders)
-[[headers]]
-  for = "/404.html"
-  [headers.values]
-    X-Robots-Tag = "noindex, follow"
-    Cache-Control = "public, max-age=0, must-revalidate"
 
 # JSON as UTF-8
 [[headers]]
@@ -140,6 +132,12 @@
   [headers.values]
     Content-Type = "application/xml; charset=utf-8"
     Cache-Control = "public, max-age=3600"
+
+# 404 page: ensure it's not indexed but links can be followed
+[[headers]]
+  for = "/404.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
 
 # ---------- Deploy Preview SEO guard ----------
 [context.deploy-preview]
