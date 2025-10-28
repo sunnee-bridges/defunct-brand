@@ -53,11 +53,13 @@
   from = "/brand/:slug"
   to = "/brand/:slug/"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/category/:slug"
   to = "/category/:slug/"
   status = 301
+  force = true
 
 # Unknown brand paths → hard 404 page
 # (put this AFTER the 410 and 301 rules above)
@@ -65,6 +67,7 @@
   from = "/brand/*"
   to = "/404.html"
   status = 404
+  force = true
 
 # Download route proxy -> function
 [[redirects]]
