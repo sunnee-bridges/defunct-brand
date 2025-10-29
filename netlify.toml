@@ -42,13 +42,13 @@
 
 # 410 for intentionally removed legacy slugs (*.public)
 [[redirects]]
-  from = "/brand/*.public"
+  from = "/brand/:name.public"
   to = "/410/"
   status = 410
   force = true
 
 [[redirects]]
-  from = "/brand/*.public/"
+  from = "/brand/:name.public/"
   to = "/410/"
   status = 410
   force = true
