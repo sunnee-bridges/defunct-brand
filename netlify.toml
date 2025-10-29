@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# ⬇️ Disable Netlify's Pretty URLs (stops auto / → / redirects)
+# Stop Netlify from rewriting / → / (prevents surprise 301s)
 [build.processing]
   skip_processing = false
 [build.processing.html]
@@ -53,20 +53,15 @@
   status = 410
   force = true
 
-# Non-slash → slash (place BEFORE the /brand/* 404)
-[[redirects]]
-  from = "/brand/:slug"
-  to   = "/brand/:slug/"
-  status = 301
-
-[[redirects]]
-  from = "/category/:slug"
-  to   = "/category/:slug/"
-  status = 301
-
-# Unknown brand paths → hard 404 page (NO force=true)
+# Unknown brand paths → serve 404 (no redirect loops; do NOT force)
 [[redirects]]
   from = "/brand/*"
+  to = "/404.html"
+  status = 404
+
+# (Optional) Unknown category paths → 404 as well
+[[redirects]]
+  from = "/category/*"
   to = "/404.html"
   status = 404
 
@@ -118,13 +113,13 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# (Optional) also cache any legacy /assets/* if present
+# (Optional) legacy /assets/*
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Public sample CSV
+# CSV sample
 [[headers]]
   for = "/data/brands-sample.csv"
   [headers.values]
@@ -144,7 +139,7 @@
     X-Robots-Tag = "noindex, nofollow"
     Cache-Control = "no-store"
 
-# Sitemaps: serve as XML and let caches keep for ~1h
+# Sitemaps
 [[headers]]
   for = "/sitemap*.xml"
   [headers.values]
