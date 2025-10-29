@@ -5,14 +5,12 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# Stop Netlify from rewriting / → / (prevents surprise 301s)
 [build.processing]
   skip_processing = false
 
 [build.processing.html]
   pretty_urls = false
 
-# ---------- Serverless functions ----------
 [functions]
   node_bundler = "esbuild"
   directory = "netlify/functions"
@@ -39,15 +37,15 @@
   force = true
 
 # --- Brand-specific status handling ---
-# 410 for intentionally removed legacy slugs (*.public)
+# 410 ONLY for legacy .public slugs - use exact string matching
 [[redirects]]
-  from = "/brand/:name.public"
+  from = "/brand/*.public"
   to = "/410/"
   status = 410
   force = true
 
 [[redirects]]
-  from = "/brand/:name.public/"
+  from = "/brand/*.public/"
   to = "/410/"
   status = 410
   force = true
@@ -59,11 +57,6 @@
   status = 200
   force = true
 
-# REMOVED THE PROBLEMATIC CATCH-ALL RULES:
-# - Removed /brand/* → 404
-# - Removed /category/* → 404
-# These were matching valid pages before Netlify could serve them
-
 # Global catch-all to real 404 page (LAST)
 [[redirects]]
   from = "/*"
@@ -71,7 +64,6 @@
   status = 404
 
 # ---------- Headers ----------
-# Serve HTML as UTF-8
 [[headers]]
   for = "/*.html"
   [headers.values]
@@ -80,7 +72,6 @@
     X-Frame-Options = "DENY"
     Referrer-Policy = "no-referrer-when-downgrade"
 
-# Explicit robots for error documents
 [[headers]]
   for = "/404.html"
   [headers.values]
@@ -91,53 +82,45 @@
   [headers.values]
     X-Robots-Tag = "noindex, follow"
 
-# JSON as UTF-8
 [[headers]]
   for = "/**/*.json"
   [headers.values]
     Content-Type = "application/json; charset=utf-8"
     X-Content-Type-Options = "nosniff"
 
-# Cache hashed static assets (Astro outputs under /_astro)
 [[headers]]
   for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# (Optional) legacy /assets/*
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# CSV sample
 [[headers]]
   for = "/data/brands-sample.csv"
   [headers.values]
     Content-Type = "text/csv; charset=utf-8"
     Cache-Control = "public, max-age=604800"
 
-# Keep utility/buy pages out of search
 [[headers]]
   for = "/buy/"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
-# Keep download endpoints out of search & caches
 [[headers]]
   for = "/download/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
     Cache-Control = "no-store"
 
-# Sitemaps
 [[headers]]
   for = "/sitemap*.xml"
   [headers.values]
     Content-Type = "application/xml; charset=utf-8"
     Cache-Control = "public, max-age=3600"
 
-# ---------- Deploy Preview SEO guard ----------
 [context.deploy-preview]
   command = "npm run build"
 
