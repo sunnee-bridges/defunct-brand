@@ -16,7 +16,6 @@
   directory = "netlify/functions"
 
 # ---------- Redirects ----------
-# API routes
 [[redirects]]
   from = "/api/brands"
   to = "/.netlify/functions/brands-get"
@@ -29,24 +28,18 @@
   status = 200
   force = true
 
-# Canonical apex (www -> apex)
 [[redirects]]
   from = "https://www.vanishedbrands.com/*"
   to   = "https://vanishedbrands.com/:splat"
   status = 301
   force = true
 
-# --- Brand-specific status handling ---
-
-
-# Download route proxy -> function
 [[redirects]]
   from = "/download/:token"
   to = "/.netlify/functions/download-link/:token"
   status = 200
   force = true
 
-# Global catch-all to real 404 page (LAST)
 [[redirects]]
   from = "/*"
   to = "/404.html"
@@ -65,7 +58,6 @@
   for = "/404.html"
   [headers.values]
     X-Robots-Tag = "noindex, follow"
-
 
 [[headers]]
   for = "/**/*.json"
