@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="utf-8"><title>Gone • Defunct Brands</title><meta name="description" content="This page has been intentionally removed."><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"><!-- Canonical & Open Graph --><link rel="canonical" href="https://vanishedbrands.com/410/"><meta property="og:url" content="https://vanishedbrands.com/410/"><meta property="og:title" content="Gone • Defunct Brands"><meta property="og:description" content="This page has been intentionally removed."><!-- Twitter --><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Gone • Defunct Brands"><meta name="twitter:description" content="This page has been intentionally removed."><!-- JSON-LD (safely inlined) --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Vanished Brands","url":"https://vanishedbrands.com"}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Vanished Brands","url":"https://vanishedbrands.com"}</script><!-- Allow pages to inject extra SEO / scripts --><!-- Theme boot --><script>
+      (function () {
+        const KEY = 'theme';
+        const saved = localStorage.getItem(KEY);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script><!-- Optional: better mobile address-bar color per theme --><meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)"><!-- Tiny list of slugs (seed) + version for cache --><script id="__brand_slugs_inline" type="application/json" data-ver="25:aim:zune">["aim","american-apparel-original","blackberry-os-phones","blockbuster","borders","casual-corner","circuit-city","compaq","jet-retail","kb-toys","kodak-consumer-cameras","lego-universe","linens-n-things","napster-original","netscape","palm","pan-am","pebble","pets-com","sears-canada","sega-dreamcast","twa","woolworth-us","yahoo-messenger","zune"]</script><!-- Hint the browser it may fetch the tiny text list soon --><link rel="preload" href="/brand-slugs.txt" as="fetch" crossorigin="anonymous"><!-- Favicons --><link rel="icon" href="/favicon.ico?v=2" sizes="any" type="image/x-icon"><link rel="icon" href="/favicon-32x32.png?v=2" type="image/png" sizes="32x32"><link rel="icon" href="/favicon-16x16.png?v=2" type="image/png" sizes="16x16"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2"><link rel="stylesheet" href="/_astro/410.GCeDqX4L.css"><script type="module" src="/_astro/page.V2R8AmkL.js"></script></head> <body class="min-h-full bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100"> <!-- Skip link for keyboard users --> <a href="#main" class="skip-link">Skip to content</a> <!-- Header --> <header class="max-w-[1040px] mx-auto px-4"> <!-- Top row: title + theme toggle --> <div class="mt-8 flex items-center justify-between gap-4"> <div> <p class="text-2xl md:text-3xl font-bold" role="heading" aria-level="2">
+🕰️ Defunct Brands Archive
+</p> <p class="text-gray-600 dark:text-slate-300 mt-1">
+Explore by category, A&ndash;Z, decade, or fate. No typing required.
+</p> </div> <!-- Theme toggle --> <button id="themeToggleBtn" type="button" class="shrink-0 px-3 py-1 rounded border border-slate-300 dark:border-slate-600
+             text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800
+             hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus-visible:ring-2
+             focus-visible:ring-indigo-500" aria-label="Toggle color theme" aria-pressed="false" data-icon="🌓">
+🌓 <span class="ml-1 hidden sm:inline">Theme</span> </button> </div> <!-- Primary nav --> <nav role="navigation" aria-label="Primary" class="flex flex-wrap items-center gap-3 mt-5 mb-6"> <a href="/category/" class="chip focus-ring "> Categories (browse) </a><a href="/az/" class="chip focus-ring "> A–Z (all brands) </a><a href="/decade/" class="chip focus-ring "> Decades (timelines) </a><a href="/data/" class="chip focus-ring "> Data (CSV dataset) </a> <!-- Real href as no-JS fallback; delegated JS will hijack --> <a href="/brand/aim/" class="btn-primary focus-ring" data-random onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true">
+Random
+</a> </nav> </header> <!-- Small inline script to sync the toggle label/state and call the global setter --> <script>
+  (function () {
+    const KEY = 'theme';
+    const btn = document.getElementById('themeToggleBtn');
+    if (!btn) return;
+
+    function currentTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+
+    function setStateFromTheme(theme) {
+      // Update aria + (optional) text if you want “Dark/Light”
+      btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      // You can also reflect the state in the label if desired:
+      // btn.lastElementChild && (btn.lastElementChild.textContent = theme === 'dark' ? 'Light' : 'Dark');
+    }
+
+    function setTheme(next) {
+      // Prefer the global helper if Base.astro provided it
+      if (window.toggleTheme) {
+        const cur = currentTheme();
+        if (cur !== next) window.toggleTheme();
+      } else {
+        // Local fallback: apply Tailwind .dark and persist
+        document.documentElement.classList.toggle('dark', next === 'dark');
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem(KEY, next); } catch (_) {}
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', next === 'dark' ? '#0b0b0f' : '#ffffff');
+      }
+      setStateFromTheme(next);
+    }
+
+    // Initialize state on load
+    setStateFromTheme(currentTheme());
+
+    // Click toggles between themes
+    btn.addEventListener('click', function () {
+      const next = currentTheme() === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+
+    // If other parts of the app change theme, keep the button in sync
+    const mo = new MutationObserver(() => setStateFromTheme(currentTheme()));
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  })();
+</script> <main id="main" class="max-w-[1040px] mx-auto px-4" aria-labelledby="brand-title">  <nav class="mb-4"> <a href="/" class="chip focus-ring">← Home</a> <a href="/az/" class="chip focus-ring">Browse A–Z</a> </nav> <h1 class="text-2xl md:text-3xl font-bold mb-2">410 — Gone</h1> <p class="text-gray-700 dark:text-slate-300">
+This legacy brand URL has been permanently removed.
+</p>  </main> <!-- Footer --> <footer class="max-w-[1040px] mx-auto px-4 mt-10 mb-8 text-sm text-slate-600 dark:text-slate-400" role="contentinfo"> <!-- Visually hidden site descriptor (SEO + a11y, no UI change) --> <p class="sr-only">
+VanishedBrands — an archive of discontinued and defunct brands, with timelines, categories, decades,
+    and a downloadable CSV dataset for research and journalism.
+</p> <div class="border-t border-slate-200 dark:border-slate-700 pt-4 flex flex-wrap items-center gap-3 justify-between"> <!-- CTA row: visible on small screens --> <nav class="flex gap-3 md:hidden" aria-label="Footer quick links"> <a href="/az/" class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none" title="Browse all brands A–Z" aria-label="Browse all defunct brands A to Z">
+Browse A&ndash;Z
+</a> <a href="/data/" class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none" title="Download the Defunct Brands CSV dataset" aria-label="Defunct Brands CSV dataset">
+Data (CSV)
+</a> <a href="/brand/aim/" class="btn-primary focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none" aria-label="Go to a random brand page" title="Random defunct brand" data-random onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true">
+Random
+</a> </nav> <!-- CTA row: visible on md+ screens --> <nav class="hidden md:flex gap-3" aria-label="Footer quick links (desktop)"> <a href="/az/" class="chip focus-ring" title="Browse all brands A–Z" aria-label="Browse all defunct brands A to Z">
+Browse A&ndash;Z
+</a> <a href="/data/" class="chip focus-ring" title="Download the Defunct Brands CSV dataset" aria-label="Defunct Brands CSV dataset">
+Data (CSV)
+</a> <a href="/brand/aim/" class="btn-primary focus-ring" aria-label="Go to a random brand page" title="Random defunct brand" data-random onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true">
+Random
+</a> </nav> </div> <!-- 🔊 Screen-reader live announcements --> <div id="live-region" aria-live="polite" class="sr-only"></div> <!-- Optional: tiny, invisible discoverability links (don’t change UI) --> <div class="sr-only"> <a href="/sitemap-index.xml">Sitemap</a> <a href="/robots.txt">Robots.txt</a> </div> </footer> <!-- 🔊 Screen-reader live announcements --> <div id="live-region" aria-live="polite" class="sr-only"></div> <!-- Random loader: no JSON parsing, uses /brand-slugs.txt + localStorage cache + idle warmup --> <script>
+      (function () {
+        const INLINE = document.getElementById("__brand_slugs_inline");
+        const VER = INLINE?.getAttribute("data-ver") || "v1";
+        const KEY = "__BRAND_SLUGS__";
+
+        function setCache(list) {
+          try { localStorage.setItem(KEY, JSON.stringify({ v: VER, l: list })); } catch {}
+        }
+        function getCache() {
+          try {
+            const x = JSON.parse(localStorage.getItem(KEY) || "null");
+            if (x && x.v === VER && Array.isArray(x.l) && x.l.length) return x.l;
+          } catch {}
+          return null;
+        }
+
+        async function fetchTxt() {
+          const r = await fetch("/brand-slugs.txt", { cache: "force-cache", credentials: "same-origin" });
+          if (!r.ok) throw new Error("fetch failed");
+          const text = await r.text();
+          return text.split("\n").map(s => s.trim()).filter(Boolean);
+        }
+
+        async function ensureSlugs() {
+          const cached = getCache();
+          if (cached) return cached;
+
+          if (INLINE?.textContent) {
+            try {
+              const seed = JSON.parse(INLINE.textContent);
+              if (Array.isArray(seed) && seed.length) {
+                setCache(seed);
+                fetchTxt().then(list => list.length && setCache(list)).catch(() => {});
+                return seed;
+              }
+            } catch {}
+          }
+
+          try {
+            const list = await fetchTxt();
+            if (list.length) { setCache(list); return list; }
+          } catch {}
+
+          const seen = new Set(), out = [];
+          document.querySelectorAll('a[href^="/brand/"]').forEach(a => {
+            const m = (a.getAttribute('href') || '').match(/^\/brand\/([^\/?#]+)\/?/);
+            if (m && m[1] && !seen.has(m[1])) { seen.add(m[1]); out.push(m[1]); }
+          });
+          return out;
+        }
+
+        function pickOther(list) {
+          const cur = (location.pathname.match(/^\/brand\/([^\/?#]+)\/?/) || [,""])[1];
+          const pool = list.length > 1 ? list.filter(s => s !== cur) : list;
+          return pool[(Math.random() * pool.length) | 0];
+        }
+
+        document.addEventListener("click", async function (e) {
+          const a = e.target && (e.target.closest?.("[data-random], #random-brand"));
+          if (!a) return;
+          e.preventDefault();
+
+          const live = document.getElementById("live-region");
+          if (live) live.textContent = "Loading a random brand…";
+
+          try {
+            const slugs = await ensureSlugs();
+            const pick = pickOther(slugs);
+            if (pick) {
+              try { document.body.classList.add("fade-out"); } catch {}
+              setTimeout(() => { location.href = "/brand/" + pick + "/"; }, 80);
+            }
+          } catch {
+            const href = a.getAttribute("href");
+            if (href) location.href = href;
+          }
+        }, false);
+
+        const warm = () => { ensureSlugs().catch(() => {}); };
+        if ("requestIdleCallback" in window) requestIdleCallback(warm);
+        else setTimeout(warm, 250);
+
+        // @ts-ignore
+        window.__goRandomBrand = function(ev){
+          ev?.preventDefault?.();
+          ensureSlugs().then(slugs => {
+            const pick = pickOther(slugs || []);
+            if (pick) location.href = "/brand/" + pick + "/";
+          });
+        };
+      })();
+    </script> </body> </html>
