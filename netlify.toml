@@ -8,6 +8,7 @@
 # Stop Netlify from rewriting / → / (prevents surprise 301s)
 [build.processing]
   skip_processing = false
+
 [build.processing.html]
   pretty_urls = false
 
@@ -17,7 +18,6 @@
   directory = "netlify/functions"
 
 # ---------- Redirects ----------
-
 # API routes
 [[redirects]]
   from = "/api/brands"
@@ -39,7 +39,6 @@
   force = true
 
 # --- Brand-specific status handling ---
-
 # 410 for intentionally removed legacy slugs (*.public)
 [[redirects]]
   from = "/brand/:name.public"
@@ -53,24 +52,17 @@
   status = 410
   force = true
 
-# Unknown brand paths → serve 404 (no redirect loops; do NOT force)
-[[redirects]]
-  from = "/brand/*"
-  to = "/404.html"
-  status = 404
-
-# (Optional) Unknown category paths → 404 as well
-[[redirects]]
-  from = "/category/*"
-  to = "/404.html"
-  status = 404
-
 # Download route proxy -> function
 [[redirects]]
   from = "/download/:token"
   to = "/.netlify/functions/download-link/:token"
   status = 200
   force = true
+
+# REMOVED THE PROBLEMATIC CATCH-ALL RULES:
+# - Removed /brand/* → 404
+# - Removed /category/* → 404
+# These were matching valid pages before Netlify could serve them
 
 # Global catch-all to real 404 page (LAST)
 [[redirects]]
@@ -79,7 +71,6 @@
   status = 404
 
 # ---------- Headers ----------
-
 # Serve HTML as UTF-8
 [[headers]]
   for = "/*.html"
