@@ -1,0 +1,56 @@
+---
+import Base from "../../layouts/Base.astro";
+
+// Params
+const { topic } = Astro.params;
+
+// Load topic registry
+const topicsReg = (await import("../../content/topics.json")).default as Record<string, {
+  title?: string; description?: string; priority?: number;
+}>;
+
+// Load all brand JSONs
+const brandEntries = Object.values(
+  import.meta.glob("/src/content/brands/*.json", { eager: true, import: "default" })
+) as any[];
+
+const brands = brandEntries
+  .filter(b => Array.isArray(b?.topics) && b.topics.includes(topic))
+  .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
+
+// Page meta
+const topicMeta = topicsReg[topic] ?? {};
+const title = topicMeta.title ?? topic.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+const desc  = topicMeta.description ?? `Explore brands related to ${title}.`;
+const canonical = Astro.site ? new URL(`/topics/${encodeURIComponent(topic)}/`, Astro.site).href
+                             : `/topics/${encodeURIComponent(topic)}/`;
+
+// JSON-LD list
+const ldItems = brands.map((b, i) => ({
+  "@type": "ListItem",
+  position: i + 1,
+  name: b.brand,
+  url: Astro.site
+    ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
+    : `/brand/${encodeURIComponent(b.slug)}/`
+}));
+---
+
+<Base title={title} description={desc} canonical={canonical} jsonLd={[
+  { "@context": "https://schema.org", "@type": "ItemList", name: title, numberOfItems: brands.length, itemListElement: ldItems }
+]}>
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
+  {brands.length === 0 ? (
+    <p class="text-slate-600">No brands are tagged with this topic yet.</p>
+  ) : (
+    <ul class="list-disc pl-5">
+      {brands.map(b => (
+        <li>
+          <a class="focus-ring hover:underline" href={`/brand/${encodeURIComponent(b.slug)}/`}>
+            {b.brand}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>

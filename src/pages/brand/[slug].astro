@@ -39,6 +39,11 @@ function catToPath(cat?: string) {
   const s = cat.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   return `/category/${encodeURIComponent(s)}/`;
 }
+function titleFromSlug(s: string) {
+  return s
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 /* --- SEO / Canonical (use Base props to emit tags) --- */
 let pageTitle = "Page not found";
@@ -117,9 +122,31 @@ if (!notFound) {
 
   // ---------- LearnMore links ----------
   internalLinks = [{ href: "/az/", label: "Browse A–Z" }];
+
+  // Category link (if present)
   const catPath = catToPath(brand?.category);
   if (catPath) internalLinks.push({ href: catPath, label: `More in ${brand.category}` });
 
+  // Topic hub links (auto-surface from brand.topics)
+  if (Array.isArray(brand?.topics) && brand.topics.length > 0) {
+    // Link to the first topic with a friendly label
+    const firstTopic = String(brand.topics[0]);
+    internalLinks.push({
+      href: `/topics/${encodeURIComponent(firstTopic)}/`,
+      label: `More in ${titleFromSlug(firstTopic)}`
+    });
+
+    // (Optional) also surface a second topic if you want:
+    if (brand.topics[1]) {
+      const t2 = String(brand.topics[1]);
+      internalLinks.push({
+        href: `/topics/${encodeURIComponent(t2)}/`,
+        label: `More in ${titleFromSlug(t2)}`
+      });
+    }
+  }
+
+  // Authority / external references
   if (brand?.links?.wikipedia)
     authorityLinks.push({ href: String(brand.links.wikipedia), label: `${brand.brand} on Wikipedia`, external: true });
 
@@ -129,6 +156,7 @@ if (!notFound) {
   if (brand?.links?.wayback)
     authorityLinks.push({ href: String(brand.links.wayback), label: "Archived homepage (Wayback)", external: true });
 
+  // Quality media links (optional)
   if (brand?.links?.verge)
     mediaLinks.push({ href: String(brand.links.verge), label: "The Verge retrospective", external: true });
 

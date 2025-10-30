@@ -1,0 +1,62 @@
+---
+import Base from "../../layouts/Base.astro";
+
+// Registry
+const topicsReg = (await import("../../content/topics.json")).default as Record<string, {
+  title?: string; description?: string; priority?: number;
+}>;
+
+// Count brands per topic
+const brandEntries = Object.values(
+  import.meta.glob("/src/content/brands/*.json", { eager: true, import: "default" })
+) as any[];
+
+const counts = new Map<string, number>();
+for (const b of brandEntries) {
+  if (Array.isArray(b?.topics)) {
+    for (const t of b.topics) counts.set(t, (counts.get(t) || 0) + 1);
+  }
+}
+
+// Build list of topics (even if 0 results, we still show them)
+const topics = Object.entries(topicsReg)
+  .map(([slug, meta]) => ({
+    slug,
+    title: meta.title ?? slug,
+    description: meta.description ?? "",
+    priority: meta.priority ?? 999,
+    count: counts.get(slug) || 0
+  }))
+  .sort((a, b) => a.priority - b.priority || a.title.localeCompare(b.title));
+
+const title = "Topics • Vanished Brands";
+const desc  = "Explore curated collections of related defunct brands.";
+const canonical = Astro.site ? new URL("/topics/", Astro.site).href : "/topics/";
+
+// JSON-LD: ItemList of topics
+const ldItems = topics.map((t, i) => ({
+  "@type": "ListItem",
+  position: i + 1,
+  name: t.title,
+  url: Astro.site
+    ? new URL(`/topics/${encodeURIComponent(t.slug)}/`, Astro.site).href
+    : `/topics/${encodeURIComponent(t.slug)}/`
+}));
+---
+
+<Base title={title} description={desc} canonical={canonical} jsonLd={[
+  { "@context": "https://schema.org", "@type": "ItemList", name: title, numberOfItems: topics.length, itemListElement: ldItems }
+]}>
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
+  <ul class="space-y-2">
+    {topics.map(t => (
+      <li>
+        <a class="focus-ring hover:underline" href={`/topics/${encodeURIComponent(t.slug)}/`}>
+          {t.title}
+        </a>
+        {t.count ? <span class="text-slate-500"> — {t.count} brand{t.count === 1 ? "" : "s"}</span> : null}
+        {t.description ? <div class="text-slate-600">{t.description}</div> : null}
+      </li>
+    ))}
+  </ul>
+</Base>
