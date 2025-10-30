@@ -1,33 +1,114 @@
 ---
-interface LinkItem { href: string; label: string; external?: boolean; rel?: string; }
+/**
+ * LearnMore.astro
+ * Renders three buckets of links: Internal, Authority, Media.
+ * Props:
+ *  - internal?: { href: string; label: string; external?: boolean; rel?: string }[]
+ *  - authority?: same as above
+ *  - media?: same as above
+ */
 
-const { internal = [], authority = [], media = [] } = Astro.props as {
+interface LinkItem {
+  href: string;
+  label: string;
+  external?: boolean;
+  rel?: string;
+}
+
+interface Props {
   internal?: LinkItem[];
   authority?: LinkItem[];
   media?: LinkItem[];
-};
+}
 
-const Section = (title: string, items: LinkItem[]) =>
-  items.length > 0 && (
-    <section class="mt-6">
-      <h2 class="text-base font-semibold mb-2">{title}</h2>
-      <ul class="list-disc pl-5 space-y-1">
-        {items.map((it) => (
-          <li>
-            <a
-              href={it.href}
-              class="text-indigo-600 dark:text-indigo-400 hover:underline focus-ring"
-              {...(it.external ? { target: "_blank", rel: it.rel ?? "noopener" } : {})}
-            >
-              {it.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
+const {
+  internal = [],
+  authority = [],
+  media = [],
+} = Astro.props as Props;
+
+const hasAny = internal.length || authority.length || media.length;
+
+// Utility: ensure rel for external links
+function relFor(item: LinkItem) {
+  // keep any explicit rel the caller provided, append noopener
+  const base = item.rel ? item.rel.trim() : "";
+  const parts = new Set(
+    (base ? base.split(/\s+/) : []).concat(["noopener"])
   );
+  return Array.from(parts).join(" ");
+}
 ---
 
-{Section("Continue on Vanished Brands", internal)}
-{Section("Official & reference", authority)}
-{Section("Retrospectives & analysis", media)}
+{hasAny ? (
+  <section class="mt-8 border-t border-slate-200 dark:border-slate-700 pt-6">
+    <h2 class="text-xl font-semibold mb-4">Learn more</h2>
+
+    {internal.length > 0 && (
+      <div class="mb-6">
+        <h3 class="text-base font-semibold mb-2">Continue on Vanished Brands</h3>
+        <ul class="list-disc ml-5 space-y-1">
+          {internal.map((item) => (
+            <li>
+              <a href={item.href} class="text-blue-700 dark:text-blue-300 hover:underline">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {authority.length > 0 && (
+      <div class="mb-6">
+        <h3 class="text-base font-semibold mb-2">Official &amp; reference</h3>
+        <ul class="list-disc ml-5 space-y-1">
+          {authority.map((item) => (
+            <li>
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel={relFor(item)}
+                  class="text-blue-700 dark:text-blue-300 hover:underline"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <a href={item.href} class="text-blue-700 dark:text-blue-300 hover:underline">
+                  {item.label}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {media.length > 0 && (
+      <div>
+        <h3 class="text-base font-semibold mb-2">Photos &amp; retrospectives</h3>
+        <ul class="list-disc ml-5 space-y-1">
+          {media.map((item) => (
+            <li>
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel={relFor(item)}
+                  class="text-blue-700 dark:text-blue-300 hover:underline"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <a href={item.href} class="text-blue-700 dark:text-blue-300 hover:underline">
+                  {item.label}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </section>
+) : null}
