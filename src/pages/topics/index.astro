@@ -1,47 +1,39 @@
 ---
 import Base from "../../layouts/Base.astro";
 
-type Brand = {
-  brand: string;
-  slug: string;
-  topics?: string[];
-};
-
-function slugifyTopic(name: string) {
+function slugifyTopic(name) {
   return String(name)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
-function titleFromSlug(s: string) {
-  return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+function titleFromSlug(s) {
+  return String(s).replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 const title = "Browse Topics • Hubs";
-const desc =
-  "Explore topic hubs that group discontinued and defunct brands by shared themes.";
+const desc = "Explore topic hubs that group discontinued and defunct brands by shared themes.";
 const canonical = Astro.site ? new URL("/topics/", Astro.site).href : "/topics/";
 
 const modules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
-}) as Record<string, Brand>;
+});
 
-const counts: Record<string, number> = {};
-for (const m of Object.values(modules)) {
-  const b = m as Brand;
+const counts = {};
+for (const mod of Object.values(modules)) {
+  const b = mod || {};
   if (!Array.isArray(b.topics)) continue;
   for (const t of b.topics) {
-    const slug = slugifyTopic(t);
-    counts[slug] = (counts[slug] || 0) + 1;
+    const s = slugifyTopic(t);
+    counts[s] = (counts[s] || 0) + 1;
   }
 }
-
 const topics = Object.keys(counts)
   .sort()
-  .map((slug) => ({ slug, name: titleFromSlug(slug), count: counts[slug] }));
+  .map((s) => ({ slug: s, name: titleFromSlug(s), count: counts[s] }));
 
-const ld = [
+const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -59,11 +51,13 @@ const ld = [
 ];
 ---
 
-<Base title={title} description={desc} canonical={canonical} jsonLd={ld}>
+<Base title={title} description={desc} canonical={canonical} jsonLd={jsonLd}>
   <h1 class="text-2xl md:text-3xl font-bold mb-4">{title}</h1>
 
-  {topics.length === 0 ? (
-    <p class="text-slate-600 dark:text-slate-300">No topics yet. Add <code>topics</code> arrays to your brand JSON files.</p>
+  {!topics.length ? (
+    <p class="text-slate-600 dark:text-slate-300">
+      No topics yet. Add <code>topics</code> arrays to your brand JSON files.
+    </p>
   ) : (
     <ul class="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
       {topics.map((t) => (
