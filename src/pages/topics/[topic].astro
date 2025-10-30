@@ -1,56 +1,114 @@
 ---
 import Base from "../../layouts/Base.astro";
 
-// Params
-const { topic } = Astro.params;
+/** Types (lightweight) */
+type Brand = {
+  brand: string;
+  slug: string;
+  category?: string;
+  topics?: string[];
+};
 
-// Load topic registry
-const topicsReg = (await import("../../content/topics.json")).default as Record<string, {
-  title?: string; description?: string; priority?: number;
-}>;
+/** Helpers */
+function slugifyTopic(name: string) {
+  return String(name)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+function titleFromSlug(s: string) {
+  return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
-// Load all brand JSONs
-const brandEntries = Object.values(
-  import.meta.glob("/src/content/brands/*.json", { eager: true, import: "default" })
-) as any[];
+/**
+ * Build all topic pages from brand JSON.
+ * Each returned entry carries the topic's display name and list of brands.
+ */
+export function getStaticPaths() {
+  const modules = import.meta.glob("/src/content/brands/*.json", {
+    eager: true,
+    import: "default",
+  }) as Record<string, Brand>;
 
-const brands = brandEntries
-  .filter(b => Array.isArray(b?.topics) && b.topics.includes(topic))
-  .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
+  const byTopic: Record<
+    string,
+    { display: string; brands: Array<Pick<Brand, "brand" | "slug" | "category">> }
+  > = {};
 
-// Page meta
-const topicMeta = topicsReg[topic] ?? {};
-const title = topicMeta.title ?? topic.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
-const desc  = topicMeta.description ?? `Explore brands related to ${title}.`;
-const canonical = Astro.site ? new URL(`/topics/${encodeURIComponent(topic)}/`, Astro.site).href
-                             : `/topics/${encodeURIComponent(topic)}/`;
+  for (const m of Object.values(modules)) {
+    const b = m as Brand;
+    if (!Array.isArray(b.topics)) continue;
+    for (const t of b.topics) {
+      const slug = slugifyTopic(t);
+      if (!byTopic[slug]) byTopic[slug] = { display: titleFromSlug(slug), brands: [] };
+      byTopic[slug].brands.push({ brand: b.brand, slug: b.slug, category: b.category });
+    }
+  }
 
-// JSON-LD list
-const ldItems = brands.map((b, i) => ({
-  "@type": "ListItem",
-  position: i + 1,
-  name: b.brand,
-  url: Astro.site
-    ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
-    : `/brand/${encodeURIComponent(b.slug)}/`
-}));
+  return Object.entries(byTopic).map(([topicSlug, data]) => ({
+    params: { topic: topicSlug },
+    props: { topicSlug, topicName: data.display, brands: data.brands },
+  }));
+}
+
+/** Props supplied by getStaticPaths */
+const { topicSlug, topicName, brands } = Astro.props as {
+  topicSlug: string;
+  topicName: string;
+  brands: Array<{ brand: string; slug: string; category?: string }>;
+};
+
+/** Page SEO */
+const title = `${topicName} • Topic Hub`;
+const desc =
+  `Explore discontinued brands related to "${topicName}". Timelines, outcomes, and related categories.`;
+const canonical = Astro.site
+  ? new URL(`/topics/${encodeURIComponent(topicSlug)}/`, Astro.site).href
+  : `/topics/${encodeURIComponent(topicSlug)}/`;
+
+/** JSON-LD ItemList */
+const ld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: title,
+    numberOfItems: brands.length,
+    itemListElement: brands.map((b, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: b.brand,
+      url: Astro.site
+        ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
+        : `/brand/${encodeURIComponent(b.slug)}/`,
+    })),
+  },
+];
 ---
 
-<Base title={title} description={desc} canonical={canonical} jsonLd={[
-  { "@context": "https://schema.org", "@type": "ItemList", name: title, numberOfItems: brands.length, itemListElement: ldItems }
-]}>
+<Base title={title} description={desc} canonical={canonical} jsonLd={ld}>
   <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
+
   {brands.length === 0 ? (
-    <p class="text-slate-600">No brands are tagged with this topic yet.</p>
+    <p class="text-slate-600 dark:text-slate-300">No brands found for this topic yet.</p>
   ) : (
     <ul class="list-disc pl-5">
-      {brands.map(b => (
-        <li>
-          <a class="focus-ring hover:underline" href={`/brand/${encodeURIComponent(b.slug)}/`}>
-            {b.brand}
-          </a>
-        </li>
-      ))}
+      {brands
+        .sort((a, b) => a.brand.localeCompare(b.brand))
+        .map((b) => (
+          <li>
+            <a class="focus-ring hover:underline" href={`/brand/${encodeURIComponent(b.slug)}/`}>
+              {b.brand}
+            </a>
+            {b.category && (
+              <span class="text-slate-500 dark:text-slate-400"> &middot; {b.category}</span>
+            )}
+          </li>
+        ))}
     </ul>
   )}
+
+  <nav class="mt-6 flex gap-3">
+    <a href="/topics/" class="chip focus-ring">← All Topics</a>
+    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+  </nav>
 </Base>

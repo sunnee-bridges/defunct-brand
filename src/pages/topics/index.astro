@@ -1,62 +1,83 @@
 ---
 import Base from "../../layouts/Base.astro";
 
-// Registry
-const topicsReg = (await import("../../content/topics.json")).default as Record<string, {
-  title?: string; description?: string; priority?: number;
-}>;
+type Brand = {
+  brand: string;
+  slug: string;
+  topics?: string[];
+};
 
-// Count brands per topic
-const brandEntries = Object.values(
-  import.meta.glob("/src/content/brands/*.json", { eager: true, import: "default" })
-) as any[];
+function slugifyTopic(name: string) {
+  return String(name)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+function titleFromSlug(s: string) {
+  return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
-const counts = new Map<string, number>();
-for (const b of brandEntries) {
-  if (Array.isArray(b?.topics)) {
-    for (const t of b.topics) counts.set(t, (counts.get(t) || 0) + 1);
+const title = "Browse Topics • Hubs";
+const desc =
+  "Explore topic hubs that group discontinued and defunct brands by shared themes.";
+const canonical = Astro.site ? new URL("/topics/", Astro.site).href : "/topics/";
+
+const modules = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, Brand>;
+
+const counts: Record<string, number> = {};
+for (const m of Object.values(modules)) {
+  const b = m as Brand;
+  if (!Array.isArray(b.topics)) continue;
+  for (const t of b.topics) {
+    const slug = slugifyTopic(t);
+    counts[slug] = (counts[slug] || 0) + 1;
   }
 }
 
-// Build list of topics (even if 0 results, we still show them)
-const topics = Object.entries(topicsReg)
-  .map(([slug, meta]) => ({
-    slug,
-    title: meta.title ?? slug,
-    description: meta.description ?? "",
-    priority: meta.priority ?? 999,
-    count: counts.get(slug) || 0
-  }))
-  .sort((a, b) => a.priority - b.priority || a.title.localeCompare(b.title));
+const topics = Object.keys(counts)
+  .sort()
+  .map((slug) => ({ slug, name: titleFromSlug(slug), count: counts[slug] }));
 
-const title = "Topics • Vanished Brands";
-const desc  = "Explore curated collections of related defunct brands.";
-const canonical = Astro.site ? new URL("/topics/", Astro.site).href : "/topics/";
-
-// JSON-LD: ItemList of topics
-const ldItems = topics.map((t, i) => ({
-  "@type": "ListItem",
-  position: i + 1,
-  name: t.title,
-  url: Astro.site
-    ? new URL(`/topics/${encodeURIComponent(t.slug)}/`, Astro.site).href
-    : `/topics/${encodeURIComponent(t.slug)}/`
-}));
+const ld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Topics",
+    numberOfItems: topics.length,
+    itemListElement: topics.map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: t.name,
+      url: Astro.site
+        ? new URL(`/topics/${encodeURIComponent(t.slug)}/`, Astro.site).href
+        : `/topics/${encodeURIComponent(t.slug)}/`,
+    })),
+  },
+];
 ---
 
-<Base title={title} description={desc} canonical={canonical} jsonLd={[
-  { "@context": "https://schema.org", "@type": "ItemList", name: title, numberOfItems: topics.length, itemListElement: ldItems }
-]}>
-  <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
-  <ul class="space-y-2">
-    {topics.map(t => (
-      <li>
-        <a class="focus-ring hover:underline" href={`/topics/${encodeURIComponent(t.slug)}/`}>
-          {t.title}
-        </a>
-        {t.count ? <span class="text-slate-500"> — {t.count} brand{t.count === 1 ? "" : "s"}</span> : null}
-        {t.description ? <div class="text-slate-600">{t.description}</div> : null}
-      </li>
-    ))}
-  </ul>
+<Base title={title} description={desc} canonical={canonical} jsonLd={ld}>
+  <h1 class="text-2xl md:text-3xl font-bold mb-4">{title}</h1>
+
+  {topics.length === 0 ? (
+    <p class="text-slate-600 dark:text-slate-300">No topics yet. Add <code>topics</code> arrays to your brand JSON files.</p>
+  ) : (
+    <ul class="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+      {topics.map((t) => (
+        <li class="flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700 p-3">
+          <a class="focus-ring hover:underline" href={`/topics/${encodeURIComponent(t.slug)}/`}>
+            {t.name}
+          </a>
+          <span class="text-sm text-slate-500 dark:text-slate-400">{t.count}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <nav class="mt-6">
+    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+  </nav>
 </Base>
