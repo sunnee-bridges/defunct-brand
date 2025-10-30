@@ -8,6 +8,7 @@
 import Base from "../../layouts/Base.astro";
 import ExploreMore from "../../components/ExploreMore.astro";
 import AffiliateDisclosure from "../../components/AffiliateDisclosure.astro";
+import LearnMore from "../../components/LearnMore.astro"; // ⬅️ added
 
 /** Generate paths for each brand file */
 export function getStaticPaths() {
@@ -41,6 +42,16 @@ let jsonLdBlocks: any[] = [];
 let ogImage = "";
 let ogImageAlt = "";
 let twitterCard = "summary_large_image";
+
+// helper for category path slugging
+function catToPath(cat?: string) {
+  if (!cat) return null;
+  const slug = cat
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return `/category/${encodeURIComponent(slug)}/`;
+}
 
 if (!notFound) {
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
@@ -167,7 +178,35 @@ if (!notFound) {
         <p class="mt-3 text-gray-700 dark:text-slate-300">{brand.summary}</p>
       )}
 
+      {/* unchanged */}
       <ExploreMore brand={brand} />
+
+      {/*
+        Learn More: render after ExploreMore, only for valid brands,
+        and only if at least one link exists.
+      */}
+      {
+        (() => {
+          const internal: Array<{href:string;label:string;external?:boolean;rel?:string}> = [
+            { href: "/az/", label: "Browse A–Z" },
+          ];
+          const catPath = catToPath(brand?.category);
+          if (catPath) internal.push({ href: catPath, label: `More in ${brand.category}` });
+
+          const authority: Array<{href:string;label:string;external?:boolean;rel?:string}> = [];
+          if (brand?.links?.wikipedia) authority.push({ href: String(brand.links.wikipedia), label: `${brand.brand} on Wikipedia`, external: true });
+          if (brand?.links?.official)   authority.push({ href: String(brand.links.official),   label: "Official site (archived)", external: true, rel: "noopener nofollow" });
+          if (brand?.links?.wayback)    authority.push({ href: String(brand.links.wayback),    label: "Archived homepage (Wayback)", external: true });
+
+          const media: Array<{href:string;label:string;external?:boolean;rel?:string}> = [];
+          if (brand?.links?.verge) media.push({ href: String(brand.links.verge), label: "The Verge retrospective", external: true });
+          if (brand?.links?.cnet)  media.push({ href: String(brand.links.cnet),  label: "CNET photo gallery", external: true });
+
+          const anyLinks = internal.length || authority.length || media.length;
+          return anyLinks ? <LearnMore internal={internal} authority={authority} media={media} /> : null;
+        })()
+      }
+
       <AffiliateDisclosure />
     </>
   )}

@@ -1,0 +1,33 @@
+---
+interface LinkItem { href: string; label: string; external?: boolean; rel?: string; }
+
+const { internal = [], authority = [], media = [] } = Astro.props as {
+  internal?: LinkItem[];
+  authority?: LinkItem[];
+  media?: LinkItem[];
+};
+
+const Section = (title: string, items: LinkItem[]) =>
+  items.length > 0 && (
+    <section class="mt-6">
+      <h2 class="text-base font-semibold mb-2">{title}</h2>
+      <ul class="list-disc pl-5 space-y-1">
+        {items.map((it) => (
+          <li>
+            <a
+              href={it.href}
+              class="text-indigo-600 dark:text-indigo-400 hover:underline focus-ring"
+              {...(it.external ? { target: "_blank", rel: it.rel ?? "noopener" } : {})}
+            >
+              {it.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+---
+
+{Section("Continue on Vanished Brands", internal)}
+{Section("Official & reference", authority)}
+{Section("Retrospectives & analysis", media)}
