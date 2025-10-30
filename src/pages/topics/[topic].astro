@@ -1,15 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 
-/** Types (lightweight) */
-type Brand = {
-  brand: string;
-  slug: string;
-  category?: string;
-  topics?: string[];
-};
-
-/** Helpers */
+/** Keep helpers INSIDE this file so getStaticPaths can see them */
 function slugifyTopic(name: string) {
   return String(name)
     .toLowerCase()
@@ -20,10 +12,14 @@ function titleFromSlug(s: string) {
   return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-/**
- * Build all topic pages from brand JSON.
- * Each returned entry carries the topic's display name and list of brands.
- */
+type Brand = {
+  brand: string;
+  slug: string;
+  category?: string;
+  topics?: string[];
+};
+
+/** Build all topic pages from brand JSON (hands-free hubs) */
 export function getStaticPaths() {
   const modules = import.meta.glob("/src/content/brands/*.json", {
     eager: true,
@@ -39,9 +35,9 @@ export function getStaticPaths() {
     const b = m as Brand;
     if (!Array.isArray(b.topics)) continue;
     for (const t of b.topics) {
-      const slug = slugifyTopic(t);
-      if (!byTopic[slug]) byTopic[slug] = { display: titleFromSlug(slug), brands: [] };
-      byTopic[slug].brands.push({ brand: b.brand, slug: b.slug, category: b.category });
+      const key = slugifyTopic(t);
+      if (!byTopic[key]) byTopic[key] = { display: titleFromSlug(key), brands: [] };
+      byTopic[key].brands.push({ brand: b.brand, slug: b.slug, category: b.category });
     }
   }
 
@@ -67,7 +63,7 @@ const canonical = Astro.site
   : `/topics/${encodeURIComponent(topicSlug)}/`;
 
 /** JSON-LD ItemList */
-const ld = [
+const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -85,7 +81,7 @@ const ld = [
 ];
 ---
 
-<Base title={title} description={desc} canonical={canonical} jsonLd={ld}>
+<Base title={title} description={desc} canonical={canonical} jsonLd={jsonLd}>
   <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
 
   {brands.length === 0 ? (
@@ -93,6 +89,7 @@ const ld = [
   ) : (
     <ul class="list-disc pl-5">
       {brands
+        .slice()
         .sort((a, b) => a.brand.localeCompare(b.brand))
         .map((b) => (
           <li>
