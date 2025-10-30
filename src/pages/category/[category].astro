@@ -3,6 +3,64 @@
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
+/**
+ * Curated copy for category hubs.
+ * - key: slugified category (must match slugify(label))
+ * - label: display label override (optional; falls back to the original label)
+ * - desc: richer intro copy shown under the H1 and used for meta description if present
+ */
+const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
+  "retail": {
+    desc:
+      "Department stores, specialty shops, and mall icons that shuttered—browse timelines, fates, and what led to the downfall.",
+  },
+  "software-internet": {
+    label: "Software / Internet",
+    desc:
+      "Once-dominant apps and online services—see what they did, when they peaked, and why they ultimately disappeared.",
+  },
+  "mobile-devices": {
+    desc:
+      "Phones, PDAs, and handhelds that defined eras of mobility—and the competitive shifts that ended them.",
+  },
+  "retail-entertainment": {
+    desc:
+      "Retail + entertainment hybrids—movie, game, and media storefronts that couldn’t survive digital disruption.",
+  },
+  "computers": {
+    desc:
+      "PC makers and platforms that shaped personal computing before being outpaced by new hardware and ecosystems.",
+  },
+  "e-commerce": {
+    desc:
+      "Dot-com darlings and online storefronts—see how early strategies stacked up against today’s e-commerce giants.",
+  },
+  "consumer-electronics": {
+    label: "Consumer electronics",
+    desc:
+      "Gadgets we loved—from music players to cameras—retired by platform lock-in, smartphones, or shifting tastes.",
+  },
+  "video-games": {
+    label: "Video games",
+    desc:
+      "Studios, services, and titles that disappeared—timelines of launches, closures, and lasting influence.",
+  },
+  "video-game-consoles": {
+    label: "Video game consoles",
+    desc:
+      "Hardware that battled for the living room—specs, release windows, and the market forces that ended each run.",
+  },
+  "airline": {
+    label: "Airlines",
+    desc:
+      "Carriers that merged, rebranded, or ceased operations—follow routes, fleets, and consolidation timelines.",
+  },
+  "wearables": {
+    desc:
+      "Watches, bands, and quantified-self experiments—what launched, what stuck, and what faded away.",
+  },
+};
+
 /** Build-time: enumerate all categories and precompute the items for each */
 export async function getStaticPaths() {
   // ✅ Only curated public files
@@ -67,12 +125,18 @@ const uniqueItems = items.filter((b: any) => {
 
 /* ---------------- SEO / Canonical / JSON-LD ---------------- */
 const categorySlug = slugify(label);
+
+/** Pull curated copy; fall back to current label/auto description */
+const meta = CATEGORY_META[categorySlug] ?? {};
+const displayLabel = meta.label || label;
+
 const categoryPath = `/category/${categorySlug}/`;
 const siteOrigin = Astro.site?.origin || "https://vanishedbrands.com";
 const canonical = Astro.site ? new URL(categoryPath, Astro.site).href : categoryPath;
 
-const title = `Defunct Brands in ${label}`;
-const description = `Explore ${uniqueItems.length} defunct or discontinued brands in ${label}.`;
+const title = `Defunct Brands in ${displayLabel}`;
+const autoDesc = `Explore ${uniqueItems.length} defunct or discontinued brands in ${displayLabel}.`;
+const description = meta.desc || autoDesc;
 
 // Stable @id helpers
 const id = (p: string) => `${siteOrigin}${p.replace(/^\//, "/")}`;
@@ -85,7 +149,7 @@ const breadcrumbLd = {
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: id("/") },
     { "@type": "ListItem", position: 2, name: "Categories", item: id("/#categories") },
-    { "@type": "ListItem", position: 3, name: label, item: canonical },
+    { "@type": "ListItem", position: 3, name: displayLabel, item: canonical },
   ],
 };
 
@@ -108,7 +172,7 @@ const itemListLd = {
   })),
 };
 
-// NEW: CollectionPage describing this category page, pointing to the ItemList
+// CollectionPage describing this category page, pointing to the ItemList
 const collectionPageLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
@@ -116,7 +180,7 @@ const collectionPageLd = {
   url: canonical,
   name: title,
   description,
-  mainEntity: { "@id": itemListLd["@id"] }, // reference the ItemList above
+  mainEntity: { "@id": itemListLd["@id"] },
 };
 ---
 
@@ -133,13 +197,15 @@ const collectionPageLd = {
 
   <!-- Compact header to avoid repetition -->
   <h1 class="text-2xl md:text-3xl font-bold mb-2">
-    {label} — defunct brands
+    {displayLabel} — defunct brands
     <span class="ml-2 align-middle inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 text-xs font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
       {uniqueItems.length}
     </span>
   </h1>
+
+  <!-- Use curated intro if provided; otherwise keep the existing short line -->
   <p class="text-slate-700 dark:text-slate-300 mb-3">
-    Browse brands, filter, and sort. A–Z by default.
+    {meta.desc ? meta.desc : `Browse brands, filter, and sort. A–Z by default.`}
   </p>
 
   <!-- Optional: quick controls (kept minimal to match index.astro’s simplicity) -->
@@ -147,7 +213,7 @@ const collectionPageLd = {
     <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
     <input id="q" type="search"
            class="w-full md:w-auto flex-1 rounded-md border border-slate-300 bg-white text-slate-900 placeholder-slate-400 px-3 py-2 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-           placeholder={`Search brands in ${label}…`} inputmode="search" />
+           placeholder={`Search brands in ${displayLabel}…`} inputmode="search" />
     <label for="sort" class="text-sm text-slate-600 dark:text-slate-300">Sort</label>
     <select id="sort"
             class="rounded-md border border-slate-300 bg-white text-slate-900 px-3 py-2 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
@@ -159,37 +225,36 @@ const collectionPageLd = {
 
   <!-- List -->
   <ul id="brandList" class="m-0 p-0 list-none border-t border-slate-200 dark:border-slate-800">
-  {uniqueItems.map((b: any) => {
-    const start = b?.active?.start ?? "";
-    const end = b?.active?.end ?? "";
-    const fate = b?.fate ?? "";
+    {uniqueItems.map((b: any) => {
+      const start = b?.active?.start ?? "";
+      const end = b?.active?.end ?? "";
+      const fate = b?.fate ?? "";
 
-    return (
-      <li
-        class="relative group cursor-pointer py-3 border-b border-slate-200 dark:border-slate-800
-               hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors"
-      >
-        {/* Full-click overlay (uses your .stretched-link helper) */}
-        <a
-          href={`/brand/${encodeURIComponent(b.slug)}/`}
-          class="stretched-link focus-ring rounded-md"
-          aria-label={`${b.brand}${start ? ` (${start}–${end || "?"})` : ""}${fate ? ` • ${fate}` : ""}`}
-        ></a>
+      return (
+        <li
+          class="relative group cursor-pointer py-3 border-b border-slate-200 dark:border-slate-800
+                 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors"
+        >
+          {/* Full-click overlay (uses your .stretched-link helper) */}
+          <a
+            href={`/brand/${encodeURIComponent(b.slug)}/`}
+            class="stretched-link focus-ring rounded-md"
+            aria-label={`${b.brand}${start ? ` (${start}–${end || "?"})` : ""}${fate ? ` • ${fate}` : ""}`}
+          ></a>
 
-        {/* Visible row content */}
-        <div class="min-w-0 pr-2">
-          <span class="font-semibold text-slate-900 dark:text-slate-100 underline-offset-2
-                        group-hover:underline">
-            {b.brand}
-          </span>
-          <span class="ml-1 text-sm text-slate-600 dark:text-slate-400">
-            {start ? ` (${start}\u2013${end || "?"})` : ""}{fate ? ` • ${fate}` : ""}
-          </span>
-        </div>
-      </li>
-    );
-  })}
-</ul>
+          {/* Visible row content */}
+          <div class="min-w-0 pr-2">
+            <span class="font-semibold text-slate-900 dark:text-slate-100 underline-offset-2 group-hover:underline">
+              {b.brand}
+            </span>
+            <span class="ml-1 text-sm text-slate-600 dark:text-slate-400">
+              {start ? ` (${start}\u2013${end || "?"})` : ""}{fate ? ` • ${fate}` : ""}
+            </span>
+          </div>
+        </li>
+      );
+    })}
+  </ul>
 
   <!-- Tiny client helpers (optional) -->
   <script>

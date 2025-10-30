@@ -3,7 +3,63 @@
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
-/** Load curated brand JSON at build time (ONLY *.public.json) */
+/**
+ * Curated copy for category hubs (used for nicer labels & hover descriptions).
+ * Keys MUST be slugified (same algo as `slugify()`).
+ */
+const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
+  "retail": {
+    desc:
+      "Department stores, specialty shops, and mall icons that shuttered—timelines, fates, and what led to the downfall.",
+  },
+  "software-internet": {
+    label: "Software / Internet",
+    desc:
+      "Once-dominant apps and online services—what they did, when they peaked, and why they disappeared.",
+  },
+  "mobile-devices": {
+    desc:
+      "Phones, PDAs, and handhelds that defined eras of mobility—and the shifts that ended them.",
+  },
+  "retail-entertainment": {
+    desc:
+      "Movie, game, and media storefronts that couldn’t survive the digital turn.",
+  },
+  "computers": {
+    desc:
+      "PC makers and platforms that shaped personal computing before being outpaced by new ecosystems.",
+  },
+  "e-commerce": {
+    desc:
+      "Dot-com darlings and online storefronts—early strategies vs. today’s e-commerce giants.",
+  },
+  "consumer-electronics": {
+    label: "Consumer electronics",
+    desc:
+      "Gadgets we loved—from music players to cameras—retired by smartphones or shifting tastes.",
+  },
+  "video-games": {
+    label: "Video games",
+    desc:
+      "Studios, services, and titles that disappeared—launches, closures, and influence.",
+  },
+  "video-game-consoles": {
+    label: "Video game consoles",
+    desc:
+      "Hardware that battled for the living room—specs, release windows, and market forces.",
+  },
+  "airline": {
+    label: "Airlines",
+    desc:
+      "Carriers that merged, rebranded, or ceased operations—routes, fleets, consolidation timelines.",
+  },
+  "wearables": {
+    desc:
+      "Watches, bands, and quantified-self experiments—what launched, what stuck, what faded.",
+  },
+};
+
+/** Load curated brand JSON at build time */
 const modules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
@@ -30,17 +86,28 @@ for (const b of brands) {
   counts.set(b.category, (counts.get(b.category) || 0) + 1);
 }
 
-/** Sorted categories */
-const categories = Array.from(counts.entries()).sort((a, b) =>
-  a[0].localeCompare(b[0])
-);
+/**
+ * Sorted categories with meta applied.
+ * We keep the canonical slug for URLs, and use CATEGORY_META to override label/desc.
+ */
+const categories = Array.from(counts.entries())
+  .map(([rawLabel, n]) => {
+    const slug = slugify(rawLabel);
+    const meta = CATEGORY_META[slug] ?? {};
+    const displayLabel = meta.label || rawLabel;
+    const desc = meta.desc || `Explore ${n} brand${n === 1 ? "" : "s"} in ${displayLabel}.`;
+    return { slug, displayLabel, desc, n };
+  })
+  .sort((a, b) => a.displayLabel.localeCompare(b.displayLabel));
 
 /** SEO bits */
 const PAGE_TITLE = "Browse by Category • Defunct Brands";
 const PAGE_DESC =
   "Browse discontinued and defunct brands by category. Clean, structured entries with timelines and outcomes.";
 const CANONICAL = Astro.site ? new URL("/category/", Astro.site).href : "/category/";
-const FEATURED = categories.slice(0, 8).map(([label]) => label);
+
+/** Feature first 8 (for JSON-LD only) */
+const FEATURED = categories.slice(0, 8);
 ---
 
 <Base title={PAGE_TITLE} description={PAGE_DESC}>
@@ -58,20 +125,20 @@ const FEATURED = categories.slice(0, 8).map(([label]) => label);
     <meta name="twitter:title" content={PAGE_TITLE} />
     <meta name="twitter:description" content={PAGE_DESC} />
 
-    <!-- JSON-LD: ItemList of featured categories (optional but useful) -->
+    {/* JSON-LD: ItemList of featured categories (optional but useful) */}
     {FEATURED.length > 0 && (
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Categories",
-          itemListElement: FEATURED.map((label, i) => ({
+          itemListElement: FEATURED.map((c, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            name: label,
+            name: c.displayLabel,
             url: Astro.site
-              ? new URL(`/category/${slugify(label)}/`, Astro.site).href
-              : `/category/${slugify(label)}/`,
+              ? new URL(`/category/${c.slug}/`, Astro.site).href
+              : `/category/${c.slug}/`,
           })),
         })}
       </script>
@@ -86,10 +153,15 @@ const FEATURED = categories.slice(0, 8).map(([label]) => label);
   <h1 class="text-2xl md:text-3xl font-bold mb-3">Browse by Category</h1>
 
   <ul class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2">
-    {categories.map(([label, n]) => (
+    {categories.map((c) => (
       <li>
-        <a href={`/category/${slugify(label)}/`} class="chip focus-ring">
-          {label} <span class="text-gray-500">({n})</span>
+        <a
+          href={`/category/${c.slug}/`}
+          class="chip focus-ring"
+          title={c.desc}
+          aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
+        >
+          {c.displayLabel} <span class="text-gray-500">({c.n})</span>
         </a>
       </li>
     ))}
