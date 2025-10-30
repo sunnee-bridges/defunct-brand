@@ -8,7 +8,7 @@
 import Base from "../../layouts/Base.astro";
 import ExploreMore from "../../components/ExploreMore.astro";
 import AffiliateDisclosure from "../../components/AffiliateDisclosure.astro";
-import LearnMore from "../../components/LearnMore.astro"; // ⬅️ added
+import LearnMore from "../../components/LearnMore.astro";
 
 /** Generate paths for each brand file */
 export function getStaticPaths() {
@@ -33,6 +33,13 @@ const modKey = `/src/content/brands/${slug}.json`;
 const brand = (brandModules[modKey] as any) ?? null;
 const notFound = !brand;
 
+/* --- Helpers --- */
+function catToPath(cat?: string) {
+  if (!cat) return null;
+  const s = cat.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return `/category/${encodeURIComponent(s)}/`;
+}
+
 /* --- SEO / Canonical (use Base props to emit tags) --- */
 let pageTitle = "Page not found";
 let pageDesc  = "Try another page or browse the full list.";
@@ -43,15 +50,11 @@ let ogImage = "";
 let ogImageAlt = "";
 let twitterCard = "summary_large_image";
 
-// helper for category path slugging
-function catToPath(cat?: string) {
-  if (!cat) return null;
-  const slug = cat
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-  return `/category/${encodeURIComponent(slug)}/`;
-}
+/* LearnMore link buckets (built only for valid brands) */
+type LinkItem = { href: string; label: string; external?: boolean; rel?: string };
+let internalLinks: LinkItem[] = [];
+let authorityLinks: LinkItem[] = [];
+let mediaLinks: LinkItem[] = [];
 
 if (!notFound) {
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
@@ -63,7 +66,7 @@ if (!notFound) {
   const brandPath = `/brand/${encodeURIComponent(brand.slug || slug)}/`;
   canonical = Astro.site ? new URL(brandPath, Astro.site).href : brandPath;
 
-  // OG/Twitter image (per-brand path fallback to site-wide path)
+  // OG/Twitter image (per-brand path; fallback to site root origin)
   const siteOrigin = Astro.site?.origin || "https://vanishedbrands.com";
   const perBrandOg  = `/og/brand/${encodeURIComponent(brand.slug || slug)}.png`;
   ogImage     = new URL(perBrandOg, siteOrigin).toString();
@@ -111,6 +114,26 @@ if (!notFound) {
   };
 
   jsonLdBlocks = [brandLd, webPageLd, breadcrumbsLd];
+
+  // ---------- LearnMore links ----------
+  internalLinks = [{ href: "/az/", label: "Browse A–Z" }];
+  const catPath = catToPath(brand?.category);
+  if (catPath) internalLinks.push({ href: catPath, label: `More in ${brand.category}` });
+
+  if (brand?.links?.wikipedia)
+    authorityLinks.push({ href: String(brand.links.wikipedia), label: `${brand.brand} on Wikipedia`, external: true });
+
+  if (brand?.links?.official)
+    authorityLinks.push({ href: String(brand.links.official), label: "Official site (archived)", external: true, rel: "noopener nofollow" });
+
+  if (brand?.links?.wayback)
+    authorityLinks.push({ href: String(brand.links.wayback), label: "Archived homepage (Wayback)", external: true });
+
+  if (brand?.links?.verge)
+    mediaLinks.push({ href: String(brand.links.verge), label: "The Verge retrospective", external: true });
+
+  if (brand?.links?.cnet)
+    mediaLinks.push({ href: String(brand.links.cnet), label: "CNET photo gallery", external: true });
 }
 ---
 
@@ -120,15 +143,9 @@ if (!notFound) {
   canonical={canonical}
   jsonLd={jsonLdBlocks}
 >
-  {/* Always render exactly one head slot; put conditionals inside */}
   <Fragment slot="head">
-    {/* Richer preview hints for all pages */}
     <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-
-    {/* Not-found page: keep out of the index (but allow following links) */}
     {notFound && <meta name="robots" content="noindex,follow" />}
-
-    {/* OG / Twitter only for valid brand pages */}
     {!notFound && (
       <>
         <meta property="og:type" content="website" />
@@ -137,7 +154,6 @@ if (!notFound) {
         <meta property="og:image:alt" content={ogImageAlt} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-
         <meta name="twitter:card" content={twitterCard} />
         <meta name="twitter:image" content={ogImage} />
         <meta name="twitter:image:alt" content={ogImageAlt} />
@@ -178,34 +194,13 @@ if (!notFound) {
         <p class="mt-3 text-gray-700 dark:text-slate-300">{brand.summary}</p>
       )}
 
-      {/* unchanged */}
+      {/* Keep existing UI/behavior */}
       <ExploreMore brand={brand} />
 
-      {/*
-        Learn More: render after ExploreMore, only for valid brands,
-        and only if at least one link exists.
-      */}
-      {
-        (() => {
-          const internal: Array<{href:string;label:string;external?:boolean;rel?:string}> = [
-            { href: "/az/", label: "Browse A–Z" },
-          ];
-          const catPath = catToPath(brand?.category);
-          if (catPath) internal.push({ href: catPath, label: `More in ${brand.category}` });
-
-          const authority: Array<{href:string;label:string;external?:boolean;rel?:string}> = [];
-          if (brand?.links?.wikipedia) authority.push({ href: String(brand.links.wikipedia), label: `${brand.brand} on Wikipedia`, external: true });
-          if (brand?.links?.official)   authority.push({ href: String(brand.links.official),   label: "Official site (archived)", external: true, rel: "noopener nofollow" });
-          if (brand?.links?.wayback)    authority.push({ href: String(brand.links.wayback),    label: "Archived homepage (Wayback)", external: true });
-
-          const media: Array<{href:string;label:string;external?:boolean;rel?:string}> = [];
-          if (brand?.links?.verge) media.push({ href: String(brand.links.verge), label: "The Verge retrospective", external: true });
-          if (brand?.links?.cnet)  media.push({ href: String(brand.links.cnet),  label: "CNET photo gallery", external: true });
-
-          const anyLinks = internal.length || authority.length || media.length;
-          return anyLinks ? <LearnMore internal={internal} authority={authority} media={media} /> : null;
-        })()
-      }
+      {/* LearnMore: render when any link bucket has items */}
+      {(internalLinks.length || authorityLinks.length || mediaLinks.length) && (
+        <LearnMore internal={internalLinks} authority={authorityLinks} media={mediaLinks} />
+      )}
 
       <AffiliateDisclosure />
     </>
