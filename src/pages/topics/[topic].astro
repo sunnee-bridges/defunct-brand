@@ -1,39 +1,27 @@
 ---
 // src/pages/topics/[topic].astro
-import Base from "../../layouts/Base.astro";
+mport Base from "../../layouts/Base.astro";
+import { getEntry } from "astro:content";
 
-/** Topic meta (richer intros). Extend any time. */
-type TopicMeta = {
-  label: string;
-  desc: string;          // short intro + meta description
-  descLong?: string;     // richer intro paragraph(s)
-  heroImage?: string;    // optional hero image path/URL
+// … your brandModules + getStaticPaths stay as-is …
+
+const { topic } = Astro.params;
+const slug = String(topic).toLowerCase();
+
+// Pull the map from the collection:
+const topicsEntry = await getEntry("topics", "topics"); // loads topics/topics.json
+const TOPIC_META = (topicsEntry?.data ?? {}) as Record<string, {
+  label: string; desc: string; descLong?: string; heroImage?: string;
   faq?: Array<{ q: string; a: string }>;
-};
+}>;
 
-const TOPIC_META: Record<string, TopicMeta> = {
-  "music-players": {
-    label: "Music Players",
-    desc: "Explore discontinued music players and services: timelines, outcomes, and related brands.",
-    descLong:
-      "From early MP3 devices to full ecosystem plays, this hub covers portable media hardware and the services behind them. Expect quick timelines, notable models, and links to reliable sources and archives.",
-    faq: [
-      {
-        q: "What counts as a music player here?",
-        a: "Dedicated portable audio devices and closely related music services that were discontinued or sunset.",
-      },
-      {
-        q: "Why did so many disappear?",
-        a: "Smartphones subsumed most use-cases, margins shrank, and ecosystems consolidated around a few dominant platforms.",
-      },
-    ],
-  },
-  "portable-audio": {
-    label: "Portable Audio",
-    desc: "Portable audio devices that came and went: categories, timelines, and notable products.",
-    descLong:
-      "Spanning cassette, CD, MiniDisc, and digital eras, this hub highlights devices and brands that defined on-the-go listening—and how they were eventually replaced.",
-  },
+function prettyLabel(s: string) {
+  return s.split("-").map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+}
+
+const meta = TOPIC_META[slug] ?? {
+  label: prettyLabel(slug),
+  desc: "Browse related discontinued brands collected under this topic.",
 };
 
 /** Fallback label from slug */
@@ -112,9 +100,30 @@ const jsonLd = [
     itemListElement: ldItems,
   },
 ];
+
+const collectionPageLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  url: canonical,
+  name: title,
+  description: desc,
+  mainEntity: jsonLd[0] /* your ItemList */,
+};
+
+const breadcrumbsLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
+    { "@type": "ListItem", position: 2, name: "Topics", item: Astro.site ? new URL("/topics/", Astro.site).href : "/topics/" },
+    { "@type": "ListItem", position: 3, name: meta.label, item: canonical },
+  ],
+};
+
+const jsonLdOut = [collectionPageLd, braadcrumbsLd,...jsonLd];
 ---
 
-<Base title={title} description={desc} canonical={canonical} jsonLd={jsonLd}>
+<Base title={title} description={desc} canonical={canonical} jsonLd={jsonLdOut}>
   <Fragment slot="head">
     <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href={canonical} />

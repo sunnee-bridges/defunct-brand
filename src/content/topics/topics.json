@@ -1,0 +1,16 @@
+{
+  "music-players": {
+    "label": "Music Players",
+    "desc": "Explore discontinued music players and services: timelines, outcomes, and related brands.",
+    "descLong": "From early MP3 devices to smartphone-era transitions...",
+    "heroImage": "/og/hubs/music-players.png",
+    "faq": [
+      { "q": "What counts as a music player?", "a": "Dedicated portable audio devices and closely related services." }
+    ]
+  },
+  "portable-audio": {
+    "label": "Portable Audio",
+    "desc": "Portable audio devices that came and went...",
+    "descLong": "Spanning cassette, CD, MiniDisc, and digital eras..."
+  }
+}

@@ -1,7 +1,8 @@
 // src/content/config.ts
 import { defineCollection, z } from "astro:content";
 
-export const post = defineCollection({
+/** Blog/articles (MD/MDX) */
+const post = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
@@ -13,10 +14,26 @@ export const post = defineCollection({
       .object({ src: z.string(), alt: z.string().default("") })
       .optional(),
     tags: z.array(z.string()).default([]),
-    topics: z.array(z.string()).default([]),     // ← tie to your /topics/*
-    brands: z.array(z.string()).default([]),     // ← brand slugs referenced
+    topics: z.array(z.string()).default([]),  // tie posts to /topics/*
+    brands: z.array(z.string()).default([]),  // referenced brand slugs
     draft: z.boolean().default(false),
   }),
 });
 
-export const collections = { post };
+/** Topics hub metadata (single JSON file that is a map: { slug: {...} }) */
+const topics = defineCollection({
+  type: "data",
+  schema: z.record(
+    z.object({
+      label: z.string(),
+      desc: z.string(),
+      descLong: z.string().optional(),
+      heroImage: z.string().optional(),
+      faq: z
+        .array(z.object({ q: z.string(), a: z.string() }))
+        .optional(),
+    })
+  ),
+});
+
+export const collections = { post, topics };
