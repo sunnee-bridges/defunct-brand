@@ -4,6 +4,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import fs from 'node:fs';
 import path from 'node:path';
+import mdx from '@astrojs/mdx';
 
 const SITE = 'https://vanishedbrands.com';
 
@@ -66,6 +67,7 @@ export default defineConfig({
   prefetch: true,
 
   integrations: [
+    mdx(),
     tailwind({ config: { applyBaseStyles: true } }),
     sitemap({
        entryLimit: 5000,

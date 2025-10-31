@@ -1,0 +1,176 @@
+---
+// /src/pages/articles/index.astro
+import Base from "../../layouts/Base.astro";
+import { slugify } from "../../lib/slug.js";
+
+/**
+ * Toggle this ON only if you created:
+ *   /src/pages/articles/defunct-by-decade/[decade].astro
+ * Otherwise set to false and we’ll link to /decade/<label>/ hubs instead.
+ */
+const USE_DECADE_ARTICLES = true;
+
+/** Load all curated brand JSON at build time */
+const mods = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
+/** Helpers */
+const toYear = (v: unknown): number | undefined => {
+  const m = String(v ?? "").match(/\d{3,4}/);
+  if (!m) return undefined;
+  const n = parseInt(m[0], 10);
+  return Number.isFinite(n) ? n : undefined;
+};
+const decadeOf = (y: number) => Math.floor(y / 10) * 10;
+
+/** Normalize + dedupe by canonical slug */
+const bySlug = new Map<string, any>();
+for (const raw of Object.values(mods)) {
+  const b = raw as any;
+  if (!b) continue;
+  const key =
+    String(b.slug || "").trim().toLowerCase() ||
+    slugify(String(b.brand || ""));
+  if (!key) continue;
+  if (!bySlug.has(key)) bySlug.set(key, b);
+}
+const brands = Array.from(bySlug.values());
+
+/** Build category counts */
+const catCounts = new Map<string, number>();
+for (const b of brands) {
+  const cat = String(b?.category || "").trim();
+  if (!cat) continue;
+  catCounts.set(cat, (catCounts.get(cat) || 0) + 1);
+}
+const categories = Array.from(catCounts.entries())
+  .map(([label, n]) => ({ label, slug: slugify(label), n }))
+  .sort((a, b) => a.label.localeCompare(b.label));
+
+/** Build available decade labels from end year (fallback to start) */
+const decadeSet = new Set<number>();
+for (const b of brands) {
+  const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
+  if (y !== undefined) decadeSet.add(decadeOf(y));
+}
+const decades = [...decadeSet]
+  .sort((a, b) => b - a) // newest first
+  .map((d) => `${d}s`);
+
+/** SEO */
+const TITLE = "Articles & Data-Driven Lists • Vanished Brands";
+const DESC =
+  "Browse our auto-generated articles: defunct brands by category and by decade. Each list updates automatically from the dataset.";
+const CANONICAL = Astro.site ? new URL("/articles/", Astro.site).href : "/articles/";
+
+/** JSON-LD: two ItemLists (categories & decades) */
+const categoriesItemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Articles by Category",
+  itemListOrder: "http://schema.org/ItemListOrderAscending",
+  numberOfItems: categories.length,
+  itemListElement: categories.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: `Defunct brands in ${c.label}`,
+    url: Astro.site
+      ? new URL(`/articles/defunct-in-category/${c.slug}/`, Astro.site).href
+      : `/articles/defunct-in-category/${c.slug}/`,
+  })),
+};
+const decadesItemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Articles by Decade",
+  itemListOrder: "http://schema.org/ItemListOrderDescending",
+  numberOfItems: decades.length,
+  itemListElement: decades.map((d, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: `Defunct brands in the ${d}`,
+    url: Astro.site
+      ? new URL(
+          USE_DECADE_ARTICLES
+            ? `/articles/defunct-by-decade/${d}/`
+            : `/decade/${d}/`,
+          Astro.site
+        ).href
+      : (USE_DECADE_ARTICLES ? `/articles/defunct-by-decade/${d}/` : `/decade/${d}/`),
+  })),
+};
+---
+
+<Base title={TITLE} description={DESC} canonical={CANONICAL} jsonLd={[categoriesItemListLd, decadesItemListLd]}>
+  <Fragment slot="head">
+    <link rel="canonical" href={CANONICAL} />
+    <meta name="description" content={DESC} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={CANONICAL} />
+    <meta property="og:title" content={TITLE} />
+    <meta property="og:description" content={DESC} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={TITLE} />
+    <meta name="twitter:description" content={DESC} />
+  </Fragment>
+
+  <nav class="mb-4">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+    <a href="/topics/" class="chip focus-ring">Topics</a>
+  </nav>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">Articles & Data-Driven Lists</h1>
+  <p class="text-slate-600 dark:text-slate-300 mb-4">
+    Automatically generated lists that update as our dataset grows. Explore discontinued brands by category and by decade.
+  </p>
+
+  <!-- Categories block -->
+  <section class="mt-6" aria-labelledby="cat-articles">
+    <h2 id="cat-articles" class="text-lg font-semibold mb-2">By Category</h2>
+    {categories.length ? (
+      <ul class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-2">
+        {categories.map((c) => (
+          <li>
+            <a href={`/articles/defunct-in-category/${c.slug}/`} class="chip focus-ring">
+              {c.label} <span class="text-gray-500">({c.n})</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="text-slate-600 dark:text-slate-300">No categories yet.</p>
+    )}
+  </section>
+
+  <!-- Decades block -->
+  <section class="mt-8" aria-labelledby="decade-articles">
+    <h2 id="decade-articles" class="text-lg font-semibold mb-2">By Decade</h2>
+    {decades.length ? (
+      <ul class="flex flex-wrap gap-2">
+        {decades.map((d) => (
+          <li>
+            <a
+              href={USE_DECADE_ARTICLES ? `/articles/defunct-by-decade/${d}/` : `/decade/${d}/`}
+              class="chip focus-ring"
+              title={`Defunct brands in the ${d}`}
+            >
+              {d}
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="text-slate-600 dark:text-slate-300">No decades available yet.</p>
+    )}
+  </section>
+
+  <!-- Gentle internal links -->
+  <div class="mt-8 flex flex-wrap gap-2">
+    <a href="/category/" class="chip focus-ring">Categories (browse)</a>
+    <a href="/decade/" class="chip focus-ring">Decades (timelines)</a>
+    <a href="/data/" class="chip focus-ring">Data (CSV)</a>
+  </div>
+</Base>

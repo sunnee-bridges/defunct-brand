@@ -1,0 +1,72 @@
+---
+// src/pages/articles/defunct-by-decade/[decade].astro
+import Base from "../../../layouts/Base.astro";
+
+const brandModules = import.meta.glob("/src/content/brands/*.json", { eager: true, import: "default" }) as Record<string, any>;
+
+export function getStaticPaths() {
+  const years = new Set<number>();
+  for (const b of Object.values(brandModules)) {
+    const end = Number(b?.active?.end ?? 0) || Number(b?.active?.start ?? 0);
+    if (end) years.add(Math.floor(end/10)*10);
+  }
+  return [...years].map(d => ({ params: { decade: `${d}s` }}));
+}
+
+const { decade } = Astro.params;
+const decadeNum = parseInt(String(decade).slice(0,4), 10);
+
+const items = Object.values(brandModules)
+  .filter((b:any) => {
+    const end = Number(b?.active?.end ?? 0) || Number(b?.active?.start ?? 0);
+    return Math.floor(end/10)*10 === decadeNum;
+  })
+  .map((b:any)=>({ name:b.brand, slug:b.slug, category:b.category, start:b?.active?.start, end:b?.active?.end, fate:b.fate }))
+  .sort((a,b)=> (b.end ?? 0) - (a.end ?? 0) || a.name.localeCompare(b.name));
+
+const title = `Defunct Brands of the ${decade}`;
+const desc  = `A data-driven list of brands that ended in the ${decade}.`;
+const canonical = Astro.site ? new URL(`/articles/defunct-by-decade/${decade}/`, Astro.site).href : `/articles/defunct-by-decade/${decade}/`;
+
+const listLd = {
+  "@context":"https://schema.org",
+  "@type":"ItemList",
+  name: title,
+  numberOfItems: items.length,
+  itemListElement: items.map((x,i)=>({
+    "@type":"ListItem", position:i+1, name:x.name,
+    url: Astro.site ? new URL(`/brand/${x.slug}/`, Astro.site).href : `/brand/${x.slug}/`,
+  })),
+};
+---
+<Base title={title} description={desc} canonical={canonical} jsonLd={[listLd]}>
+  <nav class="mb-4">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/decade/" class="chip focus-ring">Decades</a>
+  </nav>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
+  <p class="text-slate-600 dark:text-slate-300 mb-4">{desc}</p>
+
+  {items.length ? (
+    <ul class="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+      {items.map(i => (
+        <li class="rounded-xl border border-slate-200 dark:border-slate-800 p-3">
+          <a class="focus-ring hover:underline font-medium" href={`/brand/${i.slug}/`}>{i.name}</a>
+          <div class="text-xs text-slate-500 mt-1">
+            {i.start ?? ''}{i.start ? '–' : ''}{i.start ? (i.end ?? '?') : ''}{i.fate ? ` • ${i.fate}` : ''}
+          </div>
+          {i.category && <div class="text-xs text-slate-500">{i.category}</div>}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="text-slate-600 dark:text-slate-300">No brands found for this decade.</p>
+  )}
+
+  <div class="mt-6 flex flex-wrap gap-2">
+    <a href="/blog/" class="chip focus-ring">Read the Blog</a>
+    <a href="/topics/" class="chip focus-ring">Topics</a>
+    <a href="/category/" class="chip focus-ring">Categories</a>
+  </div>
+</Base>

@@ -1,0 +1,26 @@
+---
+// src/pages/blog/index.astro
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("post", p => !p.data.draft))
+  .sort((a,b) => +new Date(b.data.updated ?? b.data.date) - +new Date(a.data.updated ?? a.data.date));
+const title = "Vanished Brands Blog";
+const desc  = "Plain-language explainers, timelines, and data stories.";
+const canonical = Astro.site ? new URL("/blog/", Astro.site).href : "/blog/";
+---
+<Base title={title} description={desc} canonical={canonical}>
+  <nav class="mb-4"><a href="/" class="chip focus-ring">← Home</a></nav>
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
+  <p class="text-slate-600 dark:text-slate-300 mb-4">{desc}</p>
+
+  <ul class="grid gap-4 md:grid-cols-2">
+    {posts.map(p => (
+      <li class="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+        <a class="focus-ring hover:underline font-semibold text-lg" href={`/blog/${p.slug}/`}>{p.data.title}</a>
+        <p class="mt-1 text-slate-600 dark:text-slate-300">{p.data.description}</p>
+        <p class="mt-2 text-xs text-slate-500">{new Date(p.data.date).toLocaleDateString()}</p>
+      </li>
+    ))}
+  </ul>
+</Base>

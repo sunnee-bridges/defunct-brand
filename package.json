@@ -3,31 +3,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-   "data": "node scripts/build-data.mjs",
+    "data": "node scripts/build-data.mjs",
     "slugs": "node scripts/build-slugs.mjs",
-
-   
     "data:public": "cross-env SAMPLE_ROWS=7 node scripts/build-public-csv.mjs",
-
-    
     "dev": "npx netlify dev",
-
-   
     "prebuild": "npm run data && npm run data:public",
     "build": "astro build",
     "preview": "astro preview",
-
-  
     "data:csv": "cross-env CSV_SOURCE=src/content/brands_src node scripts/build-csv.mjs",
     "data:csv:sample": "cross-env CSV_SOURCE=src/content/brands_src CSV_OUT=sample.csv node scripts/build-csv.mjs",
     "upload:csv": "aws s3 cp exports/${CSV_OUT:-full-dataset.csv} s3://vanishedbrands-private/exports/${CSV_OUT:-full-dataset.csv}",
     "publish:csv": "node scripts/publish-csv-versioned.mjs",
-
     "clean": "rimraf dist exports public/data/brands-*.csv",
     "test": "echo \"(no tests)\" && exit 0",
     "prepare": "husky"
   },
   "dependencies": {
+    "@astrojs/mdx": "^3.1.9",
     "@aws-sdk/client-s3": "^3.910.0",
     "@aws-sdk/client-sts": "^3.908.0",
     "@aws-sdk/s3-request-presigner": "^3.910.0",
