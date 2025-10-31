@@ -1,4 +1,5 @@
 ---
+// src/layouts/Base.astro
 import "../styles/tailwind.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -36,7 +37,7 @@ const toSafeJson = (obj: any) =>
     .replace(/</g, '\\u003c')
     .replace(/\u2028|\u2029/g, '');
 
-// Default site-wide schema (minimal, no social needed)
+// Default site-wide schema (minimal)
 const ORG_NAME = "Vanished Brands";
 const defaultSchema = includeDefaultSchema
   ? [
@@ -51,7 +52,7 @@ const defaultSchema = includeDefaultSchema
         "@type": "WebSite",
         name: ORG_NAME,
         url: siteOrigin,
-        // Add SearchAction later if you publish a real /search?q=... endpoint
+        // Add SearchAction here if/when you launch /search?q=
       },
     ]
   : [];
@@ -84,7 +85,6 @@ const FALLBACK_SLUG = fileSlugs[0] || "aim";
 const INLINE_SEED = fileSlugs.slice(0, 64);
 const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SEED[INLINE_SEED.length - 1] || ""}`;
 ---
-
 <html lang="en" class="h-full">
   <head>
     <meta charset="utf-8" />
@@ -146,16 +146,29 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <link rel="icon" href="/favicon-32x32.png?v=2" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon-16x16.png?v=2" type="image/png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+
+    <!-- Minimal skip-link styles (kept here to avoid needing a new CSS file) -->
+    <style is:inline>
+      .skip-link{position:absolute;left:-9999px;top:0;background:#111827;color:#fff;padding:.5rem .75rem;border-radius:.5rem;z-index:10000}
+      .skip-link:focus{left:1rem;top:1rem;outline:2px solid #6366f1;outline-offset:2px}
+      .fade-out{transition:opacity .12s ease-in;opacity:.2}
+    </style>
   </head>
 
-  <body class="min-h-full bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100">
-    <!-- Skip link for keyboard users -->
+  <body class="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100">
+    <!-- Skip link for keyboard users (first focusable in body) -->
     <a href="#main" class="skip-link">Skip to content</a>
 
     <!-- Header -->
     <Header allSlugs={fileSlugs} fallbackSlug={FALLBACK_SLUG} />
 
-    <main id="main" class="max-w-[1040px] mx-auto px-4" aria-labelledby="brand-title">
+    <!-- Main grows to push footer down; tabindex enables skip-link focus -->
+    <main
+      id="main"
+      class="flex-1 max-w-[1040px] mx-auto px-4"
+      aria-labelledby="brand-title"
+      tabindex="-1"
+    >
       <slot />
     </main>
 

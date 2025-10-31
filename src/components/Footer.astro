@@ -1,14 +1,27 @@
 ---
 const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
 ---
-<footer class="max-w-[1040px] mx-auto px-4 mt-10 mb-8 text-sm text-slate-600 dark:text-slate-400" role="contentinfo">
+<footer
+  class="relative max-w-[1040px] mx-auto px-4
+         mt-16 md:mt-24          /* more space above footer */
+         pb-10 md:pb-14          /* internal bottom padding so it’s not glued to edge */
+         mb-[env(safe-area-inset-bottom)]  /* extra room on iOS home indicator */
+         text-sm text-slate-600 dark:text-slate-400
+         bg-white/70 dark:bg-slate-900/40  /* subtle backdrop so it stands out */
+         backdrop-blur-[2px]"              /* tiny blur for readability over busy pages */
+  role="contentinfo"
+>
   <!-- Visually hidden site descriptor (SEO + a11y, no UI change) -->
   <p class="sr-only">
     VanishedBrands — an archive of discontinued and defunct brands, with timelines, categories, decades,
     and a downloadable CSV dataset for research and journalism.
   </p>
 
-  <div class="border-t border-slate-200 dark:border-slate-700 pt-4 flex flex-wrap items-center gap-3 justify-between">
+  <div
+    class="border-t border-slate-200 dark:border-slate-700
+           pt-5 md:pt-6            /* slightly larger top padding inside the footer */
+           flex flex-wrap items-center gap-3 justify-between"
+  >
 
     <!-- CTA row: visible on small screens -->
     <nav class="flex gap-3 md:hidden" aria-label="Footer quick links">
