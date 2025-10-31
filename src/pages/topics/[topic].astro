@@ -1,30 +1,18 @@
 ---
 // src/pages/topics/[topic].astro
-mport Base from "../../layouts/Base.astro";
+import Base from "../../layouts/Base.astro";
 import { getEntry } from "astro:content";
 
-// … your brandModules + getStaticPaths stay as-is …
-
-const { topic } = Astro.params;
-const slug = String(topic).toLowerCase();
-
-// Pull the map from the collection:
-const topicsEntry = await getEntry("topics", "topics"); // loads topics/topics.json
-const TOPIC_META = (topicsEntry?.data ?? {}) as Record<string, {
-  label: string; desc: string; descLong?: string; heroImage?: string;
+/* ---------- Types ---------- */
+type TopicMeta = {
+  label: string;
+  desc: string;
+  descLong?: string;
+  heroImage?: string;
   faq?: Array<{ q: string; a: string }>;
-}>;
-
-function prettyLabel(s: string) {
-  return s.split("-").map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
-}
-
-const meta = TOPIC_META[slug] ?? {
-  label: prettyLabel(slug),
-  desc: "Browse related discontinued brands collected under this topic.",
 };
 
-/** Fallback label from slug */
+/* ---------- Helpers ---------- */
 function prettyLabel(slug: string) {
   return slug
     .split("-")
@@ -32,8 +20,9 @@ function prettyLabel(slug: string) {
     .join(" ");
 }
 
-/** ✅ Build-time: compute topics using a local glob inside getStaticPaths */
+/* ---------- Build-time paths from topics found in brand JSON ---------- */
 export function getStaticPaths() {
+  // Define the glob locally inside the function so the bundler doesn't hoist it away
   const brandModules = import.meta.glob("/src/content/brands/*.json", {
     eager: true,
     import: "default",
@@ -47,22 +36,26 @@ export function getStaticPaths() {
   return [...topics].map((topic) => ({ params: { topic } }));
 }
 
-/** ✅ Runtime: use a separate glob var (prevents minifier/hoisting issues) */
-const brandModulesRuntime = import.meta.glob("/src/content/brands/*.json", {
-  eager: true,
-  import: "default",
-}) as Record<string, any>;
-
-/** Page params & meta */
+/* ---------- Runtime data for this page ---------- */
 const { topic } = Astro.params;
 const slug = String(topic).toLowerCase();
+
+/* Load the topics map from content collection: src/content/topics/topics.json */
+const topicsEntry = await getEntry("topics", "topics");
+const TOPIC_META = (topicsEntry?.data ?? {}) as Record<string, TopicMeta>;
+
 const meta: TopicMeta =
   TOPIC_META[slug] ?? {
     label: prettyLabel(slug),
     desc: "Browse related discontinued brands collected under this topic.",
   };
 
-/** Collect brands tagged with this topic */
+/* Gather brands tagged with this topic */
+const brandModulesRuntime = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
 const items = Object.values(brandModulesRuntime)
   .filter(
     (b: any) =>
@@ -76,13 +69,13 @@ const items = Object.values(brandModulesRuntime)
   }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
-/** SEO / Canonical */
+/* ---------- SEO / Canonical ---------- */
 const hubPath = `/topics/${encodeURIComponent(slug)}/`;
 const title = `${meta.label} • Topic Hub`;
 const desc = meta.desc;
 const canonical = Astro.site ? new URL(hubPath, Astro.site).href : hubPath;
 
-/** JSON-LD ItemList */
+/* ---------- JSON-LD ---------- */
 const ldItems = items.map((b, i) => ({
   "@type": "ListItem",
   position: i + 1,
@@ -91,15 +84,14 @@ const ldItems = items.map((b, i) => ({
     ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
     : `/brand/${encodeURIComponent(b.slug)}/`,
 }));
-const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: title,
-    numberOfItems: items.length,
-    itemListElement: ldItems,
-  },
-];
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: title,
+  numberOfItems: items.length,
+  itemListElement: ldItems,
+};
 
 const collectionPageLd = {
   "@context": "https://schema.org",
@@ -107,7 +99,7 @@ const collectionPageLd = {
   url: canonical,
   name: title,
   description: desc,
-  mainEntity: jsonLd[0] /* your ItemList */,
+  mainEntity: itemListLd,
 };
 
 const breadcrumbsLd = {
@@ -120,7 +112,7 @@ const breadcrumbsLd = {
   ],
 };
 
-const jsonLdOut = [collectionPageLd, braadcrumbsLd,...jsonLd];
+const jsonLdOut = [collectionPageLd, breadcrumbsLd, itemListLd];
 ---
 
 <Base title={title} description={desc} canonical={canonical} jsonLd={jsonLdOut}>
@@ -183,5 +175,10 @@ const jsonLdOut = [collectionPageLd, braadcrumbsLd,...jsonLd];
     <p class="text-slate-600 dark:text-slate-300">No brands are tagged with this topic yet.</p>
   )}
 
-
+  {/* Gentle internal links */}
+  <div class="mt-6 flex flex-wrap gap-2">
+    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+    <a href="/category/" class="chip focus-ring">Categories</a>
+    <a href="/decade/" class="chip focus-ring">Decades</a>
+  </div>
 </Base>
