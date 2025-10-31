@@ -2,71 +2,176 @@
 // src/pages/articles/defunct-by-decade/[decade].astro
 import Base from "../../../layouts/Base.astro";
 
-const brandModules = import.meta.glob("/src/content/brands/*.json", { eager: true, import: "default" }) as Record<string, any>;
+/** ---------- Helpers ---------- */
+const toYear = (v: unknown): number | undefined => {
+  if (v == null) return undefined;
+  const m = String(v).match(/\d{3,4}/);
+  if (!m) return undefined;
+  const n = parseInt(m[0], 10);
+  return Number.isFinite(n) ? n : undefined;
+};
+const decadeStart = (y: number) => Math.floor(y / 10) * 10;
+const labelFromDecade = (d: number) => `${d}s`;
 
+/** ---------- Static paths (build-time) ---------- */
 export function getStaticPaths() {
-  const years = new Set<number>();
-  for (const b of Object.values(brandModules)) {
-    const end = Number(b?.active?.end ?? 0) || Number(b?.active?.start ?? 0);
-    if (end) years.add(Math.floor(end/10)*10);
+  // IMPORTANT: declare the glob *inside* the function
+  const brandModules = import.meta.glob("/src/content/brands/*.json", {
+    eager: true,
+    import: "default",
+  }) as Record<string, any>;
+
+  // Compute all decades present across brands (prefer end year, fallback to start)
+  const ds = new Set<number>();
+  for (const mod of Object.values(brandModules)) {
+    const end = toYear((mod as any)?.active?.end);
+    const start = toYear((mod as any)?.active?.start);
+    const y = end ?? start;
+    if (y != null) ds.add(decadeStart(y));
   }
-  return [...years].map(d => ({ params: { decade: `${d}s` }}));
+
+  // Emit params like { decade: "1990s" }
+  return [...ds]
+    .sort((a, b) => a - b)
+    .map((d) => ({ params: { decade: labelFromDecade(d) } }));
 }
 
-const { decade } = Astro.params;
-const decadeNum = parseInt(String(decade).slice(0,4), 10);
+/** ---------- Runtime (render-time) data ---------- */
+// Use a separate glob var at runtime; avoids hoisting/minifier issues
+const brandModulesRuntime = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
 
-const items = Object.values(brandModules)
-  .filter((b:any) => {
-    const end = Number(b?.active?.end ?? 0) || Number(b?.active?.start ?? 0);
-    return Math.floor(end/10)*10 === decadeNum;
+const { decade } = Astro.params;              // e.g. "2000s"
+const decadeLabel = String(decade);
+const decadeNum = Number(decadeLabel.replace(/\D+/g, "")); // "2000s" -> 2000
+const decadeStartYear = Number.isFinite(decadeNum) ? decadeNum : undefined;
+
+// Collect brands that fall into this decade.
+// Rule: prefer end year; if no end, use start year.
+const items = Object.values(brandModulesRuntime)
+  .map((b: any) => {
+    const end = toYear(b?.active?.end);
+    const start = toYear(b?.active?.start);
+    const y = end ?? start;
+    return { b, y };
   })
-  .map((b:any)=>({ name:b.brand, slug:b.slug, category:b.category, start:b?.active?.start, end:b?.active?.end, fate:b.fate }))
-  .sort((a,b)=> (b.end ?? 0) - (a.end ?? 0) || a.name.localeCompare(b.name));
+  .filter(({ y }) => {
+    if (y == null || decadeStartYear == null) return false;
+    return decadeStart(y) === decadeStartYear;
+  })
+  .map(({ b }) => ({
+    name: b.brand,
+    slug: b.slug,
+    category: b.category ?? null,
+    start: toYear(b?.active?.start),
+    end: toYear(b?.active?.end),
+    fate: b?.fate ?? "",
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
 
-const title = `Defunct Brands of the ${decade}`;
-const desc  = `A data-driven list of brands that ended in the ${decade}.`;
-const canonical = Astro.site ? new URL(`/articles/defunct-by-decade/${decade}/`, Astro.site).href : `/articles/defunct-by-decade/${decade}/`;
+/** ---------- SEO / Canonical & JSON-LD ---------- */
+const hubPath = `/articles/defunct-by-decade/${encodeURIComponent(decadeLabel)}/`;
+const title = `Defunct Brands of the ${decadeLabel}`;
+const desc =
+  items.length > 0
+    ? `Explore ${items.length} discontinued or defunct brands from the ${decadeLabel}. Timelines, fates, and categories.`
+    : `Explore discontinued brands from the ${decadeLabel}.`;
+const canonical = Astro.site ? new URL(hubPath, Astro.site).href : hubPath;
 
-const listLd = {
-  "@context":"https://schema.org",
-  "@type":"ItemList",
+// ItemList JSON-LD
+const ldItems = items.map((i, idx) => ({
+  "@type": "ListItem",
+  position: idx + 1,
+  name: i.name,
+  url: Astro.site
+    ? new URL(`/brand/${encodeURIComponent(i.slug)}/`, Astro.site).href
+    : `/brand/${encodeURIComponent(i.slug)}/`,
+}));
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
   name: title,
   numberOfItems: items.length,
-  itemListElement: items.map((x,i)=>({
-    "@type":"ListItem", position:i+1, name:x.name,
-    url: Astro.site ? new URL(`/brand/${x.slug}/`, Astro.site).href : `/brand/${x.slug}/`,
-  })),
+  itemListElement: ldItems,
+};
+
+const collectionPageLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  url: canonical,
+  name: title,
+  description: desc,
+  mainEntity: itemListLd,
+};
+
+const breadcrumbsLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
+    { "@type": "ListItem", position: 2, name: "Decades", item: Astro.site ? new URL("/decade/", Astro.site).href : "/decade/" },
+    { "@type": "ListItem", position: 3, name: decadeLabel, item: canonical },
+  ],
 };
 ---
-<Base title={title} description={desc} canonical={canonical} jsonLd={[listLd]}>
-  <nav class="mb-4">
+
+<Base title={title} description={desc} canonical={canonical} jsonLd={[collectionPageLd, breadcrumbsLd, itemListLd]}>
+  <Fragment slot="head">
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href={canonical} />
+  </Fragment>
+
+  {/* Breadcrumbs */}
+  <nav class="flex flex-wrap items-center gap-2 my-3">
     <a href="/" class="chip focus-ring">← Home</a>
-    <a href="/decade/" class="chip focus-ring">Decades</a>
+    <a href="/decade/" class="chip focus-ring">All Decades</a>
+    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
   </nav>
 
-  <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
-  <p class="text-slate-600 dark:text-slate-300 mb-4">{desc}</p>
+  <h1 class="text-2xl md:text-3xl font-bold mb-1">Defunct Brands of the {decadeLabel}</h1>
+  <p class="text-slate-600 dark:text-slate-300 mb-4">
+    Quick list of brands that ended (or are best known to have ended) in the {decadeLabel}.
+  </p>
 
+  {/* Count */}
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">
+    {items.length} brand{items.length === 1 ? "" : "s"} in this decade
+  </p>
+
+  {/* Brand list */}
   {items.length ? (
     <ul class="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
-      {items.map(i => (
+      {items.map((i) => (
         <li class="rounded-xl border border-slate-200 dark:border-slate-800 p-3">
-          <a class="focus-ring hover:underline font-medium" href={`/brand/${i.slug}/`}>{i.name}</a>
-          <div class="text-xs text-slate-500 mt-1">
-            {i.start ?? ''}{i.start ? '–' : ''}{i.start ? (i.end ?? '?') : ''}{i.fate ? ` • ${i.fate}` : ''}
+          <a class="focus-ring hover:underline font-medium" href={`/brand/${encodeURIComponent(i.slug)}/`}>
+            {i.name}
+          </a>
+          <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
+            {i.start ? `${i.start}–${i.end ?? "?"}` : i.end ? `${i.end}` : ""}{i.fate ? ` • ${i.fate}` : ""}
           </div>
-          {i.category && <div class="text-xs text-slate-500">{i.category}</div>}
+          {i.category && (
+            <span
+              class="ml-0 mt-1 inline-block text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 align-middle"
+              aria-label={`Category: ${i.category}`}
+              title={`Category: ${i.category}`}
+            >
+              {i.category}
+            </span>
+          )}
         </li>
       ))}
     </ul>
   ) : (
-    <p class="text-slate-600 dark:text-slate-300">No brands found for this decade.</p>
+    <p class="text-slate-600 dark:text-slate-300">No brands detected for this decade yet.</p>
   )}
 
+  {/* Gentle internal links */}
   <div class="mt-6 flex flex-wrap gap-2">
-    <a href="/blog/" class="chip focus-ring">Read the Blog</a>
-    <a href="/topics/" class="chip focus-ring">Topics</a>
+    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
     <a href="/category/" class="chip focus-ring">Categories</a>
+    <a href="/decade/" class="chip focus-ring">All Decades</a>
   </div>
 </Base>
