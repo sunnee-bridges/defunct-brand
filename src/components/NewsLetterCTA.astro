@@ -1,78 +1,66 @@
 ---
 // src/components/NewsletterCTA.astro
-// Props:
-// - title?: string
-// - subtitle?: string
-// - buttonLabel?: string
-// - disclaimer?: string
-// - class?: string
-//
-// Netlify Forms compatible (no server needed):
-//  - data-netlify="true"
-//  - name="newsletter"
-//  - honeypot "bot-field"
-
-const {
-  title = "Get new brand stories in your inbox",
-  subtitle = "Short, researched timelines of discontinued brands. No spam—just the good stuff.",
-  buttonLabel = "Subscribe",
-  disclaimer = "By subscribing, you agree to our privacy policy. Unsubscribe anytime.",
-  class: className = "",
-} = Astro.props as {
+export interface Props {
   title?: string;
   subtitle?: string;
-  buttonLabel?: string;
-  disclaimer?: string;
-  class?: string;
-};
+  action?: string;        // Netlify Forms success URL (e.g., "/thanks/")
+  note?: string;          // small print under the form
+}
+
+const {
+  title = "Get updates on new brand stories",
+  subtitle = "Short, occasional emails when we publish new timelines, datasets, and deep dives.",
+  action = "/thanks/",
+  note = "No spam. Unsubscribe anytime.",
+} = Astro.props;
 ---
 
 <section
+  class="mt-8 rounded-2xl border border-slate-200 bg-white/70 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/50"
   aria-label="Newsletter signup"
-  class={`mt-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 p-4 md:p-6 ${className}`}
 >
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-    <div class="min-w-0">
-      <h2 class="text-lg md:text-xl font-semibold">{title}</h2>
-      <p class="text-slate-600 dark:text-slate-300 text-sm mt-1">{subtitle}</p>
-    </div>
+  <h2 class="text-xl font-semibold mb-1 text-slate-900 dark:text-slate-100">
+    {title}
+  </h2>
+  <p class="text-slate-600 dark:text-slate-300 mb-4">
+    {subtitle}
+  </p>
 
-    <form
-      method="POST"
-      name="newsletter"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      class="flex w-full md:w-auto gap-2"
+  <!-- Netlify Forms-ready. Works even without JS. -->
+  <form
+    name="newsletter"
+    method="POST"
+    action={action}
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    class="flex flex-col gap-3 sm:flex-row"
+  >
+    <!-- Netlify Forms required hidden input -->
+    <input type="hidden" name="form-name" value="newsletter" />
+    <!-- Honey pot -->
+    <input type="text" name="bot-field" class="hidden" tabindex="-1" autocomplete="off" />
+
+    <label class="sr-only" for="newsletter-email">Email address</label>
+    <input
+      id="newsletter-email"
+      name="email"
+      type="email"
+      required
+      autocomplete="email"
+      placeholder="you@example.com"
+      class="w-full flex-1 rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+    />
+
+    <button
+      type="submit"
+      class="btn-primary focus-ring whitespace-nowrap"
+      aria-label="Subscribe to newsletter"
     >
-      {/* Netlify hidden bits */}
-      <input type="hidden" name="form-name" value="newsletter" />
-      <p class="hidden">
-        <label>
-          Don’t fill this out if you’re human: <input name="bot-field" />
-        </label>
-      </p>
+      Subscribe
+    </button>
+  </form>
 
-      <label class="sr-only" for="newsletter-email">Email address</label>
-      <input
-        id="newsletter-email"
-        name="email"
-        type="email"
-        required
-        inputmode="email"
-        autocomplete="email"
-        placeholder="you@example.com"
-        class="flex-1 md:w-72 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 px-3 py-2 focus-ring"
-      />
-
-      <button
-        type="submit"
-        class="btn-primary focus-ring px-4 py-2 rounded-md"
-        aria-label="Subscribe to newsletter"
-      >
-        {buttonLabel}
-      </button>
-    </form>
-  </div>
-
-  <p class="text-xs text-slate-500 dark:text-slate-400 mt-3">{disclaimer}</p>
+  <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+    {note}
+  </p>
 </section>
