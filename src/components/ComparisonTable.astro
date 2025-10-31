@@ -1,0 +1,26 @@
+---
+// src/components/ComparisonTable.astro
+export interface Row { label: string; a?: string; b?: string }
+const { title = "Comparison", a = "Option A", b = "Option B", rows = [] as Row[] } = Astro.props;
+---
+<div class="rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+  <div class="px-4 py-3 font-semibold bg-slate-50 dark:bg-slate-900/40">{title}</div>
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="text-left border-t border-b border-slate-200 dark:border-slate-800">
+        <th class="px-4 py-2">Metric</th>
+        <th class="px-4 py-2">{a}</th>
+        <th class="px-4 py-2">{b}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(r => (
+        <tr class="border-b border-slate-200/60 dark:border-slate-800/60">
+          <td class="px-4 py-2 font-medium">{r.label}</td>
+          <td class="px-4 py-2">{r.a ?? "—"}</td>
+          <td class="px-4 py-2">{r.b ?? "—"}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
