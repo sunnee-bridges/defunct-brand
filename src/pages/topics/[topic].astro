@@ -17,7 +17,6 @@ const TOPIC_META: Record<string, TopicMeta> = {
     desc: "Explore discontinued music players and services: timelines, outcomes, and related brands.",
     descLong:
       "From early MP3 devices to full ecosystem plays, this hub covers portable media hardware and the services behind them. Expect quick timelines, notable models, and links to reliable sources and archives.",
-    heroImage: "/og/hubs/music-players.png",
     faq: [
       {
         q: "What counts as a music player here?",
@@ -34,7 +33,6 @@ const TOPIC_META: Record<string, TopicMeta> = {
     desc: "Portable audio devices that came and went: categories, timelines, and notable products.",
     descLong:
       "Spanning cassette, CD, MiniDisc, and digital eras, this hub highlights devices and brands that defined on-the-go listening—and how they were eventually replaced.",
-    heroImage: "/og/hubs/portable-audio.png",
   },
 };
 
@@ -176,10 +174,5 @@ const jsonLd = [
     <p class="text-slate-600 dark:text-slate-300">No brands are tagged with this topic yet.</p>
   )}
 
-  {/* Gentle internal links */}
-  <div class="mt-6 flex flex-wrap gap-2">
-    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
-    <a href="/category/" class="chip focus-ring">Categories</a>
-    <a href="/decade/" class="chip focus-ring">Decades</a>
-  </div>
+
 </Base>
