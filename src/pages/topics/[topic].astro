@@ -3,7 +3,7 @@
 import Base from "../../layouts/Base.astro";
 import { getEntry } from "astro:content";
 
-/* ---------- Types ---------- */
+/** ---------- Type for topic metadata (optional but helpful) ---------- */
 type TopicMeta = {
   label: string;
   desc: string;
@@ -12,17 +12,9 @@ type TopicMeta = {
   faq?: Array<{ q: string; a: string }>;
 };
 
-/* ---------- Helpers ---------- */
-function prettyLabel(slug: string) {
-  return slug
-    .split("-")
-    .map((s) => (s ? s[0].toUpperCase() + s.slice(1) : s))
-    .join(" ");
-}
-
-/* ---------- Build-time paths from topics found in brand JSON ---------- */
+/** ---------- Build static paths from topics found in brand JSON ---------- */
 export function getStaticPaths() {
-  // Define the glob locally inside the function so the bundler doesn't hoist it away
+  // Do the glob *inside* this function to avoid hoisting/minifier issues
   const brandModules = import.meta.glob("/src/content/brands/*.json", {
     eager: true,
     import: "default",
@@ -30,18 +22,32 @@ export function getStaticPaths() {
 
   const topics = new Set<string>();
   for (const mod of Object.values(brandModules)) {
-    const t = Array.isArray((mod as any)?.topics) ? (mod as any).topics : [];
-    for (const sl of t) topics.add(String(sl).toLowerCase());
+    const list = Array.isArray((mod as any)?.topics) ? (mod as any).topics : [];
+    for (const t of list) topics.add(String(t).toLowerCase());
   }
   return [...topics].map((topic) => ({ params: { topic } }));
 }
 
-/* ---------- Runtime data for this page ---------- */
+/** ---------- Runtime: separate glob for render time ---------- */
+const brandModulesRuntime = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
+/** ---------- Helpers ---------- */
+function prettyLabel(slug: string) {
+  return slug
+    .split("-")
+    .map((s) => (s ? s[0].toUpperCase() + s.slice(1) : s))
+    .join(" ");
+}
+
+/** ---------- Params & topic meta ---------- */
 const { topic } = Astro.params;
 const slug = String(topic).toLowerCase();
 
-/* Load the topics map from content collection: src/content/topics/topics.json */
-const topicsEntry = await getEntry("topics", "topics");
+// Pull centralized meta from content/topics/topics.json (if present)
+const topicsEntry = await getEntry("topics", "topics").catch(() => null);
 const TOPIC_META = (topicsEntry?.data ?? {}) as Record<string, TopicMeta>;
 
 const meta: TopicMeta =
@@ -50,12 +56,7 @@ const meta: TopicMeta =
     desc: "Browse related discontinued brands collected under this topic.",
   };
 
-/* Gather brands tagged with this topic */
-const brandModulesRuntime = import.meta.glob("/src/content/brands/*.json", {
-  eager: true,
-  import: "default",
-}) as Record<string, any>;
-
+/** ---------- Collect brands tagged with this topic ---------- */
 const items = Object.values(brandModulesRuntime)
   .filter(
     (b: any) =>
@@ -69,13 +70,12 @@ const items = Object.values(brandModulesRuntime)
   }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
-/* ---------- SEO / Canonical ---------- */
+/** ---------- SEO / Canonical & JSON-LD ---------- */
 const hubPath = `/topics/${encodeURIComponent(slug)}/`;
 const title = `${meta.label} • Topic Hub`;
 const desc = meta.desc;
 const canonical = Astro.site ? new URL(hubPath, Astro.site).href : hubPath;
 
-/* ---------- JSON-LD ---------- */
 const ldItems = items.map((b, i) => ({
   "@type": "ListItem",
   position: i + 1,
@@ -111,11 +111,9 @@ const breadcrumbsLd = {
     { "@type": "ListItem", position: 3, name: meta.label, item: canonical },
   ],
 };
-
-const jsonLdOut = [collectionPageLd, breadcrumbsLd, itemListLd];
 ---
 
-<Base title={title} description={desc} canonical={canonical} jsonLd={jsonLdOut}>
+<Base title={title} description={desc} canonical={canonical} jsonLd={[collectionPageLd, breadcrumbsLd, itemListLd]}>
   <Fragment slot="head">
     <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href={canonical} />

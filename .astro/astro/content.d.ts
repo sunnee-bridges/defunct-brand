@@ -1,4 +1,15 @@
 declare module 'astro:content' {
+	interface Render {
+		'.mdx': Promise<{
+			Content: import('astro').MarkdownInstance<{}>['Content'];
+			headings: import('astro').MarkdownHeading[];
+			remarkPluginFrontmatter: Record<string, any>;
+			components: import('astro').MDXInstance<{}>['components'];
+		}>;
+	}
+}
+
+declare module 'astro:content' {
 	interface RenderResult {
 		Content: import('astro/runtime/server/index.js').AstroComponentFactory;
 		headings: import('astro').MarkdownHeading[];
@@ -140,7 +151,38 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		
+		"articles": {
+"50-brands-that-no-longer-exist.mdx.md": {
+	id: "50-brands-that-no-longer-exist.mdx.md";
+  slug: "50-brands-that-no-longer-existmdx";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"blockbuster-vs-netflix.mdx": {
+	id: "blockbuster-vs-netflix.mdx";
+  slug: "blockbuster-vs-netflix";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".mdx"] };
+"what-happened-to-pan-am.mdx.md": {
+	id: "what-happened-to-pan-am.mdx.md";
+  slug: "what-happened-to-pan-ammdx";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+};
+"post": Record<string, {
+  id: string;
+  slug: string;
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">;
+  render(): Render[".md"];
+}>;
+
 	};
 
 	type DataEntryMap = {
@@ -398,10 +440,17 @@ declare module 'astro:content' {
   data: any
 };
 };
+"topics": {
+"topics": {
+	id: "topics";
+  collection: "topics";
+  data: InferEntrySchema<"topics">
+};
+};
 
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("../../src/content/config.js");
 }
