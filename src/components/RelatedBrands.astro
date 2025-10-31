@@ -1,0 +1,109 @@
+---
+/**
+ * RelatedBrands.astro
+ *
+ * Props:
+ *  - slugs?: string[]                 // e.g. ["pan-am","twa","zune"]
+ *  - items?: Array<BrandLike>         // optional direct items (overrides slugs if provided)
+ *  - title?: string                   // section heading (default: "Related brands")
+ *  - limit?: number                   // limit how many to render (default: all)
+ *  - compact?: boolean                // pass through to BrandCard for tighter layout
+ *
+ * BrandLike shape (same as BrandCard):
+ *  {
+ *    brand: string; slug: string;
+ *    category?: string;
+ *    active?: { start?: number | string; end?: number | string };
+ *    fate?: string;
+ *    summary?: string;
+ *    views?: number;
+ *  }
+ */
+
+import BrandCard from "@components/BrandCard.astro";
+
+export interface BrandLike {
+  brand: string;
+  slug: string;
+  category?: string;
+  active?: { start?: number | string; end?: number | string };
+  fate?: string;
+  summary?: string;
+  views?: number;
+}
+
+export interface Props {
+  slugs?: string[];
+  items?: BrandLike[];
+  title?: string;
+  limit?: number;
+  compact?: boolean;
+}
+
+const {
+  slugs = [],
+  items,
+  title = "Related brands",
+  limit,
+  compact = false,
+} = Astro.props as Props;
+
+// If items aren’t provided, hydrate them from brand JSON via slugs.
+let resolved: BrandLike[] = [];
+
+if (Array.isArray(items) && items.length) {
+  resolved = items;
+} else if (Array.isArray(slugs) && slugs.length) {
+  const modules = import.meta.glob("/src/content/brands/*.json", {
+    eager: true,
+    import: "default",
+  }) as Record<string, any>;
+
+  // Build a quick lookup by slug (filename or explicit slug)
+  const bySlug = new Map<string, any>();
+  for (const [p, mod] of Object.entries(modules)) {
+    const data = (mod as any) ?? {};
+    const fromFile =
+      (p.split("/").pop() || "")
+        .replace(/\.public\.json$/i, "")
+        .replace(/\.json$/i, "");
+    const key = String(data.slug || fromFile).trim().toLowerCase();
+    if (!key) continue;
+    if (!bySlug.has(key)) bySlug.set(key, data);
+  }
+
+  const seen = new Set<string>();
+  for (const raw of slugs) {
+    const key = String(raw).trim().toLowerCase();
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    const data = bySlug.get(key);
+    if (!data) continue;
+    resolved.push({
+      brand: data.brand,
+      slug: data.slug || key,
+      category: data.category,
+      active: data.active,
+      fate: data.fate,
+      summary: data.summary,
+      // views: optional; attach here if you track it
+    });
+  }
+}
+
+// Optional limit
+if (typeof limit === "number" && limit > 0) {
+  resolved = resolved.slice(0, limit);
+}
+---
+
+{resolved.length > 0 && (
+  <section class="mt-6">
+    <h2 class="text-lg font-semibold mb-3">{title}</h2>
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+      {resolved.map((b) => (
+        <BrandCard item={b} compact={compact} />
+      ))}
+    </div>
+  </section>
+)}

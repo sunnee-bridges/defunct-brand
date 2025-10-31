@@ -1,77 +1,84 @@
 ---
-// /src/pages/articles/defunct-in-category/[category].astro
+// src/pages/articles/defunct-in-category/[category].astro
 import Base from "../../../layouts/Base.astro";
 import { slugify } from "../../../lib/slug.js";
 
-/** Eagerly load all brand JSON for static generation */
-const brandModules = import.meta.glob("/src/content/brands/*.json", {
-  eager: true,
-  import: "default",
-}) as Record<string, any>;
-
-/** Build static paths from discovered categories */
+/* ---------------- getStaticPaths (self-contained) ---------------- */
 export function getStaticPaths() {
-  const cats = new Set<string>();
+  // define the glob INSIDE the function to avoid hoist/minifier issues
+  const brandModules = import.meta.glob("/src/content/brands/*.json", {
+    eager: true,
+    import: "default",
+  });
+
+  const cats = new Set();
   for (const raw of Object.values(brandModules)) {
-    const b = raw as any;
-    if (!b?.category) continue;
+    const b = raw || {};
+    if (!b.category) continue;
     cats.add(slugify(String(b.category)));
   }
-  return [...cats].map((c) => ({ params: { category: c } }));
+
+  return [...cats].map((category) => ({ params: { category } }));
 }
 
-/** Utilities */
-const toYear = (v: unknown): number | undefined => {
+/* ---------------- Runtime helpers ---------------- */
+function toYear(v) {
   const m = String(v ?? "").match(/\d{3,4}/);
   if (!m) return undefined;
   const n = parseInt(m[0], 10);
   return Number.isFinite(n) ? n : undefined;
-};
+}
 
-/** Page input */
+/* Use a separate glob at runtime (different scope from getStaticPaths) */
+const brandModulesRuntime = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+});
+
+/* ---------------- Page inputs ---------------- */
 const { category } = Astro.params;
 const catSlug = String(category);
 
-/** Gather items for this category */
-const items = Object.values(brandModules)
-  .map((raw: any) => raw)
-  .filter((b: any) => !!b?.category && slugify(b.category) === catSlug)
-  // defensive de-dupe by canonical slug
-  .reduce((acc: any[], b: any) => {
+/* Gather items for this category */
+const items = Object.values(brandModulesRuntime)
+  .map((raw) => raw)
+  .filter((b) => !!b?.category && slugify(String(b.category)) === catSlug)
+  // de-dupe by canonical slug
+  .reduce((acc, b) => {
     const key = String(b?.slug || "").trim().toLowerCase();
-    if (!key || acc.find((x) => (x.slug || "").toLowerCase() === key)) return acc;
+    if (!key || acc.find((x) => String(x.slug || "").toLowerCase() === key)) return acc;
     acc.push(b);
     return acc;
   }, [])
   // sort: most recent end first → then alpha
-  .sort((a: any, b: any) => {
+  .sort((a, b) => {
     const ae = toYear(a?.active?.end) ?? toYear(a?.active?.start) ?? 0;
     const be = toYear(b?.active?.end) ?? toYear(b?.active?.start) ?? 0;
     return be - ae || a.brand.localeCompare(b.brand);
   });
 
-/** Recover the human label from any item (fallback to slug) */
+/* Human label from any item (fallback to prettified slug) */
 const label =
-  items.find(Boolean)?.category ??
+  (items.find(Boolean)?.category) ||
   catSlug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-/** SEO */
+/* ---------------- SEO / JSON-LD ---------------- */
 const title = `Defunct Brands in ${label} — Data-Driven List`;
 const desc =
   items.length > 0
     ? `Explore ${items.length} discontinued or defunct brands in ${label}. Quick timelines, fate, and links to each profile.`
     : `Explore discontinued or defunct brands in ${label}.`;
+
 const hubPath = `/articles/defunct-in-category/${encodeURIComponent(catSlug)}/`;
 const canonical = Astro.site ? new URL(hubPath, Astro.site).href : hubPath;
 
-/** JSON-LD */
 const itemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: title,
   itemListOrder: "http://schema.org/ItemListOrderDescending",
   numberOfItems: items.length,
-  itemListElement: items.map((b: any, i: number) => ({
+  itemListElement: items.map((b, i) => ({
     "@type": "ListItem",
     position: i + 1,
     name: b.brand,
@@ -89,9 +96,19 @@ const collectionPageLd = {
   description: desc,
   mainEntity: itemListLd,
 };
+
+const breadcrumbsLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
+    { "@type": "ListItem", position: 2, name: "Categories", item: Astro.site ? new URL("/category/", Astro.site).href : "/category/" },
+    { "@type": "ListItem", position: 3, name: label, item: canonical },
+  ],
+};
 ---
 
-<Base title={title} description={desc} canonical={canonical} jsonLd={[collectionPageLd]}>
+<Base title={title} description={desc} canonical={canonical} jsonLd={[collectionPageLd, breadcrumbsLd, itemListLd]}>
   <nav class="mb-4">
     <a href="/" class="chip focus-ring">← Home</a>
     <a href="/category/" class="chip focus-ring">Categories</a>
@@ -101,7 +118,6 @@ const collectionPageLd = {
   <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
   <p class="text-slate-600 dark:text-slate-300 mb-4">{desc}</p>
 
-  {/* Optional short explainer */}
   <div class="prose dark:prose-invert max-w-none mb-6">
     <p>
       This page is generated automatically from our brand dataset. Entries are sorted by the
@@ -109,10 +125,9 @@ const collectionPageLd = {
     </p>
   </div>
 
-  {/* Results */}
   {items.length ? (
     <ul class="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
-      {items.map((b: any) => {
+      {items.map((b) => {
         const start = b?.active?.start ?? "";
         const end = b?.active?.end ?? "";
         const fate = b?.fate ?? "";
@@ -124,17 +139,13 @@ const collectionPageLd = {
             <div class="text-xs text-slate-500 mt-1">
               {start ? `${start}\u2013${end || "?"}` : ""}{fate ? ` • ${fate}` : ""}
             </div>
-            {b.category && (
-              <div class="text-xs text-slate-500">{b.category}</div>
-            )}
+            {b.category && <div class="text-xs text-slate-500">{b.category}</div>}
           </li>
         );
       })}
     </ul>
   ) : (
-    <p class="text-slate-600 dark:text-slate-300">
-      No brands were found for this category yet.
-    </p>
+    <p class="text-slate-600 dark:text-slate-300">No brands were found for this category yet.</p>
   )}
 
   <div class="mt-6 flex flex-wrap gap-2">

@@ -1,0 +1,120 @@
+---
+/**
+ * TableOfContents.astro
+ * - Works out-of-the-box with MDX pages.
+ * - If you pass `items`, it uses them.
+ * - If you don't, a tiny client script will scan the page for <h2>/<h3>
+ *   and populate the list at runtime (no framework/hydration required).
+ *
+ * Props:
+ *  - title?: string           // heading above the TOC
+ *  - items?: Array<{ id: string; text: string; level?: number }>
+ *  - rootSelector?: string    // CSS selector to scope the heading scan
+ *  - includeH2?: boolean      // default true
+ *  - includeH3?: boolean      // default true
+ */
+export interface TocItem { id: string; text: string; level?: number }
+export interface Props {
+  title?: string;
+  items?: TocItem[];
+  rootSelector?: string;
+  includeH2?: boolean;
+  includeH3?: boolean;
+}
+
+const {
+  title = "On this page",
+  items = [],
+  rootSelector = "main, article, #main",
+  includeH2 = true,
+  includeH3 = true,
+} = Astro.props;
+
+const hasStatic = Array.isArray(items) && items.length > 0;
+---
+
+{(hasStatic) ? (
+  <nav class="toc sticky top-4 max-w-full rounded-xl border border-slate-200 dark:border-slate-800 p-3 text-sm">
+    <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{title}</h2>
+    <ul class="space-y-1">
+      {items.map((it) => (
+        <li class={it.level === 3 ? "ml-4" : ""}>
+          <a href={`#${it.id}`} class="focus-ring hover:underline">
+            {it.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+) : (
+  // Empty shell; a tiny script will populate it at runtime by scanning headings.
+  <nav class="toc sticky top-4 max-w-full rounded-xl border border-slate-200 dark:border-slate-800 p-3 text-sm" data-toc-root={rootSelector} data-include-h2={includeH2 ? "1" : ""} data-include-h3={includeH3 ? "1" : ""}>
+    <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{title}</h2>
+    <ul class="space-y-1" id="__toc_list"></ul>
+  </nav>
+)}
+
+<!-- No framework hydration; vanilla JS runs once on load -->
+<script is:inline>
+  (function () {
+    const toc = document.currentScript?.previousElementSibling;
+    if (!toc || toc.querySelector("#__toc_list") == null) return;
+
+    const rootSel = toc.getAttribute("data-toc-root") || "main, article, #main";
+    const includeH2 = !!toc.getAttribute("data-include-h2");
+    const includeH3 = !!toc.getAttribute("data-include-h3");
+    const root = document.querySelector(rootSel) || document;
+
+    const sels = [];
+    if (includeH2) sels.push("h2");
+    if (includeH3) sels.push("h3");
+    if (!sels.length) return;
+
+    const heads = Array.from(root.querySelectorAll(sels.join(",")));
+    if (!heads.length) return;
+
+    const list = toc.querySelector("#__toc_list");
+    if (!list) return;
+
+    function slugify(txt) {
+      return (txt || "")
+        .toLowerCase()
+        .replace(/<\/?[^>]+(>|$)/g, "")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .slice(0, 64);
+    }
+
+    heads.forEach((h) => {
+      const level = h.tagName.toLowerCase() === "h3" ? 3 : 2;
+      let id = h.id || slugify(h.textContent || "");
+      if (!id) return;
+      // de-dupe ids
+      let uniq = id, i = 2;
+      while (document.getElementById(uniq)) {
+        if (document.getElementById(uniq) === h) break;
+        uniq = id + "-" + i++;
+      }
+      if (!h.id) h.id = uniq;
+
+      const li = document.createElement("li");
+      if (level === 3) li.className = "ml-4";
+      const a = document.createElement("a");
+      a.href = "#" + h.id;
+      a.className = "focus-ring hover:underline";
+      a.textContent = h.textContent || "";
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  })();
+</script>
+
+<style is:inline>
+  .focus-ring { outline: none; }
+  .focus-ring:focus-visible {
+    box-shadow: 0 0 0 2px rgba(79,70,229,.6);
+    border-radius: .5rem;
+  }
+</style>

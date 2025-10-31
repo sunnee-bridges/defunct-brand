@@ -152,13 +152,13 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"articles": {
-"50-brands-that-no-longer-exist.mdx.md": {
-	id: "50-brands-that-no-longer-exist.mdx.md";
-  slug: "50-brands-that-no-longer-existmdx";
+"50-brands-that-no-longer-exist.mdx": {
+	id: "50-brands-that-no-longer-exist.mdx";
+  slug: "50-brands-that-no-longer-exist";
   body: string;
   collection: "articles";
   data: any
-} & { render(): Render[".md"] };
+} & { render(): Render[".mdx"] };
 "blockbuster-vs-netflix.mdx": {
 	id: "blockbuster-vs-netflix.mdx";
   slug: "blockbuster-vs-netflix";
@@ -166,13 +166,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".mdx"] };
-"what-happened-to-pan-am.mdx.md": {
-	id: "what-happened-to-pan-am.mdx.md";
-  slug: "what-happened-to-pan-ammdx";
+"what-happened-to-pan-am.mdx": {
+	id: "what-happened-to-pan-am.mdx";
+  slug: "what-happened-to-pan-am";
   body: string;
   collection: "articles";
   data: any
-} & { render(): Render[".md"] };
+} & { render(): Render[".mdx"] };
 };
 "post": Record<string, {
   id: string;
