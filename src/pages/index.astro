@@ -60,7 +60,7 @@ const featured = brands
     const by = toYear(b?.active?.end) ?? toYear(b?.active?.start) ?? 0;
     return by - ay;
   })
-  .slice(0, 12);
+  .slice(0, 8); // trimmed from 12 → 8
 
 /* ---------- SEO ---------- */
 const pageTitle = "Vanished Brands — Defunct & Discontinued Brands Archive";
@@ -158,42 +158,43 @@ const currentPath = Astro.url.pathname;
   canonical={canonical}
   jsonLd={[orgLd, siteLd, categoriesItemListLd, decadesItemListLd, faqLd]}
 >
-  <!-- ✅ NEW: Visible “Why this matters” intro (plain language, ~350–450 words) -->
+  <!-- ✅ Collapsible “Why this matters” to reduce clutter above the fold -->
   <section class="mt-4 mb-6" aria-label="Why this matters">
     <h1 class="text-2xl md:text-3xl font-bold mb-3">Why Brands Disappear (and Why It Matters)</h1>
-    <div class="prose dark:prose-invert max-w-none">
-      <p>
-        Every year, familiar names vanish from store shelves and home screens. Some fade quietly
-        after a merger. Others collapse overnight. A few reinvent themselves, only to return years
-        later as something new. <strong>Vanished Brands</strong> tracks those stories in a simple, research-friendly way:
-        quick timelines, clear categories, and direct links to trustworthy sources.
-      </p>
-      <p>
-        Why catalog defunct brands? Because they’re a fast, human way to understand bigger shifts in
-        technology, retail, and culture. When smartphones absorbed MP3 players, when e-commerce
-        reshaped malls, when streaming remade media—brands were the first visible signals of change.
-        Following what launched, grew, and eventually ended helps journalists, students, and curious
-        readers connect economic headlines to real products and everyday life.
-      </p>
-      <p>
-        This site is built to be <em>useful</em> and <em>verifiable</em>. Each brand page summarizes the basics
-        (founded, defunct, fate), links to authoritative sources (official announcements, Wikipedia, archives),
-        and points you to related reading on our site. You can browse by <a class="underline" href="/az/">A–Z</a>,
-        explore <a class="underline" href="/category/">categories</a> like Retail or Consumer electronics, or jump
-        through time with <a class="underline" href="/decade/">decade views</a>. If you’re analyzing trends,
-        head to <a class="underline" href="/data/">Data</a> for a CSV you can sort, chart, and cite.
-      </p>
-      <p>
-        We keep things plain-language and ad-light, with transparent methods and a clear editorial policy.
-        If a date is disputed, we say so. If sources disagree, we link both. The goal isn’t nostalgia for
-        its own sake—it’s giving you a clean starting point to understand what happened, why it happened,
-        and what that tells us about the present.
-      </p>
-      <p class="mb-0">
-        Start anywhere: pick a decade, skim a category, or open a brand you remember. The stories of what
-        ended often explain what’s replacing it.
-      </p>
-    </div>
+
+    <!-- Visible, tight lead -->
+    <p class="text-slate-800 dark:text-slate-200">
+      Every year, familiar names vanish. Vanished Brands tracks those stories with quick timelines,
+      clear categories, and reliable sources so you can see what ended—and why.
+    </p>
+
+    <!-- Expandable details keep the hero uncluttered -->
+    <details class="mt-2">
+      <summary class="cursor-pointer text-sm text-indigo-600 hover:underline">Read more</summary>
+      <div class="prose dark:prose-invert max-w-none mt-2">
+        <p>
+          Why catalog defunct brands? Because they’re a fast, human way to understand bigger shifts in
+          technology, retail, and culture. When smartphones absorbed MP3 players, when e-commerce reshaped
+          malls, when streaming remade media—brands were the first visible signals of change. Following what
+          launched, grew, and eventually ended helps journalists, students, and curious readers connect economic
+          headlines to real products and everyday life.
+        </p>
+        <p>
+          This site is built to be <em>useful</em> and <em>verifiable</em>. Each brand page summarizes the basics
+          (founded, defunct, fate), links to authoritative sources (official announcements, Wikipedia, archives),
+          and points you to related reading on our site. You can browse by <a class="underline" href="/az/">A–Z</a>,
+          explore <a class="underline" href="/category/">categories</a> like Retail or Consumer electronics, or jump
+          through time with <a class="underline" href="/decade/">decade views</a>. If you’re analyzing trends,
+          head to <a class="underline" href="/data/">Data</a> for a CSV you can sort, chart, and cite.
+        </p>
+        <p>
+          We keep things plain-language and ad-light, with transparent methods and a clear editorial policy.
+          If a date is disputed, we say so. If sources disagree, we link both. The goal isn’t nostalgia for
+          its own sake—it’s giving you a clean starting point to understand what happened, why it happened,
+          and what that tells us about the present. Start anywhere: pick a decade, skim a category, or open a brand you remember.
+        </p>
+      </div>
+    </details>
 
     <!-- Subtle internal links (engagement + crawl hints) -->
     <div class="mt-4 flex flex-wrap gap-2">
@@ -268,80 +269,79 @@ const currentPath = Astro.url.pathname;
     </nav>
   </section>
 
-  <!-- Featured grid (unchanged) -->
+  <!-- Featured grid (trimmed to 8; same card UI/behavior) -->
   <section class="mt-6 lg:mt-8" role="region" aria-label="Recently defunct brands">
     <h2 class="text-lg font-semibold mb-2">Recently Defunct (featured)</h2>
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5">
       {featured.map((b) => {
-  const defunct = (b?.active?.end ?? "") || "?";
-  const founded = b?.active?.start ?? "";
-  const timeline = founded ? `${founded}\u2013${defunct}` : defunct !== "?" ? `\u2013${defunct}` : "";
-  const oneLiner = (b?.summary || "").trim();
+        const defunct = (b?.active?.end ?? "") || "?";
+        const founded = b?.active?.start ?? "";
+        const timeline = founded ? `${founded}\u2013${defunct}` : defunct !== "?" ? `\u2013${defunct}` : "";
+        const oneLiner = (b?.summary || "").trim();
 
-  return (
-    <article class="card group" data-brand-slug={b.slug}>
-      {/* Title */}
-      <h3 class="text-lg font-semibold leading-snug line-clamp-2 mb-1 text-slate-900/95 dark:text-slate-100">
-        <a
-          href={`/brand/${b.slug}/`}
-          class="hover:underline focus-ring stretched-link"
-          title={`What happened to ${b.brand}?`}
-        >
-          {b.brand}
-        </a>
-      </h3>
+        return (
+          <article class="card group" data-brand-slug={b.slug}>
+            {/* Title */}
+            <h3 class="text-lg font-semibold leading-snug line-clamp-2 mb-1 text-slate-900/95 dark:text-slate-100">
+              <a
+                href={`/brand/${b.slug}/`}
+                class="hover:underline focus-ring stretched-link"
+                title={`What happened to ${b.brand}?`}
+              >
+                {b.brand}
+              </a>
+            </h3>
 
-      {/* Meta row: defunct year + industry */}
-      <div class="mt-1 flex flex-wrap items-center gap-2 text-[12px]">
-        {/* Defunct year chip */}
-        <span
-          class="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 font-medium text-slate-700
-                 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
-          aria-label={defunct !== "?" ? `Year defunct: ${defunct}` : "Year defunct unknown"}
-          title={defunct !== "?" ? `Year defunct: ${defunct}` : "Year defunct unknown"}
-        >
-          ⛔ {defunct !== "?" ? defunct : "Year unknown"}
-        </span>
+            {/* Meta row: defunct year + industry */}
+            <div class="mt-1 flex flex-wrap items-center gap-2 text-[12px]">
+              {/* Defunct year chip */}
+              <span
+                class="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 font-medium text-slate-700
+                      dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                aria-label={defunct !== "?" ? `Year defunct: ${defunct}` : "Year defunct unknown"}
+                title={defunct !== "?" ? `Year defunct: ${defunct}` : "Year defunct unknown"}
+              >
+                ⛔ {defunct !== "?" ? defunct : "Year unknown"}
+              </span>
 
-        {/* Industry chip */}
-        {b.category && (
-          <span
-            class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 font-medium text-slate-700
-                   dark:bg-slate-800 dark:text-slate-300"
-            aria-label={`Industry: ${b.category}`}
-            title={`Industry: ${b.category}`}
-          >
-            🏷️ {b.category}
-          </span>
-        )}
+              {/* Industry chip */}
+              {b.category && (
+                <span
+                  class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 font-medium text-slate-700
+                        dark:bg-slate-800 dark:text-slate-300"
+                  aria-label={`Industry: ${b.category}`}
+                  title={`Industry: ${b.category}`}
+                >
+                  🏷️ {b.category}
+                </span>
+              )}
 
-        {/* (Optional) Popularity chip — filled by client JS */}
-        <span
-          class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 font-medium text-amber-700
-                 dark:bg-amber-900/30 dark:text-amber-300"
-          data-views
-          hidden
-        >
-          ★ <span class="ml-1" data-views-count>0</span>
-        </span>
-      </div>
+              {/* (Optional) Popularity chip — will be un-hidden by client JS if used */}
+              <span
+                class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 font-medium text-amber-700
+                      dark:bg-amber-900/30 dark:text-amber-300"
+                data-views
+                hidden
+              >
+                ★ <span class="ml-1" data-views-count>0</span>
+              </span>
+            </div>
 
-      {/* One-liner summary */}
-      {oneLiner && (
-        <p class="mt-2 text-sm text-gray-600 dark:text-slate-300 line-clamp-2">
-          {oneLiner}
-        </p>
-      )}
+            {/* One-liner summary */}
+            {oneLiner && (
+              <p class="mt-2 text-sm text-gray-600 dark:text-slate-300 line-clamp-2">
+                {oneLiner}
+              </p>
+            )}
 
-      {/* Tiny timeline line (kept from your original info, slightly tidied) */}
-      <div class="mt-2 text-xs text-gray-500 dark:text-slate-400">
-        {timeline}{b.fate ? ` \u2014 ${b.fate}` : ""}
-      </div>
-    </article>
-  );
-})}
-
+            {/* Tiny timeline line */}
+            <div class="mt-2 text-xs text-gray-500 dark:text-slate-400">
+              {timeline}{b.fate ? ` \u2014 ${b.fate}` : ""}
+            </div>
+          </article>
+        );
+      })}
     </div>
   </section>
 </Base>
