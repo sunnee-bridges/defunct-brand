@@ -8,7 +8,7 @@ type TopicMeta = {
   desc: string;
   descLong?: string;
   heroImage?: string;
-  faq?: Array<{ q: string; a: string }>;
+  faq?: { q: string; a: string }[]; 
 };
 
 /** ---------- Build static paths from topics found in brand JSON ---------- */
