@@ -1,120 +1,116 @@
 ---
-/**
- * BrandCard.astro
- *
- * Flexible props:
- *  - item?: {
- *      brand: string; slug: string;
- *      category?: string;
- *      active?: { start?: number | string; end?: number | string };
- *      fate?: string;
- *      summary?: string;
- *      views?: number;
- *    }
- *  - brand?: string
- *  - slug?: string
- *  - category?: string
- *  - active?: { start?: number | string; end?: number | string }
- *  - fate?: string
- *  - summary?: string
- *  - views?: number
- *
- * Optional:
- *  - compact?: boolean   // tighter padding
- */
-
-export interface BrandLike {
-  brand: string;
-  slug: string;
-  category?: string;
-  active?: { start?: number | string; end?: number | string };
-  fate?: string;
-  summary?: string;
-  views?: number;
+// src/components/BrandCard.astro
+export interface Props {
+  slug: string;             // brand slug (e.g., "toys-r-us")
+  compact?: boolean;        // optional tighter layout for lists
 }
 
-export interface Props extends Partial<BrandLike> {
-  item?: BrandLike;
-  compact?: boolean;
+const { slug, compact = false } = Astro.props;
+
+/** Load curated brand JSON at build time */
+const modules = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
+/** Find the brand by slug (filename slug OR b.slug) */
+let brand: any = null;
+for (const [p, mod] of Object.entries(modules)) {
+  const data = (mod as any) ?? {};
+  const fileSlug = (p.split("/").pop() || "")
+    .replace(/\.public\.json$/i, "")
+    .replace(/\.json$/i, "");
+  if ((data.slug || fileSlug) === slug) {
+    brand = { ...data, slug: data.slug || fileSlug };
+    break;
+  }
 }
 
-const {
-  item,
-  brand,
-  slug,
-  category,
-  active,
-  fate,
-  summary,
-  views,
-  compact = false,
-} = Astro.props as Props;
-
-// Normalize into one object
-const b: BrandLike = {
-  brand: item?.brand ?? brand ?? "Unknown",
-  slug: item?.slug ?? slug ?? "",
-  category: item?.category ?? category,
-  active: item?.active ?? active,
-  fate: item?.fate ?? fate,
-  summary: item?.summary ?? summary,
-  views: item?.views ?? views,
+/* Helpers */
+const toYear = (v: unknown): number | undefined => {
+  if (v == null) return undefined;
+  const m = String(v).match(/\d{3,4}/);
+  if (!m) return undefined;
+  const n = parseInt(m[0], 10);
+  return Number.isFinite(n) ? n : undefined;
 };
 
-function toYear(v: unknown): string {
-  if (v == null) return "";
-  const m = String(v).match(/\d{3,4}/);
-  return m ? m[0] : "";
-}
-const start = toYear(b?.active?.start);
-const end   = toYear(b?.active?.end);
-const years = start ? `${start}\u2013${end || "?"}` : "";
+const startY = toYear(brand?.active?.start);
+const endY   = toYear(brand?.active?.end);
+const hasYear = !!(startY || endY);
 
-function trimOneLine(s?: string, n = 140) {
-  if (!s) return "";
-  const t = s.replace(/\s+/g, " ").trim();
-  return t.length > n ? t.slice(0, n - 1).trimEnd() + "…" : t;
-}
-const oneLine = trimOneLine(b.summary);
+const oneLiner = (brand?.summary || "").trim();
 
-// Safe href
-const href = b.slug ? `/brand/${encodeURIComponent(b.slug)}/` : "#";
-const aria = `What happened to ${b.brand}?${years ? ` (${years})` : ""}${b.fate ? ` — ${b.fate}` : ""}`;
+const cardPad = compact ? "p-3" : "p-4";
+const titleCls = compact ? "text-base" : "text-lg";
 ---
+{brand ? (
+  <article class={`rounded-xl border border-slate-200 dark:border-slate-800 ${cardPad}`}>
+    {/* Title */}
+    <h3 class={`${titleCls} font-semibold leading-snug mb-1`}>
+      <a
+        href={`/brand/${encodeURIComponent(brand.slug)}/`}
+        class="focus-ring hover:underline"
+        title={`What happened to ${brand.brand}?`}
+      >
+        {brand.brand}
+      </a>
+    </h3>
 
-<article class={`group relative border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 shadow-sm hover:shadow transition-shadow ${compact ? "p-3" : "p-4"}`}>
-  <!-- Full-card clickable area -->
-  <a href={href} class="stretched-link focus-ring rounded-xl" aria-label={aria}></a>
+    {/* Badge row */}
+    <div class="mt-1 flex flex-wrap items-center gap-2 text-[12px]">
+      {/* Defunct year chip — only if we have endY */}
+      {typeof endY === "number" && (
+        <span
+          class="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 font-medium text-slate-700
+                 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+          aria-label={`Year defunct: ${endY}`}
+          title={`Year defunct: ${endY}`}
+        >
+          ⛔ {endY}
+        </span>
+      )}
 
-  <!-- Title -->
-  <h3 class="text-lg font-semibold leading-snug text-slate-900 dark:text-slate-100 mb-0.5">
-    <a href={href} class="hover:underline">{b.brand}</a>
-  </h3>
+      {/* Category chip */}
+      {brand.category && (
+        <span
+          class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 font-medium text-slate-700
+                 dark:bg-slate-800 dark:text-slate-300"
+          aria-label={`Industry: ${brand.category}`}
+          title={`Industry: ${brand.category}`}
+        >
+          🏷️ {brand.category}
+        </span>
+      )}
 
-  <!-- Meta row -->
-  <div class="text-sm text-slate-600 dark:text-slate-300 flex flex-wrap items-center gap-x-2 gap-y-1">
-    {years && <span>{years}</span>}
-    {b.fate && <span>• {b.fate}</span>}
-    {b.category && <span class="text-slate-500 dark:text-slate-400">• {b.category}</span>}
-    {typeof b.views === "number" && b.views >= 0 && (
-      <span class="ml-auto text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-        {b.views.toLocaleString()} views
+      {/* Popularity chip (filled client-side if desired) */}
+      <span
+        class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 font-medium text-amber-700
+               dark:bg-amber-900/30 dark:text-amber-300"
+        data-views
+        hidden
+        title="Relative popularity"
+      >
+        ★ <span class="ml-1" data-views-count>0</span>
       </span>
+    </div>
+
+    {/* One-liner */}
+    {oneLiner && (
+      <p class="mt-2 text-sm text-gray-600 dark:text-slate-300 line-clamp-2">
+        {oneLiner}
+      </p>
     )}
-  </div>
 
-  <!-- One-liner summary -->
-  {oneLine && (
-    <p class="mt-2 text-sm text-slate-700 dark:text-slate-300">
-      {oneLine}
-    </p>
-  )}
-</article>
-
-<style is:inline>
-  .stretched-link { position: absolute; inset: 0; }
-  .focus-ring { outline: none; }
-  .focus-ring:focus-visible {
-    box-shadow: 0 0 0 2px rgba(79,70,229,.6);
-  }
-</style>
+    {/* Tiny timeline line — ONLY if we have at least one year */}
+    {hasYear && (
+      <div class="mt-2 text-xs text-gray-500 dark:text-slate-400">
+        {startY ? startY : ""}{startY ? "\u2013" : ""}{endY ?? "?"}{brand.fate ? ` \u2014 ${brand.fate}` : ""}
+      </div>
+    )}
+  </article>
+) : (
+  <article class="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+    <p class="text-sm text-slate-600 dark:text-slate-400">Brand “{slug}” not found.</p>
+  </article>
+)}
