@@ -7,15 +7,13 @@ const articles = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().max(160),
-    publishDate: z.coerce.date(),          // ← matches your MDX
-    updated: z.coerce.date().optional(),
+    publishDate: z.string().or(z.date()),        // ← matches your MDX
+    updated: z.string().or(z.date()).optional(),
     author: z.string().default("Vanished Brands"),
     image: z.object({ src: z.string(), alt: z.string().default("") }).optional(),
-    category: z.string().default("article"),
     tags: z.array(z.string()).default([]),
     topics: z.array(z.string()).default([]),
-    relatedBrands: z.array(z.string()).default([]),
-    keywords: z.array(z.string()).default([]),
+    brands: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),
 });
