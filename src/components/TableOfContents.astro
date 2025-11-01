@@ -69,48 +69,57 @@ const hasStatic = Array.isArray(items) && items.length > 0;
     const root = document.querySelector(rootSel) || document;
 
     const sels = [];
-    if (includeH2) sels.push("h2");
-    if (includeH3) sels.push("h3");
-    if (!sels.length) return;
+if (includeH2) sels.push("h2:not([data-toc-exclude])");
+if (includeH3) sels.push("h3:not([data-toc-exclude])");
+if (!sels.length) return;
 
-    const heads = Array.from(root.querySelectorAll(sels.join(",")));
-    if (!heads.length) return;
+const heads = Array.from(root.querySelectorAll(sels.join(",")))
+  // ignore headings inside any container that opts out
+  .filter(h => !h.closest("[data-toc-exclude]"));
 
-    const list = toc.querySelector("#__toc_list");
-    if (!list) return;
+const list = toc.querySelector("#__toc_list");
+if (!list) return;
 
-    function slugify(txt) {
-      return (txt || "")
-        .toLowerCase()
-        .replace(/<\/?[^>]+(>|$)/g, "")
-        .replace(/[^a-z0-9\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .slice(0, 64);
+function slugify(txt) {
+  return (txt || "")
+    .toLowerCase()
+    .replace(/<\/?[^>]+(>|$)/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 64);
+}
+
+  // de-dupe by final id (slug); skip duplicates
+  const seen = new Set();
+
+  heads.forEach((h) => {
+    const level = h.tagName.toLowerCase() === "h3" ? 3 : 2;
+    let id = h.id || slugify(h.textContent || "");
+    if (!id) return;
+
+    // ensure unique ids in the DOM
+    let uniq = id, i = 2;
+    while (document.getElementById(uniq)) {
+      if (document.getElementById(uniq) === h) break;
+      uniq = id + "-" + i++;
     }
+    if (!h.id) h.id = uniq;
 
-    heads.forEach((h) => {
-      const level = h.tagName.toLowerCase() === "h3" ? 3 : 2;
-      let id = h.id || slugify(h.textContent || "");
-      if (!id) return;
+    // skip if we've already added a TOC entry for this slug
+    if (seen.has(h.id)) return;
+    seen.add(h.id);
 
-      let uniq = id, i = 2;
-      while (document.getElementById(uniq)) {
-        if (document.getElementById(uniq) === h) break;
-        uniq = id + "-" + i++;
-      }
-      if (!h.id) h.id = uniq;
-
-      const li = document.createElement("li");
-      if (level === 3) li.className = "ml-4";
-      const a = document.createElement("a");
-      a.href = "#" + h.id;
-      a.className = "toc-link focus-ring hover:underline text-slate-700 dark:text-slate-300";
-      a.textContent = h.textContent || "";
-      li.appendChild(a);
-      list.appendChild(li);
-    });
+    const li = document.createElement("li");
+    if (level === 3) li.className = "ml-4";
+    const a = document.createElement("a");
+    a.href = "#" + h.id;
+    a.className = "focus-ring hover:underline";
+    a.textContent = h.textContent || "";
+    li.appendChild(a);
+    list.appendChild(li);
+  });
 
     const links = Array.from((toc.querySelector("#__toc_list") || toc).querySelectorAll(".toc-link"));
     if (links.length) {
