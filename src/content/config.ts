@@ -3,35 +3,44 @@ import { defineCollection, z } from "astro:content";
 
 const post = defineCollection({
   type: "content",
-  schema: z.object({
-    title: z.string(),
-    description: z.string().max(160),
-    // accept publishDate instead of date
-    publishDate: z.string().or(z.date()),
-    updatedDate: z.string().or(z.date()).optional(),
+  schema: z
+    .object({
+      title: z.string(),
+      description: z.string().max(160),
 
-    author: z.string().default("Vanished Brands"),
+      // Accept either `date` or `publishDate` (string or Date), both optional.
+      date: z.union([z.string(), z.date()]).optional(),
+      publishDate: z.union([z.string(), z.date()]).optional(),
 
-    // accept image as string OR object
-    image: z.union([
-      z.string(),
-      z.object({ src: z.string(), alt: z.string().default("") })
-    ]).optional(),
+      updated: z.union([z.string(), z.date()]).optional(),
+      author: z.string().default("Vanished Brands"),
 
-    // support your extra fields
-    category: z.string().optional(),
-    featured: z.boolean().default(false),
+      // Allow either an object { src, alt } or a simple string path
+      image: z
+        .union([
+          z.object({ src: z.string(), alt: z.string().default("") }),
+          z.string(),
+        ])
+        .optional(),
 
-    // keep both 'tags' and 'keywords' (optional)
-    tags: z.array(z.string()).default([]),
-    keywords: z.array(z.string()).default([]),
-
-    // keep both 'brands' and 'relatedBrands' (optional)
-    brands: z.array(z.string()).default([]),
-    relatedBrands: z.array(z.string()).default([]),
-
-    draft: z.boolean().default(false),
-  }),
+      tags: z.array(z.string()).default([]),
+      topics: z.array(z.string()).default([]),
+      brands: z.array(z.string()).default([]),
+      draft: z.boolean().default(false),
+      featured: z.boolean().default(false).optional(),
+      category: z.string().optional(),
+      keywords: z.array(z.string()).default([]).optional(),
+      relatedBrands: z.array(z.string()).default([]).optional(),
+    })
+    .superRefine((val, ctx) => {
+      if (!val.date && !val.publishDate) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["publishDate"],
+          message: "Provide either `date` or `publishDate`.",
+        });
+      }
+    }),
 });
 
 const topics = defineCollection({
