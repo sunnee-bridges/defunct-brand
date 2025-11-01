@@ -1,17 +1,8 @@
 ---
 /**
- * TableOfContents.astro
- * - Works out-of-the-box with MDX pages.
- * - If you pass `items`, it uses them.
- * - If you don't, a tiny client script will scan the page for <h2>/<h3>
- *   and populate the list at runtime (no framework/hydration required).
- *
- * Props:
- *  - title?: string           // heading above the TOC
- *  - items?: Array<{ id: string; text: string; level?: number }>
- *  - rootSelector?: string    // CSS selector to scope the heading scan
- *  - includeH2?: boolean      // default true
- *  - includeH3?: boolean      // default true
+ * TableOfContents.astro (patched)
+ * - Same props/behavior as your version.
+ * - Adds z-index + background so it doesn't hide behind content.
  */
 export interface TocItem { id: string; text: string; level?: number }
 export interface Props {
@@ -33,9 +24,17 @@ const {
 const hasStatic = Array.isArray(items) && items.length > 0;
 ---
 
-{(hasStatic) ? (
-  <nav class="toc sticky top-4 max-w-full rounded-xl border border-slate-200 dark:border-slate-800 p-3 text-sm">
-    <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{title}</h2>
+{hasStatic ? (
+  <nav
+    class="toc sticky top-24 md:top-28
+           z-40
+           max-w-full rounded-xl border border-slate-200 dark:border-slate-800
+           bg-white/90 dark:bg-slate-900/80 backdrop-blur shadow-sm
+           p-3 text-sm"
+  >
+    <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
+      {title}
+    </h2>
     <ul class="space-y-1">
       {items.map((it) => (
         <li class={it.level === 3 ? "ml-4" : ""}>
@@ -47,14 +46,23 @@ const hasStatic = Array.isArray(items) && items.length > 0;
     </ul>
   </nav>
 ) : (
-  // Empty shell; a tiny script will populate it at runtime by scanning headings.
-  <nav class="toc sticky top-4 max-w-full rounded-xl border border-slate-200 dark:border-slate-800 p-3 text-sm" data-toc-root={rootSelector} data-include-h2={includeH2 ? "1" : ""} data-include-h3={includeH3 ? "1" : ""}>
-    <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{title}</h2>
+  <nav
+    class="toc sticky top-24 md:top-28
+           z-40
+           max-w-full rounded-xl border border-slate-200 dark:border-slate-800
+           bg-white/90 dark:bg-slate-900/80 backdrop-blur shadow-sm
+           p-3 text-sm"
+    data-toc-root={rootSelector}
+    data-include-h2={includeH2 ? "1" : ""}
+    data-include-h3={includeH3 ? "1" : ""}
+  >
+    <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
+      {title}
+    </h2>
     <ul class="space-y-1" id="__toc_list"></ul>
   </nav>
 )}
 
-<!-- No framework hydration; vanilla JS runs once on load -->
 <script is:inline>
   (function () {
     const toc = document.currentScript?.previousElementSibling;
@@ -91,6 +99,7 @@ const hasStatic = Array.isArray(items) && items.length > 0;
       const level = h.tagName.toLowerCase() === "h3" ? 3 : 2;
       let id = h.id || slugify(h.textContent || "");
       if (!id) return;
+
       // de-dupe ids
       let uniq = id, i = 2;
       while (document.getElementById(uniq)) {
@@ -103,11 +112,34 @@ const hasStatic = Array.isArray(items) && items.length > 0;
       if (level === 3) li.className = "ml-4";
       const a = document.createElement("a");
       a.href = "#" + h.id;
-      a.className = "focus-ring hover:underline";
+      a.className = "toc-link focus-ring hover:underline text-slate-700 dark:text-slate-300";
       a.textContent = h.textContent || "";
       li.appendChild(a);
       list.appendChild(li);
     });
+
+    // Optional: highlight active section
+    const links = Array.from(list.querySelectorAll(".toc-link"));
+    if (links.length) {
+      const map = new Map(
+        links.map((a) => [a.getAttribute("href")?.slice(1) || "", a])
+      );
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const id = entry.target.id;
+            const link = map.get(id);
+            if (!link) return;
+            if (entry.isIntersecting) {
+              links.forEach((l) => l.removeAttribute("data-active"));
+              link.setAttribute("data-active", "true");
+            }
+          });
+        },
+        { rootMargin: "0px 0px -60% 0px", threshold: 0.1 }
+      );
+      heads.forEach((h) => io.observe(h));
+    }
   })();
 </script>
 
@@ -116,5 +148,10 @@ const hasStatic = Array.isArray(items) && items.length > 0;
   .focus-ring:focus-visible {
     box-shadow: 0 0 0 2px rgba(79,70,229,.6);
     border-radius: .5rem;
+  }
+  .toc-link[data-active="true"] {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 </style>
