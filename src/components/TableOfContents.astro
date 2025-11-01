@@ -1,9 +1,4 @@
 ---
-/**
- * TableOfContents.astro (patched)
- * - Same props/behavior as your version.
- * - Adds z-index + background so it doesn't hide behind content.
- */
 export interface TocItem { id: string; text: string; level?: number }
 export interface Props {
   title?: string;
@@ -26,10 +21,10 @@ const hasStatic = Array.isArray(items) && items.length > 0;
 
 {hasStatic ? (
   <nav
-    class="toc sticky top-24 md:top-28
-           z-40
+    class="toc
+           relative md:sticky md:top-24 md:z-20
            max-w-full rounded-xl border border-slate-200 dark:border-slate-800
-           bg-white/90 dark:bg-slate-900/80 backdrop-blur shadow-sm
+           md:bg-white/90 md:dark:bg-slate-900/80 md:backdrop-blur md:shadow-sm
            p-3 text-sm"
   >
     <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
@@ -47,10 +42,10 @@ const hasStatic = Array.isArray(items) && items.length > 0;
   </nav>
 ) : (
   <nav
-    class="toc sticky top-24 md:top-28
-           z-40
+    class="toc
+           relative md:sticky md:top-24 md:z-20
            max-w-full rounded-xl border border-slate-200 dark:border-slate-800
-           bg-white/90 dark:bg-slate-900/80 backdrop-blur shadow-sm
+           md:bg-white/90 md:dark:bg-slate-900/80 md:backdrop-blur md:shadow-sm
            p-3 text-sm"
     data-toc-root={rootSelector}
     data-include-h2={includeH2 ? "1" : ""}
@@ -100,7 +95,6 @@ const hasStatic = Array.isArray(items) && items.length > 0;
       let id = h.id || slugify(h.textContent || "");
       if (!id) return;
 
-      // de-dupe ids
       let uniq = id, i = 2;
       while (document.getElementById(uniq)) {
         if (document.getElementById(uniq) === h) break;
@@ -118,12 +112,9 @@ const hasStatic = Array.isArray(items) && items.length > 0;
       list.appendChild(li);
     });
 
-    // Optional: highlight active section
-    const links = Array.from(list.querySelectorAll(".toc-link"));
+    const links = Array.from((toc.querySelector("#__toc_list") || toc).querySelectorAll(".toc-link"));
     if (links.length) {
-      const map = new Map(
-        links.map((a) => [a.getAttribute("href")?.slice(1) || "", a])
-      );
+      const map = new Map(links.map((a) => [a.getAttribute("href")?.slice(1) || "", a]));
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -138,7 +129,7 @@ const hasStatic = Array.isArray(items) && items.length > 0;
         },
         { rootMargin: "0px 0px -60% 0px", threshold: 0.1 }
       );
-      heads.forEach((h) => io.observe(h));
+      Array.from(document.querySelectorAll("h2, h3")).forEach((h) => io.observe(h));
     }
   })();
 </script>
