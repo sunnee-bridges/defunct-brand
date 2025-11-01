@@ -1,8 +1,8 @@
 ---
 // src/components/BrandCard.astro
 export interface Props {
-  slug: string;             // brand slug (e.g., "toys-r-us")
-  compact?: boolean;        // optional tighter layout for lists
+  slug: string;       // brand slug (e.g., "toys-r-us")
+  compact?: boolean;  // optional tighter layout for lists
 }
 
 const { slug, compact = false } = Astro.props;
@@ -44,10 +44,14 @@ const oneLiner = (brand?.summary || "").trim();
 const cardPad = compact ? "p-3" : "p-4";
 const titleCls = compact ? "text-base" : "text-lg";
 ---
+
 {brand ? (
-  <article class={`rounded-xl border border-slate-200 dark:border-slate-800 ${cardPad}`}>
-    {/* Title */}
-    <h3 class={`${titleCls} font-semibold leading-snug mb-1`}>
+  <article
+    class={`brand-card rounded-xl border border-slate-200 dark:border-slate-800 ${cardPad}`}
+    data-toc-exclude
+  >
+    {/* Title (excluded from TOC via parent + attribute on h3) */}
+    <h3 class={`${titleCls} font-semibold leading-snug mb-1`} data-toc-exclude>
       <a
         href={`/brand/${encodeURIComponent(brand.slug)}/`}
         class="focus-ring hover:underline"
@@ -83,7 +87,7 @@ const titleCls = compact ? "text-base" : "text-lg";
         </span>
       )}
 
-      {/* Popularity chip (filled client-side if desired) */}
+      {/* Popularity chip (optional; filled client-side) */}
       <span
         class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 font-medium text-amber-700
                dark:bg-amber-900/30 dark:text-amber-300"
@@ -110,7 +114,7 @@ const titleCls = compact ? "text-base" : "text-lg";
     )}
   </article>
 ) : (
-  <article class="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+  <article class="rounded-xl border border-slate-200 dark:border-slate-800 p-4" data-toc-exclude>
     <p class="text-sm text-slate-600 dark:text-slate-400">Brand “{slug}” not found.</p>
   </article>
 )}
