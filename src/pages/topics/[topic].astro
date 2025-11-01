@@ -1,77 +1,72 @@
+---
 // src/pages/topics/[topic].astro
 import Base from "../../layouts/Base.astro";
 import { getEntry } from "astro:content";
 
-/** ---------- Type for topic metadata (optional but helpful) ---------- */
-type TopicMeta = {
-  label: string;
-  desc: string;
-  descLong?: string;
-  heroImage?: string;
-  faq?: { q: string; a: string }[]; 
-};
-
-/** ---------- Build static paths from topics found in brand JSON ---------- */
+/* ---------- Build static paths from topics found in brand JSON ---------- */
 export function getStaticPaths() {
-  // Do the glob *inside* this function to avoid hoisting/minifier issues
   const brandModules = import.meta.glob("/src/content/brands/*.json", {
     eager: true,
     import: "default",
-  }) as Record<string, any>;
+  });
 
-  const topics = new Set<string>();
+  const topics = new Set();
   for (const mod of Object.values(brandModules)) {
-    const list = Array.isArray((mod as any)?.topics) ? (mod as any).topics : [];
+    const list = Array.isArray(mod?.topics) ? mod.topics : [];
     for (const t of list) topics.add(String(t).toLowerCase());
   }
   return [...topics].map((topic) => ({ params: { topic } }));
 }
 
-/** ---------- Runtime: separate glob for render time ---------- */
+/* ---------- Runtime: separate glob for render time ---------- */
 const brandModulesRuntime = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
-}) as Record<string, any>;
+});
 
-/** ---------- Helpers ---------- */
-function prettyLabel(slug: string) {
-  return slug
+/* ---------- Helpers ---------- */
+function prettyLabel(slug) {
+  return String(slug)
     .split("-")
     .map((s) => (s ? s[0].toUpperCase() + s.slice(1) : s))
     .join(" ");
 }
 
-/** ---------- Params & topic meta ---------- */
+/* ---------- Params & topic meta ---------- */
 const { topic } = Astro.params;
 const slug = String(topic).toLowerCase();
 
-// Pull centralized meta from content/topics/topics.json (if present)
-const topicsEntry = await getEntry("topics", "topics").catch(() => null);
-const TOPIC_META = (topicsEntry?.data ?? {}) as Record<string, TopicMeta>;
+// Try to load centralized meta from content/topics/topics.json (if present)
+let TOPIC_META = {};
+try {
+  const topicsEntry = await getEntry("topics", "topics");
+  TOPIC_META = (topicsEntry?.data ?? {});
+} catch {
+  // no topics collection; fine to continue
+}
 
-const meta: TopicMeta =
-  TOPIC_META[slug] ?? {
-    label: prettyLabel(slug),
-    desc: "Browse related discontinued brands collected under this topic.",
-  };
+const meta = TOPIC_META[slug] ?? {
+  label: prettyLabel(slug),
+  desc: "Browse related discontinued brands collected under this topic.",
+};
 
-/** ---------- Collect brands tagged with this topic ---------- */
+/* ---------- Collect brands tagged with this topic ---------- */
 const items = Object.values(brandModulesRuntime)
   .filter(
-    (b: any) =>
+    (b) =>
       Array.isArray(b?.topics) &&
-      b.topics.map((x: any) => String(x).toLowerCase()).includes(slug)
+      b.topics.map((x) => String(x).toLowerCase()).includes(slug)
   )
-  .map((b: any) => ({
+  .map((b) => ({
     name: b.brand,
     slug: b.slug,
     category: b.category ?? null,
   }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
-/** ---------- SEO / Canonical & JSON-LD ---------- */
+/* ---------- SEO / Canonical & JSON-LD ---------- */
 const hubPath = `/topics/${encodeURIComponent(slug)}/`;
-const title = `${meta.label} • Topic Hub`; // keep in metadata only
+const title = `${meta.label} • Topic Hub`;
 const desc = meta.desc;
 const canonical = Astro.site ? new URL(hubPath, Astro.site).href : hubPath;
 
@@ -125,14 +120,14 @@ const breadcrumbsLd = {
     <a href="/az/" class="chip focus-ring">Browse A–Z</a>
   </nav>
 
-  {/* Lean header (no "• Topic Hub" in the visible H1) */}
-  <h1 class="text-2xl md:text-3xl font-bold mb-1">{meta.label}</h1>
+  {/* Header */}
+  <h1 class="text-2xl md:text-3xl font-bold mb-1">{meta.label} • Topic Hub</h1>
   <p class="text-slate-600 dark:text-slate-300 mb-4">{desc}</p>
 
-  {/* Optional hero (image only) */}
+  {/* Optional hero */}
   {meta.heroImage && (
     <div class="mb-5 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-      <img src={meta.heroImage} alt={`${meta.label} hero`} class="w-full h-auto block" loading="lazy" decoding="async" />
+      <img src={meta.heroImage} alt={`${meta.label} hero`} class="w-full h-auto block" loading="lazy" />
     </div>
   )}
 
@@ -172,17 +167,10 @@ const breadcrumbsLd = {
     <p class="text-slate-600 dark:text-slate-300">No brands are tagged with this topic yet.</p>
   )}
 
-  {/* If only one brand, show a small suggestion block instead of repeating global nav */}
-  {items.length === 1 && (
-    <div class="mt-6 rounded-xl border border-slate-200 dark:border-slate-800 p-3">
-      <p class="text-sm text-slate-600 dark:text-slate-300">
-        Want more like this? Explore related topics or browse all categories.
-      </p>
-      <div class="mt-2 flex flex-wrap gap-2">
-        <a href="/topics/" class="chip focus-ring">All Topics</a>
-        <a href="/category/" class="chip focus-ring">Categories</a>
-        <a href="/az/" class="chip focus-ring">A–Z</a>
-      </div>
-    </div>
-  )}
+  {/* Gentle internal links */}
+  <div class="mt-6 flex flex-wrap gap-2">
+    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+    <a href="/category/" class="chip focus-ring">Categories</a>
+    <a href="/decade/" class="chip focus-ring">Decades</a>
+  </div>
 </Base>
