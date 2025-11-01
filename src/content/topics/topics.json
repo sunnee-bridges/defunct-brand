@@ -12,5 +12,11 @@
     "label": "Portable Audio",
     "desc": "Portable audio devices that came and went...",
     "descLong": "Spanning cassette, CD, MiniDisc, and digital eras..."
+  },
+   "scandal": {
+    "label": "Scandal-Ended Brands",
+    "desc": "Companies and brands that collapsed primarily due to fraud, misconduct, or major ethical scandals.",
+    "descLong": "From Enron and WorldCom to Theranos and FTX, these cases show how governance failures and misconduct can erase even famous names. This hub collects timelines, fates, and sources.",
+    "heroImage": "/images/topics/scandal-hero.jpg"
   }
 }

@@ -43,6 +43,56 @@ const oneLiner = (brand?.summary || "").trim();
 
 const cardPad = compact ? "p-3" : "p-4";
 const titleCls = compact ? "text-base" : "text-lg";
+
+/* -------------------------------------------------------
+   Topic chips (extensible) + scandal inference fallback
+   ----------------------------------------------------- */
+
+// Define how each topic should render.
+// Add more topics later by extending this map.
+const topicBadges: Record<string, {
+  label: string;
+  icon: string;
+  title: string;
+  classes: string;
+}> = {
+  scandal: {
+    label: "Scandal",
+    icon: "⚠️",
+    title: "Ended due to scandal",
+    classes:
+      "inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 font-medium text-rose-700 " +
+      "dark:bg-rose-900/30 dark:text-rose-300",
+  },
+  // Example for future topics:
+  // "internet-history": {
+  //   label: "Internet History",
+  //   icon: "🌐",
+  //   title: "Historically significant internet brand",
+  //   classes:
+  //     "inline-flex items-center rounded-full bg-sky-50 px-2 py-0.5 font-medium text-sky-700 " +
+  //     "dark:bg-sky-900/30 dark:text-sky-300",
+  // },
+};
+
+// Normalize topics array
+const topicsArr: string[] = Array.isArray(brand?.topics) ? brand.topics : [];
+
+// Optional fallback: infer "scandal" when fate text clearly suggests it.
+// This is conservative; edit the regex to your taste.
+const scandalish = /fraud|scandal|brib|launder|misconduct|embezz|hacking|phone[- ]?hacking|accounting\s+irregular/i;
+const hasScandalTag = topicsArr.includes("scandal");
+const inferredScandal = !hasScandalTag && scandalish.test(String(brand?.fate || ""));
+
+// Build chips from explicit topics
+const topicChips = topicsArr
+  .filter((t) => topicBadges[t])
+  .map((t) => ({ key: t, ...topicBadges[t] }));
+
+// If scandal was inferred but not tagged, add a one-off scandal chip
+if (inferredScandal) {
+  topicChips.push({ key: "scandal", ...topicBadges.scandal });
+}
 ---
 
 {brand ? (
@@ -86,6 +136,18 @@ const titleCls = compact ? "text-base" : "text-lg";
           🏷️ {brand.category}
         </span>
       )}
+
+      {/* Topic chips (e.g., Scandal) */}
+      {topicChips.map((chip) => (
+        <span
+          class={chip.classes}
+          title={chip.title}
+          aria-label={chip.title}
+        >
+          <span class="mr-1" aria-hidden="true">{chip.icon}</span>
+          {chip.label}
+        </span>
+      ))}
 
       {/* Popularity chip (optional; filled client-side) */}
       <span
