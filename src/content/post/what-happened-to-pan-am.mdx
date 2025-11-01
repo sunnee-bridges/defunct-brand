@@ -1,18 +1,21 @@
 ---
-title: "What Happened to Pan Am?"
-description: "How an icon of aviation rose and fell."
-date: 2025-01-20                 # or publishDate
+title: "What Happened to Pan Am? …"
+description: "Discover the complete history of Pan Am…"
+publishDate: "2025-01-20"   # ← quote this
+# or use `date: "2025-01-20"`
+featured: true
 image:
-  src: "/images/pan-am-hero.jpg"
-  alt: "Pan Am Boeing 707 in flight"
+  src: "/images/articles/pan-am-hero.jpg"
+  alt: "Pan Am 747 on the ramp in the 1970s"
 ---
+
 
 import ArticleHero from '@components/ArticleHero.astro';
 
 <ArticleHero
   title={frontmatter.title}
   description={frontmatter.description}
-  date={frontmatter.date}         // or frontmatter.publishDate
+  date={frontmatter.date}         
   image={frontmatter.image}
 />
 
