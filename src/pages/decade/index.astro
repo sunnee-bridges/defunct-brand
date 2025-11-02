@@ -83,35 +83,69 @@ const itemListLd = {
     <meta name="twitter:description" content={PAGE_DESC} />
 
     <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
+
+    <style>
+      /* Enhanced decade card with better hover states */
+      .decade-card {
+        position: relative;
+        transition: all 0.2s ease;
+      }
+      
+      .decade-card:hover {
+        transform: scale(1.02);
+        filter: brightness(1.15);
+      }
+
+      /* Badge styling for counts */
+      .count-badge {
+        display: inline-block;
+        background: rgba(75, 85, 99, 0.3);
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        margin-left: 0.5rem;
+      }
+    </style>
   </Fragment>
 
-  <!-- 🧭 Breadcrumb + header (mirrors Categories page) -->
-  <div class="max-w-6xl mx-auto px-4">
-    <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
-      <a href="/" class="chip focus-ring">← Home</a>
-      <span class="chip opacity-70 cursor-default" aria-current="page">Decades</span>
-    </nav>
+  <!-- No wrapper needed - main container already provides max-width and centering -->
 
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Decade</h1>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Total decades: {decades.length}</p>
+  <!-- 🧭 Navigation -->
+  <nav class="mb-3 flex flex-wrap gap-2 justify-start" aria-label="Breadcrumb">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/az/" class="chip focus-ring">A–Z</a>
+    <a href="/category/" class="chip focus-ring">Categories</a>
+    <a href="/data/" class="chip focus-ring">Data</a>
+    <span class="chip opacity-70 cursor-default" aria-current="page">Decades</span>
+  </nav>
 
-    {decades.length === 0 ? (
-      <p class="text-slate-600 dark:text-slate-400">No decades available yet.</p>
-    ) : (
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {decades.map((d) => (
-          <li>
-            <a
-              href={`/decade/${d}/`}
-              class="chip focus-ring block"
-              title={`${counts.get(d)} ${counts.get(d) === 1 ? "brand" : "brands"} in the ${d}s`}
-              aria-label={`${d}s (${counts.get(d)} ${counts.get(d) === 1 ? "brand" : "brands"})`}
-            >
-              {d} <span class="text-gray-500">({counts.get(d)})</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    )}
+  <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Decade</h1>
+  <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+    Total decades: {decades.length}
+  </p>
+
+  {decades.length === 0 ? (
+    <p class="text-slate-600 dark:text-slate-400">No decades available yet.</p>
+  ) : (
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {decades.map((d) => (
+        <li>
+          <a
+            href={`/decade/${d}/`}
+            class="chip focus-ring block decade-card"
+            title={`${counts.get(d)} ${counts.get(d) === 1 ? "brand" : "brands"} in the ${d}`}
+            aria-label={`${d} (${counts.get(d)} ${counts.get(d) === 1 ? "brand" : "brands"})`}
+          >
+            <span class="font-medium">{d}</span>
+            <span class="count-badge text-gray-400">({counts.get(d)})</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <!-- Back to top -->
+  <div class="mt-8">
+    <a href="#top" class="chip focus-ring">↑ Back to top</a>
   </div>
 </Base>
