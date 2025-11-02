@@ -151,6 +151,16 @@ const FEATURED = categories.slice(0, 8);
     brand timelines, categories, and outcomes.
   </p>
 
+  <!-- 🧭 Breadcrumb + header (mirrors Categories page) -->
+  <div class="max-w-6xl mx-auto px-4">
+    <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
+      <a href="/" class="chip focus-ring">← Home</a>
+      <span class="chip opacity-70 cursor-default" aria-current="page">Decades</span>
+    </nav>
+
+    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Decade</h1>
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Total decades: {decades.length}</p>
+
   <!-- Page container -->
   <div class="max-w-6xl mx-auto px-4">
     <!-- Breadcrumb -->
