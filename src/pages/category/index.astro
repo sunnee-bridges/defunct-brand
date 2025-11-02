@@ -95,7 +95,8 @@ const categories = Array.from(counts.entries())
     const slug = slugify(rawLabel);
     const meta = CATEGORY_META[slug] ?? {};
     const displayLabel = meta.label || rawLabel;
-    const desc = meta.desc || `Explore ${n} brand${n === 1 ? "" : "s"} in ${displayLabel}.`;
+    const desc =
+      meta.desc || `Explore ${n} brand${n === 1 ? "" : "s"} in ${displayLabel}.`;
     return { slug, displayLabel, desc, n };
   })
   .sort((a, b) => a.displayLabel.localeCompare(b.displayLabel));
@@ -104,7 +105,9 @@ const categories = Array.from(counts.entries())
 const PAGE_TITLE = "Browse by Category • Defunct Brands";
 const PAGE_DESC =
   "Browse discontinued and defunct brands by category. Clean, structured entries with timelines and outcomes.";
-const CANONICAL = Astro.site ? new URL("/category/", Astro.site).href : "/category/";
+const CANONICAL = Astro.site
+  ? new URL("/category/", Astro.site).href
+  : "/category/";
 
 /** Feature first 8 (for JSON-LD only) */
 const FEATURED = categories.slice(0, 8);
@@ -125,7 +128,7 @@ const FEATURED = categories.slice(0, 8);
     <meta name="twitter:title" content={PAGE_TITLE} />
     <meta name="twitter:description" content={PAGE_DESC} />
 
-    {/* JSON-LD: ItemList of featured categories (optional but useful) */}
+    {/* JSON-LD: ItemList of featured categories (optional) */}
     {FEATURED.length > 0 && (
       <script type="application/ld+json">
         {JSON.stringify({
@@ -145,81 +148,39 @@ const FEATURED = categories.slice(0, 8);
     )}
   </Fragment>
 
-   <div class="max-w-6xl mx-auto px-4">
-    <!-- Breadcrumb -->
-    <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
-      <a href="/" class="chip focus-ring">← Home</a>
-      <a href="/az/" class="chip focus-ring" aria-current="page">A–Z</a>
-    </nav>
-
-    <!-- Header -->
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Browse A–Z</h1>
-    <p class="text-slate-700 dark:text-slate-300 mb-4">
-      A cleaned CSV of brands, categories, active years, and fate.
-    </p>
-
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-    {categories.map((c) => (
-      <li>
-        <a
-          href={`/category/${c.slug}/`}
-          class="chip focus-ring block"
-          title={c.desc}
-          aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
-        >
-          {c.displayLabel} <span class="text-gray-500">({c.n})</span>
-        </a>
-      </li>
-    ))}
-  </ul>
-  </div>
-
-    <!-- Accessible, indexable intro (hidden visually) -->
-  <p class="sr-only">
-    Defunct Brands A–Z index. Explore discontinued brands alphabetically with quick links to
-    brand timelines, categories, and outcomes.
-  </p>
-
-  <!-- 🧭 Breadcrumb + header (mirrors Categories page) -->
+  <!-- 📦 Page container: matches A–Z/Decades (max-w-6xl, px-4) -->
   <div class="max-w-6xl mx-auto px-4">
+    <!-- 🧭 Breadcrumb (same placement & style as A–Z/Decades) -->
     <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
       <a href="/" class="chip focus-ring">← Home</a>
-      <span class="chip opacity-70 cursor-default" aria-current="page">Decades</span>
-    </nav>
-
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Decade</h1>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Total decades: {counts.length}</p>
-
-  <!-- Page container -->
-  <div class="max-w-6xl mx-auto px-4">
-    <!-- Breadcrumb -->
-    <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
-      <a href="/" class="chip focus-ring">← Home</a>
-      <a href="/az/" class="chip focus-ring" aria-current="page">A–Z</a>
+      <span class="chip opacity-70 cursor-default" aria-current="page">Categories</span>
     </nav>
 
     <!-- Header -->
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Browse A–Z</h1>
-    <p class="text-slate-700 dark:text-slate-300 mb-4">
-      A cleaned CSV of brands, categories, active years, and fate.
+    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Category</h1>
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+      Total categories: {categories.length}
     </p>
 
-    <!-- Total brands -->
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Total categories: {counts.length}</p>
+    <!-- Chip grid (identical structure to A–Z/Decades) -->
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {categories.map((c) => (
+        <li>
+          <a
+            href={`/category/${c.slug}/`}
+            class="chip focus-ring block"
+            title={c.desc}
+            aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
+          >
+            {c.displayLabel} <span class="text-gray-500">({c.n})</span>
+          </a>
+        </li>
+      ))}
+    </ul>
 
-  <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-    {categories.map((c) => (
-      <li>
-        <a
-          href={`/category/${c.slug}/`}
-          class="chip focus-ring block"
-          title={c.desc}
-          aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
-        >
-          {c.displayLabel} <span class="text-gray-500">({c.n})</span>
-        </a>
-      </li>
-    ))}
-  </ul>
- </div> 
+    <!-- Optional: Back to top, aligned with content like A–Z -->
+    <div class="mt-8">
+      <a href="#top" class="chip focus-ring">↑ Back to top</a>
+    </div>
+  </div>
 </Base>
