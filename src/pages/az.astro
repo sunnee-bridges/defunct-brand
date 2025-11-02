@@ -67,7 +67,7 @@ const itemListLd = {
   "@type": "ItemList",
   name: "Defunct Brands A–Z",
   itemListOrder: "http://schema.org/ItemListOrderAscending",
-  numberOfItems: Math.min(total, LD_MAX), // keep consistent with ldItems length
+  numberOfItems: Math.min(total, LD_MAX),
   itemListElement: ldItems,
 };
 ---
@@ -78,33 +78,32 @@ const itemListLd = {
   canonical={CANONICAL}
   jsonLd={[breadcrumbLd, itemListLd]}
 >
-  <!-- Accessible, indexable intro (hidden visually; no UI change) -->
+  <!-- Accessible, indexable intro (hidden visually) -->
   <p class="sr-only">
     Defunct Brands A–Z index. Explore discontinued brands alphabetically with quick links to
     brand timelines, categories, and outcomes.
   </p>
 
-   <nav class="mb-4 flex flex-wrap gap-2">
-    <a href="/" class="chip focus-ring">← Home</a>
-    <a href="/az/" class="chip focus-ring">A–Z</a>
-  </nav>
-
-  <h1 class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands Dataset</h1>
-  <p class="text-slate-700 dark:text-slate-300 mb-4">
-    A cleaned CSV of brands, categories, active years, and fate.
-  </p>
-
-  <!-- Main container with max-width -->
-  <div class="grid gap-4 md:grid-cols-2 md:gap-4 lg:gap-6">
-    <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
+  <!-- Page container -->
+  <div class="max-w-6xl mx-auto px-4">
+    <!-- Breadcrumb -->
+    <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
       <a href="/" class="chip focus-ring">← Home</a>
-      <span class="chip opacity-70 cursor-default" aria-current="page">A–Z</span>
+      <a href="/az/" class="chip focus-ring" aria-current="page">A–Z</a>
     </nav>
 
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse A–Z</h1>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Total brands: {total}</p>
+    <!-- Header -->
+    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Browse A–Z</h1>
+    <p class="text-slate-700 dark:text-slate-300 mb-4">
+      A cleaned CSV of brands, categories, active years, and fate.
+    </p>
 
-    <!-- Jump bar with better spacing -->
+    <!-- Total brands -->
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
+      Total brands: {total}
+    </p>
+
+    <!-- Jump bar directly under brand count -->
     <div class="flex flex-wrap gap-2 mb-6" role="navigation" aria-label="Jump to letter">
       {letters.map((L) => {
         const anchor = anchorIdFor(L);
@@ -112,12 +111,12 @@ const itemListLd = {
       })}
     </div>
 
-    <!-- Letter groups -->
-    <div class="space-y-8">
+    <!-- Letter groups (single-column flow) -->
+    <div class="space-y-10">
       {letters.map((L) => {
         const anchor = anchorIdFor(L);
         return (
-          <div id={anchor} role="region" aria-labelledby={`h-${anchor}`}>
+          <section id={anchor} role="region" aria-labelledby={`h-${anchor}`}>
             <div class="flex items-baseline gap-2 mb-3">
               <h2 id={`h-${anchor}`} class="text-xl font-semibold">{L}</h2>
               <span class="text-sm text-slate-500 dark:text-slate-400">({groups[L].length})</span>
@@ -132,8 +131,7 @@ const itemListLd = {
                            dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
                            focus-within:ring-2 focus-within:ring-indigo-500
                            focus-within:ring-offset-2 focus-within:ring-offset-white
-                           dark:focus-within:ring-offset-slate-900
-                           hover:shadow-md h-full"
+                           dark:focus-within:ring-offset-slate-900 hover:shadow-md h-full"
                   >
                     <a
                       href={`/brand/${encodeURIComponent(b.slug)}/`}
@@ -156,12 +154,13 @@ const itemListLd = {
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
         );
       })}
     </div>
 
-    <div class="mt-8">
+    <!-- Back to top: bottom, aligned with content -->
+    <div class="mt-10">
       <a href="#top" class="chip focus-ring">↑ Back to top</a>
     </div>
   </div>
