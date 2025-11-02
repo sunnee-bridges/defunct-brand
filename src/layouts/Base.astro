@@ -7,9 +7,10 @@ import Footer from "../components/Footer.astro";
 export interface Props {
   title?: string;
   description?: string;
-  canonical?: string;          // optional explicit canonical override
-  jsonLd?: any | any[];        // optional JSON-LD object or array of objects
+  canonical?: string;            // optional explicit canonical override
+  jsonLd?: any | any[];          // optional JSON-LD object or array of objects
   includeDefaultSchema?: boolean; // set false to disable Organization/WebSite schema
+  containerClass?: string;       // << NEW: unified page container classes
 }
 
 const {
@@ -18,6 +19,8 @@ const {
   canonical: canonicalProp,
   jsonLd = [],
   includeDefaultSchema = true,
+  // Default container (matches your current pages). Override per-page if needed.
+  containerClass = "mx-auto w-full max-w-6xl px-4",
 } = Astro.props;
 
 // Build a canonical URL from Astro.site + current pathname if not provided
@@ -163,13 +166,11 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <Header allSlugs={fileSlugs} fallbackSlug={FALLBACK_SLUG} />
 
     <!-- Main grows to push footer down; tabindex enables skip-link focus -->
-    <main
-      id="main"
-      class="flex-1 max-w-[1040px] mx-auto px-4"
-      aria-labelledby="brand-title"
-      tabindex="-1"
-    >
-      <slot />
+    <!-- NOTE: containerClass provides the single, consistent page container -->
+    <main id="main" class="flex-1" aria-labelledby="brand-title" tabindex="-1">
+      <div class={containerClass}>
+        <slot />
+      </div>
     </main>
 
     <!-- Footer -->
