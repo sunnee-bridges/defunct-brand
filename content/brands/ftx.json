@@ -1,0 +1,23 @@
+{
+  "brand": "FTX",
+  "slug": "ftx",
+  "category": "Cryptocurrency Exchange",
+  "country": "BS",
+  "active": {
+    "start": 2019,
+    "end": 2022
+  },
+  "fate": "Bankruptcy",
+  "topics": ["scandal"],
+  "parent_company": null,
+  "summary": "FTX cryptocurrency exchange collapsed in November 2022 following revelations of misuse of customer funds and filed for Chapter 11 bankruptcy.",
+  "notable_products": [
+    "Crypto derivatives trading",
+    "Spot trading",
+    "FTT token"
+  ],
+  "source": "https://www.cnbc.com/2022/01/31/crypto-exchange-ftx-valued-at-32-billion-amid-bitcoin-price-plunge.html",
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/FTX"
+  }
+}
