@@ -179,6 +179,15 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <!-- 🔊 Screen-reader live announcements -->
     <div id="live-region" aria-live="polite" class="sr-only"></div>
 
+    {import.meta.env.PUBLIC_CF_BEACON_TOKEN && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: import.meta.env.PUBLIC_CF_BEACON_TOKEN })}
+      />
+    )}
+
+
     <!-- Random loader: no JSON parsing, uses /brand-slugs.txt + localStorage cache + idle warmup -->
     <script is:inline>
       (function () {
