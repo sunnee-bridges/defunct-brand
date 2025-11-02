@@ -1,10 +1,6 @@
 ---
 // src/pages/brand/[slug].astro
 
-/**
- * Static generation for /brand/[slug]
- * Use import.meta.glob for both path generation and data loading.
- */
 import Base from "../../layouts/Base.astro";
 import ExploreMore from "../../components/ExploreMore.astro";
 import AffiliateDisclosure from "../../components/AffiliateDisclosure.astro";
@@ -15,7 +11,7 @@ export function getStaticPaths() {
   const modules = import.meta.glob("/src/content/brands/*.json");
   return Object.keys(modules).map((p) => {
     const slug = (p.split("/").pop() || "")
-      .replace(/\.public\.json$/i, "") // tolerate legacy names
+      .replace(/\.public\.json$/i, "")
       .replace(/\.json$/i, "");
     return { params: { slug } };
   });
@@ -40,12 +36,76 @@ function catToPath(cat?: string) {
   return `/category/${encodeURIComponent(s)}/`;
 }
 function titleFromSlug(s: string) {
-  return s
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+  return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-/* --- SEO / Canonical (use Base props to emit tags) --- */
+// Country code → label (extend as needed)
+const COUNTRY_LABEL: Record<string, string> = {
+  BS: "Bahamas",
+  US: "United States",
+  GB: "United Kingdom",
+  CA: "Canada",
+  DE: "Germany",
+  FR: "France",
+};
+const countryLabel = (code?: string) =>
+  COUNTRY_LABEL[String(code || "").toUpperCase()] || code || "";
+
+/** Minimal Markdown→HTML (bold, links, paragraphs, simple lists) */
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function mdToHtml(md: string) {
+  // Normalize newlines
+  md = String(md || "").replace(/\r\n?/g, "\n").trim();
+  if (!md) return "";
+
+  // Convert simple lists: consecutive lines starting with "- "
+  const blocks: string[] = [];
+  const lines = md.split("\n");
+  let i = 0;
+  while (i < lines.length) {
+    if (/^\s*-\s+/.test(lines[i])) {
+      const items: string[] = [];
+      while (i < lines.length && /^\s*-\s+/.test(lines[i])) {
+        items.push(lines[i].replace(/^\s*-\s+/, ""));
+        i++;
+      }
+      const ul = "<ul>" + items.map(item => {
+        let t = escapeHtml(item);
+        t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, `<a href="$2" target="_blank" rel="noopener">$1</a>`);
+        return `<li>${t}</li>`;
+      }).join("") + "</ul>";
+      blocks.push(ul);
+      continue;
+    }
+
+    // Paragraph: collect until blank line
+    const para: string[] = [];
+    while (i < lines.length && lines[i].trim() !== "") {
+      para.push(lines[i]);
+      i++;
+    }
+    // skip blank lines
+    while (i < lines.length && lines[i].trim() === "") i++;
+
+    const raw = escapeHtml(para.join(" "));
+    if (raw) {
+      let html = raw;
+      html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+      html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, `<a href="$2" target="_blank" rel="noopener">$1</a>`);
+      blocks.push(`<p>${html}</p>`);
+    }
+  }
+
+  return blocks.join("\n");
+}
+
+/* --- SEO / Canonical --- */
 let pageTitle = "Page not found";
 let pageDesc  = "Try another page or browse the full list.";
 let canonical = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
@@ -55,29 +115,68 @@ let ogImage = "";
 let ogImageAlt = "";
 let twitterCard = "summary_large_image";
 
-/* LearnMore link buckets (built only for valid brands) */
+/* LearnMore link buckets */
 type LinkItem = { href: string; label: string; external?: boolean; rel?: string };
 let internalLinks: LinkItem[] = [];
 let authorityLinks: LinkItem[] = [];
 let mediaLinks: LinkItem[] = [];
 
+/* ---- Overview / Timeline / Sources precompute ---- */
+let overviewHtml = ""; // if overview_md provided
+let overviewBits: { what?: string; who?: string; how_end?: string; now?: string } = {};
+let timeline: Array<{ date: string; text?: string }> = [];
+let sources: Array<{ label?: string; url: string }> = [];
+
 if (!notFound) {
+  // Prefer author Markdown override
+  if (brand?.overview_md) {
+    overviewHtml = mdToHtml(String(brand.overview_md));
+  } else {
+    // Compose from structured fields
+    const start = brand?.active?.start;
+    const end   = brand?.active?.end;
+    const ctry  = countryLabel(brand?.country);
+    const prod  = Array.isArray(brand?.products) && brand.products.length
+      ? ` with ${brand.products.join(", ").toLowerCase()}`
+      : "";
+
+    overviewBits.what = brand?.overview?.what
+      ?? (brand?.brand
+        ? `**${brand.brand}** was a ${String(brand?.category || "brand").toLowerCase()} operating from ${start ?? "?"}\u2013${end ?? "?"}.`
+        : "");
+
+    overviewBits.who = brand?.overview?.who
+      ?? ((ctry || brand?.served)
+        ? `Headquartered in ${ctry || "—"}, it served ${brand?.served || "customers"}${prod}.`
+        : "");
+
+    overviewBits.how_end = brand?.overview?.how_end
+      ?? ((brand?.fate && end)
+        ? `In ${end}, ${brand.brand} ${String(brand.fate).trim().toLowerCase()}.`
+        : "");
+
+    overviewBits.now = brand?.overview?.now || "";
+  }
+
+  timeline = Array.isArray(brand?.timeline) ? brand.timeline : [];
+  sources =
+    Array.isArray(brand?.sources) && brand.sources.length
+      ? brand.sources
+      : (brand?.links?.wikipedia ? [{ label: "Wikipedia", url: brand.links.wikipedia }] : []);
+
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
 
-  // Intent-tuned title/description
   pageTitle = `What Happened to ${brand.brand}? (Timeline & Fate)`;
   pageDesc  = `${brand.brand}: ${brand.fate || "Defunct"}; active ${activeStr}. ${brand.summary ?? ""}`.trim();
 
   const brandPath = `/brand/${encodeURIComponent(brand.slug || slug)}/`;
   canonical = Astro.site ? new URL(brandPath, Astro.site).href : brandPath;
 
-  // OG/Twitter image (per-brand path; fallback to site root origin)
   const siteOrigin = Astro.site?.origin || "https://vanishedbrands.com";
   const perBrandOg  = `/og/brand/${encodeURIComponent(brand.slug || slug)}.png`;
   ogImage     = new URL(perBrandOg, siteOrigin).toString();
   ogImageAlt  = `What happened to ${brand.brand}?`;
 
-  // Enriched Brand JSON-LD
   const sameAs: string[] = [];
   if (brand?.links?.wikipedia) sameAs.push(String(brand.links.wikipedia));
 
@@ -94,7 +193,6 @@ if (!notFound) {
     category: brand.category || undefined,
   };
 
-  // WebPage node tying to the Brand
   const webPageLd = {
     ["@context"]: "https://schema.org",
     ["@type"]: "WebPage",
@@ -102,10 +200,7 @@ if (!notFound) {
     name: pageTitle,
     description: pageDesc,
     mainEntity: { ["@id"]: canonical + "#brand" },
-    primaryImageOfPage: {
-      ["@type"]: "ImageObject",
-      url: ogImage,
-    },
+    primaryImageOfPage: { ["@type"]: "ImageObject", url: ogImage },
   };
 
   const breadcrumbsLd = {
@@ -123,20 +218,15 @@ if (!notFound) {
   // ---------- LearnMore links ----------
   internalLinks = [{ href: "/az/", label: "Browse A–Z" }];
 
-  // Category link (if present)
   const catPath = catToPath(brand?.category);
   if (catPath) internalLinks.push({ href: catPath, label: `More in ${brand.category}` });
 
-  // Topic hub links (auto-surface from brand.topics)
   if (Array.isArray(brand?.topics) && brand.topics.length > 0) {
-    // Link to the first topic with a friendly label
     const firstTopic = String(brand.topics[0]);
     internalLinks.push({
       href: `/topics/${encodeURIComponent(firstTopic)}/`,
       label: `More in ${titleFromSlug(firstTopic)}`
     });
-
-    // (Optional) also surface a second topic if you want:
     if (brand.topics[1]) {
       const t2 = String(brand.topics[1]);
       internalLinks.push({
@@ -146,20 +236,14 @@ if (!notFound) {
     }
   }
 
-  // Authority / external references
   if (brand?.links?.wikipedia)
     authorityLinks.push({ href: String(brand.links.wikipedia), label: `${brand.brand} on Wikipedia`, external: true });
-
   if (brand?.links?.official)
     authorityLinks.push({ href: String(brand.links.official), label: "Official site (archived)", external: true, rel: "noopener nofollow" });
-
   if (brand?.links?.wayback)
     authorityLinks.push({ href: String(brand.links.wayback), label: "Archived homepage (Wayback)", external: true });
-
-  // Quality media links (optional)
   if (brand?.links?.verge)
     mediaLinks.push({ href: String(brand.links.verge), label: "The Verge retrospective", external: true });
-
   if (brand?.links?.cnet)
     mediaLinks.push({ href: String(brand.links.cnet), label: "CNET photo gallery", external: true });
 }
@@ -207,25 +291,76 @@ if (!notFound) {
 
       <h1 id="brand-title" class="text-2xl md:text-3xl font-bold mb-2">
         What Happened to {brand.brand}?
+        {/* ⚠️ Scandal chip */}
+        {Array.isArray(brand?.topics) && brand.topics.includes("scandal") && (
+          <span
+            class="ml-2 inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 text-[12px] font-medium text-rose-700
+                   dark:bg-rose-900/30 dark:text-rose-300"
+            title="Ended due to scandal"
+          >
+            ⚠️ Scandal
+          </span>
+        )}
       </h1>
 
+      {/* At-a-glance */}
       <p class="text-gray-800 dark:text-slate-200">
         <strong>At a glance:</strong>
         {brand.active?.start ? ` Founded: ${brand.active.start}.` : "" }
         {brand.active?.end ? ` Defunct: ${brand.active.end}.` : "" }
         {brand.fate ? ` Fate: ${brand.fate}.` : "" }
         {brand.category ? ` Category: ${brand.category}.` : "" }
-        {brand.country ? ` Country: ${brand.country}.` : "" }
+        {brand.country ? ` Country: ${countryLabel(brand.country)}.` : "" }
+        {brand.valuation_peak
+          ? ` Peak valuation: $${Number(brand.valuation_peak.amount || 0).toLocaleString()} ${brand.valuation_peak.currency || ""} (${brand.valuation_peak.date || ""}).`
+          : ""}
       </p>
 
       {brand.summary && (
         <p class="mt-3 text-gray-700 dark:text-slate-300">{brand.summary}</p>
       )}
 
-      {/* Keep existing UI/behavior */}
+      {/* ---- Overview ---- */}
+      {(overviewHtml || overviewBits.what || overviewBits.who || overviewBits.how_end || overviewBits.now) && (
+        <section aria-label="Overview" class="prose prose-sm dark:prose-invert max-w-none mt-4">
+          {overviewHtml ? (
+            <Fragment set:html={overviewHtml} />
+          ) : (
+            <>
+              {overviewBits.what && (
+                <p set:html={overviewBits.what.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")} />
+              )}
+              {overviewBits.who && <p>{overviewBits.who}</p>}
+              {overviewBits.how_end && <p>{overviewBits.how_end}</p>}
+              {overviewBits.now && <p>{overviewBits.now}</p>}
+            </>
+          )}
+
+          {Array.isArray(timeline) && timeline.length > 0 && (
+            <ul class="mt-3 list-disc pl-5">
+              <li>
+                <strong>Timeline:</strong>{" "}
+                {timeline.map((t, i) => `${t.date}${t.text ? " " + t.text : ""}${i < timeline.length - 1 ? " → " : ""}`)}
+              </li>
+            </ul>
+          )}
+
+          {Array.isArray(sources) && sources.length > 0 && (
+            <p class="mt-3 text-sm">
+              Sources:{" "}
+              {sources.map((s, i) => (
+                <Fragment>
+                  <a href={s.url} target="_blank" rel="noopener">{s.label || s.url}</a>{i < sources.length - 1 ? ", " : ""}
+                </Fragment>
+              ))}
+            </p>
+          )}
+        </section>
+      )}
+
+      {/* Existing UI */}
       <ExploreMore brand={brand} />
 
-      {/* LearnMore: render when any link bucket has items */}
       {(internalLinks.length || authorityLinks.length || mediaLinks.length) && (
         <LearnMore internal={internalLinks} authority={authorityLinks} media={mediaLinks} />
       )}

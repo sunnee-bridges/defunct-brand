@@ -5,10 +5,30 @@
   "country": "BS",
   "active": { "start": 2019, "end": 2022 },
   "fate": "Chapter 11 bankruptcy after fraud revelations",
-  "summary": "Crypto exchange founded in 2019; collapsed in Nov 2022.",
-  "notable_products": ["FTX Exchange", "FTT token"],
+  "headquarters": "Nassau, Bahamas",
+  "served": "retail and institutional traders",
+  "products": ["Spot trading", "Derivatives", "FTT token"],
   "topics": ["scandal"],
-  "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/FTX"
-  }
+
+  "overview": {
+    "what": "FTX was a cryptocurrency exchange operating from 2019–2022.",
+    "who": "Headquartered in the Bahamas, it served retail and institutional traders with spot and derivatives products, including its native FTT token.",
+    "how_end": "In November 2022, FTX and related entities filed for Chapter 11 bankruptcy and the platform ceased operations amid liquidity issues and allegations of misuse of customer funds.",
+    "now": "Most former FTX users migrated to alternative exchanges or self-custody solutions."
+  },
+
+  "timeline": [
+    { "date": "2019", "text": "Launch" },
+    { "date": "2021–2022", "text": "Rapid growth" },
+    { "date": "2022-11", "text": "Bankruptcy filing" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/FTX" }
+  ]
+
+ 
+  ,"overview_md": "**FTX** was a cryptocurrency exchange that operated from 2019 to 2022. Backed by venture funding and aggressive marketing, it promoted spot and derivatives trading and its native **FTT** token, quickly becoming one of the most visible brands in digital assets.\n\nHeadquartered in the **Bahamas**, FTX served retail and institutional traders with leverage products and perpetual futures, plus staking and tokenized exposures. By **January 2022**, private-market reports placed FTX’s **peak valuation at about $32 billion**.\n\nOn **November 11, 2022**, FTX and related entities **filed for Chapter 11 bankruptcy**, following a severe liquidity crisis and allegations concerning customer funds. Withdrawals were halted and operations wound down under court supervision as new management began restructuring and recovery efforts.\n\nAfter the collapse, many users moved to alternative exchanges or to self-custody. The event intensified discussion of risk controls, transparency, and consumer protection in crypto, and it remains a touchpoint in debates over exchange governance and regulation."
+
+
 }

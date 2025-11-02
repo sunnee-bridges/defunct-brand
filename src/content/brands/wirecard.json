@@ -1,0 +1,29 @@
+{
+  "brand": "Wirecard",
+  "slug": "wirecard",
+  "category": "Finance/Payments",
+  "country": "DE",
+  "active": { "start": 1999, "end": 2020 },
+  "fate": "Insolvency proceedings following accounting scandal",
+  "topics": ["scandal"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Wirecard"
+  },
+
+  "overview_md": "**Wirecard** was a German payments company that offered card issuing, merchant acquiring, and digital wallet services to businesses worldwide. After rapid expansion and inclusion in Germany’s DAX index in 2018, Wirecard became one of Europe’s most closely watched fintech firms.\n\nHeadquartered in Aschheim near Munich, the company served e-commerce merchants and payment partners across Europe and Asia, positioning itself as a technology-first alternative to legacy processors. By the late 2010s it reported fast-growing revenues and international reach.\n\nIn **June 2020**, auditors disclosed that **€1.9 billion** of cash reported on trust accounts could not be verified. Within days, Wirecard withdrew its financial results, the CEO resigned and was later arrested, and the firm **filed for insolvency on 25 June 2020**. Regulators and prosecutors opened investigations into suspected balance-sheet manipulation and market abuse, while the COO fled and remains wanted by authorities.\n\nWirecard’s collapse became a landmark European corporate scandal, prompting reforms in auditing, supervision, and market oversight. Merchants migrated to alternative providers, and assets were sold or wound down under administrators.",
+
+  "timeline": [
+    { "date": "1999", "text": "Company founded" },
+    { "date": "2018-09", "text": "Enters Germany’s DAX index" },
+    { "date": "2020-06-18", "text": "Auditors report €1.9B in cash cannot be confirmed" },
+    { "date": "2020-06-22", "text": "CEO Markus Braun resigns; later arrested" },
+    { "date": "2020-06-25", "text": "Files for insolvency" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Wirecard" },
+    { "label": "EY statement / audit coverage", "url": "https://www.ey.com/" },
+    { "label": "BaFin / regulatory updates", "url": "https://www.bafin.de/" },
+    { "label": "Wayback snapshot", "url": "https://web.archive.org/web/*/wirecard.com" }
+  ]
+}
