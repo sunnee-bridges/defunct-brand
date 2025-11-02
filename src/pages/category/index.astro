@@ -23,7 +23,7 @@ const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
   },
   "retail-entertainment": {
     desc:
-      "Movie, game, and media storefronts that couldn’t survive the digital turn.",
+      "Movie, game, and media storefronts that couldn't survive the digital turn.",
   },
   "computers": {
     desc:
@@ -31,7 +31,7 @@ const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
   },
   "e-commerce": {
     desc:
-      "Dot-com darlings and online storefronts—early strategies vs. today’s e-commerce giants.",
+      "Dot-com darlings and online storefronts—early strategies vs. today's e-commerce giants.",
   },
   "consumer-electronics": {
     label: "Consumer electronics",
@@ -56,6 +56,11 @@ const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
   "wearables": {
     desc:
       "Watches, bands, and quantified-self experiments—what launched, what stuck, what faded.",
+  },
+  "finance-cryptocurrency": {
+    label: "Finance/Cryptocurrency",
+    desc:
+      "Crypto exchanges, fintech startups, and financial services that collapsed—valuations, timelines, and what went wrong.",
   },
 };
 
@@ -146,39 +151,136 @@ const FEATURED = categories.slice(0, 8);
         })}
       </script>
     )}
+
+    <style>
+      /* Enhanced category card with better hover states and tooltip positioning */
+      .category-card {
+        position: relative;
+        transition: all 0.2s ease;
+      }
+      
+      .category-card:hover {
+        transform: scale(1.02);
+        filter: brightness(1.15);
+      }
+
+      /* Improved tooltip styling with better positioning - theme aware */
+      .category-tooltip {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-8px);
+        background: var(--tooltip-bg, rgba(17, 24, 39, 0.95));
+        color: var(--tooltip-text, white);
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        white-space: normal;
+        max-width: 280px;
+        z-index: 50;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        border: 1px solid var(--tooltip-border, rgba(75, 85, 99, 0.5));
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Light theme tooltip styles */
+      :global(html:not(.dark)) .category-tooltip {
+        --tooltip-bg: rgba(255, 255, 255, 0.98);
+        --tooltip-text: rgba(17, 24, 39, 0.95);
+        --tooltip-border: rgba(209, 213, 219, 0.8);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      /* Dark theme tooltip styles */
+      :global(html.dark) .category-tooltip {
+        --tooltip-bg: rgba(17, 24, 39, 0.95);
+        --tooltip-text: white;
+        --tooltip-border: rgba(75, 85, 99, 0.5);
+      }
+
+      /* Tooltip arrow */
+      .category-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: var(--tooltip-bg, rgba(17, 24, 39, 0.95));
+      }
+
+      /* Show tooltip on hover */
+      .category-card:hover .category-tooltip {
+        opacity: 1;
+      }
+
+      /* Tooltip positioning fallback for items near edges */
+      @media (max-width: 640px) {
+        .category-tooltip {
+          left: 10%;
+          right: 10%;
+          max-width: none;
+          transform: translateX(0) translateY(-8px);
+        }
+        .category-tooltip::after {
+          left: 20%;
+        }
+      }
+
+      /* Badge styling for counts */
+      .count-badge {
+        display: inline-block;
+        background: rgba(75, 85, 99, 0.3);
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        margin-left: 0.5rem;
+      }
+    </style>
   </Fragment>
 
-  <!-- 📦 Page container: matches A–Z/Decades (max-w-6xl, px-4) -->
-  <div class="max-w-6xl mx-auto px-4">
-    <!-- 🧭 Breadcrumb (same placement & style as A–Z/Decades) -->
-    <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
+  <!-- 📦 Page container with explicit left alignment -->
+  <div class="w-full max-w-6xl mx-auto px-4">
+    <!-- 🧭 Navigation with explicit left alignment -->
+    <nav class="mb-3 flex flex-wrap gap-2 justify-start" aria-label="Breadcrumb">
       <a href="/" class="chip focus-ring">← Home</a>
+      <a href="/az/" class="chip focus-ring">A–Z</a>
+      <a href="/decade/" class="chip focus-ring">Decades</a>
+      <a href="/data/" class="chip focus-ring">Data</a>
       <span class="chip opacity-70 cursor-default" aria-current="page">Categories</span>
     </nav>
 
-    <!-- Header -->
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Category</h1>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+    <!-- Header with explicit left alignment -->
+    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1 text-left">Browse by Category</h1>
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4 text-left">
       Total categories: {categories.length}
     </p>
 
-    <!-- Chip grid (identical structure to A–Z/Decades) -->
+    <!-- Chip grid -->
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {categories.map((c) => (
         <li>
           <a
             href={`/category/${c.slug}/`}
-            class="chip focus-ring block"
-            title={c.desc}
+            class="chip focus-ring block category-card"
             aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
           >
-            {c.displayLabel} <span class="text-gray-500">({c.n})</span>
+            <span class="font-medium">{c.displayLabel}</span>
+            <span class="count-badge text-gray-400">({c.n})</span>
+            
+            {/* Tooltip with description */}
+            <span class="category-tooltip" role="tooltip">
+              {c.desc}
+            </span>
           </a>
         </li>
       ))}
     </ul>
 
-    <!-- Optional: Back to top, aligned with content like A–Z -->
+    <!-- Back to top -->
     <div class="mt-8">
       <a href="#top" class="chip focus-ring">↑ Back to top</a>
     </div>
