@@ -224,6 +224,11 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"ftx": {
+	id: "ftx";
+  collection: "brands";
+  data: any
+};
 "jet-retail": {
 	id: "jet-retail";
   collection: "brands";
