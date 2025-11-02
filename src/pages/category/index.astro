@@ -145,14 +145,28 @@ const FEATURED = categories.slice(0, 8);
     )}
   </Fragment>
 
-  <div class="max-w-6xl mx-auto px-4">
-  <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
-    <a href="/" class="chip focus-ring">← Home</a>
-    <span class="chip opacity-70 cursor-default" aria-current="page">Categories</span>
-  </nav>
+    <!-- Accessible, indexable intro (hidden visually) -->
+  <p class="sr-only">
+    Defunct Brands A–Z index. Explore discontinued brands alphabetically with quick links to
+    brand timelines, categories, and outcomes.
+  </p>
 
-  <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Category</h1>
-  <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Total categories: {counts.length}</p>
+  <!-- Page container -->
+  <div class="max-w-6xl mx-auto px-4">
+    <!-- Breadcrumb -->
+    <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
+      <a href="/" class="chip focus-ring">← Home</a>
+      <a href="/az/" class="chip focus-ring" aria-current="page">A–Z</a>
+    </nav>
+
+    <!-- Header -->
+    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Browse A–Z</h1>
+    <p class="text-slate-700 dark:text-slate-300 mb-4">
+      A cleaned CSV of brands, categories, active years, and fate.
+    </p>
+
+    <!-- Total brands -->
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Total categories: {counts.length}</p>
 
   <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
     {categories.map((c) => (
