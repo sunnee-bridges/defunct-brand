@@ -89,49 +89,41 @@ const itemListLd = {
     <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
   </Fragment>
 
-  <!-- Breadcrumb-ish chips -->
-   <div class="max-w-6xl mx-auto px-4">
-  <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
-    <a href="/" class="chip focus-ring">← Home</a>
-    <span class="chip opacity-70 cursor-default" aria-current="page">Decades</span>
-  </nav>
+  <!-- Breadcrumb-ish chips + header (modeled like Categories) -->
+  <div class="max-w-6xl mx-auto px-4">
+    <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
+      <a href="/" class="chip focus-ring">← Home</a>
+      <span class="chip opacity-70 cursor-default" aria-current="page">Decades</span>
+    </nav>
 
-  <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Decade</h1>
-  <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
-    Explore brands by the decade they ended (or started when unknown).
-  </p>
+    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Decade</h1>
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+      Total decades: {decades.length}
+    </p>
 
-  {decades.length === 0 ? (
-    <p class="text-slate-600 dark:text-slate-400">No decades available yet.</p>
-  ) : (
-    /* Card grid of decades */
-    <ul class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4 mt-4">
-      {decades.map((d) => (
-        <li>
-          <article
-            class="relative group rounded-xl p-4 border transition
-                   bg-white border-gray-200 hover:bg-slate-50
-                   dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                   focus-within:ring-2 focus-within:ring-indigo-500
-                   focus-within:ring-offset-2 focus-within:ring-offset-white
-                   dark:focus-within:ring-offset-slate-900"
-          >
-            <!-- Full-card click -->
+    {decades.length === 0 ? (
+      <p class="text-slate-600 dark:text-slate-400">No decades available yet.</p>
+    ) : (
+      // Chip grid (mirrors Categories page)
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {decades.map((d) => (
+          <li>
             <a
               href={`/decade/${d}/`}
-              class="stretched-link focus-ring rounded"
-              aria-label={`View ${d} brands`}
-            ></a>
-
-            <h2 class="text-lg font-semibold leading-snug mb-1 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
+              class="chip focus-ring block"
+              title={`${counts.get(d)} ${counts.get(d) === 1 ? "brand" : "brands"} in the ${d}s`}
+              aria-label={`${d}s (${counts.get(d)} ${counts.get(d) === 1 ? "brand" : "brands"})`}
+            >
               {d}
-            </h2>
-            <p class="text-sm text-slate-600 dark:text-slate-300">
-              {counts.get(d)} {counts.get(d) === 1 ? "brand" : "brands"}
-            </p>
-          </article>
-        </li>
-      ))}
-    </ul>
-  )}
+              {" "}
+              <span class="text-gray-500">
+                ({counts.get(d)})
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
 </Base>
+
