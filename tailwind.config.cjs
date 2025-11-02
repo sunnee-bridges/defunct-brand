@@ -10,6 +10,5 @@ module.exports = {
   darkMode: 'class', // optional toggle later
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/line-clamp'),
   ],
 };
