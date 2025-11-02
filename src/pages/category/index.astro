@@ -3,232 +3,104 @@
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
-/**
- * Curated copy for category hubs (used for nicer labels & hover descriptions).
- * Keys MUST be slugified (same algo as `slugify()`).
- */
 const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
   "retail": {
-    desc:
-      "Department stores, specialty shops, and mall icons that shuttered—timelines, fates, and what led to the downfall.",
+    desc: "Department stores, specialty shops, and mall icons that shuttered—timelines, fates, and what led to the downfall.",
   },
   "software-internet": {
     label: "Software / Internet",
-    desc:
-      "Once-dominant apps and online services—what they did, when they peaked, and why they disappeared.",
+    desc: "Once-dominant apps and online services—what they did, when they peaked, and why they disappeared.",
   },
   "mobile-devices": {
-    desc:
-      "Phones, PDAs, and handhelds that defined eras of mobility—and the shifts that ended them.",
+    desc: "Phones, PDAs, and handhelds that defined eras of mobility—and the shifts that ended them.",
   },
   "retail-entertainment": {
-    desc:
-      "Movie, game, and media storefronts that couldn’t survive the digital turn.",
+    desc: "Movie, game, and media storefronts that couldn't survive the digital turn.",
   },
   "computers": {
-    desc:
-      "PC makers and platforms that shaped personal computing before being outpaced by new ecosystems.",
+    desc: "PC makers and platforms that shaped personal computing before being outpaced by new ecosystems.",
   },
   "e-commerce": {
-    desc:
-      "Dot-com darlings and online storefronts—early strategies vs. today’s e-commerce giants.",
+    desc: "Dot-com darlings and online storefronts—early strategies vs. today's e-commerce giants.",
   },
   "consumer-electronics": {
     label: "Consumer electronics",
-    desc:
-      "Gadgets we loved—from music players to cameras—retired by smartphones or shifting tastes.",
+    desc: "Gadgets we loved—from music players to cameras—retired by smartphones or shifting tastes.",
   },
   "video-games": {
     label: "Video games",
-    desc:
-      "Studios, services, and titles that disappeared—launches, closures, and influence.",
+    desc: "Studios, services, and titles that disappeared—launches, closures, and influence.",
   },
   "video-game-consoles": {
     label: "Video game consoles",
-    desc:
-      "Hardware that battled for the living room—specs, release windows, and market forces.",
+    desc: "Hardware that battled for the living room—specs, release windows, and market forces.",
   },
   "airline": {
     label: "Airlines",
-    desc:
-      "Carriers that merged, rebranded, or ceased operations—routes, fleets, consolidation timelines.",
+    desc: "Carriers that merged, rebranded, or ceased operations—routes, fleets, consolidation timelines.",
   },
   "wearables": {
-    desc:
-      "Watches, bands, and quantified-self experiments—what launched, what stuck, what faded.",
+    desc: "Watches, bands, and quantified-self experiments—what launched, what stuck, what faded.",
+  },
+  "finance-cryptocurrency": {
+    label: "Finance/Cryptocurrency",
+    desc: "Crypto exchanges, fintech startups, and financial services that collapsed—valuations, timelines, and what went wrong.",
   },
 };
 
-/** Load curated brand JSON at build time */
 const modules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, any>;
 
-/** Normalize + de-dupe by canonical slug (fallback to slugify(brand)) */
 const bySlug = new Map<string, any>();
 for (const raw of Object.values(modules)) {
   const b = raw as any;
   if (!b) continue;
-  const key =
-    String(b.slug || "").trim().toLowerCase() ||
-    slugify(String(b.brand || ""));
+  const key = String(b.slug || "").trim().toLowerCase() || slugify(String(b.brand || ""));
   if (!key) continue;
   if (typeof b.category === "string") b.category = b.category.trim();
   if (!b.category) continue;
-  if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
+  if (!bySlug.has(key)) bySlug.set(key, b);
 }
 const brands = Array.from(bySlug.values());
 
-/** Build category counts (based on deduped curated set) */
 const counts = new Map<string, number>();
 for (const b of brands) {
   counts.set(b.category, (counts.get(b.category) || 0) + 1);
 }
 
-/**
- * Sorted categories with meta applied.
- * We keep the canonical slug for URLs, and use CATEGORY_META to override label/desc.
- */
 const categories = Array.from(counts.entries())
   .map(([rawLabel, n]) => {
     const slug = slugify(rawLabel);
     const meta = CATEGORY_META[slug] ?? {};
     const displayLabel = meta.label || rawLabel;
-    const desc =
-      meta.desc || `Explore ${n} brand${n === 1 ? "" : "s"} in ${displayLabel}.`;
+    const desc = meta.desc || `Explore ${n} brand${n === 1 ? "" : "s"} in ${displayLabel}.`;
     return { slug, displayLabel, desc, n };
   })
   .sort((a, b) => a.displayLabel.localeCompare(b.displayLabel));
 
-/** SEO bits */
-const PAGE_TITLE = "Browse by Category • Defunct Brands";
-const PAGE_DESC =
-  "Browse discontinued and defunct brands by category. Clean, structured entries with timelines and outcomes.";
-const CANONICAL = Astro.site
-  ? new URL("/category/", Astro.site).href
-  : "/category/";
-
-/** Feature first 8 (for JSON-LD only) */
-const FEATURED = categories.slice(0, 8);
+const title = "Browse by Category • Defunct Brands";
+const desc = "Browse discontinued and defunct brands by category. Clean, structured entries with timelines and outcomes.";
+const canonical = Astro.site ? new URL("/category/", Astro.site).href : "/category/";
 ---
-
-<Base title={PAGE_TITLE} description={PAGE_DESC}>
-  <!-- 🔎 SEO head -->
-  <Fragment slot="head">
-    <link rel="canonical" href={CANONICAL} />
-    <meta name="description" content={PAGE_DESC} />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={CANONICAL} />
-    <meta property="og:title" content={PAGE_TITLE} />
-    <meta property="og:description" content={PAGE_DESC} />
-
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={PAGE_TITLE} />
-    <meta name="twitter:description" content={PAGE_DESC} />
-
-    {/* JSON-LD: ItemList of featured categories (optional) */}
-    {FEATURED.length > 0 && (
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "Categories",
-          itemListElement: FEATURED.map((c, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: c.displayLabel,
-            url: Astro.site
-              ? new URL(`/category/${c.slug}/`, Astro.site).href
-              : `/category/${c.slug}/`,
-          })),
-        })}
-      </script>
-    )}
-  </Fragment>
-
-  <!-- 📦 Page container: matches A–Z/Decades (max-w-6xl, px-4) -->
-  
-  <!-- Page container -->
-  <div class="max-w-6xl mx-auto px-4">
-    <!-- Breadcrumb -->
-    <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
-      <a href="/" class="chip focus-ring">← Home</a>
-      <a href="/az/" class="chip focus-ring" aria-current="page">A–Z</a>
-    </nav>
-
-    <!-- Header -->
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Browse A–Z</h1>
-    <p class="text-slate-700 dark:text-slate-300 mb-4">
-      A cleaned CSV of brands, categories, active years, and fate.
-    </p>
-
-    <!-- Total brands -->
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
-      Total brands: 
-    </p>
-
-    <!-- Jump bar directly under brand count -->
-    <div class="flex flex-wrap gap-2 mb-6" role="navigation" aria-label="Jump to letter">
-      {letters.map((L) => {
-        const anchor = anchorIdFor(L);
-        return <a href={`#${anchor}`} class="chip focus-ring">{L}</a>;
-      })}
-    </div>
-
-    <!-- Letter groups (single-column flow) -->
-    <div class="space-y-10">
-      {letters.map((L) => {
-        const anchor = anchorIdFor(L);
-        return (
-          <section id={anchor} role="region" aria-labelledby={`h-${anchor}`}>
-            <div class="flex items-baseline gap-2 mb-3">
-              <h2 id={`h-${anchor}`} class="text-xl font-semibold">{L}</h2>
-              <span class="text-sm text-slate-500 dark:text-slate-400">({groups[L].length})</span>
-            </div>
-
-            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {groups[L].map((b: any) => (
-                <li>
-                  <article
-                    class="relative group rounded-xl p-4 border bg-white border-gray-200
-                           hover:bg-slate-50 transition-all duration-200
-                           dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                           focus-within:ring-2 focus-within:ring-indigo-500
-                           focus-within:ring-offset-2 focus-within:ring-offset-white
-                           dark:focus-within:ring-offset-slate-900 hover:shadow-md h-full"
-                  >
-                    <a
-                      href={`/brand/${encodeURIComponent(b.slug)}/`}
-                      class="stretched-link focus-ring rounded"
-                      aria-label={`${b.brand}${b.active?.start ? ` (${b.active.start}–${b.active?.end ?? "?"})` : ""}${b.fate ? ` — ${b.fate}` : ""}`}
-                    ></a>
-
-                    <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-2 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
-                      {b.brand}
-                    </h3>
-
-                    <div class="text-sm text-gray-600 dark:text-slate-300 mb-1">
-                      {b.active?.start ?? ""}{b.active?.start ? '\u2013' : ''}{b.active?.start ? (b.active?.end ?? '?') : ''}{b.fate ? ` \u2014 ${b.fate}` : ""}
-                    </div>
-
-                    <div class="text-xs text-gray-500 dark:text-slate-400">
-                      {b.category}
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      })}
-    </div>
-
-    <!-- Back to top: bottom, aligned with content -->
-    <div class="mt-10">
-      <a href="#top" class="chip focus-ring">↑ Back to top</a>
-    </div>
-  </div>
-  
+<Base title={title} description={desc} canonical={canonical}>
+  <nav class="mb-4 flex flex-wrap gap-2">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/az/" class="chip focus-ring">A–Z</a>
+    <a href="/decade/" class="chip focus-ring">Decades</a>
+    <a href="/data/" class="chip focus-ring">Data</a>
+    <span class="chip opacity-70 cursor-default" aria-current="page">Categories</span>
+  </nav>
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
+  <p class="text-slate-600 dark:text-slate-300 mb-4">Total categories: {categories.length}</p>
+  <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    {categories.map((c) => (
+      <li>
+        <a href={`/category/${c.slug}/`} class="chip focus-ring block" title={c.desc}>
+          {c.displayLabel} <span class="text-gray-500">({c.n})</span>
+        </a>
+      </li>
+    ))}
+  </ul>
 </Base>
