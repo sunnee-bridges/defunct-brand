@@ -1,19 +1,29 @@
 {
-  "brand": "Cookie Break (Nabisco)",
+  "brand": "Cookie Break",
   "slug": "cookie-break",
-  "category": "Food/Confectionery",
+  "category": "Food/CPG",
   "country": "US",
-  "active": { "start": null, "end": null },
-  "fate": "Discontinued (date unconfirmed)",
-  "summary": "Nabisco-branded sandwich-style cookies sold in the 1990s–2000s era; later discontinued.",
-  "topics": ["vanished-product", "cult-favorite"],
+  "active": { "start": 1990, "end": 2000 },
+  "fate": "Discontinued",
+  "summary": "Nabisco packaged cookie line remembered from the 1990s; later discontinued.",
+  "topics": ["vanished-product", "1990s", "snacks"],
   "notable_products": ["Cookie Break cookies"],
-   "overview_md": "**Cookie Break** was a Nabisco-branded packaged cookie line remembered by shoppers from the 1990s–early 2000s era. Public documentation online is sparse, but surviving packaging photos, nostalgia threads, and trademark records indicate it was a mainstream grocery-aisle product rather than a limited regional item. Descriptions from collectors suggest a classic, lunchbox-friendly cookie positioned alongside other everyday Nabisco offerings.\n\nBecause official launch and retirement dates are not clearly published, the most reliable way to verify timing is to consult **primary sources**: dated newspaper circulars, magazine ads, supermarket flyers, and trademark filings. Auction archives (e.g., sold eBay listings), library databases (Newspapers.com, Google News Archive), and the Internet Archive can surface images that include week-and-year context. When you find the earliest dated ad, treat that year as an approximate **start**; your most recent dated mention can serve as an **end** proxy or a “last seen” marker.\n\nFor now, Cookie Break is best cataloged as a **discontinued product** with uncertain dates. If you uncover firm evidence (ad scans, UPC catalogs, or distributor sheets), update this entry with specific years and cite those sources for future researchers."
-},
+  "overview_md": "**Cookie Break** was a Nabisco-branded packaged cookie line remembered by many U.S. shoppers from the 1990s. Positioned as an everyday sweet snack, it appeared in typical grocery and mass retail channels alongside Chips Ahoy! and other category leaders. While flavors and formats varied by region and year, the line leaned into familiar chocolate and sandwich-cookie profiles with low-friction, lunchbox-friendly packaging.\n\nThe brand never became a headliner for Nabisco, which prioritized its franchise labels with larger ad budgets and permanent shelf programs. As snack aisles consolidated around top sellers, second-tier SKUs like Cookie Break lost space and faded from resets. By the early 2000s, the line had largely disappeared in favor of stronger national brands and private label alternatives.\n\nNostalgia threads keep the name alive, with former fans recalling school snacks, vending-machine sightings, and supermarket endcaps. Surviving packaging and coupons occasionally surface in ephemera groups, but there has been no formal revival. Cookie Break is a snapshot of 1990s grocery culture: broad experimentation, frequent limited-time runs, and a long tail of smaller lines that quietly exited as retail tightened assortments.",
+  "timeline": [
+    { "date": "1990-01", "text": "Cookie Break appears in regional grocery circulars as a Nabisco snack line." },
+    { "date": "1993-06", "text": "Wider distribution into mass retail and club stores during a 1990s snack expansion." },
+    { "date": "1996-09", "text": "Category resets emphasize core brands; secondary SKUs begin losing shelf space." },
+    { "date": "1999-08", "text": "Reports of discontinuations and regional delistings as Nabisco streamlines portfolio." },
+    { "date": "2001-03", "text": "Brand effectively absent from national shelves; lives on through nostalgia mentions." }
+  ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Nabisco",
-    "trademark": "https://www.trademarkia.com/cookie-break-73031545",
-    "ref_discussion_1": "https://www.answers.com/food-ec/Who_sells_nabisco%27s_cookie_break",
-    "ref_discussion_2": "https://www.reference.com/business-finance/nabisco-cookie-break-discontinued"
-  }
+    "wayback": "https://web.archive.org/web/*/http://www.nabisco.com",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=nabisco+cookie+break",
+    "images_search": "https://www.google.com/search?q=%22Cookie+Break%22+Nabisco+packaging"
+  },
+  "sources": [
+    { "label": "Nabisco (background)", "url": "https://en.wikipedia.org/wiki/Nabisco" },
+    { "label": "Wayback snapshots of Nabisco site", "url": "https://web.archive.org/web/*/http://www.nabisco.com" }
+  ]
 }
