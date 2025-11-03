@@ -1,0 +1,33 @@
+{
+  "brand": "DeSoto",
+  "slug": "desoto",
+  "category": "Automotive",
+  "country": "US",
+  "active": { "start": 1928, "end": 1961 },
+  "fate": "Discontinued by Chrysler after a brief 1961 model-year run; last DeSotos were built in late 1960 amid brand overlap and a shrinking mid-price market.",
+  "summary": "Chrysler’s mid-priced marque (1928–1961), known for early success, the 1934 Airflow, and flashy 1950s ‘Forward Look’—retired as the company consolidated around Dodge and Chrysler.",
+  "notable_products": [
+    "DeSoto Airflow (1934)",
+    "DeSoto Firedome / Fireflite",
+    "Adventurer performance models"
+  ],
+  "topics": ["automotive", "mid-price", "brand-consolidation", "forward-look", "airflow"],
+  "overview_md": "**DeSoto** was Chrysler’s mid-price brand, launched in **1928** to slot between value and premium makes and to meet the fierce competition from GM’s laddered lineup. Named after explorer **Hernando de Soto**, the marque scored a strong debut year and quickly established a reputation for roomy bodies, dependable drivetrains, and features that migrated down from Chrysler. In **1934** DeSoto embraced streamlining with the **Airflow**, a radical, aerodynamic design that proved influential even if sales were mixed; the following **Airstream** tempered the look for broader appeal.\n\nPost-war DeSotos rode the boom with **Firedome**, **Fireflite**, and later **Adventurer** trims, benefitting from Virgil Exner’s **‘Forward Look’** styling—longer, lower, and finned. But structural challenges mounted. The **1957–58 recession** hit mid-price buyers hard, quality stumbles across the corporation eroded confidence, and dealer conflicts grew as **Dodge** moved upmarket and **Chrysler** pushed down, squeezing DeSoto’s space. By 1960 Chrysler management opted to simplify its portfolio: the **1961** DeSoto line was pared to two models for a short run before the division was closed.\n\nToday DeSoto stands as a case study in **brand positioning**—how economic cycles, internal overlap, and product timing can undo a once-healthy marque. Collectors prize the late-’50s fin cars and the historically significant Airflow for their design ambition and place in American automotive history.",
+  "timeline": [
+    { "date": "1928-08", "text": "Chrysler announces the DeSoto brand to compete in the mid-price segment." },
+    { "date": "1929-01", "text": "First model year reaches the market; early sales surge establishes the marque." },
+    { "date": "1934-01", "text": "Launch of the DeSoto Airflow—one of the era’s most advanced, aerodynamic designs." },
+    { "date": "1955-10", "text": "‘Forward Look’ styling era begins; Firedome/Fireflite lines boost showroom appeal." },
+    { "date": "1960-11", "text": "Production of the short-run 1961 models ends; Chrysler discontinues the DeSoto division." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/DeSoto_(automobile)",
+    "airflow": "https://en.wikipedia.org/wiki/Chrysler_Airflow",
+    "forward_look": "https://en.wikipedia.org/wiki/Virgil_Exner#Forward_Look"
+  },
+  "sources": [
+    { "label": "Wikipedia – DeSoto (automobile)", "url": "https://en.wikipedia.org/wiki/DeSoto_(automobile)" },
+    { "label": "Wikipedia – Chrysler Airflow (background on streamlining)", "url": "https://en.wikipedia.org/wiki/Chrysler_Airflow" },
+    { "label": "Wikipedia – Virgil Exner / Forward Look", "url": "https://en.wikipedia.org/wiki/Virgil_Exner#Forward_Look" }
+  ]
+}

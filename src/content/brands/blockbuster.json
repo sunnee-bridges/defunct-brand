@@ -3,17 +3,27 @@
   "slug": "blockbuster",
   "category": "Retail/Entertainment",
   "country": "US",
-  "active": {
-    "start": 1985,
-    "end": 2014
-  },
-  "fate": "Bankruptcy/closures",
-  "summary": "Video rental chain largely closed after bankruptcy; one store remains as novelty.",
-  "notable_products": [
-    "Video rental",
-    "Game rental"
+  "active": { "start": 1985, "end": 2014 },
+  "fate": "Filed Chapter 11 in Oct 2010; most corporate stores closed by 2014 after asset sale to DISH Network. A single independently-owned franchised store in Bend, Oregon remains as a novelty.",
+  "summary": "Once the dominant video-rental chain, Blockbuster collapsed amid debt, streaming disruption, and Redbox competition; corporate stores closed by 2014, with one famous franchise left in Bend, Oregon.",
+  "notable_products": ["Video rental", "Game rental", "In-store membership"],
+  "topics": ["retail-entertainment", "video-rental", "nostalgia", "disruption"],
+  "overview_md": "**Blockbuster** grew from a single Dallas store in **1985** into the world’s best-known **video-rental** chain, defined by bright blue-and-yellow aisles, Friday-night rushes, and late-fee debates. At its peak, Blockbuster operated thousands of locations worldwide and experimented with add-ons like **game rentals**, mail delivery, and in-store movie/game sales. Scale delivered selection and convenience—new releases were stacked by the wall, while employees steered families to staff picks and two-for-$5 deals.\n\nBut the model was vulnerable. **Netflix’s** by-mail subscriptions removed due dates; **Redbox** kiosks undercut price and convenience; and later **streaming** eroded the need for physical inventory altogether. Strategic zig-zags—late-fee policy changes, a late subscription push, and heavy leverage—left Blockbuster less flexible than upstarts. The company **filed Chapter 11 in 2010**; **DISH Network** acquired key assets in 2011 and tried a hybrid retail/streaming approach before shuttering most corporate stores by **2014**. What remains is largely cultural memory and one beloved outpost: the **Bend, Oregon** franchise, now a nostalgia landmark and informal museum to the Saturday-night ritual.\n\nBlockbuster’s arc captures the shift from scarcity (limited copies, return deadlines) to abundance (on-demand catalogs), and how distribution innovation can upend even the most recognizable storefront.",
+  "timeline": [
+    { "date": "1985-10-19", "text": "First Blockbuster store opens in Dallas, Texas." },
+    { "date": "1994-09", "text": "Viacom acquires Blockbuster, fueling further global expansion." },
+    { "date": "2010-10-21", "text": "Blockbuster files for Chapter 11 bankruptcy protection." },
+    { "date": "2011-04-06", "text": "DISH Network wins auction for Blockbuster assets; some stores continue under new ownership." },
+    { "date": "2014-01", "text": "Most remaining corporate-owned U.S. stores close; later, only the Bend, Oregon franchise continues operating." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Blockbuster_LLC"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Blockbuster_LLC",
+    "bend_store": "https://en.wikipedia.org/wiki/Blockbuster_LLC#Last_remaining_store",
+    "netflix_history": "https://en.wikipedia.org/wiki/Netflix#History"
+  },
+  "sources": [
+    { "label": "Wikipedia – Blockbuster LLC", "url": "https://en.wikipedia.org/wiki/Blockbuster_LLC" },
+    { "label": "Wikipedia – Blockbuster: Last remaining store (Bend, OR)", "url": "https://en.wikipedia.org/wiki/Blockbuster_LLC#Last_remaining_store" },
+    { "label": "Wikipedia – Netflix (history context)", "url": "https://en.wikipedia.org/wiki/Netflix#History" }
+  ]
 }

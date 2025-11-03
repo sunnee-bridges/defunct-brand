@@ -1,0 +1,36 @@
+{
+  "brand": "Star Wars Episode I Pepsi Collection",
+  "slug": "star-wars-episode-i-pepsi-cans-1999",
+  "category": "Beverage/Promotions",
+  "country": "US",
+  "active": { "start": 1999, "end": 1999 },
+  "fate": "Limited-time tie-in promotion; discontinued after campaign",
+  "summary": "Pepsi’s 1999 tie-in for The Phantom Menace: 24 character cans with hidden phrases, rare gold Yoda prizes, and international variants.",
+  "topics": ["vanished-product", "cult-favorite", "licensed-tie-in", "star-wars", "1990s"],
+  "notable_products": [
+    "24 character cans (U.S. set)",
+    "Hidden-phrase “secret words” puzzle",
+    "Gold Yoda prize cans",
+    "International variants (DE/JP)"
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Star_Wars:_Episode_I_%E2%80%93_The_Phantom_Menace",
+    "wayback": "https://web.archive.org/web/*/http://www.pepsi.com",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=1999+pepsi+star+wars+cans",
+    "videos": "https://www.youtube.com/results?search_query=1999+Pepsi+Star+Wars+Episode+1+commercial"
+  },
+  "overview_md": "**Star Wars Episode I Pepsi Collection** was Pepsi’s blockbuster 1999 promotional campaign for _The Phantom Menace_. In the U.S., collectors chased **24 different character cans** (Pepsi, Diet Pepsi, Mountain Dew, et al.), each printed with a small **“secret word.”** When assembled, those words formed **three hidden phrases**, turning a soda tie-in into a full-blown puzzle hunt. The campaign also seeded **rare gold Yoda cans** tied to instant-win cash prizes and created region-specific packaging in markets like Germany and Japan, spawning parallel collecting scenes.\n\nFor fans, the set became a **summer-long quest**: trading doubles, scanning grocery endcaps, and negotiating with convenience stores for fresh shipments. It hit at the peak of prequel hype, with TV spots, in-store displays, and theater promotions driving frenzy. Because the run was strictly **time-boxed to 1999**, complete sets stayed scarce, while mint cartons and display flats became the crown jewels. Today, the collection sits at the intersection of **’90s soda ephemera** and **Star Wars memorabilia**—still active on eBay, in Facebook groups, and in convention bins. Search demand endures around “1999 Pepsi Star Wars cans,” “Episode I collectibles,” and “gold Yoda can,” keeping this promotion firmly in nostalgia’s hall of fame.",
+  "timeline": [
+    { "date": "1999-01", "text": "PepsiCo finalizes U.S. promotional slate; can art and secret-word scheme locked for production." },
+    { "date": "1999-04", "text": "Early shipments and store displays roll out to grocers and c-stores ahead of film release." },
+    { "date": "1999-05-19", "text": "U.S. premiere of *The Phantom Menace*; national TV spots push collecting all 24 cans." },
+    { "date": "1999-06", "text": "Peak collecting period; trades, checklists, and reports of gold Yoda prize cans circulate." },
+    { "date": "1999-09", "text": "Promotion winds down; remaining inventory sells through, ending the limited run." }
+  ],
+  "sources": [
+    { "label": "Film context: The Phantom Menace (Wikipedia)", "url": "https://en.wikipedia.org/wiki/Star_Wars:_Episode_I_%E2%80%93_The_Phantom_Menace" },
+    { "label": "Vintage commercials & promos (YouTube search)", "url": "https://www.youtube.com/results?search_query=1999+Pepsi+Star+Wars+Episode+1+commercial" },
+    { "label": "Archival Pepsi site snapshots (Wayback)", "url": "https://web.archive.org/web/*/http://www.pepsi.com" },
+    { "label": "Active secondary market listings (eBay)", "url": "https://www.ebay.com/sch/i.html?_nkw=1999+pepsi+star+wars+cans" }
+  ]
+}

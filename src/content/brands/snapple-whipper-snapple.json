@@ -1,0 +1,39 @@
+{
+  "brand": "Snapple Whipper Snapple",
+  "slug": "snapple-whipper-snapple",
+  "category": "Beverages/Non-alcoholic",
+  "country": "US",
+  "active": { "start": 1998, "end": 1999 },
+  "fate": "Launched as a ready-to-drink fruit smoothie line in 1998; momentum into 1999, then phased out in the early 2000s.",
+  "summary": "A short-lived Snapple line of shelf-stable fruit smoothies introduced in 1998. Popular out of the gate, Whipper Snapple won trade awards but was discontinued soon after as the category shifted.",
+  "notable_products": [
+    "Strawberry Banana",
+    "Orange Dream",
+    "Peach Mango"
+  ],
+  "topics": ["vanished-product", "nostalgia", "cult-favorite"],
+  "overview_md": "**Whipper Snapple** was Snapple’s late-1990s move into the booming shelf-stable smoothie space. Introduced in spring **1998**, the line blended fruit juices and purees with a touch of dairy to create a thicker, dessert-leaning drink—marketed as a portable “pour a smoothie, no blender needed.” It arrived in multiple flavors (including **Strawberry Banana**, **Orange Dream**, and **Peach Mango**) and leveraged Snapple’s distribution and quirky ads to stand out on crowded cold cases.\n\nThe launch was initially strong. Company filings reported **nearly three million cases** sold in the first eight months and trade-press accolades, including **Convenience Store News’ New Beverage Product of the Year** and an **AMA Edison Award**. Press coverage in late 1998 highlighted the novelty (and 99-cent price points) while noting the hint-of-dairy formula. By **1999**, additional flavors rolled out as Snapple pushed for broader placement.\n\nDespite the start, the smoothie segment quickly fragmented as competitors, flavor extensions, and changing shopper tastes (toward lighter juices, enhanced waters, and later low-cal options) eroded the proposition. Distribution became patchy and Whipper Snapple faded in the **early 2000s**. Today it’s remembered as a **vanished product** from the alc-pop/fruit-drink experimentation era—fondly recalled for the frothy texture and bold, kid-friendly flavors. *(Note: Whipper Snapple was a smoothie line—not a carbonated beverage.)*",
+  "timeline": [
+    { "date": "1998-04", "text": "National launch of Whipper Snapple with six flavors; positioned as ready-to-drink smoothies." },
+    { "date": "1998-10", "text": "Wins trade recognition (CSNews New Beverage Product of the Year; AMA Edison Award, 1998)." },
+    { "date": "1998-12", "text": "Mainstream press highlights the novelty and price (~$0.99/10-oz), noting fruit + hint-of-dairy formula." },
+    { "date": "1999-04", "text": "Line extension adds new flavors; company signals continued momentum into 1999." },
+    { "date": "2000-06", "text": "Category cools; distribution retrenches and the line is phased out (circa early 2000s)." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Snapple",
+    "triarc_1998_ar": "https://media.corporate-ir.net/media_files/irol/67/67548/pdfs/1998_Triarc_Annual_Report.pdf",
+    "bevnet_orange_dream": "https://www.bevnet.com/brands/whipper/orange_dream",
+    "bevnet_peach_mango": "https://www.bevnet.com/brands/whipper/peach_mango",
+    "press_1998_article": "https://www.southcoasttoday.com/story/news/1998/12/09/pour-smoothie-without-using-blender/50539890007/",
+    "ad_1999": "https://www.youtube.com/watch?v=OV8qvjJ-aLo"
+  },
+  "sources": [
+    { "label": "Triarc (Snapple parent) 1998 Annual Report – Whipper Snapple launch, sales & awards", "url": "https://media.corporate-ir.net/media_files/irol/67/67548/pdfs/1998_Triarc_Annual_Report.pdf" },
+    { "label": "SouthCoastToday (Dec 9, 1998) – Press coverage of Whipper Snapple", "url": "https://www.southcoasttoday.com/story/news/1998/12/09/pour-smoothie-without-using-blender/50539890007/" },
+    { "label": "BevNET – Whipper Snapple product pages (discontinued)", "url": "https://www.bevnet.com/brands/whipper/orange_dream" },
+    { "label": "BevNET – Peach Mango listing (ingredients incl. skim milk/cream)", "url": "https://www.bevnet.com/brands/whipper/peach_mango" },
+    { "label": "YouTube – Whipper Snapple TV commercial (1999)", "url": "https://www.youtube.com/watch?v=OV8qvjJ-aLo" },
+    { "label": "Wikipedia – Snapple (brand background)", "url": "https://en.wikipedia.org/wiki/Snapple" }
+  ]
+}

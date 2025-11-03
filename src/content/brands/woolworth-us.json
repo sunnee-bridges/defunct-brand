@@ -3,17 +3,29 @@
   "slug": "woolworth-us",
   "category": "Retail",
   "country": "US",
-  "active": {
-    "start": 1879,
-    "end": 1997
-  },
-  "fate": "Converted/closed",
-  "summary": "US five-and-dime chain closed; some international successors remain.",
-  "notable_products": [
-    "Five-and-dime stores",
-    "Foot Locker spinoff"
+  "active": { "start": 1879, "end": 1997 },
+  "fate": "U.S. five-and-dime chain wound down in 1997; parent reoriented around athletic retail (Foot Locker) and later dropped the Woolworth name.",
+  "summary": "Iconic American five-and-dime founded in 1879. The U.S. stores were closed in 1997 as the company pivoted to its successful Foot Locker banner; international Woolworth successors persisted under separate ownership.",
+  "notable_products": ["Five-and-dime stores", "Lunch counters", "Foot Locker (spinoff banner)"],
+  "topics": ["retail", "nostalgia", "brand-retired", "spinoff"],
+  "overview_md": "**Woolworth (US)** popularized the American five-and-dime: compact variety stores that sold everyday goods at fixed low prices and often included busy lunch counters. Frank W. Woolworth opened his first successful store in **1879**, then expanded through a web of affiliated chains that merged in **1912** as the F. W. Woolworth Company. The brand became a Main Street staple and corporate symbol—complete with the neo-Gothic **Woolworth Building** (1913) in New York City—while rolling out thousands of stores across the U.S.\n\nLate-20th-century shifts undermined the model. Discount big-box chains, malls, and category killers chipped away at traffic and margins, and Woolworth’s attempts at modernization were uneven. One bright spot was athletic footwear: banners like **Foot Locker** delivered growth and brand relevance. In **1997** the company shuttered remaining U.S. Woolworth stores to focus on its athletic specialty business. The parent later renamed itself **Venator Group** and, in **2001**, **Foot Locker, Inc.** International “Woolworths” entities followed their own paths, with some continuing as distinct companies in Europe and elsewhere.\n\nToday, Woolworth is remembered for pioneering mass-market retail and for the lunch counters that figured in American social history—while its lasting commercial legacy lives on through Foot Locker’s global chain.",
+  "timeline": [
+    { "date": "1879-07", "text": "First successful five-and-dime opens; the Woolworth retail formula begins to scale." },
+    { "date": "1912-01", "text": "F. W. Woolworth Company is formed via merger of affiliated five-and-dime chains." },
+    { "date": "1913-04", "text": "Woolworth Building opens in New York City as company headquarters." },
+    { "date": "1960-02", "text": "Woolworth lunch counter sit-ins highlight the chain’s place in U.S. civil-rights history." },
+    { "date": "1997-07", "text": "Company announces closure of remaining U.S. Woolworth stores and pivots toward Foot Locker; parent soon adopts Venator, then Foot Locker, Inc. (2001)." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/F._W._Woolworth_Company"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/F._W._Woolworth_Company",
+    "woolworth_building": "https://en.wikipedia.org/wiki/Woolworth_Building",
+    "foot_locker_history": "https://en.wikipedia.org/wiki/Foot_Locker",
+    "nyt_1997_closure": "https://www.nytimes.com/1997/07/18/business/woolworth-to-close-remaining-stores-in-us.html"
+  },
+  "sources": [
+    { "label": "Wikipedia – F. W. Woolworth Company", "url": "https://en.wikipedia.org/wiki/F._W._Woolworth_Company" },
+    { "label": "Wikipedia – Woolworth Building", "url": "https://en.wikipedia.org/wiki/Woolworth_Building" },
+    { "label": "The New York Times – Woolworth to Close Remaining Stores in U.S. (July 18, 1997)", "url": "https://www.nytimes.com/1997/07/18/business/woolworth-to-close-remaining-stores-in-us.html" },
+    { "label": "Wikipedia – Foot Locker (corporate lineage from Woolworth/Venator)", "url": "https://en.wikipedia.org/wiki/Foot_Locker" }
+  ]
 }

@@ -1,0 +1,30 @@
+{
+  "brand": "Theranos",
+  "slug": "theranos",
+  "category": "Healthcare/Diagnostics",
+  "country": "US",
+  "active": { "start": 2003, "end": 2018 },
+  "fate": "Dissolved following regulatory actions and fraud charges; executives later convicted in U.S. federal court",
+  "summary": "Blood-testing startup that promised hundreds of tests from a finger-prick; unraveled after accuracy and regulatory failures led to shutdown and prosecutions.",
+  "topics": ["scandal", "fraud", "diagnostics"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Theranos"
+  },
+
+  "overview_md": "**Theranos** was a U.S. blood-testing startup that claimed it could run hundreds of lab tests from a finger-prick of blood. Founded in 2003 by Elizabeth Holmes, the company pitched a compact analyzer for decentralized diagnostics and pursued retail pilots to place collection sites inside pharmacies. By the mid-2010s, Theranos had become a high-profile Silicon Valley brand with prominent investors, luminaries on its board, and extensive media coverage.\n\nBehind the scenes, Theranos relied largely on modified third-party analyzers while its proprietary devices struggled with accuracy and reliability. In **October 2015**, a series of investigative reports questioned the company’s technology and quality controls. U.S. regulators subsequently inspected Theranos’s labs, citing serious deficiencies, and retail partnerships paused or wound down as scrutiny intensified.\n\nIn **2016**, federal regulators banned Holmes from operating a clinical lab and moved to revoke the company’s CLIA certificate. The **SEC charged Theranos and its executives in March 2018** with raising money through exaggerated and false statements. By **September 2018**, Theranos ceased operations and was dissolved. Later criminal proceedings resulted in convictions of the CEO and the former president. The collapse became a landmark case in medical-device governance, underscoring the need for rigorous validation, transparent performance data, and strong clinical oversight.",
+
+  "timeline": [
+    { "date": "2003-04", "text": "Company founded by Elizabeth Holmes" },
+    { "date": "2013-09", "text": "Announces retail pharmacy pilot for blood testing" },
+    { "date": "2015-10-15", "text": "Investigative reports question accuracy and lab practices" },
+    { "date": "2016-07-08", "text": "Regulators ban Holmes from operating a lab; CLIA action" },
+    { "date": "2018-09-05", "text": "Company dissolves after SEC charges and regulatory actions" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Theranos" },
+    { "label": "SEC press release (Mar 14, 2018)", "url": "https://www.sec.gov/news/press-release/2018-41" },
+    { "label": "CMS CLIA enforcement (overview)", "url": "https://www.cms.gov/Regulations-and-Guidance/Legislation/CLIA" },
+    { "label": "Wayback snapshot (theranos.com)", "url": "https://web.archive.org/web/*/theranos.com" }
+  ]
+}

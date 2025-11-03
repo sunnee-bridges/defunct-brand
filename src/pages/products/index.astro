@@ -1,0 +1,199 @@
+---
+// src/pages/products/index.astro
+import Base from "../../layouts/Base.astro";
+
+/* ---------- Load & filter brand JSON ---------- */
+const modules = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
+const items = Object.values(modules)
+  .map((m: any) => (m?.default ?? m))
+  .filter(Boolean);
+
+const isProductish = (b: any) =>
+  Array.isArray(b?.topics) &&
+  (b.topics.includes("vanished-product") || b.topics.includes("cult-favorite"));
+
+const prods = items
+  .filter(isProductish)
+  .sort((a: any, b: any) => String(a.brand).localeCompare(String(b.brand)));
+
+/* ---------- Helpers for A–Z grouping ---------- */
+const firstLetter = (s: string = "") => {
+  const ch = (s[0] || "").toUpperCase();
+  return /[A-Z]/.test(ch) ? ch : "#";
+};
+const anchorIdFor = (L: string) => (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
+
+/* Group by first letter */
+const groups: Record<string, any[]> = {};
+for (const b of prods) {
+  const L = firstLetter(b.brand);
+  (groups[L] ||= []).push(b);
+}
+
+/* Letters in order; put # (0–9) last */
+const letters = Object.keys(groups)
+  .filter((k) => groups[k]?.length)
+  .sort((a, b) => (a === "#" ? 1 : b === "#" ? -1 : a.localeCompare(b)));
+
+const total = prods.length;
+
+/* ---------- SEO ---------- */
+const PAGE_TITLE = "Vanished Products";
+const PAGE_DESC = "Discontinued products and cult favorites people still miss.";
+const CANONICAL = Astro.site ? new URL("/products/", Astro.site).href : "/products/";
+
+/* Optional JSON-LD (ItemList of first 100 only to keep script small) */
+const LD_MAX = Math.min(total, 100);
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: PAGE_TITLE,
+  numberOfItems: LD_MAX,
+  itemListOrder: "http://schema.org/ItemListOrderAscending",
+  itemListElement: prods.slice(0, LD_MAX).map((b: any, i: number) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.brand,
+    url: Astro.site
+      ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
+      : `/brand/${encodeURIComponent(b.slug)}/`,
+  })),
+};
+---
+
+<Base title={PAGE_TITLE} description={PAGE_DESC} canonical={CANONICAL} jsonLd={itemListLd}>
+  <div class="max-w-6xl mx-auto px-4">
+    <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
+      <a href="/" class="chip focus-ring">← Home</a>
+      <span class="chip opacity-70 cursor-default" aria-current="page">Products</span>
+    </nav>
+
+    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">{PAGE_TITLE}</h1>
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
+      Discontinued products and cult favorites. <span id="countLine">Showing {total} of {total}</span>
+    </p>
+
+    <!-- Controls -->
+    <div class="mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+      <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
+      <input
+        id="q"
+        type="search"
+        class="w-full sm:w-[320px] rounded-md border border-slate-300 bg-white text-slate-900 placeholder-slate-400 px-3 py-2 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+        placeholder="Search products…"
+        inputmode="search"
+        aria-describedby="countLine"
+      />
+
+      <!-- Jump bar -->
+      <div class="mt-1 sm:mt-0 flex flex-wrap gap-2" role="navigation" aria-label="Jump to letter">
+        {letters.map((L) => {
+          const anchor = anchorIdFor(L);
+          return <a href={`#${anchor}`} class="chip focus-ring" data-letter-link={anchor}>{L}</a>;
+        })}
+      </div>
+    </div>
+
+    {total === 0 ? (
+      <p class="text-slate-600 dark:text-slate-400">No products yet.</p>
+    ) : (
+      <>
+        {/* Letter groups */}
+        <div id="groups" class="space-y-8">
+          {letters.map((L) => {
+            const anchor = anchorIdFor(L);
+            const arr = groups[L];
+            return (
+              <section id={anchor} role="region" aria-labelledby={`h-${anchor}`} data-group={anchor}>
+                <div class="flex items-baseline gap-2 mb-3">
+                  <h2 id={`h-${anchor}`} class="text-xl font-semibold">{L}</h2>
+                  <span class="text-sm text-slate-500 dark:text-slate-400" data-group-count>
+                    ({arr.length})
+                  </span>
+                </div>
+
+                <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {arr.map((b: any) => (
+                    <li data-name={String(b.brand).toLowerCase()}>
+                      <a
+                        href={`/brand/${encodeURIComponent(b.slug)}/`}
+                        class="chip focus-ring block"
+                        aria-label={`${b.brand}${b.fate ? ` — ${b.fate}` : ""}`}
+                      >
+                        {b.brand}
+                        {b.category && <span class="ml-1 text-gray-500">({b.category})</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })}
+        </div>
+
+        <div class="mt-8">
+          <a href="#top" class="chip focus-ring">↑ Back to top</a>
+        </div>
+      </>
+    )}
+  </div>
+
+  <!-- Client-side filtering & counts -->
+  <script>
+    (function () {
+      const q = document.getElementById('q');
+      const groups = Array.from(document.querySelectorAll('[data-group]'));
+      const countLine = document.getElementById('countLine');
+      const letterLinks = new Map(
+        Array.from(document.querySelectorAll('[data-letter-link]')).map(a => [a.getAttribute('data-letter-link'), a])
+      );
+
+      function normalize(s){ return (s || '').toLowerCase().trim(); }
+
+      function applyFilter() {
+        const term = normalize(q.value);
+        let visibleTotal = 0;
+
+        groups.forEach(sec => {
+          const items = Array.from(sec.querySelectorAll('li'));
+          let visibleInGroup = 0;
+
+          items.forEach(li => {
+            const name = li.getAttribute('data-name') || '';
+            const ok = !term || name.includes(term);
+            li.style.display = ok ? '' : 'none';
+            if (ok) visibleInGroup++;
+          });
+
+          // Show/hide whole group + update (N)
+          sec.style.display = visibleInGroup ? '' : 'none';
+          const cnt = sec.querySelector('[data-group-count]');
+          if (cnt) cnt.textContent = `(${visibleInGroup})`;
+
+          // Dim or hide the jump chip if group empty
+          const id = sec.getAttribute('id');
+          const link = letterLinks.get(id);
+          if (link) {
+            link.style.opacity = visibleInGroup ? '1' : '0.4';
+            link.tabIndex = visibleInGroup ? 0 : -1;
+            link.setAttribute('aria-disabled', visibleInGroup ? 'false' : 'true');
+          }
+
+          visibleTotal += visibleInGroup;
+        });
+
+        if (countLine) {
+          const all = Number({total});
+          countLine.textContent = `Showing ${visibleTotal} of ${all}`;
+        }
+      }
+
+      q.addEventListener('input', applyFilter);
+      applyFilter();
+    })();
+  </script>
+</Base>

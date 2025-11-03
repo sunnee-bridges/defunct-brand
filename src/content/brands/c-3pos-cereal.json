@@ -1,0 +1,29 @@
+{
+  "brand": "C-3PO's Cereal",
+  "slug": "c-3pos-cereal",
+  "category": "Food/Breakfast cereal",
+  "country": "US",
+  "active": { "start": 1984, "end": 1985 },
+  "fate": "Discontinued",
+  "summary": "Kellogg’s Star Wars–branded cereal (double “8” pieces) sold during 1984–1985.",
+  "topics": ["vanished-product", "cult-favorite", "licensed-tie-in", "80s-nostalgia", "star-wars"],
+  "notable_products": ["C-3PO’s cereal (double-figure-8 pieces)"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/C-3PO%27s",
+    "wayback": "https://web.archive.org/web/*/http://www.kelloggs.com",
+    "commercials": "https://www.youtube.com/results?search_query=C-3PO%27s+cereal+commercial"
+  },
+  "overview_md": "**C-3PO’s Cereal** was a limited-run, Star Wars–licensed breakfast cereal from Kellogg’s sold in 1984–1985. Marketed alongside the original trilogy’s lingering cultural moment, the box featured C-3PO and often R2-D2, while the cereal itself used distinctive double-figure-eight pieces. Positioned as a lightly sweetened corn-and-oat cereal for kids, it relied on TV spots, in-box premiums, and mail-in offers rather than any long shelf-life plan.\n\nFans remember it for three reasons: timing, design, and scarcity. It arrived as Star Wars merchandising still dominated toy aisles, the “double-8” shapes stood out next to rings and puffs, and the product vanished after roughly one year—turning empty boxes and unopened packs into collector targets. In a pre-prequel era, the branding also kept the saga visible to younger shoppers between theatrical releases and TV airings.\n\nToday, C-3PO’s lives on in ’80s cereal retrospectives, commercial compilations, and nostalgia lists. Search interest spikes around vintage food, discontinued cereals, and Star Wars memorabilia, making it a recurring query for pop-culture historians. While the recipe never returned under the same name, the cereal’s brief run is a neat snapshot of how movie licenses powered breakfast aisles—and how fast those tie-ins could disappear once campaigns ended.",
+  "timeline": [
+    { "date": "1984-03", "text": "Licensed collaboration announced internally/at trade level; packaging and ad creative finalized." },
+    { "date": "1984-06", "text": "U.S. rollout begins; TV commercials and kid-magazine ads introduce the double-figure-eight cereal pieces." },
+    { "date": "1984-09", "text": "National availability across major grocery chains; in-box premiums and mail-in offers promoted." },
+    { "date": "1985-03", "text": "Promotional push winds down as seasonal displays rotate out; limited restocks in select regions." },
+    { "date": "1985-12", "text": "Product discontinued; leftover inventory cleared, boxes become early collector items." }
+  ],
+  "sources": [
+    { "label": "Wikipedia: C-3PO’s cereal", "url": "https://en.wikipedia.org/wiki/C-3PO%27s" },
+    { "label": "Vintage TV ads (search)", "url": "https://www.youtube.com/results?search_query=C-3PO%27s+cereal+commercial" },
+    { "label": "Archival brand materials (Wayback)", "url": "https://web.archive.org/web/*/http://www.kelloggs.com" }
+  ]
+}

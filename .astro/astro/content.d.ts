@@ -157,21 +157,77 @@ declare module 'astro:content' {
   slug: "50-brands-that-no-longer-exist";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
+} & { render(): Render[".mdx"] };
+"blockbuster-50m-mistake.mdx": {
+	id: "blockbuster-50m-mistake.mdx";
+  slug: "blockbuster-50m-mistake";
+  body: string;
+  collection: "post";
+  data: any
 } & { render(): Render[".mdx"] };
 "blockbuster-vs-netflix.mdx": {
 	id: "blockbuster-vs-netflix.mdx";
   slug: "blockbuster-vs-netflix";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
+} & { render(): Render[".mdx"] };
+"borders-bn-deal.mdx": {
+	id: "borders-bn-deal.mdx";
+  slug: "borders-bn-deal";
+  body: string;
+  collection: "post";
+  data: any
+} & { render(): Render[".mdx"] };
+"bring-back-discontinued-foods.mdx": {
+	id: "bring-back-discontinued-foods.mdx";
+  slug: "bring-back-discontinued-foods";
+  body: string;
+  collection: "post";
+  data: any
+} & { render(): Render[".mdx"] };
+"circuit-city-firing-doomed-them.mdx": {
+	id: "circuit-city-firing-doomed-them.mdx";
+  slug: "circuit-city-firing-doomed-them";
+  body: string;
+  collection: "post";
+  data: any
+} & { render(): Render[".mdx"] };
+"pan-am-lockerbie-collapse.mdx": {
+	id: "pan-am-lockerbie-collapse.mdx";
+  slug: "pan-am-lockerbie-collapse";
+  body: string;
+  collection: "post";
+  data: any
+} & { render(): Render[".mdx"] };
+"radioshake-death-spiral.mdx": {
+	id: "radioshake-death-spiral.mdx";
+  slug: "radioshack-death-spiral";
+  body: string;
+  collection: "post";
+  data: any
+} & { render(): Render[".mdx"] };
+"tower-records-found-wouldnt-let-go.mdx": {
+	id: "tower-records-found-wouldnt-let-go.mdx";
+  slug: "tower-records-founder-wouldnt-let-go";
+  body: string;
+  collection: "post";
+  data: any
+} & { render(): Render[".mdx"] };
+"toys-r-us-debt.mdx": {
+	id: "toys-r-us-debt.mdx";
+  slug: "toys-r-us-debt";
+  body: string;
+  collection: "post";
+  data: any
 } & { render(): Render[".mdx"] };
 "what-happened-to-pan-am.mdx": {
 	id: "what-happened-to-pan-am.mdx";
   slug: "what-happened-to-pan-am";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 };
 
@@ -186,6 +242,11 @@ declare module 'astro:content' {
 "brands": {
 "aim": {
 	id: "aim";
+  collection: "brands";
+  data: any
+};
+"aladdins-castle": {
+	id: "aladdins-castle";
   collection: "brands";
   data: any
 };
@@ -209,6 +270,21 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"buick-gnx": {
+	id: "buick-gnx";
+  collection: "brands";
+  data: any
+};
+"c-3pos-cereal": {
+	id: "c-3pos-cereal";
+  collection: "brands";
+  data: any
+};
+"carnation-breakfast-bars": {
+	id: "carnation-breakfast-bars";
+  collection: "brands";
+  data: any
+};
 "casual-corner": {
 	id: "casual-corner";
   collection: "brands";
@@ -224,13 +300,38 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"cookie-break": {
+	id: "cookie-break";
+  collection: "brands";
+  data: any
+};
+"desoto": {
+	id: "desoto";
+  collection: "brands";
+  data: any
+};
+"frys-electronics": {
+	id: "frys-electronics";
+  collection: "brands";
+  data: any
+};
 "ftx": {
 	id: "ftx";
   collection: "brands";
   data: any
 };
+"hubba-bubba-bubble-jug": {
+	id: "hubba-bubba-bubble-jug";
+  collection: "brands";
+  data: any
+};
 "jet-retail": {
 	id: "jet-retail";
+  collection: "brands";
+  data: any
+};
+"jolt-cola": {
+	id: "jolt-cola";
   collection: "brands";
   data: any
 };
@@ -254,6 +355,16 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"mcdonalds-szechuan-sauce": {
+	id: "mcdonalds-szechuan-sauce";
+  collection: "brands";
+  data: any
+};
+"mt-gox": {
+	id: "mt-gox";
+  collection: "brands";
+  data: any
+};
 "napster-original": {
 	id: "napster-original";
   collection: "brands";
@@ -261,6 +372,11 @@ declare module 'astro:content' {
 };
 "netscape": {
 	id: "netscape";
+  collection: "brands";
+  data: any
+};
+"oldsmobile": {
+	id: "oldsmobile";
   collection: "brands";
   data: any
 };
@@ -284,6 +400,16 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"ritz-camera": {
+	id: "ritz-camera";
+  collection: "brands";
+  data: any
+};
+"sam-goody": {
+	id: "sam-goody";
+  collection: "brands";
+  data: any
+};
 "sears-canada": {
 	id: "sears-canada";
   collection: "brands";
@@ -294,8 +420,48 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"silicon-valley-bank": {
+	id: "silicon-valley-bank";
+  collection: "brands";
+  data: any
+};
+"snapple-whipper-snapple": {
+	id: "snapple-whipper-snapple";
+  collection: "brands";
+  data: any
+};
+"star-wars-episode-i-pepsi-cans-1999": {
+	id: "star-wars-episode-i-pepsi-cans-1999";
+  collection: "brands";
+  data: any
+};
+"theranos": {
+	id: "theranos";
+  collection: "brands";
+  data: any
+};
+"tmnt-turtle-pies": {
+	id: "tmnt-turtle-pies";
+  collection: "brands";
+  data: any
+};
+"tower-records": {
+	id: "tower-records";
+  collection: "brands";
+  data: any
+};
+"tuesday-morning": {
+	id: "tuesday-morning";
+  collection: "brands";
+  data: any
+};
 "twa": {
 	id: "twa";
+  collection: "brands";
+  data: any
+};
+"wirecard": {
+	id: "wirecard";
   collection: "brands";
   data: any
 };
@@ -306,6 +472,11 @@ declare module 'astro:content' {
 };
 "yahoo-messenger": {
 	id: "yahoo-messenger";
+  collection: "brands";
+  data: any
+};
+"zima": {
+	id: "zima";
   collection: "brands";
   data: any
 };
@@ -446,7 +617,7 @@ declare module 'astro:content' {
 "topics": {
 	id: "topics";
   collection: "topics";
-  data: InferEntrySchema<"topics">
+  data: any
 };
 };
 
@@ -454,5 +625,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = typeof import("../../src/content/config.js");
+	export type ContentConfig = never;
 }

@@ -1,0 +1,29 @@
+{
+  "brand": "Silicon Valley Bank",
+  "slug": "silicon-valley-bank",
+  "category": "Finance/Banking",
+  "country": "US",
+  "active": { "start": 1983, "end": 2023 },
+  "fate": "Closed by regulators; placed into FDIC receivership; most assets and deposits sold to First Citizens Bank",
+  "topics": ["banking-crisis"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Silicon_Valley_Bank"
+  },
+
+  "overview_md": "**Silicon Valley Bank (SVB)** was a U.S. commercial bank founded in 1983 that specialized in serving venture-backed startups, growth-stage tech and life-sciences firms, and the venture capital ecosystem. It offered operating accounts, venture debt, treasury services, and private banking to founders and funds, positioning itself as the go-to banking partner for innovation businesses.\n\nAs low-rate years swelled deposits and client cash balances, SVB invested heavily in longer-duration securities. When interest rates rose sharply and tech funding slowed, unrealized losses on those securities combined with concentrated, networked depositors to create vulnerability. In **March 2023**, after announcing a securities sale and planned capital raise, the bank experienced a rapid run on deposits.\n\nOn **March 10, 2023**, California regulators closed SVB and appointed the **FDIC** as receiver. A bridge bank continued critical services while authorities moved to protect depositors and stabilize the system. Later in March, **First Citizens Bank** agreed to acquire substantially all deposits and loans from the receiver. SVB’s collapse became a defining event of the **2023 banking turmoil**, prompting sector-wide reviews of interest-rate risk management, liquidity buffers, and supervision for institutions with concentrated client bases.",
+
+  "timeline": [
+    { "date": "1983", "text": "Bank founded in Santa Clara, California" },
+    { "date": "2021", "text": "Peak tech cycle; strong deposit growth and large securities portfolio" },
+    { "date": "2023-03-08", "text": "Securities sale and capital raise announced" },
+    { "date": "2023-03-10", "text": "Closed by state regulator; FDIC appointed receiver" },
+    { "date": "2023-03-26", "text": "First Citizens Bank agrees to acquire deposits and loans from FDIC" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Silicon_Valley_Bank" },
+    { "label": "FDIC press & receivership resources", "url": "https://www.fdic.gov/" },
+    { "label": "First Citizens press release (transaction)", "url": "https://www.firstcitizens.com/" },
+    { "label": "Wayback snapshot (svb.com)", "url": "https://web.archive.org/web/*/svb.com" }
+  ]
+}

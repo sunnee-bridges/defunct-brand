@@ -1,0 +1,33 @@
+{
+  "brand": "Zima",
+  "slug": "zima",
+  "category": "Beverages/Alcohol",
+  "country": "US",
+  "active": { "start": 1993, "end": 2008 },
+  "fate": "U.S. discontinuation in 2008 after declining sales; brief limited revivals in 2017 and 2018.",
+  "summary": "A clear, citrus-leaning malt beverage introduced by Coors in 1993. After a huge early splash, U.S. sales faded and Zima was discontinued in 2008, with short nostalgic returns in 2017–2018.",
+  "notable_products": ["Zima Clearmalt", "Zima Citrus (assorted flavors)"],
+  "topics": ["vanished-product", "nostalgia", "cult-favorite"],
+  "overview_md": "**Zima** was Coors’ clear, lightly citrus-flavored malt beverage that arrived in 1993 with “it’s zomething different” positioning and frosty, translucent bottles. Riding the 1990s trend for clear, ‘lighter’ products, it sold briskly out of the gate and became a pop-culture shorthand for alternative beer. Over time, brand momentum waned as copycats crowded shelves, flavor extensions muddied the proposition, and hard lemonades/alc-pops shifted attention. By 2008, distribution wound down in the U.S.\n\nNostalgia kept the name alive. After years of jokes and retro callbacks, Zima returned as a **limited release** in summer 2017 and again in 2018, targeting curiosity, tailgates, and backyard parties. The liquid stayed true to the original concept—crisp, sweet-leaning, and highly carbonated—while packaging leaned into 1990s vibes. Outside the U.S., Zima had a longer life in Japan, where it remained available for years and even spawned local variants before being phased out.\n\nToday Zima is remembered as a defining 1990s alc-pop: a time capsule of clear-product aesthetics, early flavor experimentation, and media references that outlived its regular shelf presence. The brief revivals confirmed its cult status—**a classic vanished product** that still sparks curiosity when it appears in vintage ads or party stories.",
+  "timeline": [
+    { "date": "1993-06", "text": "National U.S. launch of Zima by Coors as a clear, citrusy malt beverage." },
+    { "date": "1994-12", "text": "Early-years peak: Zima becomes a 1990s pop-culture staple amid growing alc-pop competition." },
+    { "date": "2005-05", "text": "Flavor extensions and repositioning efforts continue as sales trend downward." },
+    { "date": "2008-10", "text": "U.S. discontinuation as wholesalers wind down remaining inventory." },
+    { "date": "2017-06", "text": "Limited summer revival in the U.S.; a second short run returns in 2018 before ending again." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Zima_(drink)",
+    "npr_2017": "https://www.npr.org/2017/06/02/531186444/zimas-back-and-its-not-even-throwback-thursday",
+    "chicagotrib_2018": "https://www.chicagotribune.com/dining/drink/ct-food-zima-returns-20180531-story.html",
+    "molsoncoors_news": "https://www.molsoncoorsblog.com/news/zima-returns-limited-time",
+    "adage_archive": "https://adage.com/article/news/zima-sparkling-cooler-hits-stores/89611"
+  },
+  "sources": [
+    { "label": "Wikipedia – Zima", "url": "https://en.wikipedia.org/wiki/Zima_(drink)" },
+    { "label": "NPR – Zima’s Back (Jun 2, 2017)", "url": "https://www.npr.org/2017/06/02/531186444/zimas-back-and-its-not-even-throwback-thursday" },
+    { "label": "Chicago Tribune – Zima returns for summer 2018", "url": "https://www.chicagotribune.com/dining/drink/ct-food-zima-returns-20180531-story.html" },
+    { "label": "Molson Coors (news/blog) – Limited-time comeback", "url": "https://www.molsoncoorsblog.com/news/zima-returns-limited-time" },
+    { "label": "Ad Age – Launch coverage archive", "url": "https://adage.com/article/news/zima-sparkling-cooler-hits-stores/89611" }
+  ]
+}

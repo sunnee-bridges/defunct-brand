@@ -64,14 +64,35 @@ const topicBadges: Record<string, {
       "inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 font-medium text-rose-700 " +
       "dark:bg-rose-900/30 dark:text-rose-300",
   },
-  // Example for future topics:
-  // "internet-history": {
-  //   label: "Internet History",
-  //   icon: "🌐",
-  //   title: "Historically significant internet brand",
+
+  // NEW: tiny badge for discontinued products (explicit tag)
+  "vanished-product": {
+    label: "Product",
+    icon: "🧃",
+    title: "Discontinued product",
+    classes:
+      "inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700 " +
+      "dark:bg-emerald-900/30 dark:text-emerald-300",
+  },
+
+  // Optional alias tag shows the same tiny product badge
+  "cult-favorite": {
+    label: "Product",
+    icon: "🧃",
+    title: "Discontinued product (cult favorite)",
+    classes:
+      "inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700 " +
+      "dark:bg-emerald-900/30 dark:text-emerald-300",
+  },
+
+  // If you also use "one-that-got-away", uncomment to map it to Product:
+  // "one-that-got-away": {
+  //   label: "Product",
+  //   icon: "🧃",
+  //   title: "Beloved discontinued product",
   //   classes:
-  //     "inline-flex items-center rounded-full bg-sky-50 px-2 py-0.5 font-medium text-sky-700 " +
-  //     "dark:bg-sky-900/30 dark:text-sky-300",
+  //     "inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700 " +
+  //     "dark:bg-emerald-900/30 dark:text-emerald-300",
   // },
 };
 
@@ -79,12 +100,11 @@ const topicBadges: Record<string, {
 const topicsArr: string[] = Array.isArray(brand?.topics) ? brand.topics : [];
 
 // Optional fallback: infer "scandal" when fate text clearly suggests it.
-// This is conservative; edit the regex to your taste.
 const scandalish = /fraud|scandal|brib|launder|misconduct|embezz|hacking|phone[- ]?hacking|accounting\s+irregular/i;
 const hasScandalTag = topicsArr.includes("scandal");
 const inferredScandal = !hasScandalTag && scandalish.test(String(brand?.fate || ""));
 
-// Build chips from explicit topics
+// Build chips from explicit topics (renders in the order they appear in brand.topics)
 const topicChips = topicsArr
   .filter((t) => topicBadges[t])
   .map((t) => ({ key: t, ...topicBadges[t] }));
@@ -137,7 +157,7 @@ if (inferredScandal) {
         </span>
       )}
 
-      {/* Topic chips (e.g., Scandal) */}
+      {/* Topic chips (Scandal, Product, etc.) */}
       {topicChips.map((chip) => (
         <span
           class={chip.classes}

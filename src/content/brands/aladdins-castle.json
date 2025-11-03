@@ -1,0 +1,30 @@
+{
+  "brand": "Aladdin's Castle",
+  "slug": "aladdins-castle",
+  "category": "Retail/Entertainment",
+  "country": "US",
+  "active": { "start": 1976, "end": 2003 },
+  "fate": "Brand retired after consolidation and closures; many locations shuttered or rebranded under successor arcade operators",
+  "summary": "Mall-based video arcade chain known for tokens, ticket redemption, and deep 1980s–1990s catalog; U.S. brand sunset by the early 2000s.",
+  "topics": ["video-arcade", "retail-entertainment", "physical-media", "bankruptcy"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Aladdin%27s_Castle_(video_arcade)"
+  },
+
+  "overview_md": "**Aladdin’s Castle** was a mall-based video arcade chain that became a fixture of American retail culture from the late 1970s through the 1990s. Known for tokens, ticket redemption counters, neon signage, and walls of cabinets that rotated with new releases, the chain helped introduce mainstream shoppers to arcade hits alongside pinball and prize games. Stores were designed as hangouts: low light, loud soundtracks, and staff who swapped boards and promoted weekly high-score challenges.\n\nThe concept scaled with the growth of enclosed shopping malls. By the mid-1980s and early 1990s, Aladdin’s Castle operated hundreds of locations across the U.S., often anchoring food-court corridors or sitting near cinema entrances to capture weekend traffic. As home consoles surged and mall footfall shifted, the economics grew tougher: rising rents and declining per-visit coin drop pressured the big-floorplate arcade model. Corporate ownership changes led to consolidation with other operators, selective rebranding, and waves of closures.\n\nBy the early 2000s, most Aladdin’s Castle sites had been shuttered or absorbed into successor banners, and the brand name was retired. The chain remains a touchstone for mall-era nostalgia—remembered for stacks of prize tickets, birthday parties under blacklight, and the feeling of discovering a new cabinet months before it arrived on a home console.",
+
+  "timeline": [
+    { "date": "1976", "text": "First Aladdin's Castle arcades open in U.S. shopping malls" },
+    { "date": "1980s", "text": "Rapid national expansion; hundreds of mall locations and strong redemption programs" },
+    { "date": "1993", "text": "Corporate consolidation with larger arcade operators; select locations rebranded over time" },
+    { "date": "2001", "text": "Closures accelerate amid weak mall traffic and competition from home consoles" },
+    { "date": "2003", "text": "Brand retired; remaining sites shuttered or converted to successor arcade banners" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Aladdin%27s_Castle_(video_arcade)" },
+    { "label": "Wayback snapshot (archival mentions)", "url": "https://web.archive.org/" },
+    { "label": "Local news retrospectives (mall arcades)", "url": "https://www.newspapers.com/" },
+    { "label": "Trade press / arcade history features", "url": "https://www.arcade-museum.com/" }
+  ]
+}

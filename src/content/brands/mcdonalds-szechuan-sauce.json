@@ -1,0 +1,33 @@
+{
+  "brand": "McDonald's Szechuan Sauce",
+  "slug": "mcdonalds-szechuan-sauce",
+  "category": "Food/Condiments",
+  "country": "US",
+  "active": { "start": 1998, "end": 1998 },
+  "fate": "Limited-time promotional condiment for Disney’s Mulan (1998); sporadically reissued in 2017–2018 and again in 2022 as short-run promos.",
+  "summary": "A limited-edition dipping sauce created for Disney’s Mulan (1998). Discontinued the same year, it later returned in short, highly publicized runs after a 2017 pop-culture resurgence.",
+  "notable_products": ["Szechuan (Mulan) dipping sauce"],
+  "topics": ["vanished-product", "nostalgia", "pop-culture"],
+  "overview_md": "**McDonald’s Szechuan Sauce** debuted in 1998 as a tie-in for Disney’s *Mulan*. Marketed as a limited-time, sweet-savory dipping sauce with a mild peppery profile, it accompanied McNuggets and other menu items during the film’s theatrical window before quietly exiting menus the same year. For years it lived on mostly as packaging ephemera and scattered memories—until a 2017 pop-culture jolt turned it into a cult object.\n\nAn opening episode of *Rick and Morty* jokingly exalted the sauce, sparking petitions, secondary-market listing frenzies, and a wave of online nostalgia. McDonald’s answered with a one-day comeback in October 2017 that drew long lines and headlines for short supply. A broader, time-limited rerelease followed in early 2018, and another app-exclusive return arrived in 2022. Each revival affirmed the sauce’s unusual status: more cultural artifact than staple menu item.\n\nFlavor-wise, the Szechuan Sauce leaned sweet and tangy with soy, sugar, and spice notes—closer to a generalized “Asian-style” glaze than to regional Sichuan cuisine. That distinction didn’t blunt its appeal. Today it’s a quintessential **vanished product**: intermittently resurrected, endlessly referenced, and remembered as much for the story around it as for the taste itself.",
+  "timeline": [
+    { "date": "1998-06", "text": "Sauce launches as a limited-time *Mulan* promotion in U.S. restaurants." },
+    { "date": "1998-09", "text": "Promotion ends; sauce is discontinued after the film’s marketing window." },
+    { "date": "2017-04", "text": "Animated series *Rick and Morty* references the sauce, igniting viral demand." },
+    { "date": "2017-10", "text": "One-day limited return draws long lines; many locations run out quickly." },
+    { "date": "2018-02", "text": "Broader time-limited rerelease supplies more restaurants nationwide." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Szechuan_sauce",
+    "mcd_newsroom": "https://corporate.mcdonalds.com/us/en-us/our-stories.html",
+    "npr_reissue_2018": "https://www.npr.org/sections/thetwo-way/2018/02/22/588184267/mcdonalds-brings-back-szechuan-sauce",
+    "washpost_2017": "https://www.washingtonpost.com/news/food/wp/2017/10/08/mcdonalds-szechuan-sauce-returned-and-customers-were-not-loving-it/",
+    "theverge_2017": "https://www.theverge.com/2017/10/1/16392380/mcdonalds-szechuan-sauce-rick-and-morty-return"
+  },
+  "sources": [
+    { "label": "Wikipedia – Szechuan sauce", "url": "https://en.wikipedia.org/wiki/Szechuan_sauce" },
+    { "label": "NPR – McDonald’s brings back Szechuan Sauce (Feb 22, 2018)", "url": "https://www.npr.org/sections/thetwo-way/2018/02/22/588184267/mcdonalds-brings-back-szechuan-sauce" },
+    { "label": "Washington Post – One-day return shortages (Oct 2017)", "url": "https://www.washingtonpost.com/news/food/wp/2017/10/08/mcdonalds-szechuan-sauce-returned-and-customers-were-not-loving-it/" },
+    { "label": "The Verge – Sauce comeback coverage (Oct 2017)", "url": "https://www.theverge.com/2017/10/1/16392380/mcdonalds-szechuan-sauce-rick-and-morty-return" },
+    { "label": "McDonald’s Newsroom (official statements/archives)", "url": "https://corporate.mcdonalds.com/us/en-us/our-stories.html" }
+  ]
+}

@@ -3,17 +3,29 @@
   "slug": "pets-com",
   "category": "E-commerce",
   "country": "US",
-  "active": {
-    "start": 1998,
-    "end": 2000
-  },
-  "fate": "Liquidation",
-  "summary": "Dot-com era pet supply e-tailer famous for sock puppet; failed in 2000.",
-  "notable_products": [
-    "Sock puppet",
-    "E-commerce"
+  "active": { "start": 1998, "end": 2000 },
+  "fate": "Liquidated in late 2000 after rapid burn and weak unit economics; brand assets sold off.",
+  "summary": "Dot-com era pet-supply e-tailer famous for the sock-puppet mascot. Launched in 1998, went public in 2000, and shut down the same year amid unsustainable shipping costs and thin margins.",
+  "notable_products": ["E-commerce (pet supplies)", "Sock-puppet advertising mascot"],
+  "topics": ["dot-com", "nostalgia", "brand-retired", "e-commerce"],
+  "overview_md": "**Pets.com** was a late-1990s online retailer that tried to move the pet aisle to the web. Launched in **1998**, the company leaned on heavy brand marketing—most memorably a wisecracking **sock-puppet** that became a pop-culture fixture and appeared in national TV spots and a Super Bowl ad. The pitch resonated with awareness, but economics lagged the attention: bulky, low-margin pet goods (kibble, litter) were expensive to ship and hard to make profitable without scale, repeat purchase behavior, and tight logistics.\n\nBacked by prominent investors and partnerships, Pets.com expanded quickly and rolled out nationwide fulfillment while pricing aggressively to win share. In **early 2000** it completed an IPO during the peak of dot-com exuberance. Within months, tightening capital markets and rising customer-acquisition costs exposed the model’s fragility. Despite strong traffic and name recognition, contribution margins stayed thin and marketing spend remained high. By **late 2000**, the company announced it would cease operations and liquidate, selling intellectual property and inventory.\n\nToday, Pets.com is shorthand for the **dot-com bubble**—a case study in the gap between brand fame and unit economics. The sock-puppet lives on as cultural memory, while the lesson about shipping-heavy, low-margin categories remains part of e-commerce strategy playbooks.",
+  "timeline": [
+    { "date": "1998-08", "text": "Site launches; national expansion plans begin." },
+    { "date": "1999-11", "text": "Sock-puppet campaign gains traction; broad TV and print push." },
+    { "date": "2000-01", "text": "Super Bowl appearance amplifies brand awareness." },
+    { "date": "2000-02", "text": "Initial public offering during the dot-com boom." },
+    { "date": "2000-11", "text": "Company announces shutdown and liquidation; brand assets later sold." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Pets.com"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Pets.com",
+    "sec_s1": "https://www.sec.gov/Archives/edgar/data/1095897/000092701699006598/0000927016-99-006598.txt",
+    "nyt_shutdown": "https://www.nytimes.com/2000/11/10/business/petscom-to-close-its-doors.html",
+    "adage_sock_puppet": "https://adage.com/article/news/petscom-sock-puppet/137209"
+  },
+  "sources": [
+    { "label": "Wikipedia – Pets.com", "url": "https://en.wikipedia.org/wiki/Pets.com" },
+    { "label": "SEC – Pets.com S-1 / filings (1999–2000)", "url": "https://www.sec.gov/Archives/edgar/data/1095897/000092701699006598/0000927016-99-006598.txt" },
+    { "label": "The New York Times – Pets.com to Close Its Doors (Nov 2000)", "url": "https://www.nytimes.com/2000/11/10/business/petscom-to-close-its-doors.html" },
+    { "label": "Ad Age – The Sock Puppet (context/advertising history)", "url": "https://adage.com/article/news/petscom-sock-puppet/137209" }
+  ]
 }

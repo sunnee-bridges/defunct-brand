@@ -66,6 +66,19 @@ const jsonLdArray: any[] = [
   ...defaultSchema,
 ];
 
+// ---- SiteNavigationElement (SEO bonus) ----
+const urlFor = (p: string) => (Astro.site ? new URL(p, Astro.site).href : p);
+
+// Use short, clean names; keep URLs absolute when Astro.site is set.
+const NAV_LABELS = ["Categories","A–Z","Decades","Products","Blog","Data"];
+const NAV_PATHS  = ["/category/","/az/","/decade/","/products/","/blog/","/data/"];
+const navSchema = {
+  "@context": "https://schema.org",
+  "@type": "SiteNavigationElement",
+  name: NAV_LABELS,
+  url: NAV_PATHS.map(urlFor)
+};
+
 // Load curated brand JSON (used for random + seeds)
 const mods = import.meta.glob("/src/content/brands/*.json", { eager: true }) as Record<string, any>;
 
@@ -112,6 +125,8 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     {jsonLdArray.map((obj) => (
       <script type="application/ld+json" is:inline set:html={toSafeJson(obj)} />
     ))}
+    <!-- Extra JSON-LD: SiteNavigationElement (safe-stringified) -->
+    <script type="application/ld+json" is:inline set:html={toSafeJson(navSchema)} />
 
     <!-- Allow pages to inject extra SEO / scripts -->
     <slot name="head" />
@@ -186,7 +201,6 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
         data-cf-beacon={JSON.stringify({ token: import.meta.env.PUBLIC_CF_BEACON_TOKEN })}
       />
     )}
-
 
     <!-- Random loader: no JSON parsing, uses /brand-slugs.txt + localStorage cache + idle warmup -->
     <script is:inline>

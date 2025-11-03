@@ -3,17 +3,31 @@
   "slug": "sega-dreamcast",
   "category": "Video game consoles",
   "country": "JP",
-  "active": {
-    "start": 1998,
-    "end": 2001
-  },
-  "fate": "Discontinued",
-  "summary": "Sega's final console discontinued in 2001.",
-  "notable_products": [
-    "Dreamcast console",
-    "VMU"
+  "active": { "start": 1998, "end": 2001 },
+  "fate": "Sega discontinued Dreamcast hardware in 2001 and exited the console business to become a third-party publisher.",
+  "summary": "Sega’s final home console (launched 1998 JP, 1999 NA) known for built-in online play, inventive first-party titles, and the VMU. Discontinued in 2001 as Sega left the hardware market.",
+  "notable_products": ["Dreamcast console", "VMU (Visual Memory Unit)", "Broadband Adapter (optional)"],
+  "topics": ["video-games", "video-game-consoles", "nostalgia", "online-first", "cult-favorite"],
+  "overview_md": "**Dreamcast** was Sega’s forward-looking final console. Debuting in Japan in **1998** and North America on the iconic **9/9/99**, it shipped with a built-in modem—normalizing online play from day one—and a compact **GD-ROM** format. The system courted developers with a Hitachi SH-4/PowerVR 2D–3D pipeline and optional **Windows CE** middleware, while players got crisp VGA output, sleek industrial design, and the quirky **VMU** (a memory card with a screen that doubled as a mini companion device).\n\nIts library punched above its weight: **Soulcalibur**, **Crazy Taxi**, **Jet Set Radio**, **Shenmue**, **NFL 2K**, and **Phantasy Star Online** (one of the first console online RPGs) showcased arcade-grade visuals and inventive mechanics. In the U.S., Sega pushed a dedicated ISP, **SegaNet**, for low-latency matchmaking.\n\nDespite critical praise, the platform struggled against **PlayStation 2** hype and DVD playback (which Dreamcast lacked), uneven third-party support, and rising piracy exploits. On **January 31, 2001**, Sega announced it would discontinue Dreamcast hardware and shift to software publishing; production wound down that spring. The console’s influence endures in cel-shaded art, online console services, and fan communities that still celebrate its experimental spirit.",
+  "timeline": [
+    { "date": "1998-11-27", "text": "Launches in Japan; first sixth-generation console to market." },
+    { "date": "1999-09-09", "text": "North American launch (“9/9/99”) with a strong first-party/arcade lineup." },
+    { "date": "1999-10-14", "text": "European launch expands global footprint ahead of rival platforms." },
+    { "date": "2000-12-21", "text": "Phantasy Star Online releases in Japan (NA in 2001), pioneering console online RPG play." },
+    { "date": "2001-01-31", "text": "Sega announces exit from console hardware; Dreamcast production ends in 2001." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Dreamcast"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Dreamcast",
+    "vmu_wiki": "https://en.wikipedia.org/wiki/Visual_Memory_Unit",
+    "seganet_wiki": "https://en.wikipedia.org/wiki/SegaNet",
+    "pso_wiki": "https://en.wikipedia.org/wiki/Phantasy_Star_Online",
+    "cnet_2001": "https://www.cnet.com/tech/gaming/sega-to-quit-console-business/"
+  },
+  "sources": [
+    { "label": "Wikipedia – Dreamcast", "url": "https://en.wikipedia.org/wiki/Dreamcast" },
+    { "label": "Wikipedia – Visual Memory Unit (VMU)", "url": "https://en.wikipedia.org/wiki/Visual_Memory_Unit" },
+    { "label": "Wikipedia – SegaNet", "url": "https://en.wikipedia.org/wiki/SegaNet" },
+    { "label": "Wikipedia – Phantasy Star Online", "url": "https://en.wikipedia.org/wiki/Phantasy_Star_Online" },
+    { "label": "CNET (Jan 31, 2001) – Sega to quit console business", "url": "https://www.cnet.com/tech/gaming/sega-to-quit-console-business/" }
+  ]
 }

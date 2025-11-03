@@ -3,17 +3,28 @@
   "slug": "lego-universe",
   "category": "Video games",
   "country": "DK",
-  "active": {
-    "start": 2010,
-    "end": 2012
-  },
-  "fate": "Shut down",
-  "summary": "MMO game closed in 2012; not the LEGO company.",
-  "notable_products": [
-    "MMO",
-    "Online game"
+  "active": { "start": 2010, "end": 2012 },
+  "fate": "Servers shut down on Jan 30–31, 2012 after a short free-to-play run and insufficient subscriptions.",
+  "summary": "Family-friendly LEGO MMO (2010–2012) that let players build, quest, and battle the Maelstrom; went free-to-play in 2011 before closing in early 2012.",
+  "notable_products": ["MMO", "Online game"],
+  "topics": ["video-games", "mmo", "kids-online", "shutdown", "nostalgia"],
+  "overview_md": "**LEGO Universe** was a family-friendly massively multiplayer online game set in a new LEGO lore about the **Maelstrom**, a chaotic force threatening imaginative worlds. Released in **October 2010** for PC and Mac, it combined questing, mini-games, and combat with an unusually ambitious building system: players could unlock **LEGO models**, script behaviors, and design spaces in moderated zones. The tone was playful and cooperative—guilds, safe chat options, and curated creativity were core pillars.\n\nDespite an engaged community, the game struggled with the economics of a subscription MMO aimed at kids and families. Moderation and curation costs were high, and early content cadence couldn’t keep pace with player expectations. In **August 2011** the game shifted to a **free-to-play** model with limited areas and items, hoping to widen the funnel; conversions weren’t enough to make the service sustainable. In **November 2011**, the publisher announced the decision to wind down operations, citing the inability to reach a profitable business model.\n\nServers were turned off in **January 2012**. Fans still celebrate its world-building spirit and soundtrack, while private preservation projects keep the memory—and some tools—alive. LEGO Universe remains a snapshot of the challenge of marrying open creativity with a safe, scalable MMO for younger audiences.",
+  "timeline": [
+    { "date": "2010-10-26", "text": "Official launch on PC (Windows) with Mac support following; players begin exploring Nexus and battling the Maelstrom." },
+    { "date": "2011-01-14", "text": "Early content updates expand worlds and gear, refining building and combat loops." },
+    { "date": "2011-08-29", "text": "Transitions to a free-to-play model with starter zones; subscriptions continue to unlock full content." },
+    { "date": "2011-11-04", "text": "Closure announced; reasons cited include inability to achieve a sustainable business model." },
+    { "date": "2012-01-30", "text": "Servers shut down worldwide; accounts closed and billing canceled." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Lego_Universe"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Lego_Universe",
+    "announcement_press": "https://www.pcgamer.com/lego-universe-to-close-in-january/",
+    "f2p_news": "https://www.gameinformer.com/b/news/archive/2011/08/08/lego-universe-goes-free-to-play.aspx",
+    "soundtrack_info": "https://en.wikipedia.org/wiki/Lego_Universe#Music"
+  },
+  "sources": [
+    { "label": "Wikipedia – LEGO Universe", "url": "https://en.wikipedia.org/wiki/Lego_Universe" },
+    { "label": "PC Gamer – LEGO Universe to close in January (Nov 4, 2011)", "url": "https://www.pcgamer.com/lego-universe-to-close-in-january/" },
+    { "label": "Game Informer – LEGO Universe goes free-to-play (Aug 2011)", "url": "https://www.gameinformer.com/b/news/archive/2011/08/08/lego-universe-goes-free-to-play.aspx" }
+  ]
 }

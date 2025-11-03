@@ -3,16 +3,29 @@
   "slug": "linens-n-things",
   "category": "Retail",
   "country": "US",
-  "active": {
-    "start": 1975,
-    "end": 2008
-  },
-  "fate": "Liquidation",
-  "summary": "Home goods retailer liquidated; brand used online later.",
-  "notable_products": [
-    "Home goods stores"
+  "active": { "start": 1975, "end": 2008 },
+  "fate": "Filed Chapter 11 in 2008 and liquidated U.S. stores; brand later relaunched online under new ownership.",
+  "summary": "U.S. home-goods chain founded in 1975. After rapid expansion and a 1996 spin-off/IPO, Linens ’n Things filed for Chapter 11 in 2008 and liquidated its stores; the brand later returned online only.",
+  "notable_products": ["Home goods stores", "Linens", "Housewares", "Small appliances"],
+  "topics": ["nostalgia", "brand-retired", "e-commerce-relaunch"],
+  "overview_md": "**Linens ’n Things** grew from a single home-goods store in the 1970s into a nationwide big-box chain selling linens, housewares, and small appliances. Known for large footprints, weekly coupons, and seasonal assortments, the retailer expanded aggressively through the 1990s after being spun off from Melville Corporation and listed publicly in **1996**. It competed head-to-head with Bed Bath & Beyond and regional players, often colocating in power centers and mall-adjacent retail corridors.\n\nBy the mid-2000s the model faced mounting pressure: softer home categories after the housing peak, rising private-label competition, and the shift to online comparison shopping. With leveraged obligations and traffic declines, the company filed for **Chapter 11** in **2008** and ultimately conducted going-out-of-business sales, closing its U.S. stores. The intellectual property—name, domain, and certain customer assets—was later acquired and used to relaunch **Linens ’n Things** as an **online-only** storefront, keeping the brand recognizable to coupon-savvy shoppers even as the physical chain disappeared.\n\nToday, Linens ’n Things is remembered as a quintessential era of big-box home retail: towering towel walls, kitchen-gadget aisles, and circulars full of bargains—an analog shopping ritual that gave way to e-commerce and more flexible specialty formats.",
+  "timeline": [
+    { "date": "1975-01", "text": "Founding of Linens ’n Things as a specialty home-goods retailer in the U.S." },
+    { "date": "1996-09", "text": "Spun off from Melville Corporation and completes public listing; accelerates store expansion." },
+    { "date": "2005-03", "text": "Peak era with hundreds of large-format stores across the U.S. and Canada." },
+    { "date": "2008-05", "text": "Files for Chapter 11 bankruptcy protection amid sales declines and debt pressure." },
+    { "date": "2008-10", "text": "Begins liquidation of remaining stores; brick-and-mortar retail winds down as IP later moves online." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Linens_%27n_Things"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Linens_%27n_Things",
+    "nyt_bankruptcy_2008": "https://www.nytimes.com/2008/05/03/business/03linens.html",
+    "reuters_liquidation_2008": "https://www.reuters.com/article/us-linensnthings-bankruptcy-idUSTRE49N6L120081024",
+    "wayback_store": "https://web.archive.org/web/*/http://www.lnt.com"
+  },
+  "sources": [
+    { "label": "Wikipedia – Linens ’n Things", "url": "https://en.wikipedia.org/wiki/Linens_%27n_Things" },
+    { "label": "New York Times – Linens ’n Things Files for Bankruptcy (May 2008)", "url": "https://www.nytimes.com/2008/05/03/business/03linens.html" },
+    { "label": "Reuters – Linens ’n Things to liquidate stores (Oct 2008)", "url": "https://www.reuters.com/article/us-linensnthings-bankruptcy-idUSTRE49N6L120081024" },
+    { "label": "Wayback Machine – Archived LNT site", "url": "https://web.archive.org/web/*/http://www.lnt.com" }
+  ]
 }

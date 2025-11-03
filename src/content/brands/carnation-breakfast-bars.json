@@ -1,0 +1,37 @@
+{
+  "brand": "Carnation Breakfast Bars",
+  "slug": "carnation-breakfast-bars",
+  "category": "Food & Beverage",
+  "country": "US",
+  "active": { "start": 1975, "end": 1997 },
+  "fate": "Discontinued (original line ended in 1997; a different 'Carnation Breakfast Essentials' nutrition bar appeared in 2014 and was discontinued by 2020).",
+  "summary": "Granola-style meal-replacement bars introduced by Carnation in 1975; nostalgic fan favorite discontinued in 1997, with a later (different) Nestlé revival in the 2010s.",
+  "topics": ["vanished-product", "cult-favorite", "snack"],
+  "notable_products": [
+    "Chocolate Breakfast Bar",
+    "Peanut Butter Breakfast Bar",
+    "Chocolate Chip Breakfast Bar"
+  ],
+  "overview_md": "**Carnation Breakfast Bars** were a granola-style meal replacement introduced in **1975** as a portable take on Carnation’s Instant Breakfast. Coated in chocolate and marketed as a quick, nutrient-forward option for busy mornings, the bars carved out a loyal following among students and on-the-go families through the late 1970s and 1980s. After **Nestlé acquired Carnation in the mid-1980s**, the brand’s breakfast portfolio evolved, and the bars were eventually **discontinued in 1997** after a brief **1994** refresh. \n\nNostalgia kept the memory alive: recipe clones, vintage ads, and petitions frequently surface online. Nestlé later offered a **Carnation Breakfast Essentials**–branded nutrition bar in **2014**, but fans noted it wasn’t the same formula or flavor profile; that bar left shelves by **2020**. Today, Carnation Breakfast Bars are remembered as a rare crossover between snack aisle indulgence and the meal-replacement trend—distinct for their chocolate-covered granola texture and unmistakable breakfast-as-a-bar positioning. Their disappearance is a go-to example of how portfolio changes, shifting nutrition standards, and category competition can retire a product even when consumer nostalgia remains strong.",
+  "timeline": [
+    { "date": "1975-01", "text": "Carnation launches Carnation Breakfast Bars in the U.S. as a portable meal-replacement snack." },
+    { "date": "1985-01", "text": "Nestlé completes acquisition of Carnation Company; breakfast portfolio strategy begins to shift." },
+    { "date": "1994-01", "text": "Relaunch/refresh advertising push; packaging and flavors updated for the mid-1990s." },
+    { "date": "1997-12", "text": "Original Carnation Breakfast Bars discontinued." },
+    { "date": "2014-01", "text": "Nestlé introduces 'Carnation Breakfast Essentials' Nutrition Bar (not the original recipe); later discontinued by 2020." }
+  ],
+  "links": {
+    "carnation_brand_wikipedia": "https://en.wikipedia.org/wiki/Carnation_(brand)",
+    "nestle_history": "https://www.nestle.com/about/history/nestle-company-history",
+    "snackhistory_profile": "https://www.snackhistory.com/carnation-breakfast-bars/",
+    "clickamericana_ads_history": "https://clickamericana.com/topics/food-drink/remember-carnation-breakfast-bars-carnation-instant-breakfast",
+    "tastingtable_roundup": "https://www.tastingtable.com/1858293/carnation-chocolate-breakfast-bars-discontinued/"
+  },
+  "sources": [
+    { "label": "SnackHistory – Carnation Breakfast Bars", "url": "https://www.snackhistory.com/carnation-breakfast-bars/" },
+    { "label": "ClickAmericana – Vintage ads & history", "url": "https://clickamericana.com/topics/food-drink/remember-carnation-breakfast-bars-carnation-instant-breakfast" },
+    { "label": "Nestlé – Company history (Carnation acquisition)", "url": "https://www.nestle.com/about/history/nestle-company-history" },
+    { "label": "Wikipedia – Carnation (brand)", "url": "https://en.wikipedia.org/wiki/Carnation_(brand)" },
+    { "label": "TastingTable – Discontinued bar roundup", "url": "https://www.tastingtable.com/1858293/carnation-chocolate-breakfast-bars-discontinued/" }
+  ]
+}

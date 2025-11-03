@@ -3,18 +3,31 @@
   "slug": "palm",
   "category": "Mobile devices",
   "country": "US",
-  "active": {
-    "start": 1992,
-    "end": 2011
-  },
-  "fate": "Acquired/discontinued",
-  "summary": "Maker of PDAs/smartphones; acquired by HP; webOS devices discontinued.",
-  "notable_products": [
-    "Pilot",
-    "Treo",
-    "Pre"
+  "active": { "start": 1992, "end": 2011 },
+  "fate": "Acquired by HP in 2010; webOS hardware discontinued in 2011. Brand and assets later licensed/sold in parts.",
+  "summary": "Pioneer of handheld PDAs and early smartphones (Pilot, Treo, Pre). Acquired by HP in 2010; webOS devices were discontinued in 2011.",
+  "notable_products": ["Pilot (PalmPilot)", "Handspring Treo / Palm Treo", "Palm Pre (webOS)"],
+  "topics": ["mobile-devices", "nostalgia", "acquisition", "platforms"],
+  "overview_md": "**Palm** helped define mobile computing long before modern smartphones. Founded in **1992**, the company popularized handheld personal digital assistants with the **PalmPilot**—compact organizers that synced contacts, calendars, and notes via the iconic HotSync cradle. Palm’s design emphasized instant-on speed, long battery life, and a simple Graffiti input system, winning mainstream adoption with developers creating thousands of small, useful apps.\n\nAs phones gained data capabilities, Palm’s ecosystem evolved. Spun out, merged, and recombined through the late 1990s and early 2000s (including Handspring’s **Treo** smartphone line), Palm straddled two eras: PDA-first and phone-first. By mid-2000s it faced tougher competition from BlackBerry, Symbian, and Windows Mobile—soon followed by iPhone and Android. In **2009**, Palm attempted a platform reboot with **webOS** and the **Palm Pre**, introducing elegant multitasking “cards,” Synergy account aggregation, and a gesture-driven UI that influenced later mobile UX patterns.\n\nDespite critical praise, Palm struggled to scale devices, developer momentum, and carrier distribution. **HP acquired Palm in 2010** to make webOS its broader software platform, but hardware efforts were halted in **2011**, ending Palm-branded devices. Palm’s legacy endures in mobile UX conventions, the PDA-to-smartphone transition, and the idea that a pocketable computer should be fast, focused, and friendly.",
+  "timeline": [
+    { "date": "1992-01", "text": "Palm is founded to build handwriting-driven mobile organizers and software." },
+    { "date": "1996-03", "text": "PalmPilot (Pilot) launches, popularizing PDAs and third-party apps." },
+    { "date": "2003-10", "text": "Palm reabsorbs Handspring; Treo smartphone line becomes core to Palm’s strategy." },
+    { "date": "2009-06", "text": "Palm Pre ships with webOS, debuting card-based multitasking and Synergy." },
+    { "date": "2011-08", "text": "HP discontinues webOS hardware, effectively ending Palm’s device era." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Palm,_Inc."
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Palm,_Inc.",
+    "webos_wiki": "https://en.wikipedia.org/wiki/WebOS",
+    "hp_palm_acquisition": "https://www.hp.com/us-en/hp-news/press-release.html?docname=c02632116",
+    "pilot_history": "https://en.wikipedia.org/wiki/PalmPilot",
+    "treo_history": "https://en.wikipedia.org/wiki/Treo"
+  },
+  "sources": [
+    { "label": "Wikipedia – Palm, Inc.", "url": "https://en.wikipedia.org/wiki/Palm,_Inc." },
+    { "label": "Wikipedia – PalmPilot", "url": "https://en.wikipedia.org/wiki/PalmPilot" },
+    { "label": "Wikipedia – webOS", "url": "https://en.wikipedia.org/wiki/WebOS" },
+    { "label": "HP Newsroom – HP to Acquire Palm (2010)", "url": "https://www.hp.com/us-en/hp-news/press-release.html?docname=c02632116" },
+    { "label": "Wikipedia – Treo", "url": "https://en.wikipedia.org/wiki/Treo" }
+  ]
 }

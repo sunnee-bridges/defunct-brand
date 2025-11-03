@@ -3,17 +3,31 @@
   "slug": "netscape",
   "category": "Software/Internet",
   "country": "US",
-  "active": {
-    "start": 1994,
-    "end": 2008
-  },
-  "fate": "Discontinued",
-  "summary": "Browser pioneer; development ended, code continued as Mozilla.",
-  "notable_products": [
-    "Navigator",
-    "Communicator"
+  "active": { "start": 1994, "end": 2008 },
+  "fate": "Brand/software discontinued; code base continued via Mozilla (Firefox lineage). AOL acquired Netscape in 1999; official support for Netscape-branded browsers ended in 2008.",
+  "summary": "Web-browser pioneer behind Navigator and Communicator. Open-sourced its code (Mozilla) and was later acquired by AOL; Netscape-branded browser support ended in 2008.",
+  "notable_products": ["Netscape Navigator", "Netscape Communicator", "Netscape 6/7"],
+  "topics": ["internet-history", "browsers", "open-source", "acquisition", "dot-com"],
+  "overview_md": "**Netscape** helped ignite the consumer web. Founded in **1994** (originally Mosaic Communications), the company shipped **Netscape Navigator**, a fast, approachable browser that made web pages, images, and links feel immediate. Navigator’s popularity turned the browser into everyday software and Netscape into a bellwether—its **1995 IPO** became an emblem of early internet exuberance. Netscape followed with **Communicator**, bundling email, newsgroups, Composer, and admin tools into a suite that anchored many offices’ early intranet life.\n\nCompetition escalated as **Microsoft Internet Explorer** shipped aggressively and was bundled with Windows, reshaping distribution. In **1998**, Netscape released its code as **Mozilla**, seeding an open-source project that would later influence **Firefox** and modern browser engines. Netscape’s own product line rebooted on the new codebase (Netscape 6/7) while the firm pursued portals, ad tech, and enterprise servers.\n\nIn **1999**, **AOL acquired Netscape**, and over the 2000s the Netscape-branded browser waned. Official support ended in **2008**, but its legacy persists in open standards, the rise of independent browser foundations, and a generation of developers who learned the web on Navigator. Netscape’s arc—from breakout browser to open-source seed—maps the web’s shift from proprietary competition to community-driven engines and rapid standards evolution.",
+  "timeline": [
+    { "date": "1994-04", "text": "Mosaic Communications (later Netscape Communications) founded." },
+    { "date": "1994-12", "text": "Netscape Navigator 1.0 released; quickly becomes the dominant web browser." },
+    { "date": "1995-08-09", "text": "Netscape IPO; early internet milestone signaling the dot-com era." },
+    { "date": "1998-03-31", "text": "Netscape open-sources browser code as Mozilla; development shifts toward the community." },
+    { "date": "2008-03-01", "text": "AOL ends support for Netscape-branded browsers; users advised to migrate to Firefox." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Netscape"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Netscape",
+    "navigator_wiki": "https://en.wikipedia.org/wiki/Netscape_Navigator",
+    "communicator_wiki": "https://en.wikipedia.org/wiki/Netscape_Communicator",
+    "mozilla_wiki": "https://en.wikipedia.org/wiki/Mozilla",
+    "aol_shutdown_note": "https://blog.netscape.com/2007/12/28/end-of-support-for-netscape-web-browsers"
+  },
+  "sources": [
+    { "label": "Wikipedia – Netscape", "url": "https://en.wikipedia.org/wiki/Netscape" },
+    { "label": "Wikipedia – Netscape Navigator", "url": "https://en.wikipedia.org/wiki/Netscape_Navigator" },
+    { "label": "Wikipedia – Netscape Communicator", "url": "https://en.wikipedia.org/wiki/Netscape_Communicator" },
+    { "label": "Wikipedia – Mozilla (Netscape open-sourcing)", "url": "https://en.wikipedia.org/wiki/Mozilla" },
+    { "label": "Netscape Blog (AOL) – End of support notice (2007/2008)", "url": "https://blog.netscape.com/2007/12/28/end-of-support-for-netscape-web-browsers" }
+  ]
 }

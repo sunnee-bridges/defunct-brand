@@ -3,16 +3,33 @@
   "slug": "jet-retail",
   "category": "E-commerce",
   "country": "US",
-  "active": {
-    "start": 2015,
-    "end": 2020
-  },
-  "fate": "Discontinued",
-  "summary": "Walmart-owned marketplace brand retired in 2020.",
-  "notable_products": [
-    "Online marketplace"
+  "active": { "start": 2015, "end": 2020 },
+  "fate": "Acquired by Walmart in 2016; brand retired in 2020 while technology and talent were integrated into Walmart’s e-commerce operations.",
+  "summary": "U.S. online marketplace launched in 2015 and acquired by Walmart in 2016 for $3.3B; Jet’s brand was discontinued in 2020 as Walmart centralized its digital strategy.",
+  "notable_products": ["Jet.com marketplace", "Smart Cart dynamic pricing"],
+  "topics": ["acquisition", "e-commerce", "brand-retired"],
+  "overview_md": "**Jet (retail)** launched in 2015 as an online marketplace built around a novel “Smart Cart” model that adjusted prices in real time based on basket composition, seller options, and shipping choices. Co-founded by Marc Lore (formerly of Quidsi/Diapers.com), Jet aimed to compete with the largest e-commerce platforms by trading margin for growth and by incentivizing customers to consolidate orders for logistics efficiencies.\n\nIn **2016**, **Walmart** acquired Jet for approximately **$3.3 billion**, signaling an aggressive digital pivot. Jet’s tech stack, merchandising expertise, and leadership (including Lore as head of U.S. e-commerce) were folded into Walmart’s broader operation. Over the next few years, Walmart streamlined overlapping efforts, expanded marketplace assortment, and leveraged Jet’s pricing, fulfillment, and growth playbooks. Jet experimented with urban-focused assortments and premium positioning, but the separate brand became less central as Walmart.com scaled.\n\nBy **2020**, Walmart announced it would **retire the Jet brand**, citing the successful integration of its capabilities and the strength of Walmart.com. While the Jet site and branding were sunset, the team and underlying ideas lived on in Walmart’s marketplace, logistics, and pricing systems. Jet is often cited as a case study in acqui-integration: a fast-growing challenger whose biggest legacy is the transformation it powered inside a larger retailer.",
+  "timeline": [
+    { "date": "2015-07", "text": "Public launch of Jet.com with Smart Cart dynamic pricing." },
+    { "date": "2016-08", "text": "Walmart announces agreement to acquire Jet for ~$3.3B (cash and stock)." },
+    { "date": "2016-09", "text": "Acquisition closes; Marc Lore becomes President & CEO, Walmart U.S. eCommerce." },
+    { "date": "2018-09", "text": "Jet refocuses on urban assortments and same-day options in select markets." },
+    { "date": "2020-05", "text": "Walmart retires the Jet brand; operations and tech fully integrated into Walmart.com." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Jet.com"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Jet.com",
+    "walmart_press_2016": "https://corporate.walmart.com/newsroom/2016/08/08/walmart-to-acquire-jet-com",
+    "walmart_2020_update": "https://corporate.walmart.com/news/2020/05/19/q1-fy21-walmart-us-ecommerce-highlights",
+    "sec_8k": "https://www.sec.gov/Archives/edgar/data/104169/000119312516703160/d228957d8k.htm",
+    "nyt_acq": "https://www.nytimes.com/2016/08/09/business/dealbook/walmart-jet-com.html",
+    "cnbc_retire": "https://www.cnbc.com/2020/05/19/walmart-shutting-down-jetcom.html"
+  },
+  "sources": [
+    { "label": "Wikipedia – Jet.com", "url": "https://en.wikipedia.org/wiki/Jet.com" },
+    { "label": "Walmart Press Release – To Acquire Jet.com (Aug 8, 2016)", "url": "https://corporate.walmart.com/newsroom/2016/08/08/walmart-to-acquire-jet-com" },
+    { "label": "SEC Form 8-K – Walmart acquisition of Jet (Aug 8, 2016)", "url": "https://www.sec.gov/Archives/edgar/data/104169/000119312516703160/d228957d8k.htm" },
+    { "label": "CNBC – Walmart to discontinue Jet.com brand (May 19, 2020)", "url": "https://www.cnbc.com/2020/05/19/walmart-shutting-down-jetcom.html" },
+    { "label": "NYT – Walmart to Buy Jet.com for $3.3 Billion (Aug 8, 2016)", "url": "https://www.nytimes.com/2016/08/09/business/dealbook/walmart-jet-com.html" },
+    { "label": "Walmart Q1 FY21 Update – Jet brand retirement noted", "url": "https://corporate.walmart.com/news/2020/05/19/q1-fy21-walmart-us-ecommerce-highlights" }
+  ]
 }

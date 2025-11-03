@@ -3,16 +3,27 @@
   "slug": "napster-original",
   "category": "Software/Internet",
   "country": "US",
-  "active": {
-    "start": 1999,
-    "end": 2001
-  },
-  "fate": "Shut down",
-  "summary": "Original P2P music service shut down after lawsuits; brand later reused.",
-  "notable_products": [
-    "P2P music sharing"
+  "active": { "start": 1999, "end": 2001 },
+  "fate": "Shut down following court rulings against its centralized P2P service; company later filed Chapter 11 (2002) and the brand was reused by successors.",
+  "summary": "The original peer-to-peer music-sharing service (1999–2001) that popularized MP3 swapping and triggered landmark music-industry lawsuits; shut down after court orders.",
+  "notable_products": ["P2P music sharing client/network"],
+  "topics": ["internet-history", "p2p", "music", "legal-case", "nostalgia"],
+  "overview_md": "**Napster (original)** was the catalyst of the MP3 era. Launched in **1999** by Shawn Fanning and Sean Parker, it paired a simple Windows client with a **central index of user libraries**, making it effortless to search and swap songs across millions of PCs. College campuses and broadband households adopted it at viral speed; for many, Napster was the first experience of instant, on-demand access to nearly any track.\n\nThat popularity collided with music-industry rights. Major labels and artists (famously **Metallica** and **Dr. Dre**) sued, arguing Napster enabled widespread infringement. Because the directory and authentication were centralized, courts found Napster had knowledge and control sufficient to impose liability and injunctions. A district court ordered the service to block infringing files; the **Ninth Circuit** largely affirmed, and Napster went offline in **July 2001** to comply. The company subsequently entered **Chapter 11** in **2002**, with assets changing hands and the **Napster** name later reappearing on fully licensed services.\n\nNapster’s legacy is twofold: it normalized digital, track-based listening for a generation, and it pushed labels and tech toward licensed downloads and streaming. It also remains a case study in how architecture (centralized vs. decentralized) shapes both user experience and legal exposure.",
+  "timeline": [
+    { "date": "1999-06", "text": "Original Napster beta launches; rapid campus and broadband adoption follows." },
+    { "date": "1999-12-07", "text": "RIAA/labels file suit against Napster alleging contributory and vicarious infringement." },
+    { "date": "2000-07-26", "text": "District court issues preliminary injunction ordering Napster to prevent infringing transfers (later stayed pending appeal)." },
+    { "date": "2001-02-12", "text": "Ninth Circuit largely upholds the injunction; case remanded for tailored controls." },
+    { "date": "2001-07-11", "text": "Napster goes offline to comply with court orders, effectively ending the original service." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Napster"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Napster",
+    "case_wiki": "https://en.wikipedia.org/wiki/A%26M_Records,_Inc._v._Napster,_Inc.",
+    "metallica_case": "https://en.wikipedia.org/wiki/Metallica_v._Napster,_Inc."
+  },
+  "sources": [
+    { "label": "Wikipedia – Napster", "url": "https://en.wikipedia.org/wiki/Napster" },
+    { "label": "Wikipedia – A&M Records, Inc. v. Napster, Inc.", "url": "https://en.wikipedia.org/wiki/A%26M_Records,_Inc._v._Napster,_Inc." },
+    { "label": "Wikipedia – Metallica v. Napster, Inc.", "url": "https://en.wikipedia.org/wiki/Metallica_v._Napster,_Inc." }
+  ]
 }

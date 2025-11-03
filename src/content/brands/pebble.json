@@ -3,17 +3,31 @@
   "slug": "pebble",
   "category": "Wearables",
   "country": "US",
-  "active": {
-    "start": 2012,
-    "end": 2016
-  },
-  "fate": "Acquired/Discontinued",
-  "summary": "Smartwatch pioneer acquired by Fitbit; products discontinued.",
-  "notable_products": [
-    "Pebble",
-    "Pebble Time"
+  "active": { "start": 2012, "end": 2016 },
+  "fate": "Core assets acquired by Fitbit in Dec 2016; Pebble hardware discontinued and cloud services later sunset.",
+  "summary": "Crowdfunding-era smartwatch pioneer best known for long battery life, e-paper displays, and a vibrant developer community. Acquired by Fitbit in 2016; products discontinued.",
+  "notable_products": ["Pebble (Classic)", "Pebble Steel", "Pebble Time", "Pebble Time Steel", "Pebble Time Round"],
+  "topics": ["wearables", "crowdfunding", "developer-ecosystem", "acquisition", "nostalgia"],
+  "overview_md": "**Pebble** helped prove that smartwatches had an audience well before the mainstream took off. Launched via a record-breaking **Kickstarter** in 2012, Pebble’s appeal was practical: a sunlight-readable e-paper display, **week-long battery life**, simple notifications, fitness tracking, and water resistance. Its open SDK and watchface/app gallery fostered a lively developer scene, letting owners customize everything from running dashboards to retro game faces.\n\nHardware iterations—**Pebble Steel** and the **Pebble Time** family—refined materials, colors, and microphones while keeping battery life and platform neutrality (iOS and Android) as core strengths. But as Apple Watch and Android Wear matured, competition for components, distribution, and developer attention intensified. Scaling challenges and a tough fundraising environment pushed Pebble to sell key assets to **Fitbit** in **2016**; Pebble stopped making devices and the cloud services that powered voice replies, timeline sync, and app distribution were set to wind down (a community project, *Rebble*, later kept much functionality alive).\n\nPebble’s legacy is visible in today’s wearables: quick-glance UIs, focus on notification triage, and the idea that battery life and comfort matter as much as raw specs. For many, Pebble remains the quintessential “do-less-better” smartwatch—hackable, friendly, and delightfully reliable.",
+  "timeline": [
+    { "date": "2012-04-11", "text": "Pebble Kickstarter launches and quickly becomes one of the platform’s largest campaigns." },
+    { "date": "2013-01-23", "text": "First Pebble units begin shipping to backers; app store and watchface ecosystem grow." },
+    { "date": "2014-02-10", "text": "Pebble Steel announced, bringing a premium stainless-steel design to the lineup." },
+    { "date": "2015-02-24", "text": "Pebble Time (color e-paper, microphone, Timeline UI) Kickstarter launches; strong funding response." },
+    { "date": "2016-12-07", "text": "Fitbit announces acquisition of Pebble’s software assets and talent; Pebble hardware discontinued (cloud services later sunset, with community-led alternatives emerging)." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Pebble_(watch)"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Pebble_(watch)",
+    "pebble_time_wiki": "https://en.wikipedia.org/wiki/Pebble_Time",
+    "fitbit_press": "https://investor.fitbit.com/press/press-releases/press-release-details/2016/Fitbit-Announces-Agreement-to-Acquire-Assets-from-Pebble/default.aspx",
+    "theverge_fitbit": "https://www.theverge.com/2016/12/7/13864174/fitbit-buys-pebble-smartwatch",
+    "rebble": "https://rebble.io/"
+  },
+  "sources": [
+    { "label": "Wikipedia – Pebble (watch)", "url": "https://en.wikipedia.org/wiki/Pebble_(watch)" },
+    { "label": "Wikipedia – Pebble Time", "url": "https://en.wikipedia.org/wiki/Pebble_Time" },
+    { "label": "Fitbit Press Release – Agreement to acquire Pebble assets (Dec 7, 2016)", "url": "https://investor.fitbit.com/press/press-releases/press-release-details/2016/Fitbit-Announces-Agreement-to-Acquire-Assets-from-Pebble/default.aspx" },
+    { "label": "The Verge – Fitbit buys Pebble (2016)", "url": "https://www.theverge.com/2016/12/7/13864174/fitbit-buys-pebble-smartwatch" },
+    { "label": "Rebble – Community Pebble services", "url": "https://rebble.io/" }
+  ]
 }

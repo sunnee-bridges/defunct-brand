@@ -1,0 +1,33 @@
+{
+  "brand": "TMNT Turtle Pies",
+  "slug": "tmnt-turtle-pies",
+  "category": "Food/Snacks",
+  "country": "US",
+  "active": { "start": 1991, "end": 1991 },
+  "fate": "Limited-time tie-in discontinued after short 1991 run",
+  "summary": "Hostess’ green-glazed, vanilla-pudding snack pies released in 1991 as a Teenage Mutant Ninja Turtles tie-in; a brief promotion that ended the same year.",
+  "notable_products": ["Teenage Mutant Ninja Turtles Pudding Pies"],
+  "topics": ["nostalgia", "vanished-product"],
+  "overview_md": "**TMNT Turtle Pies** were a short-lived Hostess snack launched in 1991 to ride the Teenage Mutant Ninja Turtles wave. Each pie paired a vanilla-pudding filling with a bright green glaze that winked at the franchise’s ooze motif, and wrappers featured the individual turtles. Positioned as a limited promotion rather than a core line, the pies leaned on collectible extras and kid-targeted TV spots to generate buzz around the time of the second TMNT film.\n\nDistribution was broad but brief. Contemporary coverage and fan recollections consistently describe a one-season shelf life, with some regions seeing the pies for only a few months. Nutritional callouts from the era put a single pie at roughly 470 calories, underscoring the “treat” positioning over everyday snacking. Packaging variants included sticker inserts early on and later trading cards tied to the movie campaign.\n\nBy late 1991, the promotion wound down and the product disappeared, leaving a strong nostalgia footprint. Decades later, ads and wrappers circulate in collector communities, and the pies are frequently cited alongside other ‘90s tie-in foods as emblematic of the TMNT merchandising boom. Their cult afterlife makes them a quintessential **vanished product**: easy to remember, impossible to buy.",
+  "timeline": [
+    { "date": "1991-03", "text": "TMNT II: The Secret of the Ooze hits theaters; Hostess preps tie-in campaign." },
+    { "date": "1991-04", "text": "TMNT Turtle Pies roll out nationally with green-glazed crust and vanilla-pudding filling." },
+    { "date": "1991-05", "text": "Early wrappers include sticker premiums; TV commercials air across kids’ blocks." },
+    { "date": "1991-08", "text": "Later production runs swap in trading cards tied to the film promotion." },
+    { "date": "1991-11", "text": "Limited run concludes; product is discontinued after the promotional window." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Hostess_%28snack_cakes%29",
+    "commercial_1991": "https://www.youtube.com/watch?v=vEZt29pzdus",
+    "context_food52": "https://food52.com/story/18135-in-the-90s-the-ninja-turtles-were-everywhere-even-pudding-pies",
+    "overview_dailymeal": "https://www.thedailymeal.com/1329644/discontinued-teenage-mutant-ninja-turtles-pies-90s-snack/",
+    "turtlepedia": "https://turtlepedia.fandom.com/wiki/Teenage_Mutant_Ninja_Turtles_food_tie-ins"
+  },
+  "sources": [
+    { "label": "The Daily Meal – Discontinued TMNT Pies (Jul 5, 2023)", "url": "https://www.thedailymeal.com/1329644/discontinued-teenage-mutant-ninja-turtles-pies-90s-snack/" },
+    { "label": "Food52 – TMNT Pudding Pies context & nutrition (Oct 13, 2016)", "url": "https://food52.com/story/18135-in-the-90s-the-ninja-turtles-were-everywhere-even-pudding-pies" },
+    { "label": "1991 TV Commercial (Hostess)", "url": "https://www.youtube.com/watch?v=vEZt29pzdus" },
+    { "label": "Turtlepedia – Food tie-ins (wrappers/stickers/cards)", "url": "https://turtlepedia.fandom.com/wiki/Teenage_Mutant_Ninja_Turtles_food_tie-ins" },
+    { "label": "Wikipedia – Hostess (brand background)", "url": "https://en.wikipedia.org/wiki/Hostess_%28snack_cakes%29" }
+  ]
+}

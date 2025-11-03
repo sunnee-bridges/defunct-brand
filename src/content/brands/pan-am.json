@@ -3,17 +3,31 @@
   "slug": "pan-am",
   "category": "Airline",
   "country": "US",
-  "active": {
-    "start": 1927,
-    "end": 1991
-  },
-  "fate": "Bankruptcy",
-  "summary": "Iconic international airline ceased operations in 1991.",
-  "notable_products": [
-    "Clipper service",
-    "Pan Am logo"
+  "active": { "start": 1927, "end": 1991 },
+  "fate": "Filed Chapter 11 in 1991 and ceased operations on Dec 4, 1991 amid losses, asset sales, and a failed reorganization.",
+  "summary": "Pan American World Airways (Pan Am) was the iconic U.S. international carrier famed for globe-spanning routes and jet-age branding; it shut down in 1991 after bankruptcy.",
+  "notable_products": ["Clipper service", "Pan Am globe logo", "Boeing 707 transatlantic jet service"],
+  "topics": ["airline", "nostalgia", "bankruptcy", "aviation-history"],
+  "overview_md": "**Pan Am** (Pan American World Airways) was synonymous with the jet age. Founded in **1927**, the airline grew from Caribbean mail routes into a global network that introduced generations of travelers to international air travel. With its signature **Clipper** branding and globe logo, Pan Am set standards for cabin service, route planning, and aviation style—training stewards, commissioning bespoke uniforms, and anchoring prestige terminals.\n\nPan Am helped usher in long-haul jet travel, launching **Boeing 707** transatlantic service in **1958** and later flying 747s on high-profile routes. Yet structural challenges mounted: deregulation, fuel shocks, currency swings, and intensifying competition pressed margins. The costly **National Airlines** acquisition in **1980** added debt without delivering sufficient network synergies. Tragedy struck in **1988** with the bombing of **Flight 103** over Lockerbie, Scotland, further damaging finances and brand confidence.\n\nBy **1991**, asset sales—including prized Heathrow routes—couldn’t stabilize the company. Pan Am sought Chapter 11 protection and attempted a slimmed-down network with a Miami hub, but funding collapsed; operations ended that December. The brand endures as an aviation icon—remembered for pioneering global service, ushering in the jet age, and defining the romance of international flight—even as its collapse marks a cautionary tale about leverage, shocks, and industry upheaval.",
+  "timeline": [
+    { "date": "1927-10-28", "text": "Pan American Airways founded; begins Caribbean airmail/passenger service." },
+    { "date": "1958-10-26", "text": "Launches Boeing 707 transatlantic jet service (New York–Paris), heralding the U.S. jet age." },
+    { "date": "1980-01-07", "text": "Completes acquisition of National Airlines, expanding domestic network but increasing debt." },
+    { "date": "1988-12-21", "text": "Pan Am Flight 103 destroyed over Lockerbie, Scotland; major financial and reputational impact." },
+    { "date": "1991-12-04", "text": "After a failed reorganization under Chapter 11 (filed Jan 8, 1991), Pan Am ceases operations." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Pan_American_World_Airways"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Pan_American_World_Airways",
+    "boeing_707": "https://en.wikipedia.org/wiki/Boeing_707#Commercial_service",
+    "national_acq": "https://en.wikipedia.org/wiki/National_Airlines_(1934%E2%80%931980)#Acquisition_by_Pan_Am",
+    "lockerbie": "https://en.wikipedia.org/wiki/Pan_Am_Flight_103",
+    "nyt_shutdown": "https://www.nytimes.com/1991/12/05/business/pan-am-shuts-down-after-64-years-in-air.html"
+  },
+  "sources": [
+    { "label": "Wikipedia – Pan American World Airways", "url": "https://en.wikipedia.org/wiki/Pan_American_World_Airways" },
+    { "label": "Wikipedia – Boeing 707 (Commercial service timeline)", "url": "https://en.wikipedia.org/wiki/Boeing_707#Commercial_service" },
+    { "label": "Wikipedia – National Airlines (Acquisition by Pan Am)", "url": "https://en.wikipedia.org/wiki/National_Airlines_(1934%E2%80%931980)#Acquisition_by_Pan_Am" },
+    { "label": "Wikipedia – Pan Am Flight 103 (Lockerbie)", "url": "https://en.wikipedia.org/wiki/Pan_Am_Flight_103" },
+    { "label": "The New York Times – Pan Am Shuts Down After 64 Years in Air (Dec 5, 1991)", "url": "https://www.nytimes.com/1991/12/05/business/pan-am-shuts-down-after-64-years-in-air.html" }
+  ]
 }

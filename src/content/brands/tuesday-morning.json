@@ -1,0 +1,30 @@
+{
+  "brand": "Tuesday Morning",
+  "slug": "tuesday-morning",
+  "category": "Retail/Home Goods",
+  "country": "US",
+  "active": { "start": 1974, "end": 2023 },
+  "fate": "Liquidation following a second Chapter 11 filing; U.S. stores closed in 2023",
+  "summary": "Off-price home-goods chain founded in 1974; known for closeout décor, linens, and kitchenware. Restructured in 2020, filed again in 2023, and liquidated its remaining U.S. stores.",
+  "topics": ["discount-retail", "off-price", "bankruptcy", "liquidation", "mall-retail"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Tuesday_Morning"
+  },
+
+  "overview_md": "**Tuesday Morning** was a U.S. off-price retailer specializing in brand-name closeouts for the home—tabletop, linens, rugs, seasonal décor, and kitchenware. Founded in 1974 in Dallas, the chain grew through a no-frills model: modest stores, opportunistic buying, and limited advertising, relying on treasure-hunt merchandising and mailed circulars to drive trips. Locations were common in neighborhood centers rather than enclosed malls, and assortments turned quickly with liquidation lots and vendor overstock.\n\nAs e-commerce reshaped value shopping and supply chains tightened, the closeout pipeline became less predictable while store traffic fragmented. The company entered **Chapter 11 in May 2020**, shuttering underperforming stores during the pandemic and working down lease liabilities before emerging later that year into early 2021. **In February 2023**, Tuesday Morning again sought bankruptcy protection amid liquidity pressure, freight and occupancy costs, and recovery lag in discretionary categories.\n\nCourt filings in spring **2023** led to a wind-down and **liquidation of remaining U.S. stores**, with merchandise sold through going-out-of-business events. The brand’s decline reflected broader pressures on mid-scale specialty chains caught between faster off-price giants and online marketplaces—where closeout goods increasingly reach consumers without a dedicated brick-and-mortar stop.",
+
+  "timeline": [
+    { "date": "1974", "text": "Company founded in Dallas, Texas" },
+    { "date": "1990s", "text": "Nationwide expansion of neighborhood-center stores focused on home closeouts" },
+    { "date": "2020-05", "text": "Files for Chapter 11 during the pandemic; store rationalization begins" },
+    { "date": "2023-02", "text": "Second Chapter 11 filing amid liquidity and cost pressures" },
+    { "date": "2023-05", "text": "Court-approved liquidation; remaining U.S. stores close over subsequent weeks" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Tuesday_Morning" },
+    { "label": "Wayback snapshot (tuesdaymorning.com)", "url": "https://web.archive.org/web/*/tuesdaymorning.com" },
+    { "label": "Bankruptcy court/estate information (public dockets & notices)", "url": "https://cases.stretto.com/" },
+    { "label": "Business press coverage (bankruptcy & liquidation)", "url": "https://www.reuters.com/" }
+  ]
+}

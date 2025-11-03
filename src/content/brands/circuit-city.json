@@ -3,17 +3,31 @@
   "slug": "circuit-city",
   "category": "Retail",
   "country": "US",
-  "active": {
-    "start": 1949,
-    "end": 2009
-  },
-  "fate": "Liquidation",
-  "summary": "Electronics retailer that liquidated in 2009.",
-  "notable_products": [
-    "Retail stores",
-    "Firedog services"
+  "active": { "start": 1949, "end": 2009 },
+  "fate": "Liquidation of all U.S. retail stores in early 2009 following a Nov 2008 Chapter 11 filing; brand later resurfaced online under new owners.",
+  "summary": "U.S. electronics big-box chain founded in 1949 that expanded nationally with the Circuit City superstore format; filed Chapter 11 in 2008 and liquidated stores by March 2009.",
+  "notable_products": ["Retail stores", "Firedog services", "Big-box electronics"],
+  "topics": ["retail", "big-box", "liquidation", "nostalgia"],
+  "overview_md": "**Circuit City** grew from a small Richmond, Virginia shop (founded **1949**) into one of America’s best-known **big-box electronics** chains. By the 1980s–1990s, its red-trimmed **superstores** and circular drive-thru pickup lanes were weekend staples for TVs, VCRs, car audio, and PCs. The company experimented with service offerings (eventually branded **Firedog**) and benefited from the home-theater boom, yet retail dynamics shifted: **Best Buy’s** low-pressure showrooming, Walmart’s pricing power, and e-commerce eroded Circuit City’s advantages.\n\nStrategic missteps compounded the pressure. Store relocations left gaps in prime trade areas; appliance exits reduced traffic; and in **2007** the chain **laid off ~3,400 experienced sales associates** to cut costs—saving payroll, but hurting service and conversion. The 2008 financial crisis crushed discretionary electronics demand and tightened vendor credit. Circuit City **filed Chapter 11 in November 2008**; efforts to reorganize or find a buyer fell short. In **January 2009** the company moved to liquidate, and by **March 2009** the last stores closed.\n\nThe **Circuit City** name later reappeared online under different ownership, a reminder of the brand’s recognition even after its brick-and-mortar exit. Its rise and fall trace the arc of U.S. electronics retail—from commission sales floors and Sunday inserts to price transparency, omnichannel logistics, and relentless competition on convenience.",
+  "timeline": [
+    { "date": "1949-01", "text": "Company founded in Richmond, Virginia (as Wards Company), selling consumer electronics and appliances." },
+    { "date": "1984-01", "text": "Adopts the Circuit City brand and scales the superstore format nationwide." },
+    { "date": "2007-03-28", "text": "Announces layoffs of ~3,400 higher-paid sales associates to reduce costs, drawing criticism over service quality." },
+    { "date": "2008-11-10", "text": "Files for Chapter 11 bankruptcy protection amid sales declines and constrained vendor credit." },
+    { "date": "2009-03-08", "text": "Final U.S. stores close following a Jan 16, 2009 liquidation announcement; assets and brand later sold." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Circuit_City"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Circuit_City",
+    "nyt_liquidation": "https://www.nytimes.com/2009/01/17/business/17circuit.html",
+    "cnn_bankruptcy": "https://money.cnn.com/2008/11/10/news/companies/circuit_city_bankruptcy/",
+    "washpost_layoffs": "https://www.washingtonpost.com/archive/business/2007/03/29/circuit-city-to-lay-off-3400-workers/4d3b1d2e-6f2e-4e33-8f0b-2e1f6a9a4b87/",
+    "systemax_acquisition": "https://www.businesswire.com/news/home/20090513005903/en/Systemax-to-Acquire-Select-Assets-of-Circuit-City"
+  },
+  "sources": [
+    { "label": "Wikipedia – Circuit City", "url": "https://en.wikipedia.org/wiki/Circuit_City" },
+    { "label": "CNNMoney – Circuit City files for bankruptcy (Nov 10, 2008)", "url": "https://money.cnn.com/2008/11/10/news/companies/circuit_city_bankruptcy/" },
+    { "label": "NYTimes – Circuit City to Liquidate (Jan 16, 2009)", "url": "https://www.nytimes.com/2009/01/17/business/17circuit.html" },
+    { "label": "Washington Post – Circuit City to lay off 3,400 workers (Mar 29, 2007)", "url": "https://www.washingtonpost.com/archive/business/2007/03/29/circuit-city-to-lay-off-3400-workers/4d3b1d2e-6f2e-4e33-8f0b-2e1f6a9a4b87/" },
+    { "label": "Business Wire – Systemax to acquire select Circuit City assets (May 13, 2009)", "url": "https://www.businesswire.com/news/home/20090513005903/en/Systemax-to-Acquire-Select-Assets-of-Circuit-City" }
+  ]
 }

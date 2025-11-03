@@ -3,16 +3,23 @@
   "slug": "casual-corner",
   "category": "Retail",
   "country": "US",
-  "active": {
-    "start": 1950,
-    "end": 2005
-  },
-  "fate": "Liquidation",
-  "summary": "Women's apparel retail chain closed in 2005.",
-  "notable_products": [
-    "Women's apparel stores"
+  "active": { "start": 1950, "end": 2005 },
+  "fate": "Liquidation and closure of remaining stores in 2005 after a multi-year wind-down of the chain and related concepts.",
+  "summary": "U.S. women’s apparel chain that grew with the mall era and closed in 2005 following a portfolio wind-down.",
+  "notable_products": ["Women's apparel stores"],
+  "topics": ["retail", "mall-era", "womenswear", "liquidation", "nostalgia"],
+  "overview_md": "**Casual Corner** was a U.S. women’s specialty apparel chain founded in **1950**, known for careerwear and mall-friendly fashions that tracked the rise of enclosed shopping centers. Its stores emphasized coordinated separates, work staples, and approachable price points—positioning the brand between department stores and fast fashion. Over decades, the company built a portfolio that included banners such as **Petite Sophisticate** and outlet formats, aiming to cover work, weekend, and size-specific needs for professional shoppers.\n\nBy the late 1990s and early 2000s, the landscape had shifted. Department stores consolidated, off-price chains expanded, and vertically integrated brands accelerated design-to-rack cycles. Foot traffic drifted from many Tier-2/Tier-3 malls, and promotional pressure eroded margins for mid-market apparel. Casual Corner pursued remodels and real-estate pruning, but a broad reset proved difficult as lease obligations, inventory turns, and brand overlap weighed on results. The owners ultimately opted to wind down the chain, closing underperforming locations and later liquidating the remaining stores in **2005**.\n\nAfter closure, the trademarks changed hands; sporadic attempts at revivals or e-commerce licensing have appeared over time, reflecting the label’s residual recognition among shoppers who remember suit separates, coordinated mannequins, and “wear-to-work” windows along mall promenades. Casual Corner’s arc mirrors the broader transformation of U.S. mall apparel—from multi-banner specialty chains to fewer, faster, and more vertically controlled brands.",
+  "timeline": [
+    { "date": "1950-01", "text": "Casual Corner founded as a women’s specialty apparel retailer." },
+    { "date": "1980-01", "text": "Expands with additional mall locations and related banners during the peak mall-building era." },
+    { "date": "1990-01", "text": "Portfolio strategy solidifies around careerwear and related concepts, including Petite Sophisticate and outlet stores." },
+    { "date": "2004-01", "text": "Wind-down accelerates with store closures and asset sales as competition intensifies." },
+    { "date": "2005-01", "text": "Remaining Casual Corner stores liquidated and closed; brand exits brick-and-mortar retail." }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Casual_Corner"
-  }
+  },
+  "sources": [
+    { "label": "Wikipedia – Casual Corner", "url": "https://en.wikipedia.org/wiki/Casual_Corner" }
+  ]
 }

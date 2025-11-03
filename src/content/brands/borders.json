@@ -3,17 +3,27 @@
   "slug": "borders",
   "category": "Retail",
   "country": "US",
-  "active": {
-    "start": 1971,
-    "end": 2011
-  },
-  "fate": "Liquidation",
-  "summary": "Bookseller that filed for bankruptcy and closed in 2011.",
-  "notable_products": [
-    "Bookstores",
-    "Borders.com"
+  "active": { "start": 1971, "end": 2011 },
+  "fate": "Chapter 11 bankruptcy in Feb 2011 followed by liquidation; remaining U.S. stores closed later in 2011.",
+  "summary": "Ann Arbor–born bookseller that popularized the big-box bookstore; filed for bankruptcy in 2011 and liquidated after falling behind e-commerce and e-books.",
+  "notable_products": ["Bookstores", "Borders.com", "Waldenbooks (sister chain)"],
+  "topics": ["retail", "books", "big-box", "e-commerce", "liquidation", "nostalgia"],
+  "overview_md": "**Borders** grew from a **1971** Ann Arbor bookstore into a national chain that helped define the **big-box bookstore** era—cafés, events, and deep backlist under one roof. The company expanded rapidly through the 1990s after **Kmart acquired Borders and merged it with Waldenbooks**, then spun it out as **Borders Group**. Superstores flourished alongside music and DVD sales, while knowledgeable staff and author appearances built local followings.\n\nBut the industry shifted. Borders **outsourced its early online store to Amazon (2001–2008)**, ceding hard-won customer relationships at the dawn of e-commerce. Digital reading rose quickly, yet Borders’ own e-book strategy and device partnerships arrived late, while long leases and big footprints limited flexibility. As music/DVD categories declined and price transparency spread, comparable sales weakened and vendor terms tightened.\n\nBorders filed **Chapter 11 in 2011**, closing hundreds of locations; efforts to reorganize or find a buyer fell short, leading to **liquidation** and the final closure of U.S. stores later that year. The brand’s fall marked a turning point in book retail: smaller independents reemerged with curated models, while surviving chains leaned into omnichannel, membership perks, and experiences. For many readers, Borders remains a memory of sprawling stacks, café tables, and discovering a new author on a rainy afternoon.",
+  "timeline": [
+    { "date": "1971-01", "text": "Borders founded in Ann Arbor, Michigan by Tom and Louis Borders." },
+    { "date": "1992-10", "text": "Kmart acquires Borders; portfolio aligned with Waldenbooks ahead of superstore expansion." },
+    { "date": "1995-05", "text": "Borders Group spun off/IPO; rapid growth of big-box bookstores across the U.S." },
+    { "date": "2001-01", "text": "Borders.com operations outsourced to Amazon (relationship later ends in 2008 as Borders relaunches its own site)." },
+    { "date": "2011-02-16", "text": "Files for Chapter 11; by July announces liquidation when a buyer cannot be secured; remaining stores close in 2011." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Borders_Group"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Borders_Group",
+    "amazon_deal_background": "https://en.wikipedia.org/wiki/Borders_Group#Borders.com",
+    "chapter11_news": "https://en.wikipedia.org/wiki/Borders_Group#Bankruptcy_and_liquidation"
+  },
+  "sources": [
+    { "label": "Wikipedia – Borders Group", "url": "https://en.wikipedia.org/wiki/Borders_Group" },
+    { "label": "Wikipedia – Borders.com and Amazon arrangement", "url": "https://en.wikipedia.org/wiki/Borders_Group#Borders.com" },
+    { "label": "Wikipedia – Bankruptcy and liquidation (2011)", "url": "https://en.wikipedia.org/wiki/Borders_Group#Bankruptcy_and_liquidation" }
+  ]
 }

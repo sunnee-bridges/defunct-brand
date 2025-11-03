@@ -1,0 +1,38 @@
+{
+  "brand": "Oldsmobile",
+  "slug": "oldsmobile",
+  "category": "Automotive",
+  "country": "US",
+  "active": { "start": 1897, "end": 2004 },
+  "fate": "Discontinued by General Motors; phase-out announced in 2000 with final production ending in 2004 (last model: Alero).",
+  "summary": "America’s oldest car brand at discontinuation—famed for Cutlass, 442, Toronado, and the long-running 88/98—retired by GM after overlap with Buick and an aging customer base.",
+  "notable_products": [
+    "Cutlass / Cutlass Supreme",
+    "442",
+    "Toronado",
+    "Eighty-Eight (88) / Ninety-Eight (98)",
+    "Alero (final)"
+  ],
+  "topics": ["automotive", "marque", "over-100-years", "brand-consolidation", "gm-division", "fwd-innovation"],
+  "overview_md": "**Oldsmobile** (1897–2004) was one of America’s foundational car marques and the **oldest U.S. brand** still in production when it was retired. Founded by **Ransom E. Olds**, the company helped popularize early mass production with the **Curved Dash** in the early 1900s. Through the postwar decades Oldsmobile became a GM pillar, known for smooth Rocket V8s and a ladder of models that fit millions of driveways. The brand’s identity peaked with nameplates like **Cutlass/Cutlass Supreme**, the muscle-leaning **442**, the long-running **88/98**, and the **1966 Toronado**, a striking, powerful **front-wheel-drive** halo that showcased GM’s engineering swagger.\n\nBy the late 1980s and 1990s, differentiation inside GM’s multi-brand portfolio blurred. The infamous line—“**This is not your father’s Oldsmobile**”—captured a real problem: trying to court younger buyers while a loyal base aged. Meanwhile **Buick** encroached on similar territory, and marketing budgets fragmented. In **2000**, GM announced a **phase-out** of Oldsmobile, citing **overlap, dealer realities, and declining demand**. The final car, an **Alero** built in **2004**, closed a run of more than a century. Today Oldsmobile is remembered for democratizing technology—automatic transmissions, FWD sophistication—and for models that defined American family and performance motoring across generations.",
+  "timeline": [
+    { "date": "1897-01", "text": "Olds Motor Vehicle Company (Oldsmobile) founded by Ransom E. Olds in Lansing, Michigan." },
+    { "date": "1901-01", "text": "Curved Dash Oldsmobile enters production; among the first widely produced American automobiles." },
+    { "date": "1966-01", "text": "Toronado debuts for the 1966 model year—bold design and high-power front-wheel drive." },
+    { "date": "1988-01", "text": "“This is not your father’s Oldsmobile” campaign rolls out, seeking younger buyers with mixed results." },
+    { "date": "2000-12-12", "text": "GM announces plan to phase out Oldsmobile; final Oldsmobile (Alero) built in 2004." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Oldsmobile",
+    "toronado": "https://en.wikipedia.org/wiki/Oldsmobile_Toronado",
+    "442": "https://en.wikipedia.org/wiki/Oldsmobile_442",
+    "cutlass": "https://en.wikipedia.org/wiki/Oldsmobile_Cutlass",
+    "gm_phaseout_news": "https://en.wikipedia.org/wiki/Oldsmobile#Demise"
+  },
+  "sources": [
+    { "label": "Wikipedia – Oldsmobile", "url": "https://en.wikipedia.org/wiki/Oldsmobile" },
+    { "label": "Wikipedia – Oldsmobile Toronado", "url": "https://en.wikipedia.org/wiki/Oldsmobile_Toronado" },
+    { "label": "Wikipedia – Oldsmobile 442", "url": "https://en.wikipedia.org/wiki/Oldsmobile_442" },
+    { "label": "Wikipedia – Oldsmobile Cutlass", "url": "https://en.wikipedia.org/wiki/Oldsmobile_Cutlass" }
+  ]
+}

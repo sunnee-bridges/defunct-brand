@@ -1,0 +1,30 @@
+{
+  "brand": "Ritz Camera",
+  "slug": "ritz-camera",
+  "category": "Retail/Photography",
+  "country": "US",
+  "active": { "start": 1918, "end": 2012 },
+  "fate": "Filed for bankruptcy amid the digital shift; most U.S. stores closed or sold; brand assets later operated online under new ownership",
+  "summary": "Century-old camera and photo-finishing retailer known for one-hour labs and mall shops; collapsed after the transition to digital imaging and two bankruptcies.",
+  "topics": ["photography-retail", "physical-media", "one-hour-photo", "bankruptcy", "liquidation"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Ritz_Camera_%26_Image"
+  },
+
+  "overview_md": "**Ritz Camera** was a U.S. specialty retailer focused on cameras, lenses, film, and photo finishing. Founded in 1918, the chain expanded from a single coastal shop into hundreds of mall and street locations, often anchored by mini-labs that promised one-hour prints from 35mm film. Stores mixed enthusiast gear with approachable point-and-shoots, tripods, memory cards, and frames, while photo departments offered developing, enlargements, and passport photos—turning Ritz into an errand as much as a hobby stop.\n\nDuring the late 20th century, Ritz aggressively grew through new openings and acquisitions, pairing national advertising with circulars and photo-club promotions. But the **digital photography transition** upended its model: film processing volumes collapsed, margins on hardware compressed, and online sellers undercut store prices. The 2008–2009 recession compounded pressure with weaker discretionary spend and elevated lease costs.\n\nRitz **filed for Chapter 11 in 2009**, shuttering many locations and restructuring. A smaller chain continued, but persistent headwinds remained as smartphones absorbed casual photography. In **2012**, the company filed again, leading to additional closures and a sale of brand assets; remaining operations shifted toward e-commerce under new ownership. Ritz Camera’s legacy is bound to the era of one-hour photo labs, camera counters in every mall, and the excitement of picking up a fresh envelope of prints.",
+
+  "timeline": [
+    { "date": "1918", "text": "First Ritz Camera shop opens in the U.S." },
+    { "date": "1980s", "text": "Rapid national expansion; one-hour mini-labs become a core draw" },
+    { "date": "2001-06", "text": "Acquires assets from a rival camera chain amid industry consolidation" },
+    { "date": "2009-02", "text": "Files Chapter 11 during recession and digital transition; major store closures" },
+    { "date": "2012-06", "text": "Second bankruptcy; additional closures and sale of brand assets to new owners" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Ritz_Camera_%26_Image" },
+    { "label": "Wayback snapshot (ritzcamera.com)", "url": "https://web.archive.org/web/*/ritzcamera.com" },
+    { "label": "Business press on 2009 bankruptcy", "url": "https://www.nytimes.com/" },
+    { "label": "Business press on 2012 sale/liquidation", "url": "https://www.reuters.com/" }
+  ]
+}

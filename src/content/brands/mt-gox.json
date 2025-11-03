@@ -1,0 +1,29 @@
+{
+  "brand": "Mt. Gox",
+  "slug": "mt-gox",
+  "category": "Finance/Cryptocurrency",
+  "country": "JP",
+  "active": { "start": 2010, "end": 2014 },
+  "fate": "Bankruptcy following massive loss of customer bitcoin; later placed into civil rehabilitation in Japan",
+  "topics": ["scandal", "exchange-hack", "bankruptcy", "customer-losses", "civil-rehabilitation"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Mt._Gox"
+  },
+
+  "overview_md": "**Mt. Gox** was a Tokyo-based bitcoin exchange that grew from a niche trading site into the world’s largest BTC marketplace by early 2010s. Originally created by Jed McCaleb and later sold to Mark Karpelès, the platform processed the majority of global bitcoin volume at its peak, making it a central on-ramp for early retail users and miners.\n\nMt. Gox’s rapid rise outpaced its internal controls. The exchange faced recurring operational issues, security incidents, and reconciliation gaps between customer balances and actual wallets. In early **2014**, withdrawals were halted amid mounting complaints, and the company disclosed that a very large quantity of bitcoin was unaccounted for. Soon after, Mt. Gox filed for bankruptcy protection in Japan, triggering one of the most consequential failures in crypto’s history.\n\nIn the years that followed, administrators located a portion of previously missing coins, and the case moved from straight liquidation to **civil rehabilitation**, with the goal of returning assets to creditors. The collapse reshaped expectations for exchange governance, custody procedures, and proof-of-reserves, and it remains a touchstone for discussions about security, auditing, and consumer protection in digital-asset markets.",
+
+  "timeline": [
+    { "date": "2010-07", "text": "Launches as a bitcoin exchange under new ownership" },
+    { "date": "2011-06", "text": "Major security incident; trading disrupted after price flash-crash" },
+    { "date": "2014-02-07", "text": "Halts all bitcoin withdrawals citing technical issues" },
+    { "date": "2014-02-28", "text": "Files for bankruptcy protection in Tokyo District Court" },
+    { "date": "2014-03-20", "text": "Announces discovery of ~200,000 BTC in old wallets; proceedings continue" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Mt._Gox" },
+    { "label": "Wayback snapshot (mtgox.com)", "url": "https://web.archive.org/web/*/mtgox.com" },
+    { "label": "Civil rehabilitation info (court/administrator)", "url": "https://web.archive.org/web/*/https://www.mtgox.com/img/pdf/20180622_announcement_en.pdf" },
+    { "label": "Background explainer (archived coverage)", "url": "https://web.archive.org/web/*/https://www.coindesk.com/learn/what-was-mt-gox/" }
+  ]
+}

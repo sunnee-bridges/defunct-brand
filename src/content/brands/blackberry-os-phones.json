@@ -3,18 +3,29 @@
   "slug": "blackberry-os-phones",
   "category": "Mobile devices",
   "country": "CA",
-  "active": {
-    "start": 1999,
-    "end": 2016
-  },
-  "fate": "Discontinued",
-  "summary": "Legacy BlackBerry OS devices ended; brand licensed later on Android.",
-  "notable_products": [
-    "Bold",
-    "Curve",
-    "Torch"
+  "active": { "start": 1999, "end": 2016 },
+  "fate": "Legacy BlackBerry OS/BB10 devices discontinued; handset business exited and brand later licensed to third parties on Android.",
+  "summary": "QWERTY-keyboard smartphones built on BlackBerry OS/BB10 defined secure mobile email in the 2000s; hardware was wound down by 2016, with later Android models produced under license.",
+  "notable_products": ["Bold", "Curve", "Torch", "Pearl", "Storm"],
+  "topics": ["smartphones", "enterprise", "mobile-security", "qwerty", "platform-shift"],
+  "overview_md": "**BlackBerry (legacy OS)** refers to smartphones running **BlackBerry OS** (and later **BlackBerry 10**)—devices that popularized secure, push email and the QWERTY candy-bar form factor for business and government users. Starting from two-way email pagers in **1999**, BlackBerry’s integrated phone + email handsets (e.g., **Curve**, **Bold**) became cultural touchstones—so habit-forming they earned the “CrackBerry” nickname. Core strengths included **end-to-end encryption**, **BES/BIS** services, efficient battery life, and physical keyboards that enabled fast, accurate typing.\n\nAs the market shifted to large touchscreens and expansive app ecosystems after **2007**, BlackBerry struggled to match the pace of **iOS** and **Android**. Attempts to bridge the gap included the touch-centric **Storm** line and, later, the **BlackBerry 10** platform (2013) with gesture navigation and a new runtime. Despite loyal enterprise and messaging users, developer traction and consumer share declined. In **2016**, BlackBerry announced it would **cease in-house phone development** and pivot to software and security; the **BlackBerry** name subsequently appeared on **Android** devices via licensing (TCL, and later other partners). Legacy network services for older devices were eventually turned off.\n\nBlackBerry’s legacy endures in secure mobility, MDM/EMM software, and the enduring appeal of compact QWERTY phones—even as mainstream smartphones moved decisively to full-screen slabs.",
+  "timeline": [
+    { "date": "1999-01", "text": "Early two-way email pagers (e.g., BlackBerry 850/950) introduce push messaging and the BlackBerry name." },
+    { "date": "2003-10", "text": "Smartphone era accelerates with integrated phone + email devices like the 6200/7200 series—BlackBerry becomes an enterprise staple." },
+    { "date": "2008-11", "text": "Touch experiments (e.g., BlackBerry Storm) aim to counter iPhone but highlight ecosystem and UX gaps." },
+    { "date": "2013-01-30", "text": "Launch of BlackBerry 10 (Z10, Q10) and corporate rebrand from RIM to BlackBerry; platform shift arrives late." },
+    { "date": "2016-09-28", "text": "Company announces exit from in-house handset development; brand later licensed for Android devices. (Legacy services retired over time.)" }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/BlackBerry"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/BlackBerry",
+    "blackberry10": "https://en.wikipedia.org/wiki/BlackBerry_10",
+    "licensing_tcl": "https://en.wikipedia.org/wiki/BlackBerry#Brand_licensing",
+    "services_shutdown": "https://en.wikipedia.org/wiki/BlackBerry#Network_and_software_services"
+  },
+  "sources": [
+    { "label": "Wikipedia – BlackBerry", "url": "https://en.wikipedia.org/wiki/BlackBerry" },
+    { "label": "Wikipedia – BlackBerry 10", "url": "https://en.wikipedia.org/wiki/BlackBerry_10" },
+    { "label": "Wikipedia – BlackBerry brand licensing (TCL/others)", "url": "https://en.wikipedia.org/wiki/BlackBerry#Brand_licensing" },
+    { "label": "Wikipedia – Network/services retirement", "url": "https://en.wikipedia.org/wiki/BlackBerry#Network_and_software_services" }
+  ]
 }

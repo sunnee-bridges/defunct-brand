@@ -1,0 +1,30 @@
+{
+  "brand": "Tower Records",
+  "slug": "tower-records",
+  "category": "Retail/Entertainment",
+  "country": "US",
+  "active": { "start": 1960, "end": 2006 },
+  "fate": "Liquidation of U.S. operations following bankruptcy; international affiliates continued under separate ownership; later brand relaunch online",
+  "summary": "Iconic music retailer known for deep catalog and culture-first stores; U.S. chain liquidated in 2006 amid digital disruption and heavy debt.",
+  "topics": ["music-retail", "physical-media", "bankruptcy"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Tower_Records"
+  },
+
+  "overview_md": "**Tower Records** was a culture hub disguised as a record store. Founded in 1960 by Russ Solomon in Sacramento, the chain grew into a destination for crate-diggers, touring artists, and casual listeners alike. Stores emphasized discovery: long aisles organized by genre and country, staff-written shelf cards, listening stations, walls of magazines, and midnight releases that felt like local events. The Sunset Boulevard flagship, opened in 1971, became a pop-culture landmark—part retail, part scene.\n\nAt its peak in the 1990s, Tower operated hundreds of locations worldwide with unusually deep catalogs that carried imports, indie labels, and backlist titles other chains skipped. But the business model—big floorplates, prime rents, and inventory-heavy merchandising—collided with the MP3 era, big-box price wars, and leverage. The company filed for **Chapter 11** in 2004, restructured, then filed again in 2006; by late 2006, U.S. stores were liquidated and closed.\n\nOutside the U.S., some Tower-branded businesses continued under separate owners, and the brand would later reappear online. Tower’s legacy lives on in the memories of customers who discovered music in its bins, the artists who lined up to sign records, and the idea that a record store can be a community space as much as a point of sale.",
+
+  "timeline": [
+    { "date": "1960", "text": "First Tower Records retail operation opens in Sacramento, California" },
+    { "date": "1971", "text": "Sunset Boulevard flagship opens in West Hollywood; becomes a music-scene landmark" },
+    { "date": "1990s", "text": "Peak expansion with hundreds of stores and deep catalog strategy" },
+    { "date": "2004-08", "text": "Files for Chapter 11 bankruptcy; attempts restructuring" },
+    { "date": "2006-10", "text": "Second bankruptcy leads to liquidation and closure of U.S. stores" }
+  ],
+
+  "sources": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Tower_Records" },
+    { "label": "Wayback snapshot (towerrecords.com)", "url": "https://web.archive.org/web/*/towerrecords.com" },
+    { "label": "LA Times coverage of 2006 liquidation", "url": "https://www.latimes.com/" },
+    { "label": "Historical features / retrospectives", "url": "https://www.rollingstone.com/" }
+  ]
+}
