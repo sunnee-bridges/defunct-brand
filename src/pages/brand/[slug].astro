@@ -5,7 +5,6 @@ import Base from "../../layouts/Base.astro";
 import ExploreMore from "../../components/ExploreMore.astro";
 import AffiliateDisclosure from "../../components/AffiliateDisclosure.astro";
 import LearnMore from "../../components/LearnMore.astro";
-import { Markdown } from "astro/components"; // ← built-in Markdown renderer
 
 /** Generate paths for each brand file */
 export function getStaticPaths() {
@@ -52,6 +51,69 @@ const COUNTRY_LABEL: Record<string, string> = {
 const countryLabel = (code?: string) =>
   COUNTRY_LABEL[String(code || "").toUpperCase()] || code || "";
 
+/** Minimal Markdown→HTML (bold, links, paragraphs, simple lists) */
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function mdToHtml(md: string) {
+  md = String(md || "").replace(/\r\n?/g, "\n").trim();
+  if (!md) return "";
+
+  const blocks: string[] = [];
+  const lines = md.split("\n");
+  let i = 0;
+  while (i < lines.length) {
+    if (/^\s*-\s+/.test(lines[i])) {
+      const items: string[] = [];
+      while (i < lines.length && /^\s*-\s+/.test(lines[i])) {
+        items.push(lines[i].replace(/^\s*-\s+/, ""));
+        i++;
+      }
+      const ul =
+        "<ul>" +
+        items
+          .map((item) => {
+            let t = escapeHtml(item);
+            t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+            t = t.replace(
+              /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+              `<a href="$2" target="_blank" rel="noopener">$1</a>`
+            );
+            return `<li>${t}</li>`;
+          })
+          .join("") +
+        "</ul>";
+      blocks.push(ul);
+      // skip possible blank lines after list
+      while (i < lines.length && lines[i].trim() === "") i++;
+      continue;
+    }
+
+    const para: string[] = [];
+    while (i < lines.length && lines[i].trim() !== "") {
+      para.push(lines[i]);
+      i++;
+    }
+    while (i < lines.length && lines[i].trim() === "") i++;
+
+    const raw = escapeHtml(para.join(" "));
+    if (raw) {
+      let html = raw;
+      html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+      html = html.replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        `<a href="$2" target="_blank" rel="noopener">$1</a>`
+      );
+      blocks.push(`<p>${html}</p>`);
+    }
+  }
+
+  return blocks.join("\n");
+}
+
 /* --- SEO / Canonical --- */
 let pageTitle = "Page not found";
 let pageDesc  = "Try another page or browse the full list.";
@@ -69,41 +131,52 @@ let authorityLinks: LinkItem[] = [];
 let mediaLinks: LinkItem[] = [];
 
 /* ---- Overview / Timeline / Sources precompute ---- */
+let overviewHtml = "";
 let overviewBits: { what?: string; who?: string; how_end?: string; now?: string } = {};
 let timeline: Array<{ date: string; text?: string }> = [];
 let sources: Array<{ label?: string; url: string }> = [];
 
 if (!notFound) {
-  // Compose fallback sentences from structured fields (used only when no overview_md)
-  const start = brand?.active?.start;
-  const end   = brand?.active?.end;
-  const ctry  = countryLabel(brand?.country);
-  const prod  = Array.isArray(brand?.products) && brand.products.length
-    ? ` with ${brand.products.join(", ").toLowerCase()}`
-    : "";
+  // Prefer author Markdown override
+  if (brand?.overview_md) {
+    overviewHtml = mdToHtml(String(brand.overview_md));
+  } else {
+    // Compose from structured fields
+    const start = brand?.active?.start;
+    const end   = brand?.active?.end;
+    const ctry  = countryLabel(brand?.country);
+    const prod  = Array.isArray(brand?.products) && brand.products.length
+      ? ` with ${brand.products.join(", ").toLowerCase()}`
+      : "";
 
-  overviewBits.what = brand?.overview?.what
-    ?? (brand?.brand
-      ? `**${brand.brand}** was a ${String(brand?.category || "brand").toLowerCase()} operating from ${start ?? "?"}\u2013${end ?? "?"}.`
-      : "");
+    overviewBits.what =
+      brand?.overview?.what ??
+      (brand?.brand
+        ? `**${brand.brand}** was a ${String(brand?.category || "brand").toLowerCase()} operating from ${start ?? "?"}\u2013${end ?? "?"}.`
+        : "");
 
-  overviewBits.who = brand?.overview?.who
-    ?? ((ctry || brand?.served)
-      ? `Headquartered in ${ctry || "—"}, it served ${brand?.served || "customers"}${prod}.`
-      : "");
+    overviewBits.who =
+      brand?.overview?.who ??
+      ((ctry || brand?.served)
+        ? `Headquartered in ${ctry || "—"}, it served ${brand?.served || "customers"}${prod}.`
+        : "");
 
-  overviewBits.how_end = brand?.overview?.how_end
-    ?? ((brand?.fate && end)
-      ? `In ${end}, ${brand.brand} ${String(brand.fate).trim().toLowerCase()}.`
-      : "");
+    overviewBits.how_end =
+      brand?.overview?.how_end ??
+      ((brand?.fate && end)
+        ? `In ${end}, ${brand.brand} ${String(brand.fate).trim().toLowerCase()}.`
+        : "");
 
-  overviewBits.now = brand?.overview?.now || "";
+    overviewBits.now = brand?.overview?.now || "";
+  }
 
   timeline = Array.isArray(brand?.timeline) ? brand.timeline : [];
   sources =
     Array.isArray(brand?.sources) && brand.sources.length
       ? brand.sources
-      : (brand?.links?.wikipedia ? [{ label: "Wikipedia", url: brand.links.wikipedia }] : []);
+      : brand?.links?.wikipedia
+      ? [{ label: "Wikipedia", url: brand.links.wikipedia }]
+      : [];
 
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
 
@@ -262,11 +335,10 @@ if (!notFound) {
       )}
 
       {/* ---- Overview ---- */}
-      {(brand.overview_md ||
-        overviewBits.what || overviewBits.who || overviewBits.how_end || overviewBits.now) && (
+      {(overviewHtml || overviewBits.what || overviewBits.who || overviewBits.how_end || overviewBits.now) && (
         <section aria-label="Overview" class="prose prose-sm dark:prose-invert max-w-none mt-4">
-          {brand.overview_md ? (
-            <Markdown content={String(brand.overview_md)} />
+          {overviewHtml ? (
+            <Fragment set:html={overviewHtml} />
           ) : (
             <>
               {overviewBits.what && (
