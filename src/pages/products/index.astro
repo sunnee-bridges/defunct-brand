@@ -171,60 +171,28 @@ const itemListLd = {
       Array.from(document.querySelectorAll('[data-letter-link]')).map(a => [a.getAttribute('data-letter-link'), a])
     );
 
-    const HEADER_OFFSET = 84;
-    const PICK_TOLERANCE = 8;
-
-    let scrollingToSection = false;
-
     function normalize(s){ return (s || '').toLowerCase().trim(); }
 
     function setActiveLetter(id) {
+      // Highlight jump link
       letterLinks.forEach((a, key) => {
         const isActive = key === id;
         a.classList.toggle('active', isActive);
         if (isActive) a.setAttribute('aria-current', 'true');
         else a.removeAttribute('aria-current');
       });
-    }
 
-    function currentSectionId() {
-      const top = window.scrollY + HEADER_OFFSET;
-
-      const visible = sections.filter(sec => sec.offsetParent !== null);
-      if (!visible.length) return '';
-
-      // ADD THIS: If we're above the first section by a meaningful margin, return empty
-      if (top < visible[0].offsetTop - 200) return ''; // 200px buffer before first section
-
-      if (top > visible[visible.length - 1].offsetTop + PICK_TOLERANCE) return visible[visible.length - 1].id;
-
-      let best = visible[0];
-      let bestDist = Math.abs(best.offsetTop - top);
-      for (let i = 1; i < visible.length; i++) {
-        const sec = visible[i];
-        const dist = Math.abs(sec.offsetTop - top);
-        if (dist + 0.1 < bestDist) {
-          best = sec;
-          bestDist = dist;
+      // Highlight section header
+      sections.forEach(sec => {
+        const isActive = sec.id === id;
+        const header = sec.querySelector('h2');
+        if (header) {
+          header.classList.toggle('active-section', isActive);
         }
-      }
-      return best.id;
-    }
-
-    function updateActiveFromScroll() {
-      if (scrollingToSection) return;
-      setActiveLetter(currentSectionId());
-    }
-
-    let raf = 0;
-    function onScroll() {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        updateActiveFromScroll();
       });
     }
 
+    // Letter click behavior
     letterLinks.forEach((a, key) => {
       a.addEventListener('click', (e) => {
         const targetId = key;
@@ -232,20 +200,14 @@ const itemListLd = {
         if (!sec) return;
 
         e.preventDefault();
-
-        scrollingToSection = true;
-        setActiveLetter(targetId);
+        setActiveLetter(targetId); // Highlight clicked letter
 
         sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
         history.pushState(null, '', '#' + targetId);
-
-        setTimeout(() => {
-          scrollingToSection = false;
-        }, 800);
       });
     });
 
+    // Filtering
     function applyFilter() {
       const term = normalize(q.value);
       let visibleTotal = 0;
@@ -280,25 +242,18 @@ const itemListLd = {
         const all = Number({total});
         countLine.textContent = `Showing ${visibleTotal} of ${all}`;
       }
-
-      updateActiveFromScroll();
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', updateActiveFromScroll, { passive: true });
-    window.addEventListener('hashchange', updateActiveFromScroll);
-
-    if ('onscrollend' in window) {
-      window.addEventListener('scrollend', () => {
-        scrollingToSection = false;
-        updateActiveFromScroll();
-      });
     }
 
     q.addEventListener('input', applyFilter);
 
+    // Init
     applyFilter();
-    updateActiveFromScroll();
+    
+    // Set first letter active on load if there's a hash
+    const hash = window.location.hash.slice(1);
+    if (hash && letterLinks.has(hash)) {
+      setActiveLetter(hash);
+    }
   })();
 </script>
 </Base>
