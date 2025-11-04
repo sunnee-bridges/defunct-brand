@@ -355,13 +355,19 @@ if (!notFound) {
           )}
 
           {Array.isArray(timeline) && timeline.length > 0 && (
-            <ul class="mt-3 list-disc pl-5">
-              <li>
-                <strong>Timeline:</strong>{" "}
-                {timeline.map((t, i) => `${t.date}${t.text ? " " + t.text : ""}${i < timeline.length - 1 ? " → " : ""}`)}
-              </li>
-            </ul>
+            <section aria-label="Timeline" class="mt-4">
+              <h3 class="sr-only">Timeline</h3>
+              <ul class="list-disc pl-5 space-y-1">
+                {timeline.map((t) => (
+                  <li>
+                    <strong>{yearOf(t.date)}</strong>
+                    {t.text ? ` — ${t.text}` : ""}
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
+
 
           {Array.isArray(sources) && sources.length > 0 && (
             <p class="mt-3 text-sm">
