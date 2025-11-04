@@ -171,8 +171,10 @@ const itemListLd = {
       Array.from(document.querySelectorAll('[data-letter-link]')).map(a => [a.getAttribute('data-letter-link'), a])
     );
 
-    const HEADER_OFFSET = 84;     // keep this in sync with .anchor-target { scroll-margin-top }
-    const PICK_TOLERANCE = 8;     // px buffer to smooth boundary behavior
+    const HEADER_OFFSET = 84;
+    const PICK_TOLERANCE = 8;
+
+    let scrollingToSection = false; // ADD THIS FLAG
 
     function normalize(s){ return (s || '').toLowerCase().trim(); }
 
@@ -185,14 +187,12 @@ const itemListLd = {
       });
     }
 
-    // Choose the visible section whose top is NEAREST to the viewport top (+ header offset).
     function currentSectionId() {
       const top = window.scrollY + HEADER_OFFSET;
 
       const visible = sections.filter(sec => sec.offsetParent !== null);
       if (!visible.length) return '';
 
-      // If we’re above the first, pick first; if past the last, pick last
       if (top < visible[0].offsetTop - PICK_TOLERANCE) return visible[0].id;
       if (top > visible[visible.length - 1].offsetTop + PICK_TOLERANCE) return visible[visible.length - 1].id;
 
@@ -201,7 +201,7 @@ const itemListLd = {
       for (let i = 1; i < visible.length; i++) {
         const sec = visible[i];
         const dist = Math.abs(sec.offsetTop - top);
-        if (dist + 0.1 < bestDist) { // tiny bias prevents flicker ties
+        if (dist + 0.1 < bestDist) {
           best = sec;
           bestDist = dist;
         }
@@ -210,6 +210,7 @@ const itemListLd = {
     }
 
     function updateActiveFromScroll() {
+      if (scrollingToSection) return; // IGNORE during smooth scroll
       setActiveLetter(currentSectionId());
     }
 
@@ -222,27 +223,28 @@ const itemListLd = {
       });
     }
 
-    // Smarter link behavior: prevent default, smooth scroll, update hash and active state
     letterLinks.forEach((a, key) => {
       a.addEventListener('click', (e) => {
         const targetId = key;
         const sec = document.getElementById(targetId);
-        if (!sec) return; // let browser default happen if missing
+        if (!sec) return;
 
         e.preventDefault();
 
-        // Immediate visual feedback
+        scrollingToSection = true; // SET FLAG
         setActiveLetter(targetId);
 
-        // Smooth scroll to the section
         sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        // Keep URL hash in sync without page jump
         history.pushState(null, '', '#' + targetId);
+
+        // CLEAR FLAG after scroll completes
+        setTimeout(() => {
+          scrollingToSection = false;
+        }, 800); // slightly longer than typical smooth scroll duration
       });
     });
 
-    // Filtering
     function applyFilter() {
       const term = normalize(q.value);
       let visibleTotal = 0;
@@ -258,12 +260,10 @@ const itemListLd = {
           if (ok) visibleInGroup++;
         });
 
-        // Show/hide whole group + update (N)
         sec.style.display = visibleInGroup ? '' : 'none';
         const cnt = sec.querySelector('[data-group-count]');
         if (cnt) cnt.textContent = `(${visibleInGroup})`;
 
-        // Dim/disable jump chip if empty
         const id = sec.id;
         const link = letterLinks.get(id);
         if (link) {
@@ -280,23 +280,22 @@ const itemListLd = {
         countLine.textContent = `Showing ${visibleTotal} of ${all}`;
       }
 
-      // After filtering, recompute active (first visible/nearest wins)
       updateActiveFromScroll();
     }
 
-    // Events
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', updateActiveFromScroll, { passive: true });
     window.addEventListener('hashchange', updateActiveFromScroll);
 
-    // Some browsers fire a 'scrollend' event; use it to settle the highlight post-smooth-scroll
     if ('onscrollend' in window) {
-      window.addEventListener('scrollend', updateActiveFromScroll);
+      window.addEventListener('scrollend', () => {
+        scrollingToSection = false; // ALSO clear flag on scrollend
+        updateActiveFromScroll();
+      });
     }
 
     q.addEventListener('input', applyFilter);
 
-    // Init
     applyFilter();
     updateActiveFromScroll();
   })();
