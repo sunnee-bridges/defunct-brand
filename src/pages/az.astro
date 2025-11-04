@@ -10,13 +10,21 @@ const modules = import.meta.glob("/src/content/brands/*.json", {
 
 const bySlug = new Map<string, any>();
 for (const raw of Object.values(modules)) {
-  const b = raw as any;
+  const b = (raw as any) ?? null;
   if (!b) continue;
-  const key = (String(b.slug || "").trim().toLowerCase()) || slugify(String(b.brand || ""));
+  const key =
+    (String(b.slug || "").trim().toLowerCase()) || slugify(String(b.brand || ""));
   if (!key) continue;
   if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
 }
-const brands: any[] = Array.from(bySlug.values());
+
+/** Exclude “productish” entries (only keep brands) */
+const isProductish = (x: any) =>
+  Array.isArray(x?.topics) &&
+  (x.topics.includes("vanished-product") || x.topics.includes("cult-favorite"));
+
+/** Final list: brands only */
+const brands: any[] = Array.from(bySlug.values()).filter((b) => !isProductish(b));
 
 /* Helpers */
 const firstLetter = (s: string = "") => {
@@ -39,7 +47,7 @@ const total = sorted.length;
 
 /* SEO */
 const PAGE_TITLE = "Browse A–Z • Defunct Brands";
-const PAGE_DESC = "Browse all discontinued and defunct brands alphabetically. Clean, structured entries with timelines and outcomes.";
+const PAGE_DESC = "Browse discontinued and defunct brands alphabetically. Clean, structured entries with timelines and outcomes.";
 const CANONICAL = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
 
 /** JSON-LD: Breadcrumb + ItemList (cap to avoid huge scripts) */
