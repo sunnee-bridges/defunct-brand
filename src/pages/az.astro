@@ -1,4 +1,5 @@
 ---
+// src/pages/az.astro
 import Base from "../layouts/Base.astro";
 import { slugify } from "../lib/slug.js";
 
@@ -10,21 +11,13 @@ const modules = import.meta.glob("/src/content/brands/*.json", {
 
 const bySlug = new Map<string, any>();
 for (const raw of Object.values(modules)) {
-  const b = (raw as any) ?? null;
+  const b = raw as any;
   if (!b) continue;
-  const key =
-    (String(b.slug || "").trim().toLowerCase()) || slugify(String(b.brand || ""));
+  const key = (String(b.slug || "").trim().toLowerCase()) || slugify(String(b.brand || ""));
   if (!key) continue;
   if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
 }
-
-/** Exclude “productish” entries (only keep brands) */
-const isProductish = (x: any) =>
-  Array.isArray(x?.topics) &&
-  (x.topics.includes("vanished-product") || x.topics.includes("cult-favorite"));
-
-/** Final list: brands only */
-const brands: any[] = Array.from(bySlug.values()).filter((b) => !isProductish(b));
+const brands: any[] = Array.from(bySlug.values());
 
 /* Helpers */
 const firstLetter = (s: string = "") => {
@@ -32,6 +25,27 @@ const firstLetter = (s: string = "") => {
   return /[A-Z]/.test(ch) ? ch : "#";
 };
 const anchorIdFor = (L: string) => (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
+
+/** Create a short, plain-text snippet from overview_md (first sentence) or summary */
+function mdToPlain(s: string = ""): string {
+  // strip links [text](url)
+  s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, "$1");
+  // strip bold/italics/code
+  s = s.replace(/\*\*(.+?)\*\*/g, "$1").replace(/\*(.+?)\*/g, "$1").replace(/`(.+?)`/g, "$1");
+  // collapse whitespace
+  return s.replace(/\s+/g, " ").trim();
+}
+function firstSentence(s: string = ""): string {
+  const plain = mdToPlain(s);
+  const m = plain.match(/^(.*?\.)(\s|$)/);
+  const pick = m ? m[1] : plain;
+  return pick.length > 220 ? (pick.slice(0, 217) + "…") : pick;
+}
+function getSnippet(b: any): string | null {
+  if (b?.overview_md) return firstSentence(String(b.overview_md));
+  if (b?.summary)     return String(b.summary).length > 240 ? (String(b.summary).slice(0, 237) + "…") : String(b.summary);
+  return null;
+}
 
 /* Sort/group */
 const sorted = brands.slice().sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
@@ -47,7 +61,7 @@ const total = sorted.length;
 
 /* SEO */
 const PAGE_TITLE = "Browse A–Z • Defunct Brands";
-const PAGE_DESC = "Browse discontinued and defunct brands alphabetically. Clean, structured entries with timelines and outcomes.";
+const PAGE_DESC = "Browse all discontinued and defunct brands alphabetically. Clean, structured entries with timelines and outcomes.";
 const CANONICAL = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
 
 /** JSON-LD: Breadcrumb + ItemList (cap to avoid huge scripts) */
@@ -111,7 +125,7 @@ const itemListLd = {
       Total brands: {total}
     </p>
 
-    <!-- Jump bar directly under brand count -->
+    <!-- Jump bar -->
     <div class="flex flex-wrap gap-2 mb-6" role="navigation" aria-label="Jump to letter">
       {letters.map((L) => {
         const anchor = anchorIdFor(L);
@@ -119,7 +133,7 @@ const itemListLd = {
       })}
     </div>
 
-    <!-- Letter groups (single-column flow) -->
+    <!-- Letter groups -->
     <div class="space-y-10">
       {letters.map((L) => {
         const anchor = anchorIdFor(L);
@@ -131,43 +145,52 @@ const itemListLd = {
             </div>
 
             <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {groups[L].map((b: any) => (
-                <li>
-                  <article
-                    class="relative group rounded-xl p-4 border bg-white border-gray-200
-                           hover:bg-slate-50 transition-all duration-200
-                           dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                           focus-within:ring-2 focus-within:ring-indigo-500
-                           focus-within:ring-offset-2 focus-within:ring-offset-white
-                           dark:focus-within:ring-offset-slate-900 hover:shadow-md h-full"
-                  >
-                    <a
-                      href={`/brand/${encodeURIComponent(b.slug)}/`}
-                      class="stretched-link focus-ring rounded"
-                      aria-label={`${b.brand}${b.active?.start ? ` (${b.active.start}–${b.active?.end ?? "?"})` : ""}${b.fate ? ` — ${b.fate}` : ""}`}
-                    ></a>
+              {groups[L].map((b: any) => {
+                const snippet = getSnippet(b);
+                return (
+                  <li>
+                    <article
+                      class="relative group rounded-xl p-4 border bg-white border-gray-200
+                             hover:bg-slate-50 transition-all duration-200
+                             dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                             focus-within:ring-2 focus-within:ring-indigo-500
+                             focus-within:ring-offset-2 focus-within:ring-offset-white
+                             dark:focus-within:ring-offset-slate-900 hover:shadow-md h-full"
+                    >
+                      <a
+                        href={`/brand/${encodeURIComponent(b.slug)}/`}
+                        class="stretched-link focus-ring rounded"
+                        aria-label={`${b.brand}${b.active?.start ? ` (${b.active.start}–${b.active?.end ?? "?"})` : ""}${b.fate ? ` — ${b.fate}` : ""}`}
+                      ></a>
 
-                    <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-2 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
-                      {b.brand}
-                    </h3>
+                      <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-1 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
+                        {b.brand}
+                      </h3>
 
-                    <div class="text-sm text-gray-600 dark:text-slate-300 mb-1">
-                      {b.active?.start ?? ""}{b.active?.start ? '\u2013' : ''}{b.active?.start ? (b.active?.end ?? '?') : ''}{b.fate ? ` \u2014 ${b.fate}` : ""}
-                    </div>
+                      <div class="text-sm text-gray-600 dark:text-slate-300">
+                        {b.active?.start ?? ""}{b.active?.start ? '\u2013' : ''}{b.active?.start ? (b.active?.end ?? '?') : ''}{b.fate ? ` \u2014 ${b.fate}` : ""}
+                      </div>
 
-                    <div class="text-xs text-gray-500 dark:text-slate-400">
-                      {b.category}
-                    </div>
-                  </article>
-                </li>
-              ))}
+                      <div class="text-xs text-gray-500 dark:text-slate-400">
+                        {b.category}
+                      </div>
+
+                      {snippet && (
+                        <p class="hidden md:block mt-2 text-sm text-slate-700 dark:text-slate-300 line-clamp-2">
+                          {snippet}
+                        </p>
+                      )}
+                    </article>
+                  </li>
+                );
+              })}
             </ul>
           </section>
         );
       })}
     </div>
 
-    <!-- Back to top: bottom, aligned with content -->
+    <!-- Back to top -->
     <div class="mt-10">
       <a href="#top" class="chip focus-ring">↑ Back to top</a>
     </div>
