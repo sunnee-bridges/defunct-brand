@@ -25,7 +25,8 @@ const firstLetter = (s: string = "") => {
   const ch = (s[0] || "").toUpperCase();
   return /[A-Z]/.test(ch) ? ch : "#";
 };
-const anchorIdFor = (L: string) => (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
+const anchorIdFor = (L: string) =>
+  (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
 
 /* Group by first letter */
 const groups: Record<string, any[]> = {};
@@ -83,6 +84,19 @@ const itemListLd = {
       color: rgb(224 231 255);
     }
     .dark .jump a { color: rgb(203 213 225); } /* subtle dim so active pops */
+
+    /* Card polish */
+    .card {
+      position: relative;
+      border-radius: 0.75rem; /* xl */
+      border: 1px solid rgb(226 232 240); /* slate-200 */
+      background: #fff;
+      padding: 0.875rem; /* ~p-3.5 */
+      transition: box-shadow .15s ease, transform .06s ease, background-color .15s ease;
+    }
+    .card:hover { box-shadow: 0 6px 18px -8px rgba(0,0,0,.25); }
+    .dark .card { border-color: rgb(51 65 85); background: rgb(15 23 42); } /* slate-800/900 */
+    .stretched-link { position: absolute; inset: 0; }
   </style>
 
   <div class="max-w-6xl mx-auto px-4">
@@ -138,14 +152,34 @@ const itemListLd = {
                 <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {arr.map((b: any) => (
                     <li data-name={String(b.brand).toLowerCase()}>
-                      <a
-                        href={`/brand/${encodeURIComponent(b.slug)}/`}
-                        class="chip focus-ring block"
-                        aria-label={`${b.brand}${b.fate ? ` — ${b.fate}` : ""}`}
-                      >
-                        {b.brand}
-                        {b.category && <span class="ml-1 text-gray-500">({b.category})</span>}
-                      </a>
+                      <article class="card focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-white dark:focus-within:ring-offset-slate-900">
+                        <a
+                          href={`/brand/${encodeURIComponent(b.slug)}/`}
+                          class="stretched-link rounded"
+                          aria-label={`${b.brand}${b.active?.start ? ` (${b.active.start}–${b.active?.end ?? "?"})` : ""}${b.category ? ` — ${b.category}` : ""}`}
+                        ></a>
+
+                        {/* Brand title */}
+                        <h3 class="text-base font-semibold leading-snug mb-1 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
+                          {b.brand}
+                        </h3>
+
+                        {/* Year range (only years, compact) */}
+                        <div class="text-sm text-slate-700 dark:text-slate-300">
+                          {(() => {
+                            const s = b.active?.start;
+                            const e = b.active?.end;
+                            return (s || e)
+                              ? `${s ?? "?"}${s ? "–" : ""}${s ? (e ?? "?") : ""}`
+                              : "";
+                          })()}
+                        </div>
+
+                        {/* Category (subtle) */}
+                        <div class="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                          {b.category || ""}
+                        </div>
+                      </article>
                     </li>
                   ))}
                 </ul>
@@ -162,104 +196,83 @@ const itemListLd = {
   </div>
 
   <!-- Client-side filtering, counts & stable active-letter highlight (scroll-based) -->
-<script is:inline>
-  (function () {
-    const q = document.getElementById('q');
-    const sections = Array.from(document.querySelectorAll('section[data-group]'));
-    const countLine = document.getElementById('countLine');
-    const letterLinks = new Map(
-      Array.from(document.querySelectorAll('[data-letter-link]')).map(a => [a.getAttribute('data-letter-link'), a])
-    );
+  <script is:inline>
+    (function () {
+      const q = document.getElementById('q');
+      const sections = Array.from(document.querySelectorAll('section[data-group]'));
+      const countLine = document.getElementById('countLine');
+      const letterLinks = new Map(
+        Array.from(document.querySelectorAll('[data-letter-link]')).map(a => [a.getAttribute('data-letter-link'), a])
+      );
 
-    function normalize(s){ return (s || '').toLowerCase().trim(); }
+      function normalize(s){ return (s || '').toLowerCase().trim(); }
 
-    function setActiveLetter(id) {
-      // Highlight jump link
+      function setActiveLetter(id) {
+        letterLinks.forEach((a, key) => {
+          const isActive = key === id;
+          a.classList.toggle('active', isActive);
+          if (isActive) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
+      }
+
+      // Letter click behavior
       letterLinks.forEach((a, key) => {
-        const isActive = key === id;
-        a.classList.toggle('active', isActive);
-        if (isActive) a.setAttribute('aria-current', 'true');
-        else a.removeAttribute('aria-current');
+        a.addEventListener('click', (e) => {
+          const targetId = key;
+          const sec = document.getElementById(targetId);
+          if (!sec) return;
+
+          e.preventDefault();
+          setActiveLetter(targetId);
+          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', '#' + targetId);
+        });
       });
 
-      // Highlight section header letter
-      sections.forEach(sec => {
-        const isActive = sec.id === id;
-        const header = sec.querySelector('h2');
-        if (header) {
-          if (isActive) {
-            // Wrap the letter in a span for highlighting
-            const letterText = header.textContent.trim();
-            header.innerHTML = `<span class="active-letter">${letterText}</span>`;
-          } else {
-            // Remove the span, return to plain text
-            header.innerHTML = header.textContent;
+      // Filtering
+      function applyFilter() {
+        const term = normalize(q.value);
+        let visibleTotal = 0;
+
+        sections.forEach(sec => {
+          const items = Array.from(sec.querySelectorAll('li'));
+          let visibleInGroup = 0;
+
+          items.forEach(li => {
+            const name = li.getAttribute('data-name') || '';
+            const ok = !term || name.includes(term);
+            li.style.display = ok ? '' : 'none';
+            if (ok) visibleInGroup++;
+          });
+
+          sec.style.display = visibleInGroup ? '' : 'none';
+          const cnt = sec.querySelector('[data-group-count]');
+          if (cnt) cnt.textContent = `(${visibleInGroup})`;
+
+          const id = sec.id;
+          const link = letterLinks.get(id);
+          if (link) {
+            link.style.opacity = visibleInGroup ? '1' : '0.4';
+            link.tabIndex = visibleInGroup ? 0 : -1;
+            link.setAttribute('aria-disabled', visibleInGroup ? 'false' : 'true');
           }
-        }
-      });
-    }
 
-    // Letter click behavior
-    letterLinks.forEach((a, key) => {
-      a.addEventListener('click', (e) => {
-        const targetId = key;
-        const sec = document.getElementById(targetId);
-        if (!sec) return;
-
-        e.preventDefault();
-        setActiveLetter(targetId);
-
-        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.pushState(null, '', '#' + targetId);
-      });
-    });
-
-    // Filtering
-    function applyFilter() {
-      const term = normalize(q.value);
-      let visibleTotal = 0;
-
-      sections.forEach(sec => {
-        const items = Array.from(sec.querySelectorAll('li'));
-        let visibleInGroup = 0;
-
-        items.forEach(li => {
-          const name = li.getAttribute('data-name') || '';
-          const ok = !term || name.includes(term);
-          li.style.display = ok ? '' : 'none';
-          if (ok) visibleInGroup++;
+          visibleTotal += visibleInGroup;
         });
 
-        sec.style.display = visibleInGroup ? '' : 'none';
-        const cnt = sec.querySelector('[data-group-count]');
-        if (cnt) cnt.textContent = `(${visibleInGroup})`;
-
-        const id = sec.id;
-        const link = letterLinks.get(id);
-        if (link) {
-          link.style.opacity = visibleInGroup ? '1' : '0.4';
-          link.tabIndex = visibleInGroup ? 0 : -1;
-          link.setAttribute('aria-disabled', visibleInGroup ? 'false' : 'true');
+        if (countLine) {
+          const all = Number({total});
+          countLine.textContent = `Showing ${visibleTotal} of ${all}`;
         }
-
-        visibleTotal += visibleInGroup;
-      });
-
-      if (countLine) {
-        const all = Number({total});
-        countLine.textContent = `Showing ${visibleTotal} of ${all}`;
       }
-    }
 
-    q.addEventListener('input', applyFilter);
+      q.addEventListener('input', applyFilter);
+      applyFilter();
 
-    applyFilter();
-    
-    // Set first letter active on load if there's a hash
-    const hash = window.location.hash.slice(1);
-    if (hash && letterLinks.has(hash)) {
-      setActiveLetter(hash);
-    }
-  })();
-</script>
+      // Highlight from hash on load (if present)
+      const hash = window.location.hash.slice(1);
+      if (hash && letterLinks.has(hash)) setActiveLetter(hash);
+    })();
+  </script>
 </Base>

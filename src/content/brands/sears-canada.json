@@ -2,18 +2,43 @@
   "brand": "Sears (Canada)",
   "slug": "sears-canada",
   "category": "Retail",
-  "country": "Canada",
+  "country": "CA",
   "active": {
     "start": 1952,
     "end": 2018
   },
   "fate": "Liquidation",
   "summary": "Canadian department store chain liquidated in 2018.",
+  "topics": ["department-stores", "canadian-retail", "catalog-retail"],
   "notable_products": [
     "Department stores",
     "Kenmore (licensed)"
   ],
+  "overview_md": "**Sears (Canada)** began in 1952 as a joint venture between Simpsons and Sears, Roebuck, blending U.S.-style catalog scale with Canadian merchandising know-how. Through the 1950s–1970s it became a household name: the thick catalog on kitchen tables, auto centers in suburban plazas, and anchor stores in new shopping malls from coast to coast. Its mix of trusted private labels (including licensed **Kenmore**) and broad “one-stop” assortments made Sears a default destination for appliances, tools, fashions, and home goods.\n\nBy the 2000s, however, the formula that once guaranteed traffic started to fray. Malls matured, e-commerce accelerated, and category killers chipped away at high-margin lines such as appliances and electronics. Cost controls and property monetization bought time but dulled the in-store experience. Attempts to modernize—store remodels, edited assortments, and a smaller catalog footprint—couldn’t overcome falling sales and rising obligations. In **2017** the company sought court protection and, after failed bids to reorganize, moved to an orderly wind-down. The final stores closed in **2018**, ending more than six decades of Canadian retail history.\n\nFor many Canadians, Sears was more than a store; it was where families ordered bunk beds, winter boots, or their first washer-dryer set. The brand’s disappearance marked the close of a catalog-to-mall era and a reminder of how quickly retail habits can shift.",
+  "timeline": [
+    {
+      "date": "1952-09",
+      "text": "Simpsons-Sears Limited is formed as a joint venture to operate catalog and retail stores in Canada."
+    },
+    {
+      "date": "1953-09",
+      "text": "First Simpsons-Sears catalog season and early stores roll out across multiple provinces."
+    },
+    {
+      "date": "1984-01",
+      "text": "Corporate identity transitions to Sears Canada Inc., consolidating brand presence nationwide."
+    },
+    {
+      "date": "2017-06",
+      "text": "Sears Canada files for protection under the Companies’ Creditors Arrangement Act (CCAA)."
+    },
+    {
+      "date": "2018-01",
+      "text": "All remaining Sears Canada stores close as liquidation completes."
+    }
+  ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Sears_Canada"
+    "wikipedia": "https://en.wikipedia.org/wiki/Sears_Canada",
+    "wayback": "https://web.archive.org/web/*/http://www.sears.ca"
   }
 }
