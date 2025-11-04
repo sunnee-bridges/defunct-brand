@@ -384,15 +384,20 @@ if (!notFound) {
 
 
           {Array.isArray(sources) && sources.length > 0 && (
-            <p class="mt-3 text-sm">
-              Sources:{" "}
-              {sources.map((s, i) => (
-                <Fragment>
-                  <a href={s.url} target="_blank" rel="noopener">{s.label || s.url}</a>{i < sources.length - 1 ? ", " : ""}
-                </Fragment>
-              ))}
-            </p>
-          )}
+  <section aria-label="Sources" class="mt-4">
+    <h3 class="sr-only">Sources</h3>
+    <ul class="list-disc pl-5 space-y-1 text-sm">
+      {sources.map((s) => (
+        <li>
+          <a href={s.url} target="_blank" rel="noopener noreferrer">
+            {s.label || s.url}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
         </section>
       )}
 
