@@ -162,7 +162,7 @@ const itemListLd = {
   </div>
 
   <!-- Client-side filtering, counts & stable active-letter highlight (scroll-based) -->
- <script is:inline>
+<script is:inline>
   (function () {
     const q = document.getElementById('q');
     const sections = Array.from(document.querySelectorAll('section[data-group]'));
@@ -174,7 +174,7 @@ const itemListLd = {
     const HEADER_OFFSET = 84;
     const PICK_TOLERANCE = 8;
 
-    let scrollingToSection = false; // ADD THIS FLAG
+    let scrollingToSection = false;
 
     function normalize(s){ return (s || '').toLowerCase().trim(); }
 
@@ -193,7 +193,9 @@ const itemListLd = {
       const visible = sections.filter(sec => sec.offsetParent !== null);
       if (!visible.length) return '';
 
-      if (top < visible[0].offsetTop - PICK_TOLERANCE) return visible[0].id;
+      // ADD THIS: If we're above the first section by a meaningful margin, return empty
+      if (top < visible[0].offsetTop - 200) return ''; // 200px buffer before first section
+
       if (top > visible[visible.length - 1].offsetTop + PICK_TOLERANCE) return visible[visible.length - 1].id;
 
       let best = visible[0];
@@ -210,7 +212,7 @@ const itemListLd = {
     }
 
     function updateActiveFromScroll() {
-      if (scrollingToSection) return; // IGNORE during smooth scroll
+      if (scrollingToSection) return;
       setActiveLetter(currentSectionId());
     }
 
@@ -231,17 +233,16 @@ const itemListLd = {
 
         e.preventDefault();
 
-        scrollingToSection = true; // SET FLAG
+        scrollingToSection = true;
         setActiveLetter(targetId);
 
         sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         history.pushState(null, '', '#' + targetId);
 
-        // CLEAR FLAG after scroll completes
         setTimeout(() => {
           scrollingToSection = false;
-        }, 800); // slightly longer than typical smooth scroll duration
+        }, 800);
       });
     });
 
@@ -289,7 +290,7 @@ const itemListLd = {
 
     if ('onscrollend' in window) {
       window.addEventListener('scrollend', () => {
-        scrollingToSection = false; // ALSO clear flag on scrollend
+        scrollingToSection = false;
         updateActiveFromScroll();
       });
     }
