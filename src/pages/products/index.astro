@@ -67,6 +67,20 @@ const itemListLd = {
 
 <Base title={PAGE_TITLE} description={PAGE_DESC} canonical={CANONICAL} jsonLd={itemListLd}>
   <div class="max-w-6xl mx-auto px-4">
+    <!-- Page-level UX styles -->
+    <style is:inline>
+      html { scroll-behavior: smooth; }
+      /* Anchor targets land below header */
+      .anchor-target { scroll-margin-top: 84px; } /* tweak if your header height changes */
+
+      /* Active chip in jump bar */
+      .jump a.active {
+        outline: 2px solid rgb(99 102 241); /* indigo-500 */
+        outline-offset: 2px;
+        background: rgba(99 102 241 / 0.10);
+      }
+    </style>
+
     <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
       <a href="/" class="chip focus-ring">← Home</a>
       <span class="chip opacity-70 cursor-default" aria-current="page">Products</span>
@@ -90,7 +104,7 @@ const itemListLd = {
       />
 
       <!-- Jump bar -->
-      <div class="mt-1 sm:mt-0 flex flex-wrap gap-2" role="navigation" aria-label="Jump to letter">
+      <div class="jump mt-1 sm:mt-0 flex flex-wrap gap-2" role="navigation" aria-label="Jump to letter">
         {letters.map((L) => {
           const anchor = anchorIdFor(L);
           return <a href={`#${anchor}`} class="chip focus-ring" data-letter-link={anchor}>{L}</a>;
@@ -108,7 +122,7 @@ const itemListLd = {
             const anchor = anchorIdFor(L);
             const arr = groups[L];
             return (
-              <section id={anchor} role="region" aria-labelledby={`h-${anchor}`} data-group={anchor}>
+              <section id={anchor} class="anchor-target" role="region" aria-labelledby={`h-${anchor}`} data-group={anchor}>
                 <div class="flex items-baseline gap-2 mb-3">
                   <h2 id={`h-${anchor}`} class="text-xl font-semibold">{L}</h2>
                   <span class="text-sm text-slate-500 dark:text-slate-400" data-group-count>
@@ -142,8 +156,8 @@ const itemListLd = {
     )}
   </div>
 
-  <!-- Client-side filtering & counts -->
-  <script>
+  <!-- Client-side filtering, counts, and active letter highlight -->
+  <script is:inline>
     (function () {
       const q = document.getElementById('q');
       const groups = Array.from(document.querySelectorAll('[data-group]'));
@@ -153,6 +167,12 @@ const itemListLd = {
       );
 
       function normalize(s){ return (s || '').toLowerCase().trim(); }
+
+      function setActiveLetter(id) {
+        letterLinks.forEach((a, key) => {
+          a.classList.toggle('active', key === id);
+        });
+      }
 
       function applyFilter() {
         const term = normalize(q.value);
@@ -174,7 +194,7 @@ const itemListLd = {
           const cnt = sec.querySelector('[data-group-count]');
           if (cnt) cnt.textContent = `(${visibleInGroup})`;
 
-          // Dim or hide the jump chip if group empty
+          // Dim the jump chip if group empty
           const id = sec.getAttribute('id');
           const link = letterLinks.get(id);
           if (link) {
@@ -187,13 +207,38 @@ const itemListLd = {
         });
 
         if (countLine) {
-          const all = Number({total});
+          const all = {{total}};
           countLine.textContent = `Showing ${visibleTotal} of ${all}`;
         }
       }
 
-      q.addEventListener('input', applyFilter);
+      // Click → set active immediately (before scroll finishes)
+      letterLinks.forEach((a, id) => {
+        a.addEventListener('click', () => setActiveLetter(id));
+      });
+
+      // Keep active highlight in sync while scrolling using IntersectionObserver
+      if ('IntersectionObserver' in window && groups.length) {
+        const io = new IntersectionObserver(entries => {
+          // find the most visible group that’s actually displayed
+          const visible = entries
+            .filter(e => e.isIntersecting && e.target.style.display !== 'none')
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (visible?.target?.id) setActiveLetter(visible.target.id);
+        }, { rootMargin: '-30% 0px -60% 0px', threshold: [0.1, 0.25, 0.5, 0.75] });
+        groups.forEach(s => io.observe(s));
+      }
+
+      // Sync on hashchange (e.g., direct links)
+      window.addEventListener('hashchange', () => {
+        const id = location.hash.replace('#','') || '';
+        if (id) setActiveLetter(id);
+      });
+
+      // Init
       applyFilter();
+      setActiveLetter(location.hash.replace('#','') || '');
+      q.addEventListener('input', applyFilter);
     })();
   </script>
 </Base>
