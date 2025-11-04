@@ -143,6 +143,19 @@ let overviewBits: { what?: string; who?: string; how_end?: string; now?: string 
 let timeline: Array<{ date: string; text?: string }> = [];
 let sources: Array<{ label?: string; url: string }> = [];
 
+/* Pull a 4-digit year (or show the original date if no year found) */
+const yearOf = (d?: string) => (String(d || "").match(/\d{4}/)?.[0] || String(d || ""));
+
+/* Minimal inline Markdown (bold + links) for timeline text */
+function inlineMd(s: string) {
+  let t = (s || "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, `<a href="$2" target="_blank" rel="noopener">$1</a>`);
+  return t;
+}
+
+
 if (!notFound) {
   // Prefer author Markdown override
   if (brand?.overview_md) {
@@ -355,18 +368,19 @@ if (!notFound) {
           )}
 
           {Array.isArray(timeline) && timeline.length > 0 && (
-            <section aria-label="Timeline" class="mt-4">
-              <h3 class="sr-only">Timeline</h3>
-              <ul class="list-disc pl-5 space-y-1">
-                {timeline.map((t) => (
-                  <li>
-                    <strong>{yearOf(t.date)}</strong>
-                    {t.text ? ` — ${t.text}` : ""}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
+          <section aria-label="Timeline" class="mt-4">
+            <h3 class="sr-only">Timeline</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              {timeline.map((t) => (
+                <li>
+                  <strong>{yearOf(t.date)}</strong>
+                  {t.text ? <span> — <Fragment set:html={inlineMd(t.text)} /></span> : null}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
 
 
           {Array.isArray(sources) && sources.length > 0 && (
