@@ -66,21 +66,35 @@ const itemListLd = {
 ---
 
 <Base title={PAGE_TITLE} description={PAGE_DESC} canonical={CANONICAL} jsonLd={itemListLd}>
+  <style is:inline>
+    html { scroll-behavior: smooth; }
+
+    /* Sections will stop below the sticky header space (adjust if header height changes) */
+    .anchor-target { scroll-margin-top: 84px; }
+
+    /* Smooth visual change on state */
+    .jump a { transition: background-color .15s ease, outline-color .15s ease, color .15s ease; }
+
+    /* Active chip (light) */
+    .jump a.active {
+      outline: 2px solid rgb(99 102 241); /* indigo-500 */
+      outline-offset: 2px;
+      background: rgba(99 102 241 / 0.10);
+      color: rgb(55 48 163); /* indigo-800 */
+    }
+
+    /* Active chip (dark) */
+    .dark .jump a.active {
+      outline-color: rgb(165 180 252); /* indigo-300/200 */
+      background: rgba(99 102 241 / 0.25);
+      color: rgb(224 231 255); /* light indigo/surface-contrast */
+    }
+
+    /* Optional: make default chips a touch dimmer in dark so the active one pops */
+    .dark .jump a { color: rgb(203 213 225); } /* slate-300 */
+  </style>
+
   <div class="max-w-6xl mx-auto px-4">
-    <!-- Page-level UX styles -->
-    <style is:inline>
-      html { scroll-behavior: smooth; }
-      /* Anchor targets land below header */
-      .anchor-target { scroll-margin-top: 84px; } /* tweak if your header height changes */
-
-      /* Active chip in jump bar */
-      .jump a.active {
-        outline: 2px solid rgb(99 102 241); /* indigo-500 */
-        outline-offset: 2px;
-        background: rgba(99 102 241 / 0.10);
-      }
-    </style>
-
     <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
       <a href="/" class="chip focus-ring">← Home</a>
       <span class="chip opacity-70 cursor-default" aria-current="page">Products</span>
@@ -122,7 +136,7 @@ const itemListLd = {
             const anchor = anchorIdFor(L);
             const arr = groups[L];
             return (
-              <section id={anchor} class="anchor-target" role="region" aria-labelledby={`h-${anchor}`} data-group={anchor}>
+              <section id={anchor} role="region" aria-labelledby={`h-${anchor}`} data-group={anchor} class="anchor-target">
                 <div class="flex items-baseline gap-2 mb-3">
                   <h2 id={`h-${anchor}`} class="text-xl font-semibold">{L}</h2>
                   <span class="text-sm text-slate-500 dark:text-slate-400" data-group-count>
@@ -156,7 +170,7 @@ const itemListLd = {
     )}
   </div>
 
-  <!-- Client-side filtering, counts, and active letter highlight -->
+  <!-- Client-side filtering, counts & active-letter highlight -->
   <script is:inline>
     (function () {
       const q = document.getElementById('q');
@@ -167,12 +181,6 @@ const itemListLd = {
       );
 
       function normalize(s){ return (s || '').toLowerCase().trim(); }
-
-      function setActiveLetter(id) {
-        letterLinks.forEach((a, key) => {
-          a.classList.toggle('active', key === id);
-        });
-      }
 
       function applyFilter() {
         const term = normalize(q.value);
@@ -194,7 +202,7 @@ const itemListLd = {
           const cnt = sec.querySelector('[data-group-count]');
           if (cnt) cnt.textContent = `(${visibleInGroup})`;
 
-          // Dim the jump chip if group empty
+          // Dim or disable the jump chip if group empty
           const id = sec.getAttribute('id');
           const link = letterLinks.get(id);
           if (link) {
@@ -207,38 +215,67 @@ const itemListLd = {
         });
 
         if (countLine) {
-          const all = {{total}};
+          const all = Number({total});
           countLine.textContent = `Showing ${visibleTotal} of ${all}`;
+        }
+
+        // Keep active highlight in sync after filtering (if current hash points to a hidden group)
+        updateActiveFromHash();
+      }
+
+      function setActiveLetter(id) {
+        letterLinks.forEach((a, key) => {
+          const isActive = key === id;
+          a.classList.toggle('active', isActive);
+          if (isActive) {
+            a.setAttribute('aria-current', 'true');
+          } else {
+            a.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      function updateActiveFromHash() {
+        const hash = (location.hash || '').replace(/^#/, '');
+        if (!hash) {
+          setActiveLetter('');
+          return;
+        }
+        if (letterLinks.has(hash)) {
+          setActiveLetter(hash);
+        } else {
+          setActiveLetter('');
         }
       }
 
-      // Click → set active immediately (before scroll finishes)
-      letterLinks.forEach((a, id) => {
-        a.addEventListener('click', () => setActiveLetter(id));
+      // Click: set active immediately (before scroll finishes)
+      letterLinks.forEach((a, key) => {
+        a.addEventListener('click', () => setActiveLetter(key));
       });
 
-      // Keep active highlight in sync while scrolling using IntersectionObserver
-      if ('IntersectionObserver' in window && groups.length) {
-        const io = new IntersectionObserver(entries => {
-          // find the most visible group that’s actually displayed
-          const visible = entries
-            .filter(e => e.isIntersecting && e.target.style.display !== 'none')
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-          if (visible?.target?.id) setActiveLetter(visible.target.id);
-        }, { rootMargin: '-30% 0px -60% 0px', threshold: [0.1, 0.25, 0.5, 0.75] });
-        groups.forEach(s => io.observe(s));
-      }
+      // Hash changes (e.g., back/forward, manual edits)
+      window.addEventListener('hashchange', updateActiveFromHash);
 
-      // Sync on hashchange (e.g., direct links)
-      window.addEventListener('hashchange', () => {
-        const id = location.hash.replace('#','') || '';
-        if (id) setActiveLetter(id);
-      });
+      // IntersectionObserver: auto-highlight based on nearest section in view
+      const observer = new IntersectionObserver((entries) => {
+        // Pick the most visible section at the top of viewport
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible.length > 0) {
+          const sec = visible[0].target;
+          const id = sec.getAttribute('id');
+          if (id && letterLinks.has(id)) setActiveLetter(id);
+        }
+      }, { rootMargin: '0px 0px -70% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+      groups.forEach(sec => observer.observe(sec));
 
       // Init
-      applyFilter();
-      setActiveLetter(location.hash.replace('#','') || '');
       q.addEventListener('input', applyFilter);
+      applyFilter();
+      updateActiveFromHash();
     })();
   </script>
 </Base>
