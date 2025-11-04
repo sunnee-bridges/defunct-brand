@@ -182,12 +182,19 @@ const itemListLd = {
         else a.removeAttribute('aria-current');
       });
 
-      // Highlight section header
+      // Highlight section header letter
       sections.forEach(sec => {
         const isActive = sec.id === id;
         const header = sec.querySelector('h2');
         if (header) {
-          header.classList.toggle('active-section', isActive);
+          if (isActive) {
+            // Wrap the letter in a span for highlighting
+            const letterText = header.textContent.trim();
+            header.innerHTML = `<span class="active-letter">${letterText}</span>`;
+          } else {
+            // Remove the span, return to plain text
+            header.innerHTML = header.textContent;
+          }
         }
       });
     }
@@ -200,7 +207,7 @@ const itemListLd = {
         if (!sec) return;
 
         e.preventDefault();
-        setActiveLetter(targetId); // Highlight clicked letter
+        setActiveLetter(targetId);
 
         sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
         history.pushState(null, '', '#' + targetId);
@@ -246,7 +253,6 @@ const itemListLd = {
 
     q.addEventListener('input', applyFilter);
 
-    // Init
     applyFilter();
     
     // Set first letter active on load if there's a hash
