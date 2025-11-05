@@ -2,6 +2,7 @@
   "brand": "Fry's Electronics",
   "slug": "frys-electronics",
   "category": "Retail",
+  "seo_category": "retail",
   "country": "US",
   "active": { "start": 1985, "end": 2021 },
   "fate": "Operations ceased and all stores closed in February 2021 after years of decline and a shift to a consignment inventory model.",

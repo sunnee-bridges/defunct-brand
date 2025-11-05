@@ -2,6 +2,7 @@
   "brand": "Casual Corner",
   "slug": "casual-corner",
   "category": "Retail",
+  "seo_category": "retail",
   "country": "US",
   "active": { "start": 1950, "end": 2005 },
   "fate": "Liquidation and closure of remaining stores in 2005 after a multi-year wind-down of the chain and related concepts.",

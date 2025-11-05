@@ -2,6 +2,7 @@
   "brand": "Napster (original)",
   "slug": "napster-original",
   "category": "Software/Internet",
+  "seo_category": "software-internet",
   "country": "US",
   "active": { "start": 1999, "end": 2001 },
   "fate": "Shut down following court rulings against its centralized P2P service; company later filed Chapter 11 (2002) and the brand was reused by successors.",

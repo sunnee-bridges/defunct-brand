@@ -2,6 +2,7 @@
   "brand": "Pan Am",
   "slug": "pan-am",
   "category": "Airline",
+  "seo_category": "airline-aviation",
   "country": "US",
   "active": { "start": 1927, "end": 1991 },
   "fate": "Filed Chapter 11 in 1991 and ceased operations on Dec 4, 1991 amid losses, asset sales, and a failed reorganization.",

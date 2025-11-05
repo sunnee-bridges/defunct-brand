@@ -2,6 +2,7 @@
   "brand": "Woolworth (US)",
   "slug": "woolworth-us",
   "category": "Retail",
+  "seo_category": "retail",
   "country": "US",
   "active": { "start": 1879, "end": 1997 },
   "fate": "U.S. five-and-dime chain wound down in 1997; parent reoriented around athletic retail (Foot Locker) and later dropped the Woolworth name.",

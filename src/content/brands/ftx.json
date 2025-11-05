@@ -2,6 +2,7 @@
   "brand": "FTX",
   "slug": "ftx",
   "category": "Finance/Cryptocurrency",
+  "seo_category": "finance-payments",
   "country": "BS",
   "active": { "start": 2019, "end": 2022 },
   "fate": "Chapter 11 bankruptcy after fraud revelations",

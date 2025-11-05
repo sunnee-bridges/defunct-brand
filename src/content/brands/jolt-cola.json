@@ -2,6 +2,7 @@
   "brand": "Jolt Cola",
   "slug": "jolt-cola",
   "category": "Beverages/Soft Drinks",
+  "seo_category": "food-beverage",
   "country": "US",
   "active": { "start": 1985, "end": 2010 },
   "fate": "Original company filed Chapter 11 in 2009; U.S. distribution of the classic cola ended around 2010. The brand later saw a limited relaunch before fading again.",

@@ -2,6 +2,7 @@
   "brand": "Sega Dreamcast",
   "slug": "sega-dreamcast",
   "category": "Video game consoles",
+  "seo_category": "video-games-consoles",
   "country": "JP",
   "active": { "start": 1998, "end": 2001 },
   "fate": "Sega discontinued Dreamcast hardware in 2001 and exited the console business to become a third-party publisher.",

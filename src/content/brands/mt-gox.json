@@ -2,6 +2,7 @@
   "brand": "Mt. Gox",
   "slug": "mt-gox",
   "category": "Finance/Cryptocurrency",
+  "seo_category": "finance-payments",
   "country": "JP",
   "active": { "start": 2010, "end": 2014 },
   "fate": "Bankruptcy following massive loss of customer bitcoin; later placed into civil rehabilitation in Japan",

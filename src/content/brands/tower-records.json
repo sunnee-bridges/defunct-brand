@@ -2,6 +2,7 @@
   "brand": "Tower Records",
   "slug": "tower-records",
   "category": "Retail/Entertainment",
+  "seo_category": "retail-entertainment",
   "country": "US",
   "active": { "start": 1960, "end": 2006 },
   "fate": "Liquidation of U.S. operations following bankruptcy; international affiliates continued under separate ownership; later brand relaunch online",

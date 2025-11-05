@@ -33,6 +33,16 @@ const firstLetter = (s: string = "") => {
 };
 const anchorIdFor = (L: string) => (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
 
+/** Build a clean year range: 1990–2001, 1990–?, or –2001 (if only one side known) */
+function yearsOf(b: any): string {
+  const start = b?.active?.start;
+  const end = b?.active?.end;
+  if (start && end) return `${start}\u2013${end}`;
+  if (start && !end) return `${start}\u2013?`;
+  if (!start && end) return `\u2013${end}`;
+  return ""; // unknown
+}
+
 /* Sort/group */
 const sorted = brands.slice().sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
 const groups: Record<string, any[]> = {};
@@ -131,36 +141,47 @@ const itemListLd = {
             </div>
 
             <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {groups[L].map((b: any) => (
-                <li>
-                  <article
-                    class="relative group rounded-xl p-4 border bg-white border-gray-200
-                           hover:bg-slate-50 transition-all duration-200
-                           dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                           focus-within:ring-2 focus-within:ring-indigo-500
-                           focus-within:ring-offset-2 focus-within:ring-offset-white
-                           dark:focus-within:ring-offset-slate-900 hover:shadow-md h-full"
-                  >
-                    <a
-                      href={`/brand/${encodeURIComponent(b.slug)}/`}
-                      class="stretched-link focus-ring rounded"
-                      aria-label={`${b.brand}${b.active?.start ? ` (${b.active.start}–${b.active?.end ?? "?"})` : ""}${b.fate ? ` — ${b.fate}` : ""}`}
-                    ></a>
+              {groups[L].map((b: any) => {
+                const yrs = yearsOf(b);
+                const cat = b?.category || "";
+                return (
+                  <li>
+                    <article
+                      class="relative group rounded-xl p-4 border bg-white border-gray-200
+                             hover:bg-slate-50 transition-all duration-200
+                             dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                             focus-within:ring-2 focus-within:ring-indigo-500
+                             focus-within:ring-offset-2 focus-within:ring-offset-white
+                             dark:focus-within:ring-offset-slate-900 hover:shadow-md h-full"
+                    >
+                      <a
+                        href={`/brand/${encodeURIComponent(b.slug)}/`}
+                        class="stretched-link focus-ring rounded"
+                        aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+                      ></a>
 
-                    <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-2 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
-                      {b.brand}
-                    </h3>
+                      <!-- Brand title -->
+                      <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-2 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
+                        {b.brand}
+                      </h3>
 
-                    <div class="text-sm text-gray-600 dark:text-slate-300 mb-1">
-                      {b.active?.start ?? ""}{b.active?.start ? '\u2013' : ''}{b.active?.start ? (b.active?.end ?? '?') : ''}{b.fate ? ` \u2014 ${b.fate}` : ""}
-                    </div>
+                      <!-- Years ONLY -->
+                      {yrs && (
+                        <div class="text-sm text-gray-700 dark:text-slate-200 mb-1">
+                          {yrs}
+                        </div>
+                      )}
 
-                    <div class="text-xs text-gray-500 dark:text-slate-400">
-                      {b.category}
-                    </div>
-                  </article>
-                </li>
-              ))}
+                      <!-- Category ONLY -->
+                      {cat && (
+                        <div class="text-xs text-gray-500 dark:text-slate-400">
+                          {cat}
+                        </div>
+                      )}
+                    </article>
+                  </li>
+                );
+              })}
             </ul>
           </section>
         );

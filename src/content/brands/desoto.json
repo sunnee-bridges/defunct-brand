@@ -2,6 +2,7 @@
   "brand": "DeSoto",
   "slug": "desoto",
   "category": "Automotive",
+  "seo_category": "automotive",
   "country": "US",
   "active": { "start": 1928, "end": 1961 },
   "fate": "Discontinued by Chrysler after a brief 1961 model-year run; last DeSotos were built in late 1960 amid brand overlap and a shrinking mid-price market.",

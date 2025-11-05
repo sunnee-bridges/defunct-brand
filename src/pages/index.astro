@@ -3,24 +3,111 @@
 import Base from "../layouts/Base.astro";
 import { slugify } from "../lib/slug.js";
 
-/* ---------- Load curated brand JSON (curated *.json) ---------- */
+/* ---------- Category label map (display names) ---------- */
+const CATEGORY_META: Record<string, { label?: string }> = {
+  "retail": { label: "Retail" },
+  "retail-entertainment": { label: "Retail & Entertainment" },
+  "food-beverage": { label: "Food & Beverage" },
+  "alcoholic-beverages": { label: "Alcoholic Beverages" },
+  "consumer-electronics": { label: "Consumer Electronics" },
+  "computers-hardware": { label: "Computers & Hardware" },
+  "mobile-wearables": { label: "Mobile & Wearables" },
+  "software-internet": { label: "Software & Internet" },
+  "video-games-consoles": { label: "Video Games & Consoles" },
+  "airlines-aviation": { label: "Airlines & Aviation" },
+  "automotive": { label: "Automotive" },
+  "finance-payments": { label: "Finance & Payments" },
+  "healthcare-diagnostics": { label: "Healthcare & Diagnostics" },
+};
+
+/* ---------- Canonicalizer: map noisy input → stable SEO slug ---------- */
+function normalizeCategory(raw: string): string {
+  const s = String(raw || "").trim();
+  if (!s) return "";
+  const lower = s.toLowerCase();
+
+  // Common misspellings / spacing
+  if (lower === "retaiil" || lower === "retail ") return "retail";
+
+  // Food & beverage
+  if (["food & beverage","food/beverage","food and beverage","food-beverage","food beverage"].includes(lower))
+    return "food-beverage";
+  if (["alcohol","alcoholic beverages","alcoholic-beverages","alcoholic beverage"].includes(lower))
+    return "alcoholic-beverages";
+
+  // Consumer electronics / computers / mobile
+  if (["consumer electronics","consumer-electronics"].includes(lower))
+    return "consumer-electronics";
+  if (["computers","computers & hardware","computers-hardware","computer hardware"].includes(lower))
+    return "computers-hardware";
+  if (["mobile","wearables","mobile & wearables","mobile-wearables","mobile devices","mobile-devices","wearables & mobile"].includes(lower))
+    return "mobile-wearables";
+
+  // Software / Internet
+  if (["software/internet","software & internet","software - internet","software internet","software-internet"].includes(lower))
+    return "software-internet";
+
+  // Video games & consoles
+  if ([
+    "video games & consoles","video-games-consoles","video games","video-games",
+    "video game consoles","video-game-consoles","games & consoles"
+  ].includes(lower))
+    return "video-games-consoles";
+
+  // Retail & entertainment
+  if (["retail/entertainment","retail & entertainment","retail-entertainment"].includes(lower))
+    return "retail-entertainment";
+
+  // Airlines / Aviation
+  if ([
+    "airline","airlines","aviation","airline/aviation","airline-aviation",
+    "airlines-aviation","airlines & aviation"
+  ].includes(lower))
+    return "airlines-aviation";
+
+  // Finance / payments
+  if (["finance","payments","finance & payments","finance-payments"].includes(lower))
+    return "finance-payments";
+
+  // Healthcare / diagnostics
+  if (["healthcare","diagnostics","healthcare & diagnostics","healthcare-diagnostics"].includes(lower))
+    return "healthcare-diagnostics";
+
+  // Automotive
+  if (["auto","automotive"].includes(lower))
+    return "automotive";
+
+  // Fallback to slugify
+  const slug = slugify(s);
+  return CATEGORY_META[slug] ? slug : slug;
+}
+
+/* ---------- Load curated brand JSON ---------- */
 const modules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, any>;
 
-/* ---------- Normalize + de-dupe by slug (fallback: slugify(brand)) ---------- */
+/* ---------- Normalize + de-dupe brands ---------- */
 const bySlug = new Map<string, any>();
 for (const raw of Object.values(modules)) {
-  const b = raw as any;
+  const b = (raw as any) || null;
   if (!b) continue;
 
   const key =
     String(b.slug || "").trim().toLowerCase() ||
     slugify(String(b.brand || ""));
-
   if (!key) continue;
-  if (!b.category) continue; // skip items without a category for browse UX
+
+  // prefer seo_category if present; else category
+  const catRaw = (b.seo_category ?? b.category ?? "").toString().trim();
+  if (!catRaw) continue;
+
+  const canonicalCat = normalizeCategory(catRaw);
+  if (!canonicalCat) continue;
+
+  b.__seo_category = canonicalCat;
+  b.__seo_category_label = CATEGORY_META[canonicalCat]?.label ?? catRaw;
 
   if (!bySlug.has(key)) bySlug.set(key, b);
 }
@@ -36,10 +123,37 @@ const toYear = (v: unknown): number | undefined => {
 };
 const decadeStart = (y: number) => Math.floor(y / 10) * 10;
 
-/* ---------- Categories (unique, alpha) ---------- */
+/* Visual helpers for featured cards */
+const hashHue = (s: string) => {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h % 360;
+};
+const catHue = (label: string) => hashHue((label || "brand") + "-vb");
+const endYear = (b: any) => (b?.active?.end ?? "");
+
+/* Render years (you already had this; kept as-is) */
+const yearsOf = (b: any) => {
+  const start = b?.active?.start;
+  const end = b?.active?.end;
+  if (start && end) return `${start}\u2013${end}`;
+  if (start && !end) return `${start}\u2013?`;
+  if (!start && end) return `\u2013${end}`;
+  return "";
+};
+
+/* ---------- Categories (unique, alpha) using normalized seo_category ---------- */
 const categories = Array.from(
-  new Set(brands.map((b) => String(b.category).trim()))
-).sort((a, b) => a.localeCompare(b));
+  new Map(
+    brands.map((b) => {
+      const slug = String(b.__seo_category);
+      const label = CATEGORY_META[slug]?.label ?? (b.seo_category ?? b.category);
+      return [slug, String(label)];
+    })
+  ).entries()
+)
+  .map(([slug, label]) => ({ slug, label }))
+  .sort((a, b) => a.label.localeCompare(b.label));
 
 /* ---------- AVAILABLE decades only (prefer end year, fallback to start) ---------- */
 const decadeSet = new Set<number>();
@@ -60,12 +174,12 @@ const featured = brands
     const by = toYear(b?.active?.end) ?? toYear(b?.active?.start) ?? 0;
     return by - ay;
   })
-  .slice(0, 9); // trimmed from 12 → 8
+  .slice(0, 9);
 
 /* ---------- SEO ---------- */
 const pageTitle = "Vanished Brands — Defunct & Discontinued Brands Archive";
 const pageDesc =
-  "An easy way to explore discontinued and defunct brands with quick timelines, categories, decades, and a downloadable CSV dataset for research and journalism.";
+  "Explore discontinued and vanished brands with quick timelines, categories, decades, and a downloadable CSV dataset for research and journalism.";
 const canonical = (Astro.site ? new URL("/", Astro.site).href : "/");
 
 /* Organization (E-E-A-T: identity) */
@@ -97,13 +211,13 @@ const categoriesItemListLd = {
   name: "Browse by Category",
   itemListOrder: "http://schema.org/ItemListOrderAscending",
   numberOfItems: categories.length,
-  itemListElement: categories.map((label: string, i: number) => ({
+  itemListElement: categories.map((c, i: number) => ({
     "@type": "ListItem",
     position: i + 1,
-    name: label,
+    name: c.label,
     url: Astro.site
-      ? new URL(`/category/${slugify(label)}/`, Astro.site).href
-      : `/category/${slugify(label)}/`,
+      ? new URL(`/category/${c.slug}/`, Astro.site).href
+      : `/category/${c.slug}/`,
   })),
 };
 
@@ -158,45 +272,95 @@ const currentPath = Astro.url.pathname;
   canonical={canonical}
   jsonLd={[orgLd, siteLd, categoriesItemListLd, decadesItemListLd, faqLd]}
 >
-  <!-- ✅ Collapsible “Why this matters” to reduce clutter above the fold -->
+  <!-- Featured card styles -->
+  <style is:inline>
+    .fcard {
+      position: relative;
+      border-radius: 1rem;
+      border: 1px solid var(--card-border, rgb(226 232 240));
+      background:
+        linear-gradient(180deg, color-mix(in oklab, var(--tint) 12%, transparent) 0%, transparent 28%),
+        var(--card-bg, #fff);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+      overflow: hidden;
+    }
+    .dark .fcard {
+      --card-bg: rgb(2 6 23);
+      --card-border: rgb(51 65 85);
+    }
+    .fcard::before {
+      content: "";
+      position: absolute; inset: 0 0 auto 0; height: 4px;
+      background: linear-gradient(90deg,
+        color-mix(in oklab, var(--tint) 92%, white) 0%,
+        var(--tint) 40%,
+        color-mix(in oklab, var(--tint) 92%, white) 100%);
+      opacity: .9;
+    }
+    .fcard:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 8px 16px -8px color-mix(in oklab, var(--tint) 35%, transparent),
+        0 2px 10px -6px rgb(0 0 0 / .12);
+    }
+    .ended-badge {
+      position: absolute; top: .6rem; right: .6rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 9999px;
+      font: 700 12px/1.1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
+      color: oklch(0.24 0 0);
+      background: color-mix(in oklab, var(--tint) 22%, white);
+      border: 1px solid color-mix(in oklab, var(--tint) 40%, white);
+    }
+    .dark .ended-badge {
+      color: white;
+      background: color-mix(in oklab, var(--tint) 28%, rgb(2 6 23));
+      border-color: color-mix(in oklab, var(--tint) 55%, rgb(2 6 23));
+    }
+    .ended-badge small { display:block; font-weight:600; opacity:.85; }
+    .ended-badge span { display:block; font-size:13px; letter-spacing:.25px; }
+    .meta-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.35rem }
+    .chip-lite {
+      display:inline-flex; align-items:center; gap:.35rem;
+      padding:.25rem .5rem; border-radius:9999px; font-size:.72rem; font-weight:600;
+      background: color-mix(in oklab, var(--tint) 14%, white);
+      border: 1px solid color-mix(in oklab, var(--tint) 28%, white);
+      color: oklch(0.28 0 0);
+    }
+    .dark .chip-lite {
+      background: color-mix(in oklab, var(--tint) 22%, rgb(2 6 23));
+      border-color: color-mix(in oklab, var(--tint) 45%, rgb(2 6 23));
+      color: white;
+    }
+    .card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+
+  <!-- ✅ Collapsible “Why this matters” -->
   <section class="mt-4 mb-6" aria-label="Why this matters">
     <h1 class="text-2xl md:text-3xl font-bold mb-3">Why Brands Disappear (and Why It Matters)</h1>
 
-    <!-- Visible, tight lead -->
     <p class="text-slate-800 dark:text-slate-200">
       Every year, familiar names vanish. Vanished Brands tracks those stories with quick timelines,
       clear categories, and reliable sources so you can see what ended—and why.
     </p>
 
-    <!-- Expandable details keep the hero uncluttered -->
     <details class="mt-2">
       <summary class="cursor-pointer text-sm text-indigo-600 hover:underline">Read more</summary>
       <div class="prose dark:prose-invert max-w-none mt-2">
         <p>
           Why catalog defunct brands? Because they’re a fast, human way to understand bigger shifts in
           technology, retail, and culture. When smartphones absorbed MP3 players, when e-commerce reshaped
-          malls, when streaming remade media—brands were the first visible signals of change. Following what
-          launched, grew, and eventually ended helps journalists, students, and curious readers connect economic
-          headlines to real products and everyday life.
+          malls, when streaming remade media—brands were the first visible signals of change.
         </p>
         <p>
-          This site is built to be <em>useful</em> and <em>verifiable</em>. Each brand page summarizes the basics
-          (founded, defunct, fate), links to authoritative sources (official announcements, Wikipedia, archives),
-          and points you to related reading on our site. You can browse by <a class="underline" href="/az/">A–Z</a>,
-          explore <a class="underline" href="/category/">categories</a> like Retail or Consumer electronics, or jump
-          through time with <a class="underline" href="/decade/">decade views</a>. If you’re analyzing trends,
-          head to <a class="underline" href="/data/">Data</a> for a CSV you can sort, chart, and cite.
-        </p>
-        <p>
-          We keep things plain-language and ad-light, with transparent methods and a clear editorial policy.
-          If a date is disputed, we say so. If sources disagree, we link both. The goal isn’t nostalgia for
-          its own sake—it’s giving you a clean starting point to understand what happened, why it happened,
-          and what that tells us about the present. Start anywhere: pick a decade, skim a category, or open a brand you remember.
+          Each brand page summarizes basics (founded, defunct, fate), links to sources, and points to related reading.
+          Browse by <a class="underline" href="/az/">A–Z</a>, explore <a class="underline" href="/category/">categories</a>,
+          or jump through time with <a class="underline" href="/decade/">decades</a>.
+          For trend work, grab the <a class="underline" href="/data/">CSV</a>.
         </p>
       </div>
     </details>
 
-    <!-- Subtle internal links (engagement + crawl hints) -->
     <div class="mt-4 flex flex-wrap gap-2">
       <a href="/az/" class="chip focus-ring">Browse A–Z</a>
       <a href="/category/" class="chip focus-ring">Categories</a>
@@ -207,35 +371,34 @@ const currentPath = Astro.url.pathname;
     </div>
   </section>
 
-  <!-- (kept) Invisible intro for SR/SEO context -->
   <p class="sr-only">
     Explore defunct and discontinued brands by category, decade, and A–Z index.
     Each brand page summarizes the timeline, fate, and key facts. A downloadable CSV dataset
     is available for analysts, researchers, and journalists.
   </p>
 
-  <!-- Categories (unchanged UI/behavior) -->
+  <!-- Categories (uses normalized seo_category labels) -->
   <section class="mt-6" role="region" aria-label="Browse by category">
     <h2 class="text-lg font-semibold mb-2">Browse by Category</h2>
     <nav class="flex flex-wrap gap-2" role="navigation" aria-label="Categories">
       {categories.map((c) => {
-        const href = `/category/${slugify(c)}/`;
+        const href = `/category/${c.slug}/`;
         const isCurrent = currentPath.startsWith(href);
         return (
           <a
             href={href}
             class="chip focus-ring aria-[current=page]:ring-2 aria-[current=page]:ring-indigo-500"
             aria-current={isCurrent ? "page" : undefined}
-            title={`Defunct brands in ${c}`}
+            title={`Defunct brands in ${c.label}`}
           >
-            {c}
+            {c.label}
           </a>
         );
       })}
     </nav>
   </section>
 
-  <!-- Decades (unchanged) -->
+  <!-- Decades -->
   <section class="mt-6" role="region" aria-label="Browse by decade">
     <h2 class="text-lg font-semibold mb-2">Browse by Decade</h2>
     <p class="text-gray-600 dark:text-slate-300 text-sm mb-1">
@@ -257,7 +420,6 @@ const currentPath = Astro.url.pathname;
           </a>
         );
       })}
-
       <a
         href="/decade/"
         class="btn-primary focus-ring"
@@ -269,75 +431,35 @@ const currentPath = Astro.url.pathname;
     </nav>
   </section>
 
-  <!-- Featured grid (trimmed to 8; same card UI/behavior) -->
+  <!-- Featured grid (enhanced visuals) -->
   <section class="mt-6 lg:mt-8" role="region" aria-label="Recently defunct brands">
     <h2 class="text-lg font-semibold mb-2">Recently Defunct (featured)</h2>
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5">
       {featured.map((b) => {
-        const defunct = (b?.active?.end ?? "") || "?";
-        const founded = b?.active?.start ?? "";
-        const timeline = founded ? `${founded}\u2013${defunct}` : defunct !== "?" ? `\u2013${defunct}` : "";
-        const oneLiner = (b?.summary || "").trim();
+        const yrs = yearsOf(b);
+        const def = endYear(b);
+        const cat = b.__seo_category_label || b.category || "Brand";
+        const hue = catHue(cat);
+        const tint = `oklch(0.7 0.12 ${hue})`;
 
         return (
-          <article class="card group" data-brand-slug={b.slug}>
-            {/* Title */}
-            <h3 class="text-lg font-semibold leading-snug line-clamp-2 mb-1 text-slate-900/95 dark:text-slate-100">
+          <article class="fcard group p-4" data-brand-slug={b.slug} style={{ "--tint": tint }}>
+           
+
+            <h3 class="card-title text-lg font-semibold leading-snug mb-1 text-slate-900/95 dark:text-slate-100">
               <a
                 href={`/brand/${b.slug}/`}
-                class="hover:underline focus-ring stretched-link"
+                class="stretched-link focus-ring rounded-sm"
                 title={`What happened to ${b.brand}?`}
               >
                 {b.brand}
               </a>
             </h3>
 
-            {/* Meta row: defunct year + industry */}
-            <div class="mt-1 flex flex-wrap items-center gap-2 text-[12px]">
-              {/* Defunct year chip */}
-              <span
-                class="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 font-medium text-slate-700
-                      dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
-                aria-label={defunct !== "?" ? `Year defunct: ${defunct}` : "Year defunct unknown"}
-                title={defunct !== "?" ? `Year defunct: ${defunct}` : "Year defunct unknown"}
-              >
-                ⛔ {defunct !== "?" ? defunct : "Year unknown"}
-              </span>
-
-              {/* Industry chip */}
-              {b.category && (
-                <span
-                  class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 font-medium text-slate-700
-                        dark:bg-slate-800 dark:text-slate-300"
-                  aria-label={`Industry: ${b.category}`}
-                  title={`Industry: ${b.category}`}
-                >
-                  🏷️ {b.category}
-                </span>
-              )}
-
-              {/* (Optional) Popularity chip — will be un-hidden by client JS if used */}
-              <span
-                class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 font-medium text-amber-700
-                      dark:bg-amber-900/30 dark:text-amber-300"
-                data-views
-                hidden
-              >
-                ★ <span class="ml-1" data-views-count>0</span>
-              </span>
-            </div>
-
-            {/* One-liner summary */}
-            {oneLiner && (
-              <p class="mt-2 text-sm text-gray-600 dark:text-slate-300 line-clamp-2">
-                {oneLiner}
-              </p>
-            )}
-
-            {/* Tiny timeline line */}
-            <div class="mt-2 text-xs text-gray-500 dark:text-slate-400">
-              {timeline}{b.fate ? ` \u2014 ${b.fate}` : ""}
+            <div class="meta-row">
+              {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
+              {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
             </div>
           </article>
         );

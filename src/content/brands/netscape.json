@@ -2,6 +2,7 @@
   "brand": "Netscape",
   "slug": "netscape",
   "category": "Software/Internet",
+  "seo_category": "software-internet",
   "country": "US",
   "active": { "start": 1994, "end": 2008 },
   "fate": "Brand/software discontinued; code base continued via Mozilla (Firefox lineage). AOL acquired Netscape in 1999; official support for Netscape-branded browsers ended in 2008.",

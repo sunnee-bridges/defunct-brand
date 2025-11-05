@@ -2,6 +2,7 @@
   "brand": "Pebble",
   "slug": "pebble",
   "category": "Wearables",
+  "seo_category": "mobile-wearables",
   "country": "US",
   "active": { "start": 2012, "end": 2016 },
   "fate": "Core assets acquired by Fitbit in Dec 2016; Pebble hardware discontinued and cloud services later sunset.",

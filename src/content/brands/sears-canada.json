@@ -2,6 +2,7 @@
   "brand": "Sears (Canada)",
   "slug": "sears-canada",
   "category": "Retail",
+  "seo_category": "retail",
   "country": "CA",
   "active": {
     "start": 1952,

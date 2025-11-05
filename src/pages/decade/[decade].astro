@@ -20,6 +20,16 @@ const decadeStartFromParam = (p: string | undefined): number | null => {
 const inDecade = (year: number | undefined, start: number) =>
   typeof year === "number" && year >= start && year <= start + 9;
 
+/** Build a clean year range: 1990–2001, 1990–?, or –2001 (if only one side known) */
+function yearsOf(b: any): string {
+  const s = b?.active?.start;
+  const e = b?.active?.end;
+  if (s && e) return `${s}\u2013${e}`;
+  if (s && !e) return `${s}\u2013?`;
+  if (!s && e) return `\u2013${e}`;
+  return ""; // unknown
+}
+
 /* ---------- build-time: pre-generate decades that exist ---------- */
 export async function getStaticPaths() {
   function parseYear(v: unknown): number | undefined {
@@ -116,19 +126,6 @@ if (!decade) {
     : [];
 }
 
-/* ---------- derive available categories for THIS decade ---------- */
-const normCat = (s: string) => slugify(String(s || "")).toLowerCase();
-
-const catCounts = new Map<string, number>(); // label -> count
-for (const b of (items || [])) {
-  if (!b?.category) continue;
-  const label = String(b.category).trim();
-  catCounts.set(label, (catCounts.get(label) || 0) + 1);
-}
-const catsAvailable = Array.from(catCounts.entries())
-  .map(([label, count]) => ({ label, count, key: normCat(label) }))
-  .sort((a, b) => b.count - a.count); // show most common first
-
 /* ---------- 404 guard ---------- */
 const notFound = !Number.isFinite(start!) || (items?.length ?? 0) === 0;
 if (notFound) Astro.response.status = 404;
@@ -196,7 +193,6 @@ const itemListLd = !notFound
   <nav class="mb-4 flex flex-wrap gap-2">
     <a href="/" class="chip focus-ring">← Home</a>
     <a href="/decade/" class="chip focus-ring">All decades</a>
-    <a href="#" data-random class="btn-primary focus-ring">Random</a>
   </nav>
 
   {notFound ? (
@@ -209,7 +205,6 @@ const itemListLd = !notFound
         <a href="/az/" class="chip focus-ring">Browse A–Z</a>
         <a href="/category/" class="chip focus-ring">Categories</a>
         <a href="/decade/" class="chip focus-ring">Decades</a>
-        <a href="#" data-random class="btn-primary focus-ring">Random</a>
       </div>
     </>
   ) : (
@@ -219,261 +214,51 @@ const itemListLd = !notFound
       </h1>
       <p class="text-slate-600 dark:text-slate-300 mb-3">{PAGE_DESC}</p>
 
-      <!-- Controls -->
-      <div class="mb-2 flex flex-wrap items-center gap-3">
-        <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
-        <input
-          id="q"
-          type="search"
-          class="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-          placeholder="Search brand, category, or fate…"
-          inputmode="search"
-          aria-describedby="quickChipsHelp"
-        />
+      <!-- Minimal list: Brand title + YEAR RANGE ONLY + Category -->
+      <ul id="brandList" class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-3">
+        {items!.map((b: any) => {
+          const yrs = yearsOf(b);
+          const cat = b?.category || "";
+          return (
+            <li>
+              <article
+                class="relative group rounded-xl p-4 border transition
+                       bg-white border-gray-200 hover:bg-slate-50
+                       dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                       focus-within:ring-2 focus-within:ring-indigo-500
+                       focus-within:ring-offset-2 focus-within:ring-offset-white
+                       dark:focus-within:ring-offset-slate-900 h-full"
+              >
+                <!-- Full-card click -->
+                <a
+                  href={`/brand/${encodeURIComponent(b.slug)}/`}
+                  class="stretched-link focus-ring rounded"
+                  aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+                ></a>
 
-        <label for="fate" class="text-sm text-slate-600 dark:text-slate-300">Status</label>
-        <select
-          id="fate"
-          class="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-        >
-          <option value="">All</option>
-          <option value="acquired">Acquired</option>
-          <option value="bankrupt">Bankrupt</option>
-          <option value="merged">Merged</option>
-          <option value="discontinued">Discontinued</option>
-        </select>
+                <!-- Brand title -->
+                <h3 class="text-base font-semibold mb-1 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2 line-clamp-2">
+                  {b.brand}
+                </h3>
 
-        <label for="sort" class="text-sm text-slate-600 dark:text-slate-300">Sort</label>
-        <select
-          id="sort"
-          class="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-        >
-          <option value="alpha">A → Z</option>
-          <option value="start-asc">Oldest founded</option>
-          <option value="end-desc">Most recent closure</option>
-        </select>
-      </div>
+                <!-- Years ONLY -->
+                {yrs && (
+                  <div class="text-sm text-gray-700 dark:text-slate-200">
+                    {yrs}
+                  </div>
+                )}
 
-      <!-- Quick chips: only categories present in this decade (top 8) -->
-      <div class="mb-3 flex flex-wrap gap-2" aria-live="polite" aria-describedby="quickChipsHelp">
-        <span id="quickChipsHelp" class="sr-only">Quick category filters</span>
-        {catsAvailable.slice(0, 8).map((c) => (
-          <button class="chip focus-ring" data-chip={c.key} aria-pressed="false">
-            {c.label} <span class="opacity-70">({c.count})</span>
-          </button>
-        ))}
-      </div>
-
-      <!-- Active filter chips -->
-      <div id="activeChips" class="mb-3 flex flex-wrap gap-2" aria-live="polite"></div>
-
-      <!-- List -->
-      <ul id="brandList" class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
-        {items!.map((b: any) => (
-          <li
-            data-brand={(b.brand || "").toLowerCase()}
-            data-fate={(b.fate || "").toLowerCase()}
-            data-cat={(b.category || "").toLowerCase()}
-            data-cat-key={normCat(b.category || "")}
-            data-start={b.active?.start || "0"}
-            data-end={b.active?.end || "0"}
-          >
-            <article
-              class="relative group rounded-xl p-4 border transition
-                     bg-white border-gray-200 hover:bg-slate-50
-                     dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                     focus-within:ring-2 focus-within:ring-indigo-500
-                     focus-within:ring-offset-2 focus-within:ring-offset-white
-                     dark:focus-within:ring-offset-slate-900"
-            >
-              <!-- Full-card click -->
-              <a
-                href={`/brand/${encodeURIComponent(b.slug)}/`}
-                class="stretched-link focus-ring rounded"
-                aria-label={`${b.brand}${b.active?.start ? ` (${b.active.start}–${b.active?.end ?? "?"})` : ""}${b.fate ? ` — ${b.fate}` : ""}`}
-              ></a>
-
-              <h3 class="text-base font-semibold mb-1 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
-                {b.brand}
-              </h3>
-              <div class="text-sm text-gray-600 dark:text-slate-300">
-                {b.active?.start ?? ""}{b.active?.start ? '\u2013' : ''}{b.active?.start ? (b.active?.end ?? '?') : ''}{b.fate ? ` \u2014 ${b.fate}` : ""}
-              </div>
-              <div class="text-xs text-gray-500 dark:text-slate-400 mt-1">{b.category}</div>
-            </article>
-          </li>
-        ))}
+                <!-- Category ONLY -->
+                {cat && (
+                  <div class="text-xs text-gray-500 dark:text-slate-400 mt-1">
+                    {cat}
+                  </div>
+                )}
+              </article>
+            </li>
+          );
+        })}
       </ul>
-
-      <!-- Empty state -->
-      <div id="emptyBlock" class="hidden mt-2 text-slate-600 dark:text-slate-300">
-        No matches. Try clearing filters or searching fewer terms.
-        <button
-          id="clearAll"
-          class="ml-2 inline-flex items-center rounded-md border border-slate-200 bg-white px-2.5 py-1 text-sm text-slate-900 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-        >
-          Clear all
-        </button>
-      </div>
     </>
   )}
 </Base>
-
-<!-- Client-side filters (no deps) -->
-<script>
-  const $  = (s)=>document.querySelector(s);
-  const $$ = (s)=>Array.from(document.querySelectorAll(s));
-
-  const list  = $("#brandList");
-  const q     = $("#q");
-  const fate  = $("#fate");
-  const sort  = $("#sort");
-  const chips = $("#activeChips");
-  const empty = $("#emptyBlock");
-  const clearAllBtn = $("#clearAll");
-
-  // quick category chip (normalized key: slugified/lowercased)
-  let quickCat = "";
-
-  /* URL → controls */
-  const params = new URLSearchParams(location.search);
-  if (params.has("q")) q.value = params.get("q") || "";
-  if (params.has("status")) fate.value = params.get("status") || "";
-  if (params.has("sort")) sort.value = params.get("sort") || "alpha";
-  if (params.has("cat")) quickCat = (params.get("cat") || "").toLowerCase();
-
-  syncQuickChipsUI();
-
-  function pushURL(){
-    const p = new URLSearchParams();
-    if (q.value.trim()) p.set("q", q.value.trim());
-    if (fate.value) p.set("status", fate.value);
-    if (quickCat) p.set("cat", quickCat);
-    if (sort.value && sort.value !== "alpha") p.set("sort", sort.value);
-    const qs = p.toString();
-    history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
-  }
-
-  function renderChips(){
-    chips.innerHTML = "";
-    const fr = document.createDocumentFragment();
-
-    if (q.value.trim()){
-      const el = document.createElement("span");
-      el.className = "chip inline-flex items-center gap-1";
-      el.innerHTML = `<strong>Search:</strong> ${escapeHtml(q.value.trim())} <button aria-label="Clear search">✕</button>`;
-      el.querySelector("button").onclick = () => { q.value = ""; onChange(); q.focus(); };
-      fr.appendChild(el);
-    }
-    if (fate.value){
-      const el = document.createElement("span");
-      el.className = "chip inline-flex items-center gap-1";
-      el.innerHTML = `<strong>Status:</strong> ${escapeHtml(fate.value)} <button aria-label="Clear status">✕</button>`;
-      el.querySelector("button").onclick = () => { fate.value = ""; onChange(); fate.focus(); };
-      fr.appendChild(el);
-    }
-    if (quickCat){
-      // Derive display label from the active chip button (so counts/spacing don't leak)
-      const activeBtn = document.querySelector(`[data-chip="${quickCat}"]`);
-      const label = activeBtn
-        ? activeBtn.textContent.replace(/\(\d+\)\s*$/,'').trim()
-        : quickCat;
-      const el = document.createElement("span");
-      el.className = "chip inline-flex items-center gap-1";
-      el.innerHTML = `<strong>Category:</strong> ${escapeHtml(label)} <button aria-label="Clear category">✕</button>`;
-      el.querySelector("button").onclick = () => { quickCat = ""; syncQuickChipsUI(); onChange(); };
-      fr.appendChild(el);
-    }
-    if (fr.childNodes.length){
-      const clear = document.createElement("button");
-      clear.textContent = "Clear all";
-      clear.className = "chip focus-ring cursor-pointer";
-      clear.onclick = () => { q.value = ""; fate.value = ""; sort.value = "alpha"; quickCat = ""; syncQuickChipsUI(); onChange(); };
-      fr.appendChild(clear);
-    }
-    chips.appendChild(fr);
-  }
-
-  function applyFilters(){
-    const term = (q.value || "").trim().toLowerCase();
-    const st   = (fate.value || "").toLowerCase();
-    const key  = (quickCat || "").toLowerCase(); // normalized key
-
-    let visible = 0;
-    $$("#brandList > li").forEach(li => {
-      const t = li.dataset.brand || "";
-      const f = li.dataset.fate || "";
-      const c = li.dataset.cat || "";
-      const k = li.dataset.catKey || ""; // normalized category key on the item
-
-      const textMatch = !term || t.includes(term) || c.includes(term) || f.includes(term);
-      const fateMatch = !st || f.includes(st);
-      const catMatch  = !key || k === key;
-
-      const show = textMatch && fateMatch && catMatch;
-      li.style.display = show ? "" : "none";
-      if (show) visible++;
-    });
-    empty.classList.toggle("hidden", !!visible);
-  }
-
-  function applySort(){
-    const mode = sort.value;
-    const rows = $$("#brandList > li").filter(li => li.style.display !== "none");
-    const name = (li)=> (li.dataset.brand || "");
-    const num  = (v)=> parseInt(v || "0", 10);
-
-    rows.sort((a,b)=>{
-      if (mode === "alpha") return name(a).localeCompare(name(b));
-      if (mode === "start-asc") return num(a.dataset.start)-num(b.dataset.start) || name(a).localeCompare(name(b));
-      if (mode === "end-desc") return num(b.dataset.end)-num(a.dataset.end) || name(a).localeCompare(name(b));
-      return 0;
-    });
-    rows.forEach(r => list.appendChild(r));
-  }
-
-  function onChange(){ applyFilters(); applySort(); renderChips(); pushURL(); }
-
-  // debounce search
-  let t; q.addEventListener("input", () => { clearTimeout(t); t = setTimeout(onChange, 150); });
-  fate.addEventListener("change", onChange);
-  sort.addEventListener("change", onChange);
-
-  // quick chips (toggle single-select)
-  $$('[data-chip]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const val = (btn.getAttribute('data-chip') || '').toLowerCase();
-      quickCat = (quickCat === val) ? '' : val; // toggle
-      syncQuickChipsUI();
-      onChange();
-    });
-  });
-
-  function syncQuickChipsUI(){
-    $$('[data-chip]').forEach(btn => {
-      const val = (btn.getAttribute('data-chip') || '').toLowerCase();
-      const active = quickCat === val;
-      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-      btn.classList.toggle('ring-2', active);
-      btn.classList.toggle('ring-indigo-500', active);
-      btn.classList.toggle('ring-offset-2', active);
-      btn.classList.toggle('ring-offset-white', active);
-      btn.classList.toggle('dark:ring-offset-slate-900', active);
-    });
-  }
-
-  // keyboard niceties
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "/" && document.activeElement?.tagName !== "INPUT"){ e.preventDefault(); q.focus(); }
-    else if (e.key === "Escape" && (q.value || quickCat || fate.value)){ q.value=""; fate.value=""; quickCat=""; syncQuickChipsUI(); onChange(); }
-  });
-
-  clearAllBtn?.addEventListener("click", ()=>{ q.value=""; fate.value=""; sort.value="alpha"; quickCat=""; syncQuickChipsUI(); onChange(); });
-
-  // init
-  onChange();
-
-  function escapeHtml(s){
-    return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  }
-</script>

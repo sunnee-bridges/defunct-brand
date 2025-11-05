@@ -2,6 +2,7 @@
   "brand": "Buick GNX",
   "slug": "buick-gnx",
   "category": "Automotive",
+  "seo_category": "automotive",
   "country": "US",
   "active": { "start": 1987, "end": 1987 },
   "fate": "One-year limited run (547 units) built with ASC/McLaren; discontinued with the end of the Regal-based Grand National program.",

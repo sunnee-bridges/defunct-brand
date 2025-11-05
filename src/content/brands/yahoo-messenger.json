@@ -2,6 +2,7 @@
   "brand": "Yahoo! Messenger",
   "slug": "yahoo-messenger",
   "category": "Software/Internet",
+  "seo_category": "software-internet",
   "country": "US",
   "active": { "start": 1998, "end": 2018 },
   "fate": "Service shut down in July 2018 as Yahoo shifted resources to new messaging experiments and core properties.",

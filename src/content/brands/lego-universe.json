@@ -2,6 +2,7 @@
   "brand": "LEGO Universe",
   "slug": "lego-universe",
   "category": "Video games",
+  "seo_category": "video-games-consoles",
   "country": "DK",
   "active": { "start": 2010, "end": 2012 },
   "fate": "Servers shut down on Jan 30–31, 2012 after a short free-to-play run and insufficient subscriptions.",

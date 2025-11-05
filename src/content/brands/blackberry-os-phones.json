@@ -2,6 +2,7 @@
   "brand": "BlackBerry phones (legacy OS)",
   "slug": "blackberry-os-phones",
   "category": "Mobile devices",
+  "seo_category": "mobile-wearables",
   "country": "CA",
   "active": { "start": 1999, "end": 2016 },
   "fate": "Legacy BlackBerry OS/BB10 devices discontinued; handset business exited and brand later licensed to third parties on Android.",

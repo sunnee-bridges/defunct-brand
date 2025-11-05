@@ -2,6 +2,7 @@
   "brand": "Theranos",
   "slug": "theranos",
   "category": "Healthcare/Diagnostics",
+  "seo_category": "healthcare-diagnostics",
   "country": "US",
   "active": { "start": 2003, "end": 2018 },
   "fate": "Dissolved following regulatory actions and fraud charges; executives later convicted in U.S. federal court",

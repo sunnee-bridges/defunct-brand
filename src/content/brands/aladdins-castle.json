@@ -2,6 +2,7 @@
   "brand": "Aladdin's Castle",
   "slug": "aladdins-castle",
   "category": "Retail/Entertainment",
+  "seo_category": "retail-entertainment",
   "country": "US",
   "active": { "start": 1976, "end": 2003 },
   "fate": "Brand retired after consolidation and closures; many locations shuttered or rebranded under successor arcade operators",

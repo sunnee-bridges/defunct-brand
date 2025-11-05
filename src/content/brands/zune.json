@@ -2,6 +2,7 @@
   "brand": "Zune",
   "slug": "zune",
   "category": "Consumer electronics",
+  "seo_category": "consumer-electronics",
   "country": "US",
   "active": { "start": 2006, "end": 2012 },
   "fate": "Hardware discontinued; software/services folded into Xbox Music (later Groove) and eventually retired.",

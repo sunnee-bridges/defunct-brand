@@ -2,6 +2,7 @@
   "brand": "Silicon Valley Bank",
   "slug": "silicon-valley-bank",
   "category": "Finance/Banking",
+  "seo_category": "finance-payments",
   "country": "US",
   "active": { "start": 1983, "end": 2023 },
   "fate": "Closed by regulators; placed into FDIC receivership; most assets and deposits sold to First Citizens Bank",

@@ -2,6 +2,7 @@
   "brand": "Cookie Break",
   "slug": "cookie-break",
   "category": "Food/CPG",
+  "seo_category": "food-beverage",
   "country": "US",
   "active": { "start": 1990, "end": 2000 },
   "fate": "Discontinued",

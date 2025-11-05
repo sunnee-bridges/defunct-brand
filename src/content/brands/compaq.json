@@ -2,6 +2,7 @@
   "brand": "Compaq",
   "slug": "compaq",
   "category": "Computers",
+  "seo_category": "computers-hardware",
   "country": "US",
   "active": { "start": 1982, "end": 2002 },
   "fate": "Merged with Hewlett-Packard; HP–Compaq transaction completed May 3, 2002. Compaq brand later retired in many markets.",

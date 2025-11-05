@@ -4,60 +4,113 @@ import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 
 /**
- * Curated copy for category hubs (used for nicer labels & hover descriptions).
- * Keys MUST be slugified (same algo as `slugify()`).
+ * Canonical SEO categories + display labels/descriptions.
+ * Keys MUST be slugified (kebab-case) and match the normalized category slugs.
  */
 const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
   "retail": {
+    label: "Retail",
     desc:
       "Department stores, specialty shops, and mall icons that shuttered—timelines, fates, and what led to the downfall.",
   },
-  "software-internet": {
-    label: "Software / Internet",
-    desc:
-      "Once-dominant apps and online services—what they did, when they peaked, and why they disappeared.",
-  },
-  "mobile-devices": {
-    desc:
-      "Phones, PDAs, and handhelds that defined eras of mobility—and the shifts that ended them.",
-  },
   "retail-entertainment": {
+    label: "Retail & Entertainment",
     desc:
-      "Movie, game, and media storefronts that couldn’t survive the digital turn.",
+      "Video rental, arcades, and music/movie retailers that couldn’t survive the digital turn.",
   },
-  "computers": {
+  "food-beverage": {
+    label: "Food & Beverage",
     desc:
-      "PC makers and platforms that shaped personal computing before being outpaced by new ecosystems.",
+      "Cereal, snacks, and soft drinks—limited runs, cult favorites, and why they vanished.",
   },
-  "e-commerce": {
+  "alcoholic-beverages": {
+    label: "Alcoholic Beverages",
     desc:
-      "Dot-com darlings and online storefronts—early strategies vs. today’s e-commerce giants.",
+      "Beers, malts, and RTDs that defined eras, then disappeared (and sometimes came back).",
   },
   "consumer-electronics": {
-    label: "Consumer electronics",
+    label: "Consumer Electronics",
     desc:
       "Gadgets we loved—from music players to cameras—retired by smartphones or shifting tastes.",
   },
-  "video-games": {
-    label: "Video games",
+  "computers-hardware": {
+    label: "Computers & Hardware",
     desc:
-      "Studios, services, and titles that disappeared—launches, closures, and influence.",
+      "PC makers and components that shaped personal computing before being outpaced by new ecosystems.",
   },
-  "video-game-consoles": {
-    label: "Video game consoles",
+  "mobile-wearables": {
+    label: "Mobile & Wearables",
     desc:
-      "Hardware that battled for the living room—specs, release windows, and market forces.",
+      "Phones, PDAs, and smartwatches that set the pace for mobility—then ceded it.",
   },
-  "airline": {
-    label: "Airlines",
+  "software-internet": {
+    label: "Software & Internet",
     desc:
-      "Carriers that merged, rebranded, or ceased operations—routes, fleets, consolidation timelines.",
+      "Browsers, IM clients, P2P, and e-commerce pioneers—what they built, and why they ended.",
   },
-  "wearables": {
+  "video-games-consoles": {
+    label: "Video games & consoles",
     desc:
-      "Watches, bands, and quantified-self experiments—what launched, what stuck, what faded.",
+      "Hardware and online worlds that battled for the living room—launches, closures, and legacy.",
+  },
+  "airlines-aviation": {
+    label: "Airlines & Aviation",
+    desc:
+      "Carriers that merged, rebranded, or ceased operations—routes, fleets, and consolidation timelines.",
+  },
+  "automotive": {
+    label: "Automotive",
+    desc:
+      "Marques and halo models that defined eras, from mid-century giants to single-year cult icons.",
+  },
+  "finance-payments": {
+    label: "Finance & Payments",
+    desc:
+      "Banks, crypto exchanges, and processors—rise, risk, regulation, and collapse.",
+  },
+  "healthcare-diagnostics": {
+    label: "Healthcare & Diagnostics",
+    desc:
+      "Ambitious med-tech and diagnostics brands—promises, pivots, and regulatory reality.",
   },
 };
+
+/**
+ * Normalize raw category/seo_category strings → canonical slugs.
+ * Add/adjust mappings here if you see new variants in your data.
+ */
+function normalizeCategory(raw: string): string {
+  const s = String(raw || "").trim();
+  if (!s) return "";
+
+  // Common typos & punctuation variants → canonical slug
+  const lower = s.toLowerCase();
+
+  // Direct quick fixes
+  if (lower === "retaiil") return "retail";
+  if (lower === "retail/entertainment" || lower === "retail-entertainment") return "retail-entertainment";
+  if (lower === "consumer electronics" || lower === "consumer-electronics") return "consumer-electronics";
+  if (lower === "software/internet" || lower === "software - internet") return "software-internet";
+  if (lower === "video games & consoles" || lower === "video games and consoles" || lower === "video-games" || lower === "video-game-consoles")
+    return "video-games-consoles";
+  if (lower === "airline" || lower === "airlines" || lower === "aviation" || lower === "airline/aviation" || lower === "airlines-aviation")
+    return "airlines-aviation";
+  if (lower === "computers" || lower === "computers & hardware" || lower === "computers-hardware")
+    return "computers-hardware";
+  if (lower === "mobile devices" || lower === "mobile" || lower === "wearables" || lower === "mobile & wearables" || lower === "mobile-wearables")
+    return "mobile-wearables";
+  if (lower === "food & beverage" || lower === "food/beverage" || lower === "food-beverage")
+    return "food-beverage";
+  if (lower === "beverages/alcohol" || lower === "beverages (alcohol)" || lower === "alcoholic beverages")
+    return "alcoholic-beverages";
+  if (lower === "finance" || lower === "finance & payments" || lower === "finance/payments")
+    return "finance-payments";
+  if (lower === "healthcare" || lower === "healthcare & diagnostics" || lower === "healthcare/diagnostics")
+    return "healthcare-diagnostics";
+
+  // Fallback: slugify whatever came in
+  return slugify(s);
+}
 
 /** Load curated brand JSON at build time */
 const modules = import.meta.glob("/src/content/brands/*.json", {
@@ -65,38 +118,54 @@ const modules = import.meta.glob("/src/content/brands/*.json", {
   import: "default",
 }) as Record<string, any>;
 
-/** Normalize + de-dupe by canonical slug (fallback to slugify(brand)) */
+/** Normalize + de-dupe by canonical brand slug */
 const bySlug = new Map<string, any>();
 for (const raw of Object.values(modules)) {
   const b = raw as any;
   if (!b) continue;
+
   const key =
     String(b.slug || "").trim().toLowerCase() ||
     slugify(String(b.brand || ""));
   if (!key) continue;
-  if (typeof b.category === "string") b.category = b.category.trim();
-  if (!b.category) continue;
+
+  // Prefer seo_category, fallback to category
+  const rawCat = (b.seo_category ?? b.category ?? "").toString().trim();
+  if (!rawCat) continue;
+
+  // Store normalized canonical category slug on the object for later use
+  b.__seo_category = normalizeCategory(rawCat);
+
   if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
 }
 const brands = Array.from(bySlug.values());
 
-/** Build category counts (based on deduped curated set) */
+/** Build category counts using the canonical normalized slug */
 const counts = new Map<string, number>();
 for (const b of brands) {
-  counts.set(b.category, (counts.get(b.category) || 0) + 1);
+  const slug = b.__seo_category;
+  if (!slug) continue;
+  counts.set(slug, (counts.get(slug) || 0) + 1);
+}
+
+/** Helper: pretty label from meta, else title-cased slug */
+function labelFor(slug: string, fallbackRaw?: string): string {
+  const meta = CATEGORY_META[slug];
+  if (meta?.label) return meta.label;
+  const base = fallbackRaw || slug.replace(/-/g, " ");
+  return base.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 /**
  * Sorted categories with meta applied.
- * We keep the canonical slug for URLs, and use CATEGORY_META to override label/desc.
+ * No duplicates; labels/descriptions come from CATEGORY_META when available.
  */
 const categories = Array.from(counts.entries())
-  .map(([rawLabel, n]) => {
-    const slug = slugify(rawLabel);
-    const meta = CATEGORY_META[slug] ?? {};
-    const displayLabel = meta.label || rawLabel;
+  .map(([slug, n]) => {
+    const displayLabel = labelFor(slug);
     const desc =
-      meta.desc || `Explore ${n} brand${n === 1 ? "" : "s"} in ${displayLabel}.`;
+      CATEGORY_META[slug]?.desc ||
+      `Explore ${n} brand${n === 1 ? "" : "s"} in ${displayLabel}.`;
     return { slug, displayLabel, desc, n };
   })
   .sort((a, b) => a.displayLabel.localeCompare(b.displayLabel));
@@ -148,39 +217,36 @@ const FEATURED = categories.slice(0, 8);
     )}
   </Fragment>
 
-  <!-- 📦 Page container: matches A–Z/Decades (max-w-6xl, px-4) -->
-  
-    <!-- 🧭 Breadcrumb (same placement & style as A–Z/Decades) -->
-    <nav class="mb-4 flex flex-wrap gap-2">
-      <a href="/" class="chip focus-ring">← Home</a>
-      <span class="chip opacity-70 cursor-default" aria-current="page">Categories</span>
-    </nav>
+  <!-- 📦 Page container -->
+  <nav class="mb-4 flex flex-wrap gap-2">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <span class="chip opacity-70 cursor-default" aria-current="page">Categories</span>
+  </nav>
 
-    <!-- Header -->
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Category</h1>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
-      Total categories: {categories.length}
-    </p>
+  <!-- Header -->
+  <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Category</h1>
+  <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+    Total categories: {categories.length}
+  </p>
 
-    <!-- Chip grid (identical structure to A–Z/Decades) -->
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      {categories.map((c) => (
-        <li>
-          <a
-            href={`/category/${c.slug}/`}
-            class="chip focus-ring block"
-            title={c.desc}
-            aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
-          >
-            {c.displayLabel} <span class="text-gray-500">({c.n})</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+  <!-- Chip grid -->
+  <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    {categories.map((c) => (
+      <li>
+        <a
+          href={`/category/${c.slug}/`}
+          class="chip focus-ring block"
+          title={c.desc}
+          aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
+        >
+          {c.displayLabel} <span class="text-gray-500">({c.n})</span>
+        </a>
+      </li>
+    ))}
+  </ul>
 
-    <!-- Optional: Back to top, aligned with content like A–Z -->
-    <div class="mt-8">
-      <a href="#top" class="chip focus-ring">↑ Back to top</a>
-    </div>
-  
+  <!-- Back to top -->
+  <div class="mt-8">
+    <a href="#top" class="chip focus-ring">↑ Back to top</a>
+  </div>
 </Base>

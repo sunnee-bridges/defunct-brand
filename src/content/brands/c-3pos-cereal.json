@@ -2,6 +2,7 @@
   "brand": "C-3PO's Cereal",
   "slug": "c-3pos-cereal",
   "category": "Food/Breakfast cereal",
+  "seo_category": "food-beverage",
   "country": "US",
   "active": { "start": 1984, "end": 1985 },
   "fate": "Discontinued",

@@ -2,6 +2,7 @@
   "brand": "Oldsmobile",
   "slug": "oldsmobile",
   "category": "Automotive",
+  "seo_category": "automotive",
   "country": "US",
   "active": { "start": 1897, "end": 2004 },
   "fate": "Discontinued by General Motors; phase-out announced in 2000 with final production ending in 2004 (last model: Alero).",

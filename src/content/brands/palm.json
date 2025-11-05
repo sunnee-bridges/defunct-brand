@@ -2,6 +2,7 @@
   "brand": "Palm",
   "slug": "palm",
   "category": "Mobile devices",
+  "seo_category": "mobile-wearables",
   "country": "US",
   "active": { "start": 1992, "end": 2011 },
   "fate": "Acquired by HP in 2010; webOS hardware discontinued in 2011. Brand and assets later licensed/sold in parts.",

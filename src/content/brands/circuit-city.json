@@ -2,6 +2,7 @@
   "brand": "Circuit City",
   "slug": "circuit-city",
   "category": "Retail",
+  "seo_category": "retail",
   "country": "US",
   "active": { "start": 1949, "end": 2009 },
   "fate": "Liquidation of all U.S. retail stores in early 2009 following a Nov 2008 Chapter 11 filing; brand later resurfaced online under new owners.",

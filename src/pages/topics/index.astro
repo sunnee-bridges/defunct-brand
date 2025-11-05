@@ -1,38 +1,85 @@
 ---
+// src/pages/topics/index.astro
 import Base from "../../layouts/Base.astro";
 
-function slugifyTopic(name) {
+/* ---------- Helpers ---------- */
+function normalizeTopicName(raw: unknown): string {
+  let s = String(raw || "").trim();
+
+  // Unify apostrophes
+  s = s.replace(/[’']/g, "'");
+
+  // If the ENTIRE token is a two-digit decade like 80s / '80s,
+  // expand to 1980s (anchor to whole string to avoid double-expanding 1980s)
+  const mShort = s.match(/^'?(\d{2})s$/i);
+  if (mShort) {
+    const two = mShort[1];
+    // Assume 20th-century decades for 20s..99s
+    return `19${two}0s`;
+  }
+
+  // If ENTIRE token is already a four-digit decade (1980s, 2000s), keep as-is
+  if (/^(?:18|19|20)\d0s$/i.test(s)) {
+    return s;
+  }
+
+  // Otherwise, return unchanged (multi-word topics, etc.)
+  return s;
+}
+
+function slugifyTopic(name: string): string {
   return String(name)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
-function titleFromSlug(s) {
-  return String(s).replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+function titleFromSlug(slug: string): string {
+  // Preserve decade formatting like 1980s exactly
+  if (/^(?:18|19|20)\d0s$/i.test(slug)) return slug;
+
+  // Title case for general topics, keeping small words lower would be overkill here
+  return slug
+    .split("-")
+    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+    .join(" ");
 }
 
+/* ---------- Page meta ---------- */
 const title = "Browse Topics • Hubs";
 const desc = "Explore topic hubs that group discontinued and defunct brands by shared themes.";
 const canonical = Astro.site ? new URL("/topics/", Astro.site).href : "/topics/";
 
+/* ---------- Load content ---------- */
 const modules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
-});
+}) as Record<string, any>;
 
-const counts = {};
+/* ---------- Aggregate counts with normalization & de-dupe ---------- */
+const counts = new Map<string, number>(); // key: normalized slug
 for (const mod of Object.values(modules)) {
-  const b = mod || {};
+  const b = (mod as any) || {};
   if (!Array.isArray(b.topics)) continue;
+
   for (const t of b.topics) {
-    const s = slugifyTopic(t);
-    counts[s] = (counts[s] || 0) + 1;
+    // Normalize the human name safely (fixes 80s/'80s; avoids 19800s)
+    const normName = normalizeTopicName(t);
+    const slug = slugifyTopic(normName);
+    counts.set(slug, (counts.get(slug) || 0) + 1);
   }
 }
-const topics = Object.keys(counts)
-  .sort()
-  .map((s) => ({ slug: s, name: titleFromSlug(s), count: counts[s] }));
 
+/* ---------- Build sorted topic list ---------- */
+const topics = Array.from(counts.entries())
+  .map(([slug, count]) => ({
+    slug,
+    name: titleFromSlug(slug),
+    count,
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+/* ---------- JSON-LD ---------- */
 const jsonLd = [
   {
     "@context": "https://schema.org",
