@@ -1,0 +1,49 @@
+{
+  "brand": "Toys “R” Us",
+  "slug": "toys-r-us",
+  "category": "Retail",
+  "seo_category": "retail",
+  "country": "US",
+  "active": { "start": 1948, "end": 2018 },
+  "hook": "Childhood wonderland crushed by $5B debt and Amazon",
+  "fate": "After a 2017 Chapter 11 filing, the U.S. business entered liquidation in 2018 and closed hundreds of stores. The intellectual property was later acquired and relaunched by new owners with small-format stores and Macy’s shop-in-shops.",
+  "summary": "Founded by Charles Lazarus, Toys “R” Us grew from a post-war children’s furniture shop (1948) into the world’s best-known toy superstore chain. Following years of debt from a 2005 LBO and mounting competition from e-commerce and big-box retailers, the company filed for Chapter 11 in 2017 and liquidated its U.S. stores in 2018. The brand name lived on under new owners (Tru Kids, later with WHP Global), including online sales and shop-in-shop locations at Macy’s.",
+  "notable_products": ["Toy superstores", "Babies “R” Us (subcategory)", "Geoffrey the Giraffe (mascot)"],
+  "topics": [
+    "retail",
+    "big-box",
+    "mall-era",
+    "bankruptcy",
+    "liquidation",
+    "brand-relaunch",
+    "nostalgia"
+  ],
+  "overview_md": "**Toys “R” Us** became synonymous with toy shopping in the U.S. and abroad. The chain popularized the big-box toy superstore model, expanded internationally, and spun up **Babies “R” Us** for infant goods.\n\nHeavy debt from a **2005 leveraged buyout** and a rapid shift toward **e-commerce** and **discounters** eroded performance. The company filed for **Chapter 11 in 2017** and, unable to find a buyer for the entire U.S. business, **liquidated in 2018**, shuttering hundreds of stores. The **intellectual property** was later acquired by **Tru Kids** (and subsequently tied to **WHP Global**), which experimented with small experiential stores, online sales, and **Macy’s** shop-in-shops.\n\nWhile the original U.S. company ended in 2018, the **brand** persists in limited forms—an example of a famous retail name outliving the corporation that made it ubiquitous.",
+  "timeline": [
+    { "date": "1948-01-01", "text": "Charles Lazarus opens a children’s furniture shop in Washington, D.C., the precursor to Toys “R” Us." },
+    { "date": "1957-01-01", "text": "First dedicated Toys “R” Us store opens, focusing on toys year-round." },
+    { "date": "1978-01-01", "text": "IPO on the New York Stock Exchange fuels expansion; Geoffrey the Giraffe becomes a pop-culture mascot." },
+    { "date": "1996-01-01", "text": "Launch of Babies “R” Us concept focused on infant and toddler products." },
+    { "date": "2005-07-21", "text": "Taken private in a leveraged buyout by Bain Capital, KKR, and Vornado; debt load weighs on flexibility." },
+    { "date": "2017-09-18", "text": "Files for Chapter 11 bankruptcy protection in the U.S. amid declining sales and high debt service." },
+    { "date": "2018-03-15", "text": "Company announces U.S. liquidation after failing to secure a going-concern sale." },
+    { "date": "2018-06-29", "text": "Most remaining U.S. stores close; the original U.S. company effectively ends operations." },
+    { "date": "2019-02-01", "text": "Tru Kids Brands assumes ownership of the Toys “R” Us and Babies “R” Us IP; explores relaunch." },
+    { "date": "2019-11-01", "text": "Small experiential stores open under new ownership; later closures precede a revised strategy." },
+    { "date": "2021-08-19", "text": "Macy’s partnership announced: online sales collaboration and plan for in-store Toys “R” Us shops." },
+    { "date": "2022-10-01", "text": "Nationwide Macy’s shop-in-shop rollout expands brand presence ahead of the holiday season." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Toys_%22R%22_Us",
+    "liquidation_news": "https://www.nytimes.com/2018/03/15/business/toys-r-us-liquidation.html",
+    "lbo_background": "https://www.wsj.com/articles/SB111135454862531707",
+    "tru_kids_ip": "https://www.prnewswire.com/news-releases/tru-kids-brands-owns-toys-r-us-and-babies-r-us-brands-300799342.html",
+    "macys_partnership": "https://press.macysinc.com/news-releases/news-release-details/macys-and-toys-r-us-announce-partnership"
+  },
+  "sources": [
+    { "label": "Wikipedia – Toys “R” Us", "url": "https://en.wikipedia.org/wiki/Toys_%22R%22_Us" },
+    { "label": "NYTimes – Toys “R” Us to Liquidate (Mar 15, 2018)", "url": "https://www.nytimes.com/2018/03/15/business/toys-r-us-liquidation.html" },
+    { "label": "PR Newswire – Tru Kids owns Toys “R” Us IP (2019)", "url": "https://www.prnewswire.com/news-releases/tru-kids-brands-owns-toys-r-us-and-babies-r-us-brands-300799342.html" },
+    { "label": "Macy’s Press – Partnership Announcement (2021)", "url": "https://press.macysinc.com/news-releases/news-release-details/macys-and-toys-r-us-announce-partnership" }
+  ]
+}

@@ -1,13 +1,18 @@
 ---
+/* ---------- Configurable “from … to …” labels (optional) ---------- */
+const firstBrandLabel: string = Astro.props.firstBrandLabel ?? "Blockbuster";
+const lastBrandLabel:  string = Astro.props.lastBrandLabel  ?? "Borders";
+
+/* ---------- Primary nav links (unchanged from your file) ---------- */
 const links = [
   { href: "/category/",  label: "Categories (browse)",  match: (p: string) => p.startsWith("/category/") },
   { href: "/az/",        label: "A–Z (all brands)",     match: (p: string) => p.startsWith("/az/") },
   { href: "/decade/",    label: "Decades (timelines)",  match: (p: string) => p.startsWith("/decade/") },
 
-  // NEW: Products hub (vanished products/cult favorites)
+  // Products hub (vanished products/cult favorites)
   { href: "/products/",  label: "Products",             match: (p: string) => p.startsWith("/products/") },
 
-  { href: "/blog/",      label: "Blog (articles)",      match: (p: string) => p.startsWith("/blog/") },
+  { href: "/blog/",      label: "Brand Stories",        match: (p: string) => p.startsWith("/blog/") },
   { href: "/data/",      label: "Data (CSV dataset)",   match: (p: string) => p.startsWith("/data/") },
 ];
 
@@ -15,21 +20,47 @@ const path = Astro.url.pathname;
 const isHome = path === "/";
 const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
 
-/* ---------- Safe inline JSON-LD for site nav ---------- */
-const urlFor = (p: string) => (Astro.site ? new URL(p, Astro.site).href : p);
+/* ---------- Load brand JSON & compute dynamic stats ---------- */
+const modules = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
 
-// Optional: simpler names (without parentheses) for the JSON-LD "name" array
+const items = Object.values(modules)
+  .map((m: any) => (m?.default ?? m))
+  .filter(Boolean);
+
+const totalBrands = items.length;
+
+const toYear = (v: unknown): number | undefined => {
+  if (v == null) return undefined;
+  const m = String(v).match(/\d{3,4}/);
+  if (!m) return undefined;
+  const n = parseInt(m[0], 10);
+  return Number.isFinite(n) ? n : undefined;
+};
+
+const yearPool: number[] = [];
+for (const it of items) {
+  const s = toYear(it?.active?.start);
+  const e = toYear(it?.active?.end);
+  if (typeof s === "number") yearPool.push(s);
+  if (typeof e === "number") yearPool.push(e);
+}
+const minY = yearPool.length ? Math.min(...yearPool) : undefined;
+const maxY = yearPool.length ? Math.max(...yearPool) : undefined;
+const yearSpan = (minY && maxY) ? `${minY}\u2013${maxY}` : "—";
+
+/* ---------- Safe inline JSON-LD for site nav (unchanged) ---------- */
+const urlFor = (p: string) => (Astro.site ? new URL(p, Astro.site).href : p);
 const navNames = links.map(l => l.label.replace(/\s*\([^)]*\)\s*/g, "").trim());
 const navUrls  = links.map(l => urlFor(l.href));
-
 const navSchema = {
   "@context": "https://schema.org",
   "@type": "SiteNavigationElement",
   name: navNames,
   url: navUrls
 };
-
-// Escape dangerous sequences for inline <script>
 const toSafeJson = (obj: any) =>
   JSON.stringify(obj ?? {})
     .replace(/<\/script/gi, '<\\/script')
@@ -50,8 +81,10 @@ const toSafeJson = (obj: any) =>
           🕰️ Vanished Brands Archive
         </p>
       )}
+
+      <!-- ✅ Dynamic tagline -->
       <p class="text-gray-600 dark:text-slate-300 mt-1">
-        Explore by category, A&ndash;Z, decade, or fate.
+        Track {totalBrands} discontinued brands from <strong>{firstBrandLabel}</strong> to <strong>{lastBrandLabel}</strong> ({yearSpan})
       </p>
     </div>
 
@@ -93,7 +126,7 @@ const toSafeJson = (obj: any) =>
       data-random
       onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
     >
-      Random
+      Random Brand
     </a>
   </nav>
 </header>
