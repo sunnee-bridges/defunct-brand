@@ -1,86 +1,17 @@
 ---
 // src/pages/index.astro
 import Base from "../layouts/Base.astro";
-import { slugify } from "../lib/slug.js";
-
-/* ---------- Category label map (display names) ---------- */
-const CATEGORY_META: Record<string, { label?: string }> = {
-  "retail": { label: "Retail" },
-  "retail-entertainment": { label: "Retail & Entertainment" },
-  "food-beverage": { label: "Food & Beverage" },
-  "alcoholic-beverages": { label: "Alcoholic Beverages" },
-  "consumer-electronics": { label: "Consumer Electronics" },
-  "computers-hardware": { label: "Computers & Hardware" },
-  "mobile-wearables": { label: "Mobile & Wearables" },
-  "software-internet": { label: "Software & Internet" },
-  "video-games-consoles": { label: "Video Games & Consoles" },
-  "airlines-aviation": { label: "Airlines & Aviation" },
-  "automotive": { label: "Automotive" },
-  "finance-payments": { label: "Finance & Payments" },
-  "healthcare-diagnostics": { label: "Healthcare & Diagnostics" },
-};
-
-/* ---------- Canonicalizer: map noisy input → stable SEO slug ---------- */
-function normalizeCategory(raw: string): string {
-  const s = String(raw || "").trim();
-  if (!s) return "";
-  const lower = s.toLowerCase();
-
-  // Common misspellings / spacing
-  if (lower === "retaiil" || lower === "retail ") return "retail";
-
-  // Food & beverage
-  if (["food & beverage","food/beverage","food and beverage","food-beverage","food beverage"].includes(lower))
-    return "food-beverage";
-  if (["alcohol","alcoholic beverages","alcoholic-beverages","alcoholic beverage"].includes(lower))
-    return "alcoholic-beverages";
-
-  // Consumer electronics / computers / mobile
-  if (["consumer electronics","consumer-electronics"].includes(lower))
-    return "consumer-electronics";
-  if (["computers","computers & hardware","computers-hardware","computer hardware"].includes(lower))
-    return "computers-hardware";
-  if (["mobile","wearables","mobile & wearables","mobile-wearables","mobile devices","mobile-devices","wearables & mobile"].includes(lower))
-    return "mobile-wearables";
-
-  // Software / Internet
-  if (["software/internet","software & internet","software - internet","software internet","software-internet"].includes(lower))
-    return "software-internet";
-
-  // Video games & consoles
-  if ([
-    "video games & consoles","video-games-consoles","video games","video-games",
-    "video game consoles","video-game-consoles","games & consoles"
-  ].includes(lower))
-    return "video-games-consoles";
-
-  // Retail & entertainment
-  if (["retail/entertainment","retail & entertainment","retail-entertainment"].includes(lower))
-    return "retail-entertainment";
-
-  // Airlines / Aviation
-  if ([
-    "airline","airlines","aviation","airline/aviation","airline-aviation",
-    "airlines-aviation","airlines & aviation"
-  ].includes(lower))
-    return "airlines-aviation";
-
-  // Finance / payments
-  if (["finance","payments","finance & payments","finance-payments"].includes(lower))
-    return "finance-payments";
-
-  // Healthcare / diagnostics
-  if (["healthcare","diagnostics","healthcare & diagnostics","healthcare-diagnostics"].includes(lower))
-    return "healthcare-diagnostics";
-
-  // Automotive
-  if (["auto","automotive"].includes(lower))
-    return "automotive";
-
-  // Fallback to slugify
-  const slug = slugify(s);
-  return CATEGORY_META[slug] ? slug : slug;
-}
+import {
+  normalizeBrands,
+  toYear,
+  decadeStart,
+  catHue,
+  yearsOf,
+  fateIconOf,
+  fateTypeOf,
+  primaryTextOf,
+  truncateInline,
+} from "../lib/brandUtils";
 
 /* ---------- Load curated brand JSON ---------- */
 const modules = import.meta.glob("/src/content/brands/*.json", {
@@ -88,68 +19,13 @@ const modules = import.meta.glob("/src/content/brands/*.json", {
   import: "default",
 }) as Record<string, any>;
 
-/* ---------- Normalize + de-dupe brands ---------- */
-const bySlug = new Map<string, any>();
-for (const raw of Object.values(modules)) {
-  const b = (raw as any) || null;
-  if (!b) continue;
+/* ---------- Normalize brands (dedupe + taxonomy merge) ---------- */
+const brands: any[] = normalizeBrands(modules);
 
-  const key =
-    String(b.slug || "").trim().toLowerCase() ||
-    slugify(String(b.brand || ""));
-  if (!key) continue;
-
-  // prefer seo_category if present; else category
-  const catRaw = (b.seo_category ?? b.category ?? "").toString().trim();
-  if (!catRaw) continue;
-
-  const canonicalCat = normalizeCategory(catRaw);
-  if (!canonicalCat) continue;
-
-  b.__seo_category = canonicalCat;
-  b.__seo_category_label = CATEGORY_META[canonicalCat]?.label ?? catRaw;
-
-  if (!bySlug.has(key)) bySlug.set(key, b);
-}
-const brands: any[] = Array.from(bySlug.values());
-
-/* ---------- Helpers ---------- */
-const toYear = (v: unknown): number | undefined => {
-  if (v == null) return undefined;
-  const m = String(v).match(/\d{3,4}/);
-  if (!m) return undefined;
-  const n = parseInt(m[0], 10);
-  return Number.isFinite(n) ? n : undefined;
-};
-const decadeStart = (y: number) => Math.floor(y / 10) * 10;
-
-/* Visual helpers for featured cards */
-const hashHue = (s: string) => {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-  return h % 360;
-};
-const catHue = (label: string) => hashHue((label || "brand") + "-vb");
-const endYear = (b: any) => (b?.active?.end ?? "");
-
-/* Render years (you already had this; kept as-is) */
-const yearsOf = (b: any) => {
-  const start = b?.active?.start;
-  const end = b?.active?.end;
-  if (start && end) return `${start}\u2013${end}`;
-  if (start && !end) return `${start}\u2013?`;
-  if (!start && end) return `\u2013${end}`;
-  return "";
-};
-
-/* ---------- Categories (unique, alpha) using normalized seo_category ---------- */
+/* ---------- Categories (unique, alpha) ---------- */
 const categories = Array.from(
   new Map(
-    brands.map((b) => {
-      const slug = String(b.__seo_category);
-      const label = CATEGORY_META[slug]?.label ?? (b.seo_category ?? b.category);
-      return [slug, String(label)];
-    })
+    brands.map((b) => [String(b.__seo_category), String(b.__seo_category_label || b.category || "Brand")])
   ).entries()
 )
   .map(([slug, label]) => ({ slug, label }))
@@ -237,7 +113,6 @@ const decadesItemListLd = {
   })),
 };
 
-/* Small FAQPage JSON-LD (no UI) */
 const faqLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -284,41 +159,13 @@ const currentPath = Astro.url.pathname;
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
       overflow: hidden;
     }
-    .dark .fcard {
-      --card-bg: rgb(2 6 23);
-      --card-border: rgb(51 65 85);
-    }
-    .fcard::before {
-      content: "";
-      position: absolute; inset: 0 0 auto 0; height: 4px;
-      background: linear-gradient(90deg,
-        color-mix(in oklab, var(--tint) 92%, white) 0%,
-        var(--tint) 40%,
-        color-mix(in oklab, var(--tint) 92%, white) 100%);
-      opacity: .9;
-    }
+    .dark .fcard { --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
     .fcard:hover {
       transform: translateY(-2px);
       box-shadow:
         0 8px 16px -8px color-mix(in oklab, var(--tint) 35%, transparent),
         0 2px 10px -6px rgb(0 0 0 / .12);
     }
-    .ended-badge {
-      position: absolute; top: .6rem; right: .6rem;
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 44px; height: 44px; border-radius: 9999px;
-      font: 700 12px/1.1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
-      color: oklch(0.24 0 0);
-      background: color-mix(in oklab, var(--tint) 22%, white);
-      border: 1px solid color-mix(in oklab, var(--tint) 40%, white);
-    }
-    .dark .ended-badge {
-      color: white;
-      background: color-mix(in oklab, var(--tint) 28%, rgb(2 6 23));
-      border-color: color-mix(in oklab, var(--tint) 55%, rgb(2 6 23));
-    }
-    .ended-badge small { display:block; font-weight:600; opacity:.85; }
-    .ended-badge span { display:block; font-size:13px; letter-spacing:.25px; }
     .meta-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.35rem }
     .chip-lite {
       display:inline-flex; align-items:center; gap:.35rem;
@@ -332,6 +179,14 @@ const currentPath = Astro.url.pathname;
       border-color: color-mix(in oklab, var(--tint) 45%, rgb(2 6 23));
       color: white;
     }
+    .hook {
+      margin-top:.45rem;
+      font-size:.9rem;
+      line-height:1.25rem;
+      color: rgb(71 85 105);
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .dark .hook { color: rgb(203 213 225); }
     .card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
   </style>
 
@@ -366,8 +221,8 @@ const currentPath = Astro.url.pathname;
       <a href="/category/" class="chip focus-ring">Categories</a>
       <a href="/decade/" class="chip focus-ring">Decades</a>
       <a href="/topics/" class="chip focus-ring">Topics</a>
-      <a href="/data/" class="chip focus-ring">Data (CSV)</a>
-      <a href="/random/" class="chip focus-ring">Random</a>
+      <a href="/data/" class="chip focus-ring">Download data (CSV)</a>
+      <a href="/random/" class="chip focus-ring">Random brand</a>
     </div>
   </section>
 
@@ -426,27 +281,28 @@ const currentPath = Astro.url.pathname;
         aria-label={`View all decades${totalDecades ? ` (${totalDecades} available)` : ""}`}
         title="View all decades"
       >
-        View all &raquo;
+        View all »
       </a>
     </nav>
   </section>
 
-  <!-- Featured grid (enhanced visuals) -->
+  <!-- Featured grid (enhanced: shows hook + fate icon, still clean) -->
   <section class="mt-6 lg:mt-8" role="region" aria-label="Recently defunct brands">
     <h2 class="text-lg font-semibold mb-2">Recently Defunct (featured)</h2>
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5">
       {featured.map((b) => {
         const yrs = yearsOf(b);
-        const def = endYear(b);
         const cat = b.__seo_category_label || b.category || "Brand";
         const hue = catHue(cat);
         const tint = `oklch(0.7 0.12 ${hue})`;
+        const icon = fateIconOf(b);
+        const fateType = fateTypeOf(b) || "other";
+        const primary = primaryTextOf(b);
+        const text = b?.hook ? primary : truncateInline(primary, 160);
 
         return (
           <article class="fcard group p-4" data-brand-slug={b.slug} style={{ "--tint": tint }}>
-           
-
             <h3 class="card-title text-lg font-semibold leading-snug mb-1 text-slate-900/95 dark:text-slate-100">
               <a
                 href={`/brand/${b.slug}/`}
@@ -456,6 +312,15 @@ const currentPath = Astro.url.pathname;
                 {b.brand}
               </a>
             </h3>
+
+            {/* Hook → fate → summary with icon; always show if any */}
+            {text && (
+              <p class="hook">
+                <span aria-hidden="true">{icon}</span>
+                <span class="sr-only">Fate: {fateType}</span>
+                {' '}{text}
+              </p>
+            )}
 
             <div class="meta-row">
               {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}

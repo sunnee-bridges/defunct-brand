@@ -23,13 +23,13 @@ const brandModules = import.meta.glob("/src/content/brands/*.json", {
   import: "default",
 }) as Record<string, any>;
 
-/** Resolve the current brand from the preloaded map */
+/** Resolve current brand */
 const { slug } = Astro.params;
 const modKey = `/src/content/brands/${slug}.json`;
 const brand = (brandModules[modKey] as any) ?? null;
 const notFound = !brand;
 
-/* --- Helpers --- */
+/* ---------------- Helpers ---------------- */
 function catToPath(cat?: string) {
   if (!cat) return null;
   const s = cat.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -39,32 +39,25 @@ function titleFromSlug(s: string) {
   return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-// Country code → label (extend as needed)
 const COUNTRY_LABEL: Record<string, string> = {
-  BS: "Bahamas",
-  US: "United States",
-  GB: "United Kingdom",
-  CA: "Canada",
-  DE: "Germany",
-  FR: "France",
+  BS: "Bahamas", US: "United States", GB: "United Kingdom", CA: "Canada",
+  DE: "Germany", FR: "France",
 };
 const countryLabel = (code?: string) =>
   COUNTRY_LABEL[String(code || "").toUpperCase()] || code || "";
 
 /** Minimal Markdown→HTML (bold, links, paragraphs, simple lists) */
 function escapeHtml(s: string) {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  return String(s || "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 function mdToHtml(md: string) {
   md = String(md || "").replace(/\r\n?/g, "\n").trim();
   if (!md) return "";
-
   const blocks: string[] = [];
   const lines = md.split("\n");
   let i = 0;
+
   while (i < lines.length) {
     if (/^\s*-\s+/.test(lines[i])) {
       const items: string[] = [];
@@ -74,29 +67,23 @@ function mdToHtml(md: string) {
       }
       const ul =
         "<ul>" +
-        items
-          .map((item) => {
-            let t = escapeHtml(item);
-            t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-            t = t.replace(
-              /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-              `<a href="$2" target="_blank" rel="noopener">$1</a>`
-            );
-            return `<li>${t}</li>`;
-          })
-          .join("") +
+        items.map((item) => {
+          let t = escapeHtml(item);
+          t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+          t = t.replace(
+            /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+            `<a href="$2" target="_blank" rel="noopener">$1</a>`
+          );
+          return `<li>${t}</li>`;
+        }).join("") +
         "</ul>";
       blocks.push(ul);
-      // skip possible blank lines after list
       while (i < lines.length && lines[i].trim() === "") i++;
       continue;
     }
 
     const para: string[] = [];
-    while (i < lines.length && lines[i].trim() !== "") {
-      para.push(lines[i]);
-      i++;
-    }
+    while (i < lines.length && lines[i].trim() !== "") { para.push(lines[i]); i++; }
     while (i < lines.length && lines[i].trim() === "") i++;
 
     const raw = escapeHtml(para.join(" "));
@@ -110,86 +97,78 @@ function mdToHtml(md: string) {
       blocks.push(`<p>${html}</p>`);
     }
   }
-
   return blocks.join("\n");
 }
 
-/* ↓ Years-only helpers */
+/** Inline-bold/links for short strings */
+function inlineMd(s: string) {
+  let t = escapeHtml(s || "");
+  t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, `<a href="$2" target="_blank" rel="noopener">$1</a>`);
+  return t;
+}
+
+/** Years-only helpers */
 const startY = brand?.active?.start;
 const endY   = brand?.active?.end;
 const years  = (startY || endY)
   ? `${startY ?? "?"}${startY ? "\u2013" : ""}${startY ? (endY ?? "?") : ""}`
   : "";
 
-/* --- SEO / Canonical --- */
+/** Fate → icon */
+const fateIcons: Record<string, string> = {
+  bankruptcy: "💥", bankrupt: "💥",
+  acquired: "🤝", acquisition: "🤝",
+  merged: "🔀", merge: "🔀",
+  liquidated: "📉", liquidation: "📉",
+  fraud: "⚠️", scandal: "⚠️",
+  shutdown: "🔒", closed: "🔒",
+  crisis: "🚨", insolvency: "🚨",
+};
+function pickFateIcon(fate?: string, topics?: string[]) {
+  const tset = new Set((topics || []).map((x) => String(x).toLowerCase()));
+  for (const k of tset) {
+    if (fateIcons[k]) return fateIcons[k];
+  }
+  const f = String(fate || "").toLowerCase();
+  if (/bankrupt|chapter\s*11|insolv/.test(f)) return fateIcons.bankruptcy;
+  if (/acqui/.test(f)) return fateIcons.acquired;
+  if (/merg/.test(f)) return fateIcons.merged;
+  if (/liquidat/.test(f)) return fateIcons.liquidated;
+  if (/fraud|scandal/.test(f)) return fateIcons.fraud;
+  if (/shut\s*down|closed/.test(f)) return fateIcons.shutdown;
+  if (/crisis/.test(f)) return fateIcons.crisis;
+  return "ℹ️";
+}
+
+/* ---------------- Derived blocks ---------------- */
 let pageTitle = "Page not found";
 let pageDesc  = "Try another page or browse the full list.";
 let canonical = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
-
 let jsonLdBlocks: any[] = [];
 let ogImage = "";
 let ogImageAlt = "";
 let twitterCard = "summary_large_image";
 
-/* LearnMore link buckets */
 type LinkItem = { href: string; label: string; external?: boolean; rel?: string };
 let internalLinks: LinkItem[] = [];
 let authorityLinks: LinkItem[] = [];
 let mediaLinks: LinkItem[] = [];
 
-/* ---- Overview / Timeline / Sources precompute ---- */
 let overviewHtml = "";
-let overviewBits: { what?: string; who?: string; how_end?: string; now?: string } = {};
 let timeline: Array<{ date: string; text?: string }> = [];
 let sources: Array<{ label?: string; url: string }> = [];
 
-/* Pull a 4-digit year (or show the original date if no year found) */
+/* Pull a 4-digit year (or echo original date) */
 const yearOf = (d?: string) => (String(d || "").match(/\d{4}/)?.[0] || String(d || ""));
 
-/* Minimal inline Markdown (bold + links) for timeline text */
-function inlineMd(s: string) {
-  let t = (s || "")
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, `<a href="$2" target="_blank" rel="noopener">$1</a>`);
-  return t;
-}
-
-
 if (!notFound) {
-  // Prefer author Markdown override
+  // Prefer author's Markdown body
   if (brand?.overview_md) {
     overviewHtml = mdToHtml(String(brand.overview_md));
-  } else {
-    // Compose from structured fields
-    const start = brand?.active?.start;
-    const end   = brand?.active?.end;
-    const ctry  = countryLabel(brand?.country);
-    const prod  = Array.isArray(brand?.products) && brand.products.length
-      ? ` with ${brand.products.join(", ").toLowerCase()}`
-      : "";
-
-    overviewBits.what =
-      brand?.overview?.what ??
-      (brand?.brand
-        ? `**${brand.brand}** was a ${String(brand?.category || "brand").toLowerCase()} operating from ${start ?? "?"}\u2013${end ?? "?"}.`
-        : "");
-
-    overviewBits.who =
-      brand?.overview?.who ??
-      ((ctry || brand?.served)
-        ? `Headquartered in ${ctry || "—"}, it served ${brand?.served || "customers"}${prod}.`
-        : "");
-
-    overviewBits.how_end =
-      brand?.overview?.how_end ??
-      ((brand?.fate && end)
-        ? `In ${end}, ${brand.brand} ${String(brand.fate).trim().toLowerCase()}.`
-        : "");
-
-    overviewBits.now = brand?.overview?.now || "";
   }
 
+  // Timeline/Sources (optional)
   timeline = Array.isArray(brand?.timeline) ? brand.timeline : [];
   sources =
     Array.isArray(brand?.sources) && brand.sources.length
@@ -198,10 +177,12 @@ if (!notFound) {
       ? [{ label: "Wikipedia", url: brand.links.wikipedia }]
       : [];
 
+  // SEO bits — prefer hook, else fate, else summary
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
+  const descPref = (brand.hook || brand.fate || brand.summary || "").trim();
 
   pageTitle = `What Happened to ${brand.brand}? (Timeline & Fate)`;
-  pageDesc  = `${brand.brand}: ${brand.fate || "Defunct"}; active ${activeStr}. ${brand.summary ?? ""}`.trim();
+  pageDesc  = descPref ? `${brand.brand}: ${descPref}` : `${brand.brand}: active ${activeStr}.`;
 
   const brandPath = `/brand/${encodeURIComponent(brand.slug || slug)}/`;
   canonical = Astro.site ? new URL(brandPath, Astro.site).href : brandPath;
@@ -219,7 +200,7 @@ if (!notFound) {
     ["@type"]: "Brand",
     ["@id"]: canonical + "#brand",
     name: brand.brand,
-    description: brand.summary || undefined,
+    description: descPref || undefined,
     url: canonical,
     sameAs: sameAs.length ? sameAs : undefined,
     foundingDate: brand.active?.start || undefined,
@@ -251,23 +232,17 @@ if (!notFound) {
 
   // ---------- LearnMore links ----------
   internalLinks = [{ href: "/az/", label: "Browse A–Z" }];
-
   const catPath = catToPath(brand?.category);
   if (catPath) internalLinks.push({ href: catPath, label: `More in ${brand.category}` });
 
   if (Array.isArray(brand?.topics) && brand.topics.length > 0) {
-    const firstTopic = String(brand.topics[0]);
-    internalLinks.push({
-      href: `/topics/${encodeURIComponent(firstTopic)}/`,
-      label: `More in ${titleFromSlug(firstTopic)}`
-    });
-    if (brand.topics[1]) {
-      const t2 = String(brand.topics[1]);
+    const uniq = Array.from(new Set(brand.topics.map((t: string)=> String(t))));
+    uniq.slice(0, 2).forEach((t) => {
       internalLinks.push({
-        href: `/topics/${encodeURIComponent(t2)}/`,
-        label: `More in ${titleFromSlug(t2)}`
+        href: `/topics/${encodeURIComponent(t)}/`,
+        label: `More in ${titleFromSlug(t)}`
       });
-    }
+    });
   }
 
   if (brand?.links?.wikipedia)
@@ -323,9 +298,8 @@ if (!notFound) {
         <a href="/az/" class="chip focus-ring">Browse A–Z</a>
       </nav>
 
-      <h1 id="brand-title" class="text-2xl md:text-3xl font-bold mb-2">
+      <h1 id="brand-title" class="text-2xl md:text-3xl font-bold mb-1">
         What Happened to {brand.brand}?
-        {/* ⚠️ Scandal chip */}
         {Array.isArray(brand?.topics) && brand.topics.includes("scandal") && (
           <span
             class="ml-2 inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 text-[12px] font-medium text-rose-700
@@ -337,73 +311,73 @@ if (!notFound) {
         )}
       </h1>
 
-      {/* Years-only line (no extra “At a glance” text) */}
-      {years && (
-        <p
-          class="text-slate-700 dark:text-slate-300 text-sm"
-          aria-label={`Active years ${startY ?? "unknown"} to ${endY ?? "unknown"}`}
-        >
-          {years}
+      {/* Metadata row: years & category */}
+      {(years || brand.category) && (
+        <div class="text-sm text-slate-700 dark:text-slate-300 mb-3 flex flex-wrap items-center gap-2">
+          {years && <span class="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-700 dark:bg-slate-900">{years}</span>}
+          {brand.category && (
+            <a href={catToPath(brand.category) || "#"} class="chip focus-ring">
+              {brand.category}
+            </a>
+          )}
+          {brand.country && (
+            <span class="text-slate-500 dark:text-slate-400">• {countryLabel(brand.country)}</span>
+          )}
+        </div>
+      )}
+
+      {/* Fate (prominent on brand page; we do NOT show the hook here) */}
+      {brand.fate && (
+        <p class="mt-2 text-base text-slate-800 dark:text-slate-200">
+          <strong>{pickFateIcon(brand.fate, brand.topics)} Fate:</strong>{" "}
+          <Fragment set:html={inlineMd(brand.fate)} />
         </p>
       )}
 
+      {/* Optional short summary retained for backwards compatibility */}
       {brand.summary && (
         <p class="mt-3 text-gray-700 dark:text-slate-300">{brand.summary}</p>
       )}
 
-      {/* ---- Overview ---- */}
-      {(overviewHtml || overviewBits.what || overviewBits.who || overviewBits.how_end || overviewBits.now) && (
+      {/* Overview body (Markdown) */}
+      {(brand.overview_md || overviewHtml) && (
         <section aria-label="Overview" class="prose prose-sm dark:prose-invert max-w-none mt-4">
-          {overviewHtml ? (
-            <Fragment set:html={overviewHtml} />
-          ) : (
-            <>
-              {overviewBits.what && (
-                <p set:html={overviewBits.what.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")} />
-              )}
-              {overviewBits.who && <p>{overviewBits.who}</p>}
-              {overviewBits.how_end && <p>{overviewBits.how_end}</p>}
-              {overviewBits.now && <p>{overviewBits.now}</p>}
-            </>
-          )}
+          <Fragment set:html={overviewHtml || mdToHtml(String(brand.overview_md || ""))} />
+        </section>
+      )}
 
-         {Array.isArray(timeline) && timeline.length > 0 && (
-          <section aria-label="Timeline" class="mt-6">
-            <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
-              Timeline
-            </h3>
-            <ul class="list-disc pl-5 space-y-1">
-              {timeline.map((t) => (
-                <li>
-                  <strong>{yearOf(t.date)}</strong>
-                  {t.text ? <span> — <Fragment set:html={inlineMd(t.text)} /></span> : null}
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+      {/* Timeline */}
+      {Array.isArray(timeline) && timeline.length > 0 && (
+        <section aria-label="Timeline" class="mt-6">
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
+            Timeline
+          </h3>
+          <ul class="list-disc pl-5 space-y-1">
+            {timeline.map((t) => (
+              <li>
+                <strong>{yearOf(t.date)}</strong>
+                {t.text ? <span> — <Fragment set:html={inlineMd(t.text)} /></span> : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
-
-
-
-          {Array.isArray(sources) && sources.length > 0 && (
-            <section aria-label="Sources" class="mt-6">
-              <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
-                Sources
-              </h3>
-              <ul class="list-disc pl-5 space-y-1 text-sm">
-                {sources.map((s) => (
-                  <li>
-                    <a href={s.url} target="_blank" rel="noopener noreferrer">
-                      {s.label || s.url}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-
+      {/* Sources */}
+      {Array.isArray(sources) && sources.length > 0 && (
+        <section aria-label="Sources" class="mt-6">
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
+            Sources
+          </h3>
+          <ul class="list-disc pl-5 space-y-1 text-sm">
+            {sources.map((s) => (
+              <li>
+                <a href={s.url} target="_blank" rel="noopener noreferrer">
+                  {s.label || s.url}
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

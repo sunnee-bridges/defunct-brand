@@ -1,37 +1,43 @@
 ---
 // src/pages/products/index.astro
 import Base from "../../layouts/Base.astro";
+import {
+  normalizeBrands,
+  yearsOf,
+  fateIconOf,
+  fateTypeOf,
+  primaryTextOf,
+  truncateInline,
+} from "../../lib/brandUtils";
 
-/* ---------- Load & filter brand JSON ---------- */
+/* ---------- Load & normalize brand JSON ---------- */
 const modules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, any>;
+const brands: any[] = normalizeBrands(modules);
 
-const items = Object.values(modules)
-  .map((m: any) => (m?.default ?? m))
-  .filter(Boolean);
+/* ---------- Filter to "productish" entries ---------- */
+const isProductish = (b: any) => {
+  const t: string[] = Array.isArray(b?.topics) ? b.topics : [];
+  return t.some((x) => /^(vanished[-_ ]?product|cult[-_ ]?favorite)$/i.test(String(x)));
+};
 
-const isProductish = (b: any) =>
-  Array.isArray(b?.topics) &&
-  (b.topics.includes("vanished-product") || b.topics.includes("cult-favorite"));
-
-const prods = items
+const prods = brands
   .filter(isProductish)
-  .sort((a: any, b: any) => String(a.brand).localeCompare(String(b.brand)));
+  .sort((a, b) => String(a.brand || "").localeCompare(String(b.brand || "")));
 
 /* ---------- Helpers for A–Z grouping ---------- */
-const firstLetter = (s: string = "") => {
+const firstLetter = (s = "") => {
   const ch = (s[0] || "").toUpperCase();
   return /[A-Z]/.test(ch) ? ch : "#";
 };
-const anchorIdFor = (L: string) =>
-  (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
+const anchorIdFor = (L: string) => (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
 
 /* Group by first letter */
 const groups: Record<string, any[]> = {};
 for (const b of prods) {
-  const L = firstLetter(b.brand);
+  const L = firstLetter(String(b.brand));
   (groups[L] ||= []).push(b);
 }
 
@@ -73,30 +79,23 @@ const itemListLd = {
 
     .jump a { transition: background-color .15s ease, outline-color .15s ease, color .15s ease; }
     .jump a.active {
-      outline: 2px solid rgb(99 102 241); /* indigo-500 */
+      outline: 2px solid rgb(99 102 241);
       outline-offset: 2px;
       background: rgba(99 102 241 / 0.10);
-      color: rgb(55 48 163); /* indigo-800 */
+      color: rgb(55 48 163);
     }
-    .dark .jump a.active {
-      outline-color: rgb(165 180 252);
-      background: rgba(99 102 241 / 0.25);
-      color: rgb(224 231 255);
-    }
-    .dark .jump a { color: rgb(203 213 225); } /* subtle dim so active pops */
+    .dark .jump a.active { outline-color: rgb(165 180 252); background: rgba(99 102 241 / 0.25); color: rgb(224 231 255); }
+    .dark .jump a { color: rgb(203 213 225); }
 
-    /* Card polish */
-    .card {
-      position: relative;
-      border-radius: 0.75rem; /* xl */
-      border: 1px solid rgb(226 232 240); /* slate-200 */
-      background: #fff;
-      padding: 0.875rem; /* ~p-3.5 */
-      transition: box-shadow .15s ease, transform .06s ease, background-color .15s ease;
-    }
-    .card:hover { box-shadow: 0 6px 18px -8px rgba(0,0,0,.25); }
-    .dark .card { border-color: rgb(51 65 85); background: rgb(15 23 42); } /* slate-800/900 */
-    .stretched-link { position: absolute; inset: 0; }
+    /* Card polish (match A–Z/home style) */
+    .fcard-sm { position: relative; border-radius: .875rem; border: 1px solid var(--card-border, rgb(226 232 240)); background: var(--card-bg, #fff); padding:.75rem .85rem; overflow:hidden; transition: transform .16s ease, box-shadow .16s ease; }
+    .fcard-sm:hover { transform: translateY(-1px); box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); }
+    .dark .fcard-sm { --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
+    .meta-row { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.35rem }
+    .chip-lite { display:inline-flex; align-items:center; gap:.35rem; padding:.2rem .5rem; border-radius:9999px; font-size:.7rem; font-weight:600; background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 14%, white); border: 1px solid color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 28%, white); color: oklch(0.28 0 0); }
+    .dark .chip-lite { background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 22%, rgb(2 6 23)); border-color: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 45%, rgb(2 6 23)); color: white; }
+    .hook { margin-top:.25rem; font-size:.85rem; line-height:1.2rem; color: rgb(71 85 105); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .dark .hook { color: rgb(203 213 225); }
   </style>
 
   <div class="max-w-6xl mx-auto px-4">
@@ -150,38 +149,45 @@ const itemListLd = {
                 </div>
 
                 <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {arr.map((b: any) => (
-                    <li data-name={String(b.brand).toLowerCase()}>
-                      <article class="card focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-white dark:focus-within:ring-offset-slate-900">
-                        <a
-                          href={`/brand/${encodeURIComponent(b.slug)}/`}
-                          class="stretched-link rounded"
-                          aria-label={`${b.brand}${b.active?.start ? ` (${b.active.start}–${b.active?.end ?? "?"})` : ""}${b.category ? ` — ${b.category}` : ""}`}
-                        ></a>
+                  {arr.map((b: any) => {
+                    const yrs = yearsOf(b);
+                    const cat = b.__seo_category_label || b.category || "Brand";
+                    // stable tint from category
+                    let h = 0; const s = (cat || "brand") + "-vb"; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+                    const tint = `oklch(0.7 0.12 ${h % 360})`;
+                    const icon = fateIconOf(b);
+                    const fateType = fateTypeOf(b) || "other";
+                    const text = truncateInline(primaryTextOf(b), 120);
 
-                        {/* Brand title */}
-                        <h3 class="text-base font-semibold leading-snug mb-1 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
-                          {b.brand}
-                        </h3>
+                    return (
+                      <li data-name={String(b.brand).toLowerCase()}>
+                        <article class="fcard-sm group h-full" style={{ "--tint": tint }}>
+                          <a
+                            href={`/brand/${encodeURIComponent(b.slug)}/`}
+                            class="stretched-link focus-ring rounded"
+                            aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+                          ></a>
 
-                        {/* Year range (only years, compact) */}
-                        <div class="text-sm text-slate-700 dark:text-slate-300">
-                          {(() => {
-                            const s = b.active?.start;
-                            const e = b.active?.end;
-                            return (s || e)
-                              ? `${s ?? "?"}${s ? "–" : ""}${s ? (e ?? "?") : ""}`
-                              : "";
-                          })()}
-                        </div>
+                          <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-1.5 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
+                            {b.brand}
+                          </h3>
 
-                        {/* Category (subtle) */}
-                        <div class="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                          {b.category || ""}
-                        </div>
-                      </article>
-                    </li>
-                  ))}
+                          {text && (
+                            <p class="hook">
+                              <span aria-hidden="true">{icon}</span>
+                              <span class="sr-only">Fate: {fateType}</span>
+                              {" "}{text}
+                            </p>
+                          )}
+
+                          <div class="meta-row">
+                            {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
+                            {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
+                          </div>
+                        </article>
+                      </li>
+                    );
+                  })}
                 </ul>
               </section>
             );
@@ -222,7 +228,6 @@ const itemListLd = {
           const targetId = key;
           const sec = document.getElementById(targetId);
           if (!sec) return;
-
           e.preventDefault();
           setActiveLetter(targetId);
           sec.scrollIntoView({ behavior: 'smooth', block: 'start' });

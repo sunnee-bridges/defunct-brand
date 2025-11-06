@@ -1,49 +1,29 @@
 ---
 import Base from "../layouts/Base.astro";
-import { slugify } from "../lib/slug.js";
+import {
+  normalizeBrands,
+  yearsOf,
+  fateIconOf,
+  fateTypeOf,
+  primaryTextOf,
+  truncateInline,
+} from "../lib/brandUtils";
 
-/* Load curated data and de-dupe by slug */
+/* Load & normalize brands once */
 const modules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, any>;
-
-const bySlug = new Map<string, any>();
-for (const raw of Object.values(modules)) {
-  const b = (raw as any) ?? null;
-  if (!b) continue;
-  const key =
-    (String(b.slug || "").trim().toLowerCase()) || slugify(String(b.brand || ""));
-  if (!key) continue;
-  if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
-}
-
-/** Exclude “productish” entries (only keep brands) */
-const isProductish = (x: any) =>
-  Array.isArray(x?.topics) &&
-  (x.topics.includes("vanished-product") || x.topics.includes("cult-favorite"));
-
-/** Final list: brands only */
-const brands: any[] = Array.from(bySlug.values()).filter((b) => !isProductish(b));
+const brands: any[] = normalizeBrands(modules);
 
 /* Helpers */
-const firstLetter = (s: string = "") => {
+const firstLetter = (s = "") => {
   const ch = (s[0] || "").toUpperCase();
   return /[A-Z]/.test(ch) ? ch : "#";
 };
 const anchorIdFor = (L: string) => (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
 
-/** Build a clean year range: 1990–2001, 1990–?, or –2001 (if only one side known) */
-function yearsOf(b: any): string {
-  const start = b?.active?.start;
-  const end = b?.active?.end;
-  if (start && end) return `${start}\u2013${end}`;
-  if (start && !end) return `${start}\u2013?`;
-  if (!start && end) return `\u2013${end}`;
-  return ""; // unknown
-}
-
-/* Sort/group */
+/* Sort & group */
 const sorted = brands.slice().sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
 const groups: Record<string, any[]> = {};
 for (const b of sorted) {
@@ -57,10 +37,11 @@ const total = sorted.length;
 
 /* SEO */
 const PAGE_TITLE = "Browse A–Z • Defunct Brands";
-const PAGE_DESC = "Browse discontinued and defunct brands alphabetically. Clean, structured entries with timelines and outcomes.";
+const PAGE_DESC =
+  "Browse discontinued and defunct brands alphabetically with hooks, fate icons, years active, and normalized categories.";
 const CANONICAL = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
 
-/** JSON-LD: Breadcrumb + ItemList (cap to avoid huge scripts) */
+/* JSON-LD (capped) */
 const LD_MAX = 100;
 const ldItems = sorted.slice(0, LD_MAX).map((b: any, i: number) => ({
   "@type": "ListItem",
@@ -70,7 +51,6 @@ const ldItems = sorted.slice(0, LD_MAX).map((b: any, i: number) => ({
     ? new URL(`/brand/${encodeURIComponent(b.slug)}/`, Astro.site).href
     : `/brand/${encodeURIComponent(b.slug)}/`,
 }));
-
 const breadcrumbLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -79,7 +59,6 @@ const breadcrumbLd = {
     { "@type": "ListItem", position: 2, name: "A–Z", item: CANONICAL },
   ],
 };
-
 const itemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -90,49 +69,54 @@ const itemListLd = {
 };
 ---
 
-<Base
-  title={PAGE_TITLE}
-  description={PAGE_DESC}
-  canonical={CANONICAL}
-  jsonLd={[breadcrumbLd, itemListLd]}
->
-  <!-- Accessible, indexable intro (hidden visually) -->
+<Base title={PAGE_TITLE} description={PAGE_DESC} canonical={CANONICAL} jsonLd={[breadcrumbLd, itemListLd]}>
+  <style is:inline>
+    .fcard-sm {
+      position: relative; border-radius: .875rem;
+      border: 1px solid var(--card-border, rgb(226 232 240));
+      background:
+        linear-gradient(180deg, color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 10%, transparent) 0%, transparent 24%),
+        var(--card-bg, #fff);
+      padding:.75rem .85rem; overflow:hidden;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .fcard-sm:hover { transform: translateY(-1px); box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); }
+    .dark .fcard-sm { --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
+    .meta-row { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.35rem }
+    .chip-lite { display:inline-flex; align-items:center; gap:.35rem; padding:.2rem .5rem; border-radius:9999px; font-size:.7rem; font-weight:600; background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 14%, white); border: 1px solid color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 28%, white); color: oklch(0.28 0 0); }
+    .dark .chip-lite { background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 22%, rgb(2 6 23)); border-color: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 45%, rgb(2 6 23)); color: white; }
+    .hook { margin-top:.25rem; font-size:.85rem; line-height:1.2rem; color: rgb(71 85 105); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .dark .hook { color: rgb(203 213 225); }
+  </style>
+
   <p class="sr-only">
     Defunct Brands A–Z index. Explore discontinued brands alphabetically with quick links to
     brand timelines, categories, and outcomes.
   </p>
 
-  <!-- Page container -->
   <div class="max-w-6xl mx-auto px-4">
-    <!-- Breadcrumb -->
     <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
       <a href="/" class="chip focus-ring">← Home</a>
       <a href="/az/" class="chip focus-ring" aria-current="page">A–Z</a>
     </nav>
 
-    <!-- Header -->
     <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Browse A–Z</h1>
     <p class="text-slate-700 dark:text-slate-300 mb-4">
       A cleaned CSV of brands, categories, active years, and fate.
     </p>
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Total brands: {total}</p>
 
-    <!-- Total brands -->
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
-      Total brands: {total}
-    </p>
-
-    <!-- Jump bar directly under brand count -->
+    <!-- Jump bar -->
     <div class="flex flex-wrap gap-2 mb-6" role="navigation" aria-label="Jump to letter">
       {letters.map((L) => {
-        const anchor = anchorIdFor(L);
+        const anchor = L === "#" ? "0-9" : L;
         return <a href={`#${anchor}`} class="chip focus-ring">{L}</a>;
       })}
     </div>
 
-    <!-- Letter groups (single-column flow) -->
     <div class="space-y-10">
       {letters.map((L) => {
-        const anchor = anchorIdFor(L);
+        const anchor = L === "#" ? "0-9" : L;
         return (
           <section id={anchor} role="region" aria-labelledby={`h-${anchor}`}>
             <div class="flex items-baseline gap-2 mb-3">
@@ -143,41 +127,39 @@ const itemListLd = {
             <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {groups[L].map((b: any) => {
                 const yrs = yearsOf(b);
-                const cat = b?.category || "";
+                const cat = b.__seo_category_label || b.category || "Brand";
+                // derive a stable tint from category label
+                let h = 0; const s = (cat || "brand") + "-vb"; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+                const tint = `oklch(0.7 0.12 ${h % 360})`;
+                const icon = fateIconOf(b);
+                const fateType = fateTypeOf(b) || "other";
+                const text = truncateInline(primaryTextOf(b), 120);
+
                 return (
                   <li>
-                    <article
-                      class="relative group rounded-xl p-4 border bg-white border-gray-200
-                             hover:bg-slate-50 transition-all duration-200
-                             dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                             focus-within:ring-2 focus-within:ring-indigo-500
-                             focus-within:ring-offset-2 focus-within:ring-offset-white
-                             dark:focus-within:ring-offset-slate-900 hover:shadow-md h-full"
-                    >
+                    <article class="fcard-sm group h-full" style={{ "--tint": tint }}>
                       <a
                         href={`/brand/${encodeURIComponent(b.slug)}/`}
                         class="stretched-link focus-ring rounded"
                         aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
                       ></a>
 
-                      <!-- Brand title -->
-                      <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-2 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
+                      <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-1.5 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
                         {b.brand}
                       </h3>
 
-                      <!-- Years ONLY -->
-                      {yrs && (
-                        <div class="text-sm text-gray-700 dark:text-slate-200 mb-1">
-                          {yrs}
-                        </div>
+                      {text && (
+                        <p class="hook">
+                          <span aria-hidden="true">{icon}</span>
+                          <span class="sr-only">Fate: {fateType}</span>
+                          {" "}{text}
+                        </p>
                       )}
 
-                      <!-- Category ONLY -->
-                      {cat && (
-                        <div class="text-xs text-gray-500 dark:text-slate-400">
-                          {cat}
-                        </div>
-                      )}
+                      <div class="meta-row">
+                        {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
+                        {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
+                      </div>
                     </article>
                   </li>
                 );
@@ -188,7 +170,6 @@ const itemListLd = {
       })}
     </div>
 
-    <!-- Back to top: bottom, aligned with content -->
     <div class="mt-10">
       <a href="#top" class="chip focus-ring">↑ Back to top</a>
     </div>

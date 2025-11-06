@@ -5,6 +5,7 @@
   "seo_category": "software-internet",
   "country": "US",
   "active": { "start": 1994, "end": 2008 },
+  "hook": "Won the browser wars, then lost to Internet Explorer",
   "fate": "Brand/software discontinued; code base continued via Mozilla (Firefox lineage). AOL acquired Netscape in 1999; official support for Netscape-branded browsers ended in 2008.",
   "summary": "Web-browser pioneer behind Navigator and Communicator. Open-sourced its code (Mozilla) and was later acquired by AOL; Netscape-branded browser support ended in 2008.",
   "notable_products": ["Netscape Navigator", "Netscape Communicator", "Netscape 6/7"],

@@ -1,48 +1,62 @@
 ---
-// src/pages/topics/index.astro
 import Base from "../../layouts/Base.astro";
 
-/* ---------- Helpers ---------- */
+/* ---------- Normalization helpers ---------- */
 function normalizeTopicName(raw: unknown): string {
-  let s = String(raw || "").trim();
+  // 1) unify apostrophes
+  let s = String(raw || "")
+    .trim()
+    .replace(/[’']/g, "'")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s{2,}/g, " ");
+  if (!s) return "";
 
-  // Unify apostrophes
-  s = s.replace(/[’']/g, "'");
+  // 2) short-decade → 19xxs (e.g., 80s/'80s → 1980s); leave 2000s etc. alone
+  const mShort = s.match(/^'?([0-9]{2})s$/i);
+  if (mShort) return `19${mShort[1]}0s`;
+  if (/^(?:18|19|20)\d0s$/i.test(s)) return s; // already a four-digit decade label
 
-  // If the ENTIRE token is a two-digit decade like 80s / '80s,
-  // expand to 1980s (anchor to whole string to avoid double-expanding 1980s)
-  const mShort = s.match(/^'?(\d{2})s$/i);
-  if (mShort) {
-    const two = mShort[1];
-    // Assume 20th-century decades for 20s..99s
-    return `19${two}0s`;
-  }
+  // 3) common variant merges (keep label-cased output)
+  const lower = s.toLowerCase().replace(/\s+/g, " ");
+  const map: Record<string, string> = {
+    "e commerce": "E‑commerce",
+    "e-commerce": "E‑commerce",
+    "ecommerce": "E‑commerce",
+    "software internet": "Software & Internet",
+    "software/internet": "Software & Internet",
+    "retail entertainment": "Retail & Entertainment",
+    "retail/entertainment": "Retail & Entertainment",
+    "pc clone era": "PC clone era",
+    "p2p": "P2P",
+    "mmo": "MMO",
+    "qwerty": "QWERTY",
+    "gm division": "GM division",
+    "video game consoles": "Video game consoles",
+    "instant messaging": "Instant messaging",
+    "dot com": "Dot‑com",
+    "photography retail": "Photography retail",
+    "civil rehabilitation": "Civil rehabilitation",
+    "brand retired": "Brand retired",
+    "brand sold": "Brand sold",
+    "brand consolidation": "Brand consolidation",
+  };
+  if (map[lower]) return map[lower];
 
-  // If ENTIRE token is already a four-digit decade (1980s, 2000s), keep as-is
-  if (/^(?:18|19|20)\d0s$/i.test(s)) {
-    return s;
-  }
-
-  // Otherwise, return unchanged (multi-word topics, etc.)
-  return s;
+  // 4) Simple Title Case default
+  return s.replace(/\b([a-z])(\w*)/g, (_, a, rest) => a.toUpperCase() + rest.toLowerCase());
 }
 
 function slugifyTopic(name: string): string {
   return String(name)
     .toLowerCase()
+    .replace(/&/g, " and ")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
 
-function titleFromSlug(slug: string): string {
-  // Preserve decade formatting like 1980s exactly
-  if (/^(?:18|19|20)\d0s$/i.test(slug)) return slug;
-
-  // Title case for general topics, keeping small words lower would be overkill here
-  return slug
-    .split("-")
-    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
-    .join(" ");
+function firstLetter(s = "") {
+  const c = (s[0] || "").toUpperCase();
+  return /[A-Z]/.test(c) ? c : "#";
 }
 
 /* ---------- Page meta ---------- */
@@ -57,27 +71,33 @@ const modules = import.meta.glob("/src/content/brands/*.json", {
 }) as Record<string, any>;
 
 /* ---------- Aggregate counts with normalization & de-dupe ---------- */
-const counts = new Map<string, number>(); // key: normalized slug
+const counts = new Map<string, { label: string; count: number }>();
 for (const mod of Object.values(modules)) {
   const b = (mod as any) || {};
   if (!Array.isArray(b.topics)) continue;
-
   for (const t of b.topics) {
-    // Normalize the human name safely (fixes 80s/'80s; avoids 19800s)
-    const normName = normalizeTopicName(t);
-    const slug = slugifyTopic(normName);
-    counts.set(slug, (counts.get(slug) || 0) + 1);
+    const label = normalizeTopicName(t);
+    if (!label) continue;
+    const slug = slugifyTopic(label);
+    const prev = counts.get(slug);
+    counts.set(slug, { label, count: (prev?.count || 0) + 1 });
   }
 }
 
-/* ---------- Build sorted topic list ---------- */
+/* ---------- Build lists ---------- */
 const topics = Array.from(counts.entries())
-  .map(([slug, count]) => ({
-    slug,
-    name: titleFromSlug(slug),
-    count,
-  }))
+  .map(([slug, v]) => ({ slug, name: v.label, count: v.count }))
   .sort((a, b) => a.name.localeCompare(b.name));
+const total = topics.length;
+const popular = topics.slice().sort((a, b) => b.count - a.count || a.name.localeCompare(b.name)).slice(0, 12);
+
+const groups = new Map<string, typeof topics>();
+for (const t of topics) {
+  const k = firstLetter(t.name);
+  if (!groups.has(k)) groups.set(k, [] as any);
+  groups.get(k)!.push(t);
+}
+const letters = Array.from(groups.keys()).sort((a, b) => (a === "#" ? 1 : b === "#" ? -1 : a.localeCompare(b)));
 
 /* ---------- JSON-LD ---------- */
 const jsonLd = [
@@ -86,7 +106,7 @@ const jsonLd = [
     "@type": "ItemList",
     name: "Topics",
     numberOfItems: topics.length,
-    itemListElement: topics.map((t, i) => ({
+    itemListElement: topics.slice(0, 200).map((t, i) => ({
       "@type": "ListItem",
       position: i + 1,
       name: t.name,
@@ -99,26 +119,88 @@ const jsonLd = [
 ---
 
 <Base title={title} description={desc} canonical={canonical} jsonLd={jsonLd}>
-  <h1 class="text-2xl md:text-3xl font-bold mb-4">{title}</h1>
+  <style is:inline>
+    .search { width: 100%; max-width: 28rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .75rem; }
+    .tcard { position: relative; border-radius: .875rem; border: 1px solid var(--card-border, rgb(226 232 240)); background: var(--card-bg, #fff); padding: .65rem .75rem; }
+    .tcard:hover { box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); transform: translateY(-1px); }
+    .dark .tcard { --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
+    .count { font-size: .72rem; font-weight: 700; padding: .15rem .45rem; border-radius: 9999px; background: rgb(241 245 249); color: rgb(51 65 85); }
+    .dark .count { background: rgb(30 41 59); color: rgb(226 232 240); }
+  </style>
 
-  {!topics.length ? (
-    <p class="text-slate-600 dark:text-slate-300">
-      No topics yet. Add <code>topics</code> arrays to your brand JSON files.
-    </p>
-  ) : (
-    <ul class="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
-      {topics.map((t) => (
-        <li class="flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700 p-3">
-          <a class="focus-ring hover:underline" href={`/topics/${encodeURIComponent(t.slug)}/`}>
-            {t.name}
-          </a>
-          <span class="text-sm text-slate-500 dark:text-slate-400">{t.count}</span>
-        </li>
-      ))}
-    </ul>
-  )}
-
-  <nav class="mt-6">
-    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+  <!-- Breadcrumbs to Home and A–Z -->
+  <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/az/" class="chip focus-ring">A–Z</a>
+    <a href="/topics/" class="chip focus-ring" aria-current="page">Topics</a>
   </nav>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-2">Browse Topics</h1>
+  <p class="text-slate-700 dark:text-slate-300 mb-4">Hubs that group brands by themes, eras, industries, and events.</p>
+
+  <!-- Controls: search + popular chips -->
+  <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-4 mb-5">
+    <input id="q" class="search chip focus-ring" type="search" placeholder="Filter topics… (e.g., Bankruptcy, Video games, 1990s)" />
+    <div class="flex flex-wrap gap-2">
+      {popular.map((t) => (
+        <a href={`#${t.slug}`} class="chip focus-ring" title={`${t.count} brands`}>{t.name}</a>
+      ))}
+    </div>
+  </div>
+
+  <!-- A–Z jump bar -->
+  <div class="flex flex-wrap gap-2 mb-4" role="navigation" aria-label="Jump to letter">
+    {letters.map((L) => (
+      <a href={`#${L === "#" ? "0-9" : L}`} class="chip focus-ring">{L}</a>
+    ))}
+  </div>
+
+  <!-- Groups -->
+  <div class="space-y-8" id="topics">
+    {letters.map((L) => (
+      <section id={L === "#" ? "0-9" : L} role="region" aria-labelledby={`h-${L}`}>
+        <div class="flex items-baseline gap-2 mb-2">
+          <h2 id={`h-${L}`} class="text-xl font-semibold">{L}</h2>
+          <span class="text-sm text-slate-500 dark:text-slate-400">({groups.get(L)!.length})</span>
+        </div>
+        <div class="grid">
+          {groups.get(L)!.map((t) => (
+            <a href={`/topics/${t.slug}/`} id={t.slug} class="tcard group focus-ring">
+              <div class="flex items-center justify-between gap-3">
+                <span class="font-semibold text-slate-900 dark:text-slate-100">{t.name}</span>
+                <span class="count" aria-label={`${t.count} brands`}>{t.count}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <div class="mt-8 flex gap-2">
+    <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+    <a href="#top" class="chip focus-ring">↑ Back to top</a>
+  </div>
+
+  <script>
+    const q = document.getElementById('q');
+    const container = document.getElementById('topics');
+    if (q && container) {
+      q.addEventListener('input', () => {
+        const term = q.value.trim().toLowerCase();
+        const sections = container.querySelectorAll('section');
+        sections.forEach((sec) => {
+          let any = false;
+          sec.querySelectorAll('.tcard').forEach((a) => {
+            const label = a.querySelector('span')?.textContent?.toLowerCase() || '';
+            const hit = !term || label.includes(term);
+            (a as HTMLElement).style.display = hit ? '' : 'none';
+            any = any || hit;
+          });
+          (sec as HTMLElement).style.display = any ? '' : 'none';
+        });
+      });
+    }
+  </script>
 </Base>
