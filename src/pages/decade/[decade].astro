@@ -172,24 +172,13 @@ const itemListLd = !notFound
   : null;
 ---
 
-<Base title={PAGE_TITLE} description={PAGE_DESC}>
-  <!-- SEO head -->
-  <Fragment slot="head">
-    <link rel="canonical" href={CANONICAL} />
-    <meta property="og:url" content={CANONICAL} />
-    <meta property="og:title" content={PAGE_TITLE} />
-    <meta property="og:description" content={PAGE_DESC} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={PAGE_TITLE} />
-    <meta name="twitter:description" content={PAGE_DESC} />
-    {notFound && <meta name="robots" content="noindex,follow" />}
-    <script type="application/ld+json">{JSON.stringify(breadcrumbsLd)}</script>
-    {!notFound && itemListLd && (
-      <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
-    )}
-  </Fragment>
-
-  <!-- Top nav chips -->
+<Base
+  title={PAGE_TITLE}
+  description={PAGE_DESC}
+  canonical={CANONICAL}
+  jsonLd={[breadcrumbsLd, itemListLd].filter(Boolean)}
+>
+  {/* Top nav chips */}
   <nav class="mb-4 flex flex-wrap gap-2">
     <a href="/" class="chip focus-ring">← Home</a>
     <a href="/decade/" class="chip focus-ring">All decades</a>
@@ -229,26 +218,26 @@ const itemListLd = !notFound
                        focus-within:ring-offset-2 focus-within:ring-offset-white
                        dark:focus-within:ring-offset-slate-900 h-full"
               >
-                <!-- Full-card click -->
+                {/* Full-card click */}
                 <a
                   href={`/brand/${encodeURIComponent(b.slug)}/`}
                   class="stretched-link focus-ring rounded"
                   aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
                 ></a>
 
-                <!-- Brand title -->
+                {/* Brand title */}
                 <h3 class="text-base font-semibold mb-1 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2 line-clamp-2">
                   {b.brand}
                 </h3>
 
-                <!-- Years ONLY -->
+                {/* Years ONLY */}
                 {yrs && (
                   <div class="text-sm text-gray-700 dark:text-slate-200">
                     {yrs}
                   </div>
                 )}
 
-                <!-- Category ONLY -->
+                {/* Category ONLY */}
                 {cat && (
                   <div class="text-xs text-gray-500 dark:text-slate-400 mt-1">
                     {cat}
