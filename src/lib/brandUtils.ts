@@ -92,6 +92,8 @@ export const yearsOf = (b: any) => {
 export function fateTypeOf(b: any): string {
   const s = String(b?.fate || "").toLowerCase();
   if (!s) return "";
+  if (s.includes("banned") || s.includes("ban by") || s.includes("federal ban")) return "banned";
+  if (s.includes("recall") || s.includes("cpsc")) return "safety-recall";
   if (s.includes("bankrupt") || s.includes("chapter")) return "bankruptcy";
   if (s.includes("acquired") || s.includes("acquisition")) return "acquired";
   if (s.includes("merged") || s.includes("merge")) return "merged";
@@ -108,8 +110,10 @@ export function fateIconOf(b: any): string {
     merged: "🔀",
     liquidated: "📉",
     fraud: "⚠️",
+    "safety-recall": "⚠️",
     shutdown: "🔒",
     crisis: "🚨",
+    banned: "🚫",
     other: "✨",
   };
   const t = fateTypeOf(b);
