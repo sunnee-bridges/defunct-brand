@@ -16,6 +16,8 @@ build/
 .cache/
 .tmp/
 
+assets/articles/*
+
 # Private brand sources (never commit)
 src/content/brands_src/
 src/content/brands_private/

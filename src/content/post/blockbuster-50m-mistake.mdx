@@ -6,7 +6,25 @@ date: "2025-11-02"
 updated: "2025-11-02"
 tags: ["retail/entertainment", "case-study", "bankruptcy", "streaming", "blockbuster", "netflix"]
 canonical: "/blog/blockbuster-50m-mistake/"
+
+# Image object: works with ArticleHero and the blog index credit overlay
+image:
+  src: "/images/articles/hero/blockbuster.webp"
+  alt: "Blockbuster storefront in Birkenhead, UK"
+  credit: "Rept0n1x"
+  source: "https://commons.wikimedia.org/wiki/File:Blockbuster,_Birkenhead_(6).JPG"
+  license: "CC BY-SA 3.0"
 ---
+
+import ArticleHero from '@components/ArticleHero.astro';
+
+{/* Option A: Render an explicit hero (no duplication thanks to your [...slug].astro checks) */}
+<ArticleHero
+  title={frontmatter.title}
+  description={frontmatter.description}
+  date={frontmatter.updated ?? frontmatter.date}
+  image={frontmatter.image}
+/>
 
 "What Really Happened to Blockbuster? The $50 Million Mistake That Changed Everything"
 The Mystery Hook:

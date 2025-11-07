@@ -2,78 +2,15 @@
 // src/pages/category/[category].astro
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
-import { CATEGORY_META, labelFor, descFor } from "../../lib/categoryMeta.ts";
-
-/**
- * Curated copy for SEO categories (canonical).
- * Keys MUST be slugified and should match `seo_category` values.
- */
-const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
-  "retail": {
-    desc:
-      "Department stores, specialty shops, and mall icons that shuttered—browse timelines, fates, and what led to the downfall.",
-  },
-  "retail-entertainment": {
-    label: "Retail & Entertainment",
-    desc:
-      "Video rental, arcades, and music/movie retailers that couldn’t survive the digital turn.",
-  },
-  "food-beverage": {
-    label: "Food & Beverage",
-    desc:
-      "Cereal, snacks, and soft drinks—limited runs, cult favorites, and why they vanished.",
-  },
-  "alcoholic-beverages": {
-    label: "Alcoholic Beverages",
-    desc:
-      "Beers, malts, and RTDs that defined eras, then disappeared (and sometimes came back).",
-  },
-  "consumer-electronics": {
-    label: "Consumer Electronics",
-    desc:
-      "Gadgets we loved—from music players to cameras—retired by smartphones or shifting tastes.",
-  },
-  "computers-hardware": {
-    label: "Computers & Hardware",
-    desc:
-      "PC makers and components that shaped personal computing before being outpaced by new ecosystems.",
-  },
-  "mobile-wearables": {
-    label: "Mobile & Wearables",
-    desc:
-      "Phones, PDAs, and smartwatches that set the pace for mobility—then ceded it.",
-  },
-  "software-internet": {
-    label: "Software & Internet",
-    desc:
-      "Browsers, IM clients, P2P, and e-commerce pioneers—what they built, and why they ended.",
-  },
-  "video-games-consoles": {
-    label: "Video Games & Consoles",
-    desc:
-      "Hardware and online worlds that battled for the living room—launches, closures, and legacy.",
-  },
-  // ✅ canonical key matches the rest of the site
-  "airline-aviation": {
-    label: "Airlines & Aviation",
-    desc:
-      "Carriers that merged, rebranded, or ceased operations—routes, fleets, and consolidation timelines.",
-  },
-  "automotive": {
-    desc:
-      "Marques and halo models that defined eras, from mid-century giants to single-year cult icons.",
-  },
-  "finance-payments": {
-    label: "Finance & Payments",
-    desc:
-      "Banks, crypto exchanges, and processors—rise, risk, regulation, and collapse.",
-  },
-  "healthcare-diagnostics": {
-    label: "Healthcare & Diagnostics",
-    desc:
-      "Ambitious med-tech and diagnostics brands—promises, pivots, and regulatory reality.",
-  },
-};
+import { CATEGORY_META } from "../../lib/categoryMeta.ts";
+import {
+  yearsOf,
+  catHue,
+  fateIconOf,
+  fateTypeOf,
+  primaryTextOf,
+  truncateInline,
+} from "../../lib/brandUtils";
 
 /** Build-time: enumerate all SEO categories and precompute the items for each */
 export async function getStaticPaths() {
@@ -123,7 +60,7 @@ export async function getStaticPaths() {
 }
 
 /** Props from getStaticPaths */
-const { label, catSlug, items, allCats } = Astro.props;
+const { label, catSlug, items } = Astro.props;
 
 /** Final render-time guard (belt & suspenders) */
 const _seen = new Set<string>();
@@ -138,30 +75,16 @@ const uniqueItems = items.filter((b: any) => {
 
 /* ---------------- SEO / Canonical / JSON-LD ---------------- */
 const categoryPath = `/category/${catSlug}/`;
-const siteOrigin = Astro.site?.origin || "https://vanishedbrands.com";
 const canonical = Astro.site ? new URL(categoryPath, Astro.site).href : categoryPath;
 
 const title = `Defunct Brands in ${label}`;
-const metaDesc = (CATEGORY_META[catSlug]?.desc ??
-  `Explore ${uniqueItems.length} defunct or discontinued brands in ${label}.`);
-
-const id = (p: string) => `${siteOrigin}${p.replace(/^\//, "/")}`;
-
-const breadcrumbLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "@id": id(`${categoryPath}#breadcrumbs`),
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: id("/") },
-    { "@type": "ListItem", position: 2, name: "Categories", item: id("/#categories") },
-    { "@type": "ListItem", position: 3, name: label, item: canonical },
-  ],
-};
+const metaDesc =
+  CATEGORY_META[catSlug]?.desc ??
+  `Explore ${uniqueItems.length} defunct or discontinued brands in ${label}.`;
 
 const itemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "@id": id(`${categoryPath}#itemlist`),
   url: canonical,
   name: title,
   itemListOrder: "http://schema.org/ItemListOrderAscending",
@@ -175,116 +98,189 @@ const itemListLd = {
       : `/brand/${encodeURIComponent(b.slug)}/`,
   })),
 };
-
-const collectionPageLd = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": id(categoryPath),
-  url: canonical,
-  name: title,
-  description: metaDesc,
-  mainEntity: { "@id": itemListLd["@id"] },
-};
 ---
 
 <Base
   title={title}
   description={metaDesc}
   canonical={canonical}
-  jsonLd={[collectionPageLd, breadcrumbLd, itemListLd]}
+  jsonLd={[itemListLd]}
 >
-  <nav class="mb-4">
+  <style is:inline>
+    /* Page controls */
+    .toolbar {
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px;
+    }
+    .input, .select {
+      border:1px solid rgb(226 232 240); background:#fff; color:#0f172a;
+      border-radius:10px; padding:.5rem .7rem; font-size:.95rem;
+    }
+    .dark .input, .dark .select {
+      border-color: rgb(51 65 85); background: rgb(2 6 23); color:white;
+    }
+
+    /* Cards – aligned with homepage mini cards (fcard-sm) */
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      position:relative;
+      border-radius:.875rem;
+      border:1px solid var(--card-border, rgb(226 232 240));
+      background: var(--card-bg, #fff);
+      padding:.8rem .9rem;
+      overflow:hidden;
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
+    }
+    .card:hover { transform: translateY(-1px); box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); }
+    .dark .card{ --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
+
+    .title { font-weight: 700; line-height:1.2; margin: 0 0 .25rem 0; }
+    .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .hook {
+      margin-top:.25rem; font-size:.9rem; line-height:1.25rem;
+      color: rgb(71 85 105);
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .dark .hook { color: rgb(203 213 225); }
+    .meta-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.4rem }
+    .chip-lite {
+      display:inline-flex; align-items:center; gap:.35rem;
+      padding:.25rem .5rem; border-radius:9999px; font-size:.72rem; font-weight:600;
+      background: color-mix(in oklab, var(--tint) 14%, white);
+      border: 1px solid color-mix(in oklab, var(--tint) 28%, white);
+      color: oklch(0.28 0 0);
+    }
+    .dark .chip-lite {
+      background: color-mix(in oklab, var(--tint) 22%, rgb(2 6 23));
+      border-color: color-mix(in oklab, var(--tint) 45%, rgb(2 6 23));
+      color: white;
+    }
+
+    /* Divider + spacing for clarity */
+    .section-head { display:flex; align-items:center; gap:.5rem; margin-bottom:.35rem; }
+    .badge {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width: 1.5rem; height:1.5rem; padding: 0 .4rem;
+      border-radius:9999px; font-size:.75rem; font-weight:700;
+      border:1px solid rgb(226 232 240); background:white; color:#0f172a;
+    }
+    .dark .badge { border-color: rgb(51 65 85); background: rgb(2 6 23); color: white; }
+  </style>
+
+  <nav class="mb-3">
     <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/category/" class="chip focus-ring">All Categories</a>
   </nav>
 
-  <h1 class="text-2xl md:text-3xl font-bold mb-2">
-    {label} — defunct brands
-    <span class="ml-2 align-middle inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 text-xs font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
-      {uniqueItems.length}
-    </span>
-  </h1>
-
+  <div class="section-head">
+    <h1 class="text-2xl md:text-3xl font-bold">{label} — defunct brands</h1>
+    <span class="badge" aria-label={`${uniqueItems.length} brands`}>{uniqueItems.length}</span>
+  </div>
   <p class="text-slate-700 dark:text-slate-300 mb-3">
-    {CATEGORY_META[catSlug]?.desc ?? `Browse brands, filter, and sort. A–Z by default.`}
+    {CATEGORY_META[catSlug]?.desc ?? `Browse brands in ${label}.`}
   </p>
 
-  <div class="mb-3 flex flex-wrap items-center gap-3">
+  <!-- Controls -->
+  <div class="toolbar">
     <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
-    <input id="q" type="search"
-           class="w-full md:w-auto flex-1 rounded-md border border-slate-300 bg-white text-slate-900 placeholder-slate-400 px-3 py-2 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-           placeholder={`Search brands in ${label}…`} inputmode="search" />
+    <input id="q" class="input" type="search" placeholder={`Search ${label}…`} inputmode="search" />
     <label for="sort" class="text-sm text-slate-600 dark:text-slate-300">Sort</label>
-    <select id="sort"
-            class="rounded-md border border-slate-300 bg-white text-slate-900 px-3 py-2 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+    <select id="sort" class="select">
       <option value="alpha">A → Z</option>
-      <option value="start-asc">Oldest founded</option>
       <option value="end-desc">Most recent closure</option>
+      <option value="start-asc">Oldest founded</option>
     </select>
   </div>
 
-  <ul id="brandList" class="m-0 p-0 list-none border-t border-slate-200 dark:border-slate-800">
+  <!-- Card grid -->
+  <ul id="grid" class="grid" role="list">
     {uniqueItems.map((b: any) => {
-      const start = b?.active?.start ?? "";
-      const end = b?.active?.end ?? "";
-      const fate = b?.fate ?? "";
+      const yrs = yearsOf(b);
+      const cat = b.__seo_category_label || b.category || "Brand";
+      const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
+      const icon = fateIconOf(b);
+      const fateType = fateTypeOf(b) || "other";
+      const text = truncateInline(primaryTextOf(b), 140);
 
       return (
-        <li
-          class="relative group cursor-pointer py-3 border-b border-slate-200 dark:border-slate-800
-                 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors"
-        >
-          <a
-            href={`/brand/${encodeURIComponent(b.slug)}/`}
-            class="stretched-link focus-ring rounded-md"
-            aria-label={`${b.brand}${start ? ` (${start}–${end || "?"})` : ""}${fate ? ` • ${fate}` : ""}`}
-          ></a>
+        <li role="listitem">
+          <article class="card" style={{ "--tint": tint }}>
+            <a
+              href={`/brand/${encodeURIComponent(b.slug)}/`}
+              class="stretched-link focus-ring rounded"
+              aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${b.fate ? ` • ${b.fate}` : ""}`}
+            ></a>
 
-          <div class="min-w-0 pr-2">
-            <span class="font-semibold text-slate-900 dark:text-slate-100 underline-offset-2 group-hover:underline">
-              {b.brand}
-            </span>
-            <span class="ml-1 text-sm text-slate-600 dark:text-slate-400">
-              {start ? ` (${start}\u2013${end || "?"})` : ""}{fate ? ` • ${fate}` : ""}
-            </span>
-          </div>
+            <h2 class="title text-slate-900 dark:text-slate-100">
+              <a href={`/brand/${encodeURIComponent(b.slug)}/`}>{b.brand}</a>
+            </h2>
+
+            {text && (
+              <p class="hook">
+                <span aria-hidden="true">{icon}</span>
+                <span class="sr-only">Fate: {fateType}</span>
+                {" "}{text}
+              </p>
+            )}
+
+            <div class="meta-row">
+              {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
+              {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
+            </div>
+          </article>
         </li>
       );
     })}
   </ul>
 
+  <!-- Client-side search + sort (cards) -->
   <script>
     const $ = (s)=>document.querySelector(s);
     const $$ = (s)=>Array.from(document.querySelectorAll(s));
-    const list = $("#brandList");
+
+    const grid = $("#grid");
     const q = $("#q");
     const sortSel = $("#sort");
 
+    function normalize(s){ return (s || "").toLowerCase().trim(); }
+
     function applyFilters() {
-      const term = (q.value || "").trim().toLowerCase();
-      $$("#brandList > li").forEach(li => {
+      const term = normalize(q.value);
+      $$("#grid > li").forEach(li => {
         const txt = (li.textContent || "").toLowerCase();
         li.style.display = !term || txt.includes(term) ? "" : "none";
       });
     }
 
+    function parseYears(text) {
+      // Looks for "(1990–2001)" patterns; returns {start,end}
+      const m = text.match(/\((\d{3,4})\u2013(\?|\d{3,4})\)/);
+      if (!m) return {start:0, end:0};
+      return { start: parseInt(m[1],10), end: (m[2] === "?" ? 0 : parseInt(m[2],10)) };
+    }
+
     function applySort() {
       const mode = sortSel.value;
-      const rows = $$("#brandList > li").filter(li => li.style.display !== "none");
-      const getName = (li)=> (li.querySelector("a")?.textContent || "").toLowerCase();
-      const getYear = (li, which)=> {
-        const t = li.textContent || "";
-        const m = t.match(/\((\d{3,4})\u2013(\?|\d{3,4})\)/);
-        if (!m) return 0;
-        return which === "start" ? parseInt(m[1],10) : (m[2] === "?" ? 0 : parseInt(m[2],10));
-      };
+      const rows = $$("#grid > li").filter(li => li.style.display !== "none");
+      const nameOf = (li)=> (li.querySelector("h2")?.textContent || "").toLowerCase();
+      const yearsOfText = (li)=> parseYears(li.textContent || "");
 
       rows.sort((a,b)=>{
-        if (mode === "alpha") return getName(a).localeCompare(getName(b));
-        if (mode === "start-asc") return getYear(a,"start") - getYear(b,"start") || getName(a).localeCompare(getName(b));
-        if (mode === "end-desc") return getYear(b,"end") - getYear(a,"end") || getName(a).localeCompare(getName(b));
+        if (mode === "alpha") return nameOf(a).localeCompare(nameOf(b));
+        if (mode === "end-desc") {
+          const A = yearsOfText(a).end, B = yearsOfText(b).end;
+          return (B - A) || nameOf(a).localeCompare(nameOf(b));
+        }
+        if (mode === "start-asc") {
+          const A = yearsOfText(a).start, B = yearsOfText(b).start;
+          return (A - B) || nameOf(a).localeCompare(nameOf(b));
+        }
         return 0;
       });
-      rows.forEach(r => list.appendChild(r));
+      rows.forEach(r => grid.appendChild(r));
     }
 
     function onChange(){ applyFilters(); applySort(); }

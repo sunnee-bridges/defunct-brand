@@ -1,22 +1,34 @@
 ---
 title: "50 Iconic Brands That No Longer Exist (2025)"
-description: "Discover 50 vanished brands—from Toys R Us to Pan Am—and what their rise and fall reveal about shifting markets and consumer trends."
-date: "2025-01-15"            # prefer `date` in your schema; you can also add publishDate if you like
-author: "Vanished Brands"
-tags: ["roundup", "history", "brand-failures"]
-brands: ["pan-am", "toys-r-us", "blockbuster", "circuit-city", "borders"]
-topics: ["retail", "airlines", "technology"]
+description: "From Blockbuster to Borders, a data-backed look at 50 beloved brands that disappeared—and why."
+date: "2025-11-02"
+updated: "2025-11-02"
+slug: "50-iconic-brands-no-longer-exist-2025"
+tags: ["roundup","nostalgia","case-study","retail","media","toys"]
+canonical: "/blog/50-iconic-brands-no-longer-exist-2025/"
 hero: true
 image:
-  src: "/images/articles/50-brands-hero.jpg"
-  alt: "Collage of iconic defunct brand logos"
-draft: false
+  src: "/images/articles/hero/brands-50.webp"
+  alt: "Collage of closed Blockbuster, Toys “R” Us, and Borders storefronts"
+  credit: "Rept0n1x; DoulosBen; brewbooks"
+  source: "Blockbuster: https://commons.wikimedia.org/wiki/File:Blockbuster,_Birkenhead_(6).JPG • Toys “R” Us: https://commons.wikimedia.org/wiki/File:Toys_R_Us_IP.jpg • Borders: https://commons.wikimedia.org/wiki/File:Borders_Bookstore_-_Lihue,_Kauai_(2503902404).jpg"
+  license: "Blockbuster: CC BY-SA 3.0 • Toys “R” Us: CC BY 4.0 • Borders: CC BY-SA 2.0"
 ---
 
-
+import ArticleHero from '@components/ArticleHero.astro';
 import BrandCard from '@components/BrandCard.astro';
 import NewsletterCTA from '@components/NewsletterCTA.astro';
 import RelatedBrands from '@components/RelatedBrands.astro';
+
+<ArticleHero
+  title={frontmatter.title}
+  description={frontmatter.description}
+  date={frontmatter.updated ?? frontmatter.date}
+  image={frontmatter.image}
+/>
+
+
+
 
 
 

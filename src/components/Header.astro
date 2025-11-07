@@ -1,9 +1,11 @@
 ---
+// src/components/Header.astro
+
 /* ---------- Configurable “from … to …” labels (optional) ---------- */
 const firstBrandLabel: string = Astro.props.firstBrandLabel ?? "Blockbuster";
 const lastBrandLabel:  string = Astro.props.lastBrandLabel  ?? "Borders";
 
-/* ---------- Primary nav links (unchanged from your file) ---------- */
+/* ---------- Primary nav links ---------- */
 const links = [
   { href: "/category/",  label: "Categories (browse)",  match: (p: string) => p.startsWith("/category/") },
   { href: "/az/",        label: "A–Z (all brands)",     match: (p: string) => p.startsWith("/az/") },
@@ -51,7 +53,7 @@ const minY = yearPool.length ? Math.min(...yearPool) : undefined;
 const maxY = yearPool.length ? Math.max(...yearPool) : undefined;
 const yearSpan = (minY && maxY) ? `${minY}\u2013${maxY}` : "—";
 
-/* ---------- Safe inline JSON-LD for site nav (unchanged) ---------- */
+/* ---------- Safe inline JSON-LD for site nav ---------- */
 const urlFor = (p: string) => (Astro.site ? new URL(p, Astro.site).href : p);
 const navNames = links.map(l => l.label.replace(/\s*\([^)]*\)\s*/g, "").trim());
 const navUrls  = links.map(l => urlFor(l.href));
@@ -104,14 +106,24 @@ const toSafeJson = (obj: any) =>
     </button>
   </div>
 
-  <!-- Primary nav -->
-  <nav role="navigation" aria-label="Primary" class="flex flex-wrap items-center gap-3 mt-5 mb-6">
+  <!-- Primary nav: single row, scrollable if needed -->
+  <nav
+    role="navigation"
+    aria-label="Primary"
+    data-site-nav
+    class="mt-5 mb-6 flex items-center gap-3 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] -mx-4 px-4"
+  >
+    <!-- Hide horizontal scrollbar in WebKit (keeps scroll behavior) -->
+    <style is:inline>
+      nav[data-site-nav]::-webkit-scrollbar { height: 0; }
+    </style>
+
     {links.map((l) => {
       const isCurrent = l.match(path);
       return (
         <a
           href={l.href}
-          class={`chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
+          class={`shrink-0 inline-flex chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
           aria-current={isCurrent ? "page" : undefined}
         >
           {l.label}
@@ -119,10 +131,10 @@ const toSafeJson = (obj: any) =>
       );
     })}
 
-    <!-- Real href as no-JS fallback; delegated JS will hijack -->
+    <!-- Keep Random Brand on the same row -->
     <a
       href={`/brand/${fallbackSlug}/`}
-      class="btn-primary focus-ring"
+      class="shrink-0 inline-flex btn-primary focus-ring ml-1"
       data-random
       onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
     >
@@ -134,7 +146,7 @@ const toSafeJson = (obj: any) =>
 <!-- Inline SiteNavigationElement JSON-LD (safely escaped) -->
 <script type="application/ld+json" is:inline set:html={toSafeJson(navSchema)} />
 
-<!-- Small inline script to sync the toggle label/state and call the global setter -->
+<!-- Theme toggle logic -->
 <script is:inline>
   (function () {
     const KEY = 'theme';

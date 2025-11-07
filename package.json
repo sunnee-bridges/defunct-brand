@@ -16,7 +16,13 @@
     "publish:csv": "node scripts/publish-csv-versioned.mjs",
     "clean": "rimraf dist exports public/data/brands-*.csv",
     "test": "echo \"(no tests)\" && exit 0",
-    "prepare": "husky"
+    "prepare": "husky",
+    "img": "node scripts/process-images.mjs",
+     "img:prep": "node -e \"require('fs').mkdirSync('public/images/articles/hero',{recursive:true}); require('fs').mkdirSync('public/images/articles/card',{recursive:true});\"",
+    "img:hero": "find assets/articles -type f \\( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \\) -exec magick mogrify -path public/images/articles/hero -format webp -quality 82 -strip -resize 2000x2000^ -gravity center -extent 2000x1200 {} +",
+    "img:hero:jpg": "find assets/articles -type f \\( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \\) -exec magick mogrify -path public/images/articles/hero -format jpg -quality 85 -strip -resize 2000x2000^ -gravity center -extent 2000x1200 {} +",
+    "img:card": "find assets/articles -type f \\( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \\) -exec magick mogrify -path public/images/articles/card -format webp -quality 82 -strip -resize 1200x1200^ -gravity center -extent 1200x675 {} +",
+    "img:all": "npm run img:prep && npm run img:hero && npm run img:hero:jpg && npm run img:card"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.9",

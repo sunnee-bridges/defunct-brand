@@ -3,10 +3,12 @@
 export interface Props {
   title: string;
   description?: string;
-  date?: string | Date;          // prefer this
-  publishDate?: string | Date;   // legacy fallback
-  image?: { src: string; alt?: string } | string;
-  imageAlt?: string;             // if image is a string
+  date?: string | Date;
+  publishDate?: string | Date;
+  image?:
+    | { src: string; alt?: string; credit?: string; source?: string; license?: string; fit?: "cover" | "contain" }
+    | string;
+  imageAlt?: string;
 }
 
 const {
@@ -18,10 +20,9 @@ const {
   imageAlt = "",
 } = Astro.props;
 
+/* Dates */
 const rawDate = date ?? publishDate ?? null;
-let iso = "";
-let pretty = "";
-
+let iso = "", pretty = "";
 if (rawDate) {
   const d = new Date(String(rawDate));
   if (!isNaN(d.getTime())) {
@@ -30,26 +31,54 @@ if (rawDate) {
   }
 }
 
-function imgSrc(i: Props["image"]) {
+/* Image normalize */
+function imgObj(i: Props["image"]) {
   if (!i) return null;
-  return typeof i === "string" ? i : i.src;
+  return typeof i === "string" ? { src: i, alt: imageAlt || "" } : i;
 }
-function imgAlt(i: Props["image"]) {
-  if (!i) return "";
-  return typeof i === "string" ? (imageAlt || "") : (i.alt || "");
-}
+const I = imgObj(image);
+const fitClass = (I?.fit === "contain") ? "hero-contain" : "hero-cover";
 ---
+<style is:inline>
+  .hero-media { overflow:hidden; border-radius: .75rem; }
+  .hero-media img { width:100%; height:auto; display:block; }
+  /* if you ever want fixed aspect on hero: 
+  .hero-media .frame { aspect-ratio: 16/9; } */
+  .hero-cover img   { object-fit: cover;   object-position: center; }
+  .hero-contain img { object-fit: contain; object-position: center; background:#000; }
+  figcaption {
+    font-size: 12px;
+    color: rgb(71 85 105);
+  }
+  .dark figcaption { color: rgb(203 213 225); }
+</style>
+
 <header class="mb-6">
   <h1 class="text-2xl md:text-3xl font-bold">{title}</h1>
   {description && <p class="text-slate-600 dark:text-slate-300 mt-1">{description}</p>}
-  {pretty && (
-    <time datetime={iso} class="block text-sm text-slate-500 dark:text-slate-400 mt-1">
-      {pretty}
-    </time>
-  )}
-  {imgSrc(image) && (
-    <figure class="mt-4 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
-      <img src={imgSrc(image)} alt={imgAlt(image)} class="w-full h-auto block" loading="lazy" />
+  {pretty && <time datetime={iso} class="block text-sm text-slate-500 dark:text-slate-400 mt-1">{pretty}</time>}
+
+  {I?.src && (
+    <figure class={`hero-media mt-4 border border-slate-200 dark:border-slate-800 ${fitClass}`}>
+      {/* No auto .jpg fallback — serve the WebP (or whatever) directly. */}
+      <img
+        src={I.src}
+        alt={I.alt || ""}
+        loading="lazy"
+        decoding="async"
+      />
+      {(I.credit || I.source || I.license) && (
+        <figcaption class="p-2 bg-slate-50 dark:bg-slate-900/40 border-t border-slate-200 dark:border-slate-800">
+          {I.credit ? <span>{I.credit}</span> : <span>Image</span>}
+          {I.license ? <span> — {I.license}</span> : null}
+          {I.source ? (
+            <>
+              {" · "}
+              <a class="underline" href={I.source} target="_blank" rel="noopener noreferrer">Source</a>
+            </>
+          ) : null}
+        </figcaption>
+      )}
     </figure>
   )}
 </header>

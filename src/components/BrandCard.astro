@@ -2,7 +2,7 @@
 // src/components/BrandCard.astro
 export interface Props {
   slug: string;       // brand slug (e.g., "toys-r-us")
-  compact?: boolean;  // optional tighter layout for lists
+  compact?: boolean;  // tighter layout
 }
 
 const { slug, compact = false } = Astro.props;
@@ -26,7 +26,7 @@ for (const [p, mod] of Object.entries(modules)) {
   }
 }
 
-/* Helpers */
+/* ---------- Local helpers ---------- */
 const toYear = (v: unknown): number | undefined => {
   if (v == null) return undefined;
   const m = String(v).match(/\d{3,4}/);
@@ -35,168 +35,191 @@ const toYear = (v: unknown): number | undefined => {
   return Number.isFinite(n) ? n : undefined;
 };
 
-const startY = toYear(brand?.active?.start);
-const endY   = toYear(brand?.active?.end);
-const hasYear = !!(startY || endY);
-
-const oneLiner = (brand?.summary || "").trim();
-
-const cardPad = compact ? "p-3" : "p-4";
-const titleCls = compact ? "text-base" : "text-lg";
-
-/* -------------------------------------------------------
-   Topic chips (extensible) + scandal inference fallback
-   ----------------------------------------------------- */
-
-// Define how each topic should render.
-// Add more topics later by extending this map.
-const topicBadges: Record<string, {
-  label: string;
-  icon: string;
-  title: string;
-  classes: string;
-}> = {
-  scandal: {
-    label: "Scandal",
-    icon: "⚠️",
-    title: "Ended due to scandal",
-    classes:
-      "inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 font-medium text-rose-700 " +
-      "dark:bg-rose-900/30 dark:text-rose-300",
-  },
-
-  // NEW: tiny badge for discontinued products (explicit tag)
-  "vanished-product": {
-    label: "Product",
-    icon: "🧃",
-    title: "Discontinued product",
-    classes:
-      "inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700 " +
-      "dark:bg-emerald-900/30 dark:text-emerald-300",
-  },
-
-  // Optional alias tag shows the same tiny product badge
-  "cult-favorite": {
-    label: "Product",
-    icon: "🧃",
-    title: "Discontinued product (cult favorite)",
-    classes:
-      "inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700 " +
-      "dark:bg-emerald-900/30 dark:text-emerald-300",
-  },
-
-  // If you also use "one-that-got-away", uncomment to map it to Product:
-  // "one-that-got-away": {
-  //   label: "Product",
-  //   icon: "🧃",
-  //   title: "Beloved discontinued product",
-  //   classes:
-  //     "inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700 " +
-  //     "dark:bg-emerald-900/30 dark:text-emerald-300",
-  // },
+const yearsOf = (b: any): string => {
+  const s = b?.active?.start;
+  const e = b?.active?.end;
+  if (s && e) return `${s}\u2013${e}`;
+  if (s && !e) return `${s}\u2013?`;
+  if (!s && e) return `\u2013${e}`;
+  return "";
 };
 
-// Normalize topics array
-const topicsArr: string[] = Array.isArray(brand?.topics) ? brand.topics : [];
+function primaryTextOf(b: any): string {
+  const hook = (b?.hook ?? "").toString().trim();
+  if (hook) return hook;
+  const fate = (b?.fate ?? "").toString().trim();
+  if (fate) return fate;
+  const summary = (b?.summary ?? "").toString().trim();
+  return summary;
+}
+function truncateInline(text: string, max = 140) {
+  const plain = String(text).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+  if (plain.length <= max) return plain;
+  return plain.slice(0, max - 1).replace(/\W?$/, "") + "…";
+}
 
-// Optional fallback: infer "scandal" when fate text clearly suggests it.
+/* ---------- Derived ---------- */
+const years = yearsOf(brand || {});
+const oneLiner = truncateInline(primaryTextOf(brand || {}), compact ? 110 : 140);
+const catLabel = (brand?.__seo_category_label || brand?.category || "").toString().trim();
+
+/* ---------- Topic chips (1-line, no wrap) ---------- */
+const topicBadges: Record<string, { label: string; icon: string; title: string; classes: string }> = {
+  scandal: {
+    label: "Scandal", icon: "⚠️", title: "Ended due to scandal",
+    classes: "inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 font-medium text-rose-700 dark:bg-rose-900/30 dark:text-rose-300"
+  },
+  "vanished-product": {
+    label: "Product", icon: "🧃", title: "Discontinued product",
+    classes: "inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
+  },
+  "cult-favorite": {
+    label: "Product", icon: "🧃", title: "Discontinued product (cult favorite)",
+    classes: "inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
+  },
+};
+const topicsArr: string[] = Array.isArray(brand?.topics) ? brand.topics : [];
 const scandalish = /fraud|scandal|brib|launder|misconduct|embezz|hacking|phone[- ]?hacking|accounting\s+irregular/i;
 const hasScandalTag = topicsArr.includes("scandal");
 const inferredScandal = !hasScandalTag && scandalish.test(String(brand?.fate || ""));
+const topicChips = topicsArr.filter((t) => topicBadges[t]).map((t) => ({ key: t, ...topicBadges[t] }));
+if (inferredScandal) topicChips.push({ key: "scandal", ...topicBadges.scandal });
 
-// Build chips from explicit topics (renders in the order they appear in brand.topics)
-const topicChips = topicsArr
-  .filter((t) => topicBadges[t])
-  .map((t) => ({ key: t, ...topicBadges[t] }));
-
-// If scandal was inferred but not tagged, add a one-off scandal chip
-if (inferredScandal) {
-  topicChips.push({ key: "scandal", ...topicBadges.scandal });
-}
+/* ---------- Sizing tokens ---------- */
+const linesHook = compact ? 2 : 3;
+const titleSize = compact ? "text-base" : "text-lg";
+const pad = compact ? "p-3" : "p-4";
 ---
 
 {brand ? (
   <article
-    class={`brand-card rounded-xl border border-slate-200 dark:border-slate-800 ${cardPad}`}
+    class={`brand-card rounded-xl border border-slate-200 dark:border-slate-800 ${pad}`}
     data-toc-exclude
+    style={{ "--hook-lines": String(linesHook) }}
   >
-    {/* Title (excluded from TOC via parent + attribute on h3) */}
-    <h3 class={`${titleCls} font-semibold leading-snug mb-1`} data-toc-exclude>
-      <a
-        href={`/brand/${encodeURIComponent(brand.slug)}/`}
-        class="focus-ring hover:underline"
-        title={`What happened to ${brand.brand}?`}
-      >
-        {brand.brand}
-      </a>
+    <a
+      href={`/brand/${encodeURIComponent(brand.slug)}/`}
+      class="stretched-link focus-ring rounded-sm"
+      aria-label={`${brand.brand}${years ? ` (${years})` : ""}${catLabel ? ` — ${catLabel}` : ""}`}
+    ></a>
+
+    <!-- 1) Title: fixed 2 lines -->
+    <h3 class={`title ${titleSize} font-semibold leading-snug`} data-toc-exclude>
+      {brand.brand}
     </h3>
 
-    {/* Badge row */}
-    <div class="mt-1 flex flex-wrap items-center gap-2 text-[12px]">
-      {/* Defunct year chip — only if we have endY */}
-      {typeof endY === "number" && (
-        <span
-          class="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 font-medium text-slate-700
-                 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
-          aria-label={`Year defunct: ${endY}`}
-          title={`Year defunct: ${endY}`}
-        >
-          ⛔ {endY}
-        </span>
-      )}
+    <!-- 2) Hook: fixed block-size (2–3 lines) -->
+    <p class="hook">{oneLiner || "\u00A0"}</p>
 
-      {/* Category chip */}
-      {brand.category && (
-        <span
-          class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 font-medium text-slate-700
-                 dark:bg-slate-800 dark:text-slate-300"
-          aria-label={`Industry: ${brand.category}`}
-          title={`Industry: ${brand.category}`}
-        >
-          🏷️ {brand.category}
-        </span>
-      )}
-
-      {/* Topic chips (Scandal, Product, etc.) */}
-      {topicChips.map((chip) => (
-        <span
-          class={chip.classes}
-          title={chip.title}
-          aria-label={chip.title}
-        >
-          <span class="mr-1" aria-hidden="true">{chip.icon}</span>
-          {chip.label}
-        </span>
-      ))}
-
-      {/* Popularity chip (optional; filled client-side) */}
-      <span
-        class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 font-medium text-amber-700
-               dark:bg-amber-900/30 dark:text-amber-300"
-        data-views
-        hidden
-        title="Relative popularity"
-      >
-        ★ <span class="ml-1" data-views-count>0</span>
-      </span>
-    </div>
-
-    {/* One-liner */}
-    {oneLiner && (
-      <p class="mt-2 text-sm text-gray-600 dark:text-slate-300 line-clamp-2">
-        {oneLiner}
-      </p>
-    )}
-
-    {/* Tiny timeline line — ONLY if we have at least one year */}
-    {hasYear && (
-      <div class="mt-2 text-xs text-gray-500 dark:text-slate-400">
-        {startY ? startY : ""}{startY ? "\u2013" : ""}{endY ?? "?"}{brand.fate ? ` \u2014 ${brand.fate}` : ""}
+    <!-- 3) Chips: forced 1 line with ellipsis (optional; will not change card height) -->
+    {topicChips.length > 0 ? (
+      <div class="chips" aria-label="Tags">
+        {topicChips.map((c) => (
+          <span class={c.classes} title={c.title} aria-label={c.title}>
+            <span class="mr-1" aria-hidden="true">{c.icon}</span>{c.label}
+          </span>
+        ))}
       </div>
+    ) : (
+      <div class="chips" aria-hidden="true">&nbsp;</div>
     )}
+
+    <!-- 4) Years: always render a line to reserve space -->
+    <div class="years">{years || "\u00A0"}</div>
+
+    <!-- 5) Category: always render a line to reserve space -->
+    <div class="category">
+      <span class="category-chip" title={catLabel}>{catLabel ? `🏷️ ${catLabel}` : "\u00A0"}</span>
+    </div>
   </article>
 ) : (
   <article class="rounded-xl border border-slate-200 dark:border-slate-800 p-4" data-toc-exclude>
     <p class="text-sm text-slate-600 dark:text-slate-400">Brand “{slug}” not found.</p>
   </article>
 )}
+
+<style is:inline>
+  /* Make every card the same total height by fixing each row’s height */
+  .brand-card {
+    position: relative;
+    display: grid;
+    grid-template-rows:
+      /* title */ minmax(calc(1.2em * 2), auto)
+      /* hook  */ minmax(calc(1.25rem * var(--hook-lines, 3)), auto)
+      /* chips */ 1.5rem
+      /* years */ 1.1rem
+      /* cat   */ 1.4rem;
+    gap: .55rem;
+    height: 100%;
+    background: var(--card-bg, #fff);
+  }
+  .dark .brand-card { --card-bg: rgb(2 6 23); }
+
+  .title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hook {
+    --lh: 1.25rem;
+    line-height: var(--lh);
+    display: -webkit-box;
+    -webkit-line-clamp: var(--hook-lines, 3);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    /* ensure exact height regardless of content */
+    block-size: calc(var(--lh) * var(--hook-lines, 3));
+    color: rgb(71 85 105);
+    font-size: .95rem;
+    margin: 0;
+  }
+  .dark .hook { color: rgb(203 213 225); }
+
+  /* Force chips to ONE line, ellipsize if long, never wrap to a new row */
+  .chips {
+    display: flex;
+    gap: .375rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: center;
+    min-height: 1.5rem;
+  }
+
+  .years, .category {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
+    font-size: .9rem;
+    color: rgb(71 85 105);
+  }
+  .dark .years, .dark .category { color: rgb(203 213 225); }
+
+  .category-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .25rem .5rem;
+    border-radius: 9999px;
+    font-size: .72rem;
+    font-weight: 600;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgb(241 245 249);
+    border: 1px solid rgb(226 232 240);
+    color: rgb(30 41 59);
+  }
+  .dark .category-chip {
+    background: rgb(30 41 59 / .45);
+    border-color: rgb(51 65 85);
+    color: white;
+  }
+
+  .stretched-link { position: absolute; inset: 0; }
+  .focus-ring:focus-visible { outline: 2px solid rgb(99 102 241); outline-offset: 2px; }
+</style>

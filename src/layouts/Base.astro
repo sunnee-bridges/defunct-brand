@@ -171,6 +171,19 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
       .skip-link:focus{left:1rem;top:1rem;outline:2px solid #6366f1;outline-offset:2px}
       .fade-out{transition:opacity .12s ease-in;opacity:.2}
     </style>
+
+    <!-- ✅ Fix nav wrapping differences by stabilizing viewport width -->
+    <style is:inline>
+      :root { scrollbar-gutter: stable both-edges; } /* modern */
+      html { overflow-y: scroll; }                  /* fallback */
+    </style>
+
+    <!-- (Optional) Slightly tighten primary-nav gaps on narrower viewports -->
+    <style is:inline>
+      @media (max-width: 1040px) {
+        [data-site-nav] { gap: .5rem; }
+      }
+    </style>
   </head>
 
   <body class="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-[#0b0b0f] dark:text-slate-100">

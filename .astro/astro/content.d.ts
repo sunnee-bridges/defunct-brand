@@ -154,80 +154,66 @@ declare module 'astro:content' {
 		"post": {
 "50-brands-that-no-longer-exist.mdx": {
 	id: "50-brands-that-no-longer-exist.mdx";
-  slug: "50-brands-that-no-longer-exist";
+  slug: "50-iconic-brands-no-longer-exist-2025";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "blockbuster-50m-mistake.mdx": {
 	id: "blockbuster-50m-mistake.mdx";
   slug: "blockbuster-50m-mistake";
   body: string;
   collection: "post";
-  data: any
-} & { render(): Render[".mdx"] };
-"blockbuster-vs-netflix.mdx": {
-	id: "blockbuster-vs-netflix.mdx";
-  slug: "blockbuster-vs-netflix";
-  body: string;
-  collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "borders-bn-deal.mdx": {
 	id: "borders-bn-deal.mdx";
   slug: "borders-bn-deal";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "bring-back-discontinued-foods.mdx": {
 	id: "bring-back-discontinued-foods.mdx";
   slug: "bring-back-discontinued-foods";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "circuit-city-firing-doomed-them.mdx": {
 	id: "circuit-city-firing-doomed-them.mdx";
   slug: "circuit-city-firing-doomed-them";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "pan-am-lockerbie-collapse.mdx": {
 	id: "pan-am-lockerbie-collapse.mdx";
   slug: "pan-am-lockerbie-collapse";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "radioshake-death-spiral.mdx": {
 	id: "radioshake-death-spiral.mdx";
   slug: "radioshack-death-spiral";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "tower-records-found-wouldnt-let-go.mdx": {
 	id: "tower-records-found-wouldnt-let-go.mdx";
   slug: "tower-records-founder-wouldnt-let-go";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "toys-r-us-debt.mdx": {
 	id: "toys-r-us-debt.mdx";
   slug: "toys-r-us-debt";
   body: string;
   collection: "post";
-  data: any
-} & { render(): Render[".mdx"] };
-"what-happened-to-pan-am.mdx": {
-	id: "what-happened-to-pan-am.mdx";
-  slug: "what-happened-to-pan-am";
-  body: string;
-  collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 };
 
@@ -622,7 +608,7 @@ declare module 'astro:content' {
 "topics": {
 	id: "topics";
   collection: "topics";
-  data: any
+  data: InferEntrySchema<"topics">
 };
 };
 
@@ -630,5 +616,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("../../src/content/config.js");
 }

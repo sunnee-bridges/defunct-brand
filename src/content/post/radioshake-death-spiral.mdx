@@ -6,7 +6,25 @@ date: "2025-11-02"
 updated: "2025-11-02"
 tags: ["retail", "electronics", "bankruptcy", "case-study", "brand-collapse"]
 canonical: "/blog/radioshack-death-spiral/"
+
+# Use your processed local hero (preferred)
+image:
+  src: "/images/articles/hero/radio-shack.webp"
+  alt: "RadioShack storefront exterior"
+  credit: "Freakofnurture"
+  source: "https://commons.wikimedia.org/wiki/File:RadioShack_Exterior_Modified.jpg"
+  license: "Public domain"
+  # fit: "cover"  # (optional) set to "contain" if you ever need letterboxing
 ---
+
+import ArticleHero from "@components/ArticleHero.astro";
+
+<ArticleHero
+  title={frontmatter.title}
+  description={frontmatter.description}
+  date={frontmatter.updated ?? frontmatter.date}
+  image={frontmatter.image}
+/>
 
 1. "What Really Happened to RadioShack? The Death Spiral Nobody Saw Coming"
 The Mystery Hook:

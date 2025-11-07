@@ -1,12 +1,29 @@
 ---
 title: "What Really Happened to Circuit City? The Firing That Doomed Them"
 description: "In 2007 Circuit City fired 3,400 top salespeople; service crashed, shoppers fled to Best Buy, and bankruptcy hit 18 months later."
-date: 2025-11-03
-updated: 2025-11-03
+date: "2025-11-03"
+updated: "2025-11-03"
 tags: ["retail", "circuit-city", "case-study", "failures"]
-canonical: "https://vanishedbrands.com/blog/circuit-city-firing-doomed-them/"
+
+# Image object works with your ArticleHero + index cards
+image:
+  src: "/images/articles/hero/circuit-city.webp"
+  alt: "Circuit City store in Sand City, CA, late 2000s"
+  credit: "Adam Kent"
+  source: "https://commons.wikimedia.org/wiki/File:Circuit_City,_Sand_City_CA_(3320518365).jpg"
+  license: "CC BY 2.0"
+  fit: "contain"
 ---
 
+import ArticleHero from '@components/ArticleHero.astro';
+
+
+<ArticleHero
+  title={frontmatter.title}
+  description={frontmatter.description}
+  date={frontmatter.updated ?? frontmatter.date}
+  image={frontmatter.image}
+/>
 
 "What Really Happened to Circuit City? The Firing That Doomed Them"
 The Mystery Hook:

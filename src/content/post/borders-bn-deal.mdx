@@ -6,7 +6,24 @@ date: "2025-11-02"
 updated: "2025-11-02"
 tags: ["retail", "case-study", "e-commerce", "borders", "barnes-and-noble", "amazon"]
 canonical: "/blog/borders-bn-deal/"
+
+# Used by ArticleHero (figure + caption) and by the blog index overlay credit
+image:
+  src: "/images/articles/hero/borders.webp"
+  alt: "Borders Bookstore in Lihue, Kauai"
+  credit: "brewbooks"
+  source: "https://commons.wikimedia.org/wiki/File:Borders_Bookstore_-_Lihue,_Kauai_(2503902404).jpg"
+  license: "CC BY-SA 2.0"
 ---
+
+import ArticleHero from '@components/ArticleHero.astro';
+
+<ArticleHero
+  title={frontmatter.title}
+  description={frontmatter.description}
+  date={frontmatter.updated ?? frontmatter.date}
+  image={frontmatter.image}
+/>
 
 "What Really Happened to Borders Books? The Barnes & Noble Deal That Sealed Their Fate"
 The Mystery Hook:

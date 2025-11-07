@@ -6,7 +6,26 @@ date: "2025-11-02"
 updated: "2025-11-02"
 tags: ["retail", "music", "case-study", "bankruptcy", "tower-records", "digital-shift"]
 canonical: "/blog/tower-records-founder-wouldnt-let-go/"
+
+# Image object used by <ArticleHero /> and blog index
+image:
+  src: "/images/articles/hero/tower-records.webp"
+  alt: "Tower Records storefront (Dublin)"
+  credit: "Joehawkins"
+  source: "https://commons.wikimedia.org/wiki/File:Tower_Records_Dublin_01.jpg"
+  license: "CC BY-SA 4.0"
+  # fit: "cover"  # (optional) set to "contain" if you ever need letterboxing
 ---
+
+
+import ArticleHero from '@components/ArticleHero.astro';
+
+<ArticleHero
+  title={frontmatter.title}
+  description={frontmatter.description}
+  date={frontmatter.updated ?? frontmatter.date}
+  image={frontmatter.image}
+/>
 
 "What Really Happened to Tower Records? The Founder Who Couldn't Let Go"
 The Mystery Hook:
