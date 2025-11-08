@@ -1,0 +1,32 @@
+{
+  "brand": "Hershey’s Swoops",
+  "slug": "hershey-swoops",
+  "category": "Food/Snacks",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 2003, "end": 2006 },
+  "hook": "Potato-chip–shaped chocolate slices that never found an audience.",
+  "fate": "Discontinued around 2006 after weak sales and positioning confusion.",
+  "summary": "Thin, curved chocolate pieces shaped like chips and sold in canisters. Launched with brand tie-ins (Reese’s, Almond Joy, York) but struggled on price, melting, and shopper expectations for a ‘snack vs. candy’ product.",
+  "topics": ["vanished-product", "chocolate", "2000s", "snacks"],
+  "notable_products": [
+    "Reese’s Swoops",
+    "Almond Joy Swoops",
+    "York Peppermint Pattie Swoops",
+    "Hershey’s Milk Chocolate Swoops",
+    "Hershey’s Dark Chocolate Swoops"
+  ],
+  "overview_md": "**Hershey’s Swoops** were thin, curved chocolate pieces—visually similar to potato chips—packed in a rigid canister for ‘stackable’ portioning. The idea rode early-2000s snack trends (portable, resealable, portion control) and leveraged Hershey sub-brands like **Reese’s** and **York**. In practice, Swoops ran into several frictions: higher unit price than bars, smaller perceived value, and a form factor that **melted easily** and didn’t match how people ate chocolate. Merchandising also proved awkward—candy aisle shoppers looked for bars and bags, not canisters. Despite flavor extensions, the line faded and was **discontinued by mid-2000s**. Today it’s a nostalgic footnote in big-brand product experiments.",
+  "timeline": [
+    { "date": "2003-06-01", "text": "National launch of Swoops in canisters with Hershey’s Milk & Dark variants." },
+    { "date": "2004-03-01", "text": "Brand extensions roll out: Reese’s, Almond Joy, and York Peppermint Pattie Swoops." },
+    { "date": "2005-09-01", "text": "Distribution contracts; reports of poor velocity and merchandising challenges." },
+    { "date": "2006-06-01", "text": "Product line discontinued after underperformance." }
+  ],
+  "links": {
+    "wayback": "https://web.archive.org/web/*/http://www.hersheys.com/swoops*"
+  },
+  "sources": [
+    { "label": "Packaging & nostalgia threads (image/reference search)", "url": "https://www.google.com/search?q=Hershey%27s+Swoops+packaging" }
+  ]
+}

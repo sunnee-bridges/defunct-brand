@@ -17,6 +17,8 @@ export const CATEGORY_META: Record<string, { label: string }> = {
   automotive: { label: "Automotive" },
   "finance-payments": { label: "Finance & Payments" },
   "healthcare-diagnostics": { label: "Healthcare & Diagnostics" },
+  "toys-games": { label: "Toys & Games" },
+  "consumer-products": { label: "Consumer Products & Beauty" },
 };
 
 /* ---------- Canonicalizer: noisy → stable SEO slug ---------- */
@@ -64,6 +66,21 @@ export function normalizeCategory(raw: string): string {
 
   if (["auto","automotive"].includes(lower))
     return "automotive";
+
+  if (["toys", "games", "toys/games", "toys & games", "toy", "board games"].includes(s))
+    return "toys-games";
+
+  if ([
+    "consumer products",
+    "consumer-products",
+    "consumer products/beauty",
+    "consumer products & beauty",
+    "beauty",
+    "cosmetics",
+    "cosmetics/beauty",
+    "personal care",
+    "personal-care"
+  ].includes(s)) return "consumer-products";
 
   const slug = slugify(s);
   return CATEGORY_META[slug] ? slug : slug;

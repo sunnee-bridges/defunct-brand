@@ -1,0 +1,48 @@
+{
+  "brand": "Sparks (Original Caffeinated Formula)",
+  "slug": "sparks-original",
+  "category": "Alcoholic Beverages",
+  "seo_category": "alcoholic-beverages",
+  "country": "US",
+  "active": { "start": 2002, "end": 2008 },
+  "hook": "Caffeinated malt liquor banned after linking to risky behavior",
+  "fate": "Reformulated in 2008 after FDA warning; caffeine, taurine, and guarana removed from original formula",
+  "summary": "Caffeinated alcoholic energy drink (6-7% ABV) that combined malt liquor with caffeine, taurine, and guarana. Marketed with edgy branding and high-energy positioning before regulatory pressure forced removal of stimulants in 2008.",
+  "notable_products": [
+    "Sparks Original (orange can)",
+    "Sparks Plus (red can, 7% ABV)",
+    "Sparks Light"
+  ],
+  "topics": ["banned", "caffeinated-alcohol", "regulatory", "2000s", "nostalgia"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Sparks_(drink)"
+  },
+  "overview_md": "**Sparks** was a caffeinated alcoholic beverage introduced in 2002 by McKenzie River Corporation that became emblematic of the controversial caffeinated alcohol trend of the mid-2000s. The drink combined malt liquor (6-7% alcohol by volume) with caffeine, taurine, guarana, and ginseng—essentially creating an alcoholic energy drink years before Four Loko would dominate headlines.\n\nSparks came in distinctive tall aluminum cans (16 oz) with bold, eye-catching designs—originally orange for the standard version and red for Sparks Plus (7% ABV). The marketing emphasized energy, nightlife, and an edgy lifestyle, targeting young adults aged 21-30 who frequented clubs and bars. The tagline and branding suggested a party fuel that would keep consumers energized while drinking.\n\nThe caffeine content was substantial: approximately **70-80mg per can** (equivalent to a cup of coffee), combined with additional stimulants. This created a physiological effect where the stimulants masked alcohol's depressant effects, allowing drinkers to consume more alcohol than they otherwise might while feeling alert—a dangerous combination that could lead to alcohol poisoning, risky behavior, and impaired judgment.\n\nBy 2006-2007, Sparks had gained significant market share in the alcoholic energy drink category and had been acquired by **MillerCoors**. However, the product was drawing increasing scrutiny from public health officials, state attorneys general, and college administrators who linked caffeinated alcohol to emergency room visits, sexual assaults, and alcohol poisoning cases.\n\nIn **November 2008**, following pressure from multiple state attorneys general and the looming threat of FDA action, MillerCoors announced it would **reformulate Sparks** to remove all stimulants—caffeine, taurine, guarana, and ginseng. The reformulated version retained the same alcohol content but became essentially a flavored malt beverage without the energy drink components.\n\nThe original caffeinated Sparks disappeared from shelves by early 2009. While the brand technically continued with the reformulated version, it lost its core identity and market appeal. Consumers who wanted the original combination of alcohol and caffeine moved to competitors like Four Loko, which would face its own regulatory reckoning just two years later.\n\nToday, original Sparks represents the first major casualty in the caffeinated alcohol wars. It set the template that Four Loko would follow to even greater controversy: aggressive marketing to young adults, high alcohol content combined with stimulants, and eventual regulatory intervention. Vintage Sparks cans have become collectibles, symbols of a brief moment when alcoholic energy drinks seemed destined to dominate the youth market before health concerns and government action shut down the category.",
+  "timeline": [
+    { "date": "2002", "text": "Sparks introduced by McKenzie River Corporation as caffeinated malt liquor" },
+    { "date": "2005", "text": "Product gains market share; expansion to Sparks Plus (7% ABV) and other varieties" },
+    { "date": "2006", "text": "MillerCoors acquires McKenzie River Corporation and Sparks brand" },
+    { "date": "2007", "text": "Growing concerns from health officials about caffeinated alcohol risks" },
+    { "date": "2008-11", "text": "State attorneys general pressure MillerCoors; company announces reformulation" },
+    { "date": "2008-12", "text": "Original caffeinated formula discontinued; new formula without stimulants released" },
+    { "date": "2009", "text": "Brand continues with reformulated version but loses market significance" }
+  ],
+  "sources": [
+    { 
+      "label": "Wikipedia - Sparks (drink)", 
+      "url": "https://en.wikipedia.org/wiki/Sparks_(drink)" 
+    },
+    { 
+      "label": "FDA - Caffeinated Alcoholic Beverages Information", 
+      "url": "https://www.fda.gov/" 
+    },
+    { 
+      "label": "MillerCoors announcement (2008, archived)", 
+      "url": "https://www.millercoors.com/" 
+    },
+    { 
+      "label": "News coverage: Associated Press, Reuters (2008)", 
+      "url": "https://apnews.com/" 
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "brand": "Bartles & Jaymes Wine Coolers",
+  "slug": "bartles-and-jaymes",
+  "category": "Alcoholic Beverages",
+  "seo_category": "alcoholic-beverages",
+  "country": "US",
+  "active": { "start": 1981, "end": 2002 },
+  "hook": "Iconic 80s wine coolers with 'thank you for your support' ads",
+  "fate": "Discontinued in 2002 as wine cooler market collapsed; briefly relaunched 2007-2010 before final discontinuation",
+  "summary": "Premium wine cooler brand from E&J Gallo that dominated the 1980s with folksy advertising featuring two fictional characters thanking viewers for support. Discontinued as consumer tastes shifted to malt-based beverages and hard seltzers.",
+  "notable_products": [
+    "Bartles & Jaymes Premium Wine Coolers",
+    "Classic flavors (Berry, Peach, etc.)",
+    "Bartles & Jaymes Fuzzy Navel"
+  ],
+  "topics": ["discontinued", "80s-nostalgia", "wine-coolers", "vanished-product"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Bartles_%26_Jaymes",
+    "gallo": "https://www.gallo.com/"
+  },
+  "overview_md": "**Bartles & Jaymes** was a wine cooler brand introduced in 1981 by **E&J Gallo Winery** that became synonymous with 1980s drinking culture through one of the most memorable advertising campaigns in beverage history. The product itself was straightforward—a blend of white wine, fruit juice, and carbonation with approximately 4-6% alcohol by volume—but the marketing made it legendary.\n\nThe brand's advertising featured two fictional characters, **Frank Bartles** and **Ed Jaymes** (portrayed by actors David Rufkahr and Dick Maugg), sitting on a porch and delivering deadpan, folksy monologues about their wine cooler business. Each commercial ended with Frank's signature line: **\"Thank you for your support.\"** The understated, almost anti-advertising approach became wildly successful, making Bartles & Jaymes one of the most recognizable brands of the 1980s.\n\nWine coolers exploded in popularity during the 1980s, driven by consumers seeking lighter, sweeter, and less intimidating alternatives to beer and wine. Bartles & Jaymes competed with **California Cooler**, **Seagram's**, and **Sun Country**, but its superior marketing and E&J Gallo's distribution muscle made it the market leader. At its peak in the mid-1980s, wine coolers represented a significant portion of the alcoholic beverage market, particularly among young adults and women.\n\nThe wine cooler boom began to collapse in **1991** when the federal government **increased excise taxes** on wine, making wine-based coolers significantly more expensive to produce. Manufacturers responded by reformulating their products as **malt-based beverages** (like beer) to avoid the wine tax, but this required dropping \"wine cooler\" from the name and changing the flavor profile. Bartles & Jaymes attempted to navigate this transition but struggled.\n\nBy the late 1990s, consumer tastes had shifted dramatically. Wine coolers were seen as dated and uncool, replaced by **Zima**, **Mike's Hard Lemonade**, **Smirnoff Ice**, and other flavored malt beverages that appealed to the same demographic with hipper branding. The nostalgic, rural imagery that made Bartles & Jaymes charming in the 1980s felt obsolete in the irony-soaked late 1990s.\n\n**Bartles & Jaymes was discontinued in 2002** as E&J Gallo exited the dying wine cooler category. The brand's disappearance marked the official end of the wine cooler era. In **2007**, Gallo briefly **relaunched** Bartles & Jaymes with updated packaging and flavors, attempting to capitalize on 80s nostalgia among Gen X consumers. However, the relaunch failed to gain traction, and the brand was quietly discontinued again around **2010**.\n\nToday, Bartles & Jaymes exists primarily as a cultural memory—a symbol of 1980s Americana alongside Members Only jackets, Rubik's Cubes, and MTV's early years. The \"Thank you for your support\" catchphrase remains embedded in pop culture, occasionally referenced in TV shows and memes. For Gen X consumers, Bartles & Jaymes represents a specific moment when drinking culture was less cynical and marketing could succeed through sincerity rather than irony.\n\nThe brand's rise and fall also illustrates how tax policy can reshape entire beverage categories overnight. The 1991 wine tax increase didn't just hurt one brand—it effectively killed the entire wine cooler industry, forcing a permanent shift to malt-based alternatives. Bartles & Jaymes, despite its strong brand equity, couldn't survive that structural change.",
+  "timeline": [
+    { "date": "1981", "text": "Bartles & Jaymes launched by E&J Gallo Winery" },
+    { "date": "1985", "text": "Iconic 'Frank and Ed' advertising campaign begins; brand becomes cultural phenomenon" },
+    { "date": "1986-1988", "text": "Wine cooler market peaks; Bartles & Jaymes is category leader" },
+    { "date": "1991", "text": "Federal wine excise tax increase makes wine coolers economically unviable" },
+    { "date": "1991-1995", "text": "Wine cooler market collapses; brands reformulate as malt beverages" },
+    { "date": "2002", "text": "Bartles & Jaymes discontinued as E&J Gallo exits wine cooler category" },
+    { "date": "2007", "text": "Brief relaunch attempt with updated packaging; limited distribution" },
+    { "date": "2010", "text": "Relaunch fails; brand discontinued permanently" }
+  ],
+  "sources": [
+    { 
+      "label": "Wikipedia - Bartles & Jaymes", 
+      "url": "https://en.wikipedia.org/wiki/Bartles_%26_Jaymes" 
+    },
+    { 
+      "label": "E&J Gallo Winery", 
+      "url": "https://www.gallo.com/" 
+    },
+    { 
+      "label": "Wine Institute - History of wine coolers and tax policy", 
+      "url": "https://wineinstitute.org/" 
+    },
+    { 
+      "label": "News archives: LA Times, USA Today (1980s-2000s coverage)", 
+      "url": "https://www.latimes.com/" 
+    }
+  ]
+}

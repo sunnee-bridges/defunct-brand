@@ -1,0 +1,47 @@
+{
+  "brand": "Jane Cosmetics",
+  "slug": "jane-cosmetics",
+  "category": "Consumer Products/Beauty",
+  "seo_category": "consumer-products",
+  "country": "US",
+  "active": { "start": 1995, "end": 2012 },
+  "hook": "Teen drugstore makeup brand discontinued after 17-year run",
+  "fate": "Discontinued in 2012 by parent company Estée Lauder after declining sales and changing teen beauty market",
+  "summary": "Affordable cosmetics brand launched in 1995 targeting teenage girls with trendy, accessible makeup sold at drugstores. Became the first makeup brand for many Millennials before discontinuation in 2012.",
+  "notable_products": [
+    "Jane lip glosses",
+    "Jane eyeshadow palettes",
+    "Jane Be Pure mineral makeup",
+    "Jane nail polish"
+  ],
+  "topics": ["discontinued", "beauty", "vanished-product", "drugstore", "90s-2000s", "nostalgia"],
+  "links": {},
+  "overview_md": "**Jane Cosmetics** was an American drugstore makeup brand launched in 1995 that defined affordable teen beauty for a generation of Millennial girls. With its accessible price points, on-trend colors, and \"Be Jane\" marketing campaign, the brand became a starter makeup line for millions of young women navigating the transition from childhood to cosmetics.\n\nJane was introduced by **Estée Lauder Companies** as a mass-market brand targeting **teenagers and young adults aged 15-24**. This was a strategic departure for Estée Lauder, which traditionally focused on prestige department store cosmetics. The company recognized an opportunity: teenage girls wanted makeup but couldn't afford prestige brands and found existing drugstore options (Cover Girl, Maybelline) too mature and conservative.\n\nThe brand's positioning was perfect for its moment. **Late 1990s teen culture** was defined by shows like *Dawson's Creek* and *Felicity*, magazines like *Seventeen* and *YM*, and a general aesthetic that mixed grunge's edge with pop's accessibility. Jane fit this sensibility with packaging that was colorful but not childish, products that were playful but not gimmicky, and marketing that spoke to teens without patronizing them.\n\n**\"Be Jane\"** became the brand's rallying cry—a message of self-expression and individuality that resonated with teen consumers seeking to establish their identity. The advertising featured diverse young women (unusual for the era) in candid, natural poses rather than the heavily airbrushed glamour shots typical of cosmetics marketing. Jane positioned makeup as a tool for self-expression rather than conformity.\n\nThe product line was comprehensive but focused. **Lip glosses** were the gateway product—affordable ($3-5), low-commitment, easy to apply, and available in dozens of shades from natural to bold. **Eyeshadows** came in palettes with coordinated colors, eliminating the guesswork for inexperienced makeup users. **Nail polishes** offered trendy colors at prices teenagers could afford with babysitting money. The products were good quality for the price point—not prestige, but reliable and fun.\n\nJane's distribution strategy was key to its success. The brand was sold at **drugstores** (CVS, Walgreens, Rite Aid) and **mass retailers** (Walmart, Target)—places where teenagers actually shopped, with parents who controlled the purse strings. The displays were eye-catching, the testers were accessible, and the prices ($2-8 for most products) fit teenage budgets.\n\nFor many Millennial women, **Jane was their first real makeup**. Not kids' play makeup, not borrowing from mom's vanity, but their own products chosen for their own faces. The brand captured the thrilling anxiety of standing in the makeup aisle, comparing shades, reading product names, and making the leap from ChapStick to lip gloss, from bare eyelids to eyeshadow. Those first Jane purchases—often a lip gloss in \"Kiss Me Quick\" or an eyeshadow duo in neutral browns—marked the beginning of a relationship with cosmetics that would last a lifetime.\n\nHowever, by the mid-2000s, the teen beauty market was transforming. **E.l.f. Cosmetics** (launched 2004) offered even cheaper alternatives with online distribution. **Prestige brands** like Urban Decay and Too Faced were developing followings among teens through makeup blogs and YouTube tutorials. **Sephora** and **Ulta** made prestige cosmetics more accessible. Most importantly, social media was changing how teens discovered and learned about makeup—influencers and tutorials replaced magazine ads and in-store experimentation.\n\nJane attempted to adapt. In **2006**, the brand relaunched with new packaging and a mineral makeup line (\"Jane Be Pure\") to compete with the BareMinerals trend. But the refresh felt like a mid-life crisis—the new aesthetic was less distinctive, and the brand lost its clear identity. Sales declined as Jane's original Millennial fans aged out and younger Gen Z consumers gravitated toward newer brands.\n\nIn **2012**, Estée Lauder made the decision to **discontinue Jane** entirely. The announcement was quiet—no press release, no official statement, just products disappearing from shelves as retailers cleared inventory. By early 2013, Jane was gone from stores. The brand's website went offline, social media accounts went dormant, and 17 years of teen beauty history ended with barely a whisper.\n\nThe discontinuation sparked immediate nostalgia among Millennial women who had grown up with Jane. Beauty blogs and forums filled with remembrances: favorite products, first makeup memories, laments about the brand's disappearance. Some women stockpiled final inventory from clearance racks. For many, losing Jane felt like losing a piece of their adolescence—the brand that had been there for first dates, school dances, and the awkward journey of figuring out who they wanted to be.\n\nToday, Jane exists only in bathroom drawers with ancient products, in beauty blog retrospectives, and in the collective memory of Millennial women. The brand represents a specific moment—late 90s/early 2000s teen culture before social media transformed beauty, when drugstore aisles were laboratories for self-discovery and a $4 lip gloss felt like the key to confidence and coolness.",
+  "timeline": [
+    { "date": "1995", "text": "Jane Cosmetics launched by Estée Lauder as affordable teen makeup brand" },
+    { "date": "1995-2000", "text": "'Be Jane' campaign establishes brand identity; expansion into drugstores nationwide" },
+    { "date": "2000-2005", "text": "Peak popularity; Jane becomes first makeup brand for millions of Millennial girls" },
+    { "date": "2006", "text": "Brand relaunch with new packaging and Jane Be Pure mineral makeup line" },
+    { "date": "2007-2011", "text": "Declining sales as market shifts to e.l.f., YouTube influencers, and Sephora culture" },
+    { "date": "2012", "text": "Estée Lauder discontinues Jane; products phased out of retailers" },
+    { "date": "2013", "text": "Final inventory cleared; brand fully discontinued" }
+  ],
+  "sources": [
+    { 
+      "label": "Estée Lauder Companies (parent company)", 
+      "url": "https://www.elcompanies.com/" 
+    },
+    { 
+      "label": "90s beauty brand retrospectives: Refinery29, Allure", 
+      "url": "https://www.refinery29.com/" 
+    },
+    { 
+      "label": "Teen makeup history and nostalgia coverage", 
+      "url": "https://www.teenvogue.com/" 
+    },
+    { 
+      "label": "Drugstore beauty brand archives", 
+      "url": "https://www.beautylish.com/" 
+    }
+  ]
+}

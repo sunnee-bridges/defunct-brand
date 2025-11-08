@@ -157,63 +157,63 @@ declare module 'astro:content' {
   slug: "50-iconic-brands-no-longer-exist-2025";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 "blockbuster-50m-mistake.mdx": {
 	id: "blockbuster-50m-mistake.mdx";
   slug: "blockbuster-50m-mistake";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 "borders-bn-deal.mdx": {
 	id: "borders-bn-deal.mdx";
   slug: "borders-bn-deal";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 "bring-back-discontinued-foods.mdx": {
 	id: "bring-back-discontinued-foods.mdx";
   slug: "bring-back-discontinued-foods";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 "circuit-city-firing-doomed-them.mdx": {
 	id: "circuit-city-firing-doomed-them.mdx";
   slug: "circuit-city-firing-doomed-them";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 "pan-am-lockerbie-collapse.mdx": {
 	id: "pan-am-lockerbie-collapse.mdx";
   slug: "pan-am-lockerbie-collapse";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 "radioshake-death-spiral.mdx": {
 	id: "radioshake-death-spiral.mdx";
   slug: "radioshack-death-spiral";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 "tower-records-found-wouldnt-let-go.mdx": {
 	id: "tower-records-found-wouldnt-let-go.mdx";
   slug: "tower-records-founder-wouldnt-let-go";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 "toys-r-us-debt.mdx": {
 	id: "toys-r-us-debt.mdx";
   slug: "toys-r-us-debt";
   body: string;
   collection: "post";
-  data: InferEntrySchema<"post">
+  data: any
 } & { render(): Render[".mdx"] };
 };
 
@@ -241,6 +241,21 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"austin-magic-pistol": {
+	id: "austin-magic-pistol";
+  collection: "brands";
+  data: any
+};
+"bartles-and-jaymes": {
+	id: "bartles-and-jaymes";
+  collection: "brands";
+  data: any
+};
+"battlestar-galactica-viper": {
+	id: "battlestar-galactica-viper";
+  collection: "brands";
+  data: any
+};
 "blackberry-os-phones": {
 	id: "blackberry-os-phones";
   collection: "brands";
@@ -248,6 +263,11 @@ declare module 'astro:content' {
 };
 "blockbuster": {
 	id: "blockbuster";
+  collection: "brands";
+  data: any
+};
+"bonne-bell": {
+	id: "bonne-bell";
   collection: "brands";
   data: any
 };
@@ -281,6 +301,11 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"cisco-fortified-wine": {
+	id: "cisco-fortified-wine";
+  collection: "brands";
+  data: any
+};
 "compaq": {
 	id: "compaq";
   collection: "brands";
@@ -291,8 +316,23 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"csi-fingerprint-kit": {
+	id: "csi-fingerprint-kit";
+  collection: "brands";
+  data: any
+};
 "desoto": {
 	id: "desoto";
+  collection: "brands";
+  data: any
+};
+"four-loko-original": {
+	id: "four-loko-original";
+  collection: "brands";
+  data: any
+};
+"fruit-stripe-gum": {
+	id: "fruit-stripe-gum";
   collection: "brands";
   data: any
 };
@@ -306,8 +346,23 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"hard-candy-original": {
+	id: "hard-candy-original";
+  collection: "brands";
+  data: any
+};
+"hershey-swoops": {
+	id: "hershey-swoops";
+  collection: "brands";
+  data: any
+};
 "hubba-bubba-bubble-jug": {
 	id: "hubba-bubba-bubble-jug";
+  collection: "brands";
+  data: any
+};
+"jane-cosmetics": {
+	id: "jane-cosmetics";
   collection: "brands";
   data: any
 };
@@ -328,6 +383,11 @@ declare module 'astro:content' {
 };
 "kodak-consumer-cameras": {
 	id: "kodak-consumer-cameras";
+  collection: "brands";
+  data: any
+};
+"lawn-darts": {
+	id: "lawn-darts";
   collection: "brands";
   data: any
 };
@@ -411,8 +471,23 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"sky-dancers": {
+	id: "sky-dancers";
+  collection: "brands";
+  data: any
+};
+"skyy-blue-us": {
+	id: "skyy-blue-us";
+  collection: "brands";
+  data: any
+};
 "snapple-whipper-snapple": {
 	id: "snapple-whipper-snapple";
+  collection: "brands";
+  data: any
+};
+"sparks-original": {
+	id: "sparks-original";
   collection: "brands";
   data: any
 };
@@ -608,7 +683,7 @@ declare module 'astro:content' {
 "topics": {
 	id: "topics";
   collection: "topics";
-  data: InferEntrySchema<"topics">
+  data: any
 };
 };
 
@@ -616,5 +691,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = typeof import("../../src/content/config.js");
+	export type ContentConfig = never;
 }

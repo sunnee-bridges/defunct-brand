@@ -1,0 +1,48 @@
+{
+  "brand": "Sky Dancers",
+  "slug": "sky-dancers",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 1994, "end": 2000 },
+  "hook": "Flying fairy dolls recalled after 170 injuries including eye trauma",
+  "fate": "Recalled in 2000 after 170 reported injuries; 8.9 million units pulled from shelves and never relaunched",
+  "summary": "Toy fairy dolls with foam wings that launched spinning into the air via pull-string mechanism. Recalled by Galoob in 2000 after causing scratched corneas, broken teeth, facial lacerations, and mild concussions due to unpredictable flight patterns.",
+  "notable_products": [
+    "Sky Dancers dolls (original line)",
+    "Dragon Flyz (boys' version)",
+    "Sky Dancers TV series tie-in dolls"
+  ],
+  "topics": ["safety-recall", "vanished-product", "nostalgia", "90s-toys"],
+  "links": {
+    "cpsc_recall": "https://www.cpsc.gov/Recalls/2000/cpsc-galoob-announce-recall-of-sky-dancers-flying-dolls",
+    "wikipedia": "https://en.wikipedia.org/wiki/Sky_Dancers"
+  },
+  "overview_md": "**Sky Dancers** were a line of flying fairy dolls introduced by Galoob in 1994 that became a cultural phenomenon before their dramatic recall in 2000. The toys featured small dolls with foam wings attached to a plastic base. When children pulled a ripcord string, the doll would launch spinning into the air, sometimes reaching heights of 20 feet or more.\n\nThe toy line was a massive commercial success, spawning a television series that aired from 1995-1996, video games, and an expanded product line including Dragon Flyz (marketed to boys). At their peak, Sky Dancers were one of the hottest toys of the mid-1990s, beloved by children for their magical flying effect and colorful character designs.\n\nHowever, the core mechanism that made Sky Dancers exciting also made them dangerous. The spinning launch was inherently unpredictable—dolls could veer off course, fly horizontally instead of vertically, or ricochet off surfaces. The hard plastic body and base, combined with high rotational speed, turned the toy into an unintended projectile.\n\nBy 2000, the CPSC had received **170 injury reports**, including 150 incidents in the United States alone. Injuries ranged from scratched corneas and temporary blindness to broken teeth, facial lacerations, mild concussions, and even a broken rib. The unpredictable flight path meant children and bystanders could be struck in the face without warning.\n\nIn **June 2000**, Galoob announced a voluntary recall of approximately **8.9 million Sky Dancers and Dragon Flyz units**—one of the largest toy recalls of that era. The company offered consumers a $7 rebate per toy returned. Unlike many recalled toys that are later redesigned and relaunched, Sky Dancers never returned to market. The fundamental design flaw—unpredictable spinning flight—could not be engineered away without eliminating the core appeal of the toy.\n\nToday, Sky Dancers remain a nostalgic memory for millennials who grew up in the 1990s. Original units occasionally surface on auction sites as collectibles, though using them remains risky. The toy serves as a cautionary tale in product design: sometimes the feature that makes a toy exciting is the same feature that makes it unsafe.",
+  "timeline": [
+    { "date": "1994", "text": "Sky Dancers introduced by Galoob; immediate commercial success" },
+    { "date": "1995-09", "text": "Sky Dancers animated TV series premieres, boosting popularity" },
+    { "date": "1996", "text": "Product line expands with Dragon Flyz (boys' version) and additional characters" },
+    { "date": "1997-1999", "text": "Injury reports accumulate; CPSC begins investigating safety concerns" },
+    { "date": "2000-06", "text": "Voluntary recall announced: 8.9 million units in U.S., 150 reported injuries including eye trauma, broken teeth, concussions" },
+    { "date": "2000-06", "text": "Galoob offers $7 rebate per returned toy; product permanently discontinued" }
+  ],
+  "sources": [
+    { 
+      "label": "CPSC Recall Notice (June 2000)", 
+      "url": "https://www.cpsc.gov/Recalls/2000/cpsc-galoob-toys-inc-announce-recall-of-sky-dancers-flying-dolls" 
+    },
+    { 
+      "label": "Wikipedia - Sky Dancers", 
+      "url": "https://en.wikipedia.org/wiki/Sky_Dancers" 
+    },
+    { 
+      "label": "CPSC Recall Database", 
+      "url": "https://www.cpsc.gov/Recalls" 
+    },
+    { 
+      "label": "Consumer Reports - Toy Safety (archived coverage)", 
+      "url": "https://www.consumerreports.org/" 
+    }
+  ]
+}

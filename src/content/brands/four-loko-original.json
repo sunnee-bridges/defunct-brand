@@ -1,0 +1,54 @@
+{
+  "brand": "Four Loko (Original Caffeinated Formula)",
+  "slug": "four-loko-original",
+  "category": "Alcoholic Beverages",
+  "seo_category": "alcoholic-beverages",
+  "country": "US",
+  "active": { "start": 2005, "end": 2010 },
+  "hook": "Caffeinated 'blackout in a can' banned after hospitalizations and deaths",
+  "fate": "Reformulated in November 2010 after FDA warning; caffeine, taurine, and guarana removed following nationwide ban on caffeinated alcoholic beverages",
+  "summary": "Caffeinated alcoholic energy drink containing 12% alcohol, caffeine (equivalent to 4-5 cups of coffee), taurine, and guarana in a 23.5 oz can. Became infamous for emergency room visits and was reformulated after FDA intervention in 2010.",
+  "notable_products": [
+    "Four Loko Original (various flavors)",
+    "23.5 oz cans (12% ABV + caffeine)",
+    "Four Loko Gold (limited edition)"
+  ],
+  "topics": ["banned", "caffeinated-alcohol", "regulatory", "scandal", "2000s", "college-culture"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Four_Loko"
+  },
+  "overview_md": "**Four Loko** was a caffeinated alcoholic beverage that became the most notorious drink of the late 2000s, earning the nickname **\"blackout in a can\"** before regulatory intervention forced its reformulation. Introduced in 2005 by Phusion Projects, the drink combined high alcohol content (12% ABV) with massive amounts of caffeine (approximately 156mg per can—equivalent to 4-5 cups of coffee), plus taurine and guarana, all packaged in eye-catching 23.5-ounce cans.\n\nThe \"Four\" in Four Loko originally referred to its four main ingredients: alcohol, caffeine, taurine, and guarana. At 12% alcohol by volume in a 23.5 oz can, a single Four Loko contained as much alcohol as **4-5 beers** combined with the caffeine of several energy drinks. The formula created a dangerous synergy: stimulants masked alcohol's depressant effects, allowing drinkers to consume far more alcohol than they could handle while feeling artificially alert and energized.\n\nFour Loko quickly became popular on college campuses, where its low price ($2-3 per can), high alcohol content, and energy-drink effects made it a party staple. The colorful cans came in flavors like Fruit Punch, Lemonade, and Watermelon, masking the harsh alcohol taste and making them dangerously easy to drink quickly. The branding was deliberately edgy and youth-oriented, though the company maintained the product was intended for adults 21+.\n\nBy **2009-2010**, Four Loko was linked to a wave of **alcohol poisoning cases**, emergency room visits, and several deaths. The most high-profile incident occurred in **October 2010** when **nine college students** at Central Washington University were hospitalized after drinking Four Loko at a party, with blood alcohol levels reaching potentially lethal levels. Several students had no memory of the evening despite being conscious and active—the hallmark \"blackout\" effect.\n\nThe incident triggered immediate action. **Washington State banned** Four Loko within weeks. **Michigan, Oklahoma, Utah, and other states** followed. College campuses nationwide banned the drink. The **FDA** began formal investigations and, in **November 2010**, issued warning letters to Phusion Projects and other caffeinated alcohol manufacturers, stating that caffeine was an **\"unsafe food additive\"** when combined with alcohol.\n\nFaced with an imminent federal ban, Phusion Projects announced in **November 2010** it would reformulate Four Loko to **remove all stimulants**. The new version retained the 12% alcohol content and the brand name, but eliminated caffeine, taurine, and guarana. The reformulated Four Loko began shipping in January 2011.\n\nThe original caffeinated Four Loko disappeared from shelves by early 2011, though existing inventory became sought-after contraband on college campuses. The reformulated version continues to sell, but without the stimulants it lost much of its notoriety and appeal.\n\nFour Loko's fall marked the effective end of caffeinated alcoholic beverages in the United States. It remains a cultural touchstone for millennials who came of age in the late 2000s, symbolizing a brief, chaotic moment when dangerously potent drinks were readily available. The phrase \"Four Loko story\" has entered slang to describe any night of excessive, regrettable drinking. Original cans have become collectibles, and the drink's legacy lives on in countless memes about poor decisions and legendary college parties.",
+  "timeline": [
+    { "date": "2005", "text": "Four Loko introduced by Phusion Projects (Chris Hunter, Jaisen Freeman, Jeff Wright)" },
+    { "date": "2008-2009", "text": "Rapid growth on college campuses; becomes party drink phenomenon" },
+    { "date": "2009", "text": "First wave of hospitalizations and emergency room visits linked to Four Loko" },
+    { "date": "2010-10-09", "text": "Nine students hospitalized at Central Washington University after Four Loko party" },
+    { "date": "2010-10", "text": "Washington State bans Four Loko; Michigan, Utah, Oklahoma follow" },
+    { "date": "2010-11-17", "text": "FDA issues warning letters; declares caffeine in alcoholic beverages unsafe" },
+    { "date": "2010-11", "text": "Phusion Projects announces reformulation; removal of all stimulants" },
+    { "date": "2010-12", "text": "Original formula production ceases; retailers pull remaining stock" },
+    { "date": "2011-01", "text": "Reformulated Four Loko (no caffeine) begins distribution" }
+  ],
+  "sources": [
+    { 
+      "label": "Wikipedia - Four Loko", 
+      "url": "https://en.wikipedia.org/wiki/Four_Loko" 
+    },
+    { 
+      "label": "FDA Warning Letter to Phusion Projects (Nov 17, 2010)", 
+      "url": "https://www.fda.gov/" 
+    },
+    { 
+      "label": "Phusion Projects (manufacturer)", 
+      "url": "https://www.phaganblank.com/" 
+    },
+    { 
+      "label": "News coverage: CNN, NBC, Washington Post (2010)", 
+      "url": "https://www.cnn.com/" 
+    },
+    { 
+      "label": "Journal of American College Health - Four Loko studies", 
+      "url": "https://pubmed.ncbi.nlm.nih.gov/" 
+    }
+  ]
+}

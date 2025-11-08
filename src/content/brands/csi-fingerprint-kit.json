@@ -1,0 +1,47 @@
+{
+  "brand": "CSI Fingerprint Examination Kit",
+  "slug": "csi-fingerprint-kit",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 2007, "end": 2007 },
+  "hook": "Crime scene toy recalled after fingerprint powder tested positive for asbestos",
+  "fate": "Recalled in 2007 after powder found to contain up to 5% asbestos; permanently discontinued with no relaunch",
+  "summary": "Licensed CSI crime scene investigation toy kit for children that included fingerprint powder containing up to 5% asbestos. Recalled immediately upon discovery by CBS Consumer Products and Planet Toys in 2007. The carcinogenic contamination led to permanent discontinuation.",
+  "notable_products": [
+    "CSI Fingerprint Examination Kit",
+    "Fingerprint powder (contaminated)",
+    "Brush and evidence collection materials"
+  ],
+  "topics": ["safety-recall", "banned", "asbestos", "carcinogen", "2000s-toys"],
+  "links": {
+    "cpsc_recall": "https://www.cpsc.gov/Recalls",
+    "epa_asbestos": "https://www.epa.gov/asbestos"
+  },
+  "overview_md": "**CSI Fingerprint Examination Kit** was a short-lived children's toy that became infamous for one of the most alarming product contaminations in modern toy history. Released in 2007 as licensed merchandise tied to the popular *CSI: Crime Scene Investigation* television franchise, the kit was designed to let children play crime scene investigator by dusting for and collecting fingerprints.\n\nThe kit included standard forensic props: fingerprint powder, a brush for dusting, evidence collection cards, and investigation tools. Marketed to children interested in science and detective work, it seemed like an educational toy that capitalized on the forensic science boom popularized by CSI and similar shows.\n\nIn **2007**, routine testing revealed a shocking discovery: the fingerprint powder contained **up to 5% asbestos**, a known carcinogen linked to lung cancer, mesothelioma, and other serious respiratory diseases. Asbestos is a group of naturally occurring fibrous minerals that were widely used in construction and manufacturing until their health risks became undeniable. When asbestos fibers are inhaled, they can lodge in lung tissue and cause cancer decades later.\n\nThe presence of asbestos in a children's toy was particularly alarming because the fingerprint powder was designed to be poured, brushed, and blown—activities that would release asbestos fibers into the air where children could easily inhale them. Young, developing lungs are especially vulnerable to asbestos exposure.\n\n**CBS Consumer Products** and manufacturer **Planet Toys** immediately announced a recall in coordination with the CPSC. Approximately **7,300 units** had been sold at toy stores and retailers across the United States before the recall. The company offered full refunds and urged consumers to stop using the product immediately and return it in a sealed plastic bag to avoid further exposure.\n\nThe contamination likely resulted from the powder's manufacturing process overseas, where asbestos regulations are less stringent than in the United States. The incident highlighted ongoing concerns about toy safety and the challenges of monitoring supply chains for products manufactured internationally.\n\nFollowing the recall, CBS pulled all CSI-licensed toy products and never relaunched the fingerprint kit or similar forensic toys under the CSI brand. The incident became a case study in product testing failures and the importance of materials screening, particularly for children's products. Today, the CSI Fingerprint Kit is remembered as one of the most dangerous toys accidentally released to market in the 2000s.",
+  "timeline": [
+    { "date": "2007-01", "text": "CSI Fingerprint Examination Kit released by CBS Consumer Products and Planet Toys" },
+    { "date": "2007-06", "text": "Routine testing discovers fingerprint powder contains up to 5% asbestos" },
+    { "date": "2007-06-08", "text": "CPSC announces immediate recall; approximately 7,300 units sold in U.S." },
+    { "date": "2007-06", "text": "CBS Consumer Products discontinues all CSI forensic toy products" },
+    { "date": "2007-06", "text": "Full refunds offered; consumers instructed to return product in sealed bag" }
+  ],
+  "sources": [
+    { 
+      "label": "CPSC Recall #07-192: CSI Fingerprint Kit (June 8, 2007)", 
+      "url": "https://www.cpsc.gov/" 
+    },
+    { 
+      "label": "EPA - Asbestos Health Information", 
+      "url": "https://www.epa.gov/asbestos" 
+    },
+    { 
+      "label": "CBS News: Asbestos in CSI Toy (June 2007)", 
+      "url": "https://www.cbsnews.com/" 
+    },
+    { 
+      "label": "Consumer Product Safety Commission - Toy Safety", 
+      "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/toy-safety" 
+    }
+  ]
+}

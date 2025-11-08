@@ -1,0 +1,47 @@
+{
+  "brand": "Cisco Fortified Wine",
+  "slug": "cisco-fortified-wine",
+  "category": "Alcoholic Beverages",
+  "seo_category": "alcoholic-beverages",
+  "country": "US",
+  "active": { "start": 1980, "end": 1991 },
+  "hook": "Fortified wine nicknamed 'liquid crack' after wave of hospitalizations",
+  "fate": "Reformulated in 1991 after public health crisis; alcohol content reduced from 20% to 13.9% and marketing changed",
+  "summary": "High-alcohol fortified wine (20% ABV) sold in juice-like bottles that became notorious in urban communities during the 1980s-90s. Dubbed 'liquid crack' due to its potency, low cost, and association with alcohol poisoning cases before reformulation.",
+  "notable_products": [
+    "Cisco fortified wine (original 20% formula)",
+    "Fruit-flavored varieties (various)"
+  ],
+  "topics": ["reformulated", "public-health", "80s-90s", "fortified-wine", "controversy"],
+  "links": {
+    "manufacturer": "https://www.canandaiguabrands.com/"
+  },
+  "overview_md": "**Cisco** was a fortified wine produced by Canandaigua Wine Company (now Constellation Brands) that became one of the most notorious alcoholic beverages of the late 1980s and early 1990s. With **20% alcohol by volume**—nearly triple the strength of regular wine—Cisco was sold in small bottles that resembled juice containers, complete with fruity flavors and colorful labels.\n\nThe product's notoriety stemmed from several factors. First, its high alcohol content and low price point (typically under $2) made it extremely popular among low-income drinkers, homeless populations, and young people seeking cheap intoxication. Second, the juice-like packaging and sweet flavors masked the high alcohol content, leading inexperienced drinkers to consume it like a soft drink with devastating results.\n\nCisco earned the street nickname **\"liquid crack\"** in urban communities, where it was associated with public intoxication, violence, and medical emergencies. Emergency room doctors reported numerous alcohol poisoning cases linked specifically to Cisco, with patients often unaware they had consumed such high-proof alcohol due to the deceptive packaging.\n\nThe crisis reached a tipping point in **1991** when public health officials, community activists, and media outlets began highlighting Cisco's role in alcohol-related harm, particularly in African American and low-income communities. Critics accused Canandaigua of targeting vulnerable populations with predatory marketing—selling dangerous levels of alcohol in packaging designed to look innocuous.\n\nFacing intense public pressure, potential lawsuits, and regulatory scrutiny, **Canandaigua reformulated Cisco in 1991**. The alcohol content was reduced from 20% to **13.9% ABV** (still high for wine, but below the 14% threshold that would classify it as \"fortified wine\" requiring special warning labels). The packaging was also changed to look less like juice and more like a standard wine product.\n\nWhile Cisco technically still exists in its reformulated version, the original 20% ABV \"liquid crack\" formula disappeared by 1992. The brand never regained significant market presence and remains obscure today. However, the Cisco controversy became a landmark case in discussions about alcohol marketing ethics, particularly regarding products that target low-income communities.\n\nThe incident also foreshadowed later battles over other problematic alcohol products: **Four Loko** in 2010 (caffeinated malt liquor) and various **super-strength malt liquors** that faced similar criticism for high alcohol content and youth-oriented marketing. Cisco remains a cautionary tale about how product design, alcohol content, and marketing can combine to create public health disasters.",
+  "timeline": [
+    { "date": "1980", "text": "Cisco fortified wine introduced by Canandaigua Wine Company" },
+    { "date": "1985-1990", "text": "Product gains notoriety in urban communities; nicknamed 'liquid crack'" },
+    { "date": "1990", "text": "Emergency room reports link Cisco to alcohol poisoning cases" },
+    { "date": "1991-03", "text": "Public health crisis: media exposes Cisco's high alcohol content and deceptive packaging" },
+    { "date": "1991-06", "text": "Community activists and officials demand action; boycotts organized" },
+    { "date": "1991-08", "text": "Canandaigua announces reformulation: alcohol reduced from 20% to 13.9%" },
+    { "date": "1992", "text": "Original high-proof formula discontinued; reformulated version released with new packaging" }
+  ],
+  "sources": [
+    { 
+      "label": "Constellation Brands (Canandaigua successor)", 
+      "url": "https://www.cbrands.com/" 
+    },
+    { 
+      "label": "Public health reports on fortified wine (1990s)", 
+      "url": "https://pubmed.ncbi.nlm.nih.gov/" 
+    },
+    { 
+      "label": "News archives: New York Times, Washington Post (1991)", 
+      "url": "https://www.nytimes.com/" 
+    },
+    { 
+      "label": "Wikipedia - Cisco (wine)", 
+      "url": "https://en.wikipedia.org/wiki/Cisco_(wine)" 
+    }
+  ]
+}

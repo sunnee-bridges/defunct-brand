@@ -1,0 +1,29 @@
+{
+  "brand": "Austin Magic Pistol",
+  "slug": "austin-magic-pistol",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 1946, "end": 1956 },
+  "hook": "Toy gun that created real explosions using calcium carbide and water",
+  "fate": "Discontinued in the mid-1950s after burn and eye injuries; never relaunched due to inherently dangerous mechanism.",
+  "summary": "Post-war toy pistol that reacted calcium carbide with water to generate acetylene gas and a spark—producing a real explosion and smoke. After injury reports, it quietly disappeared from shelves by the 1950s.",
+  "notable_products": [
+    "Austin Magic Pistol",
+    "Calcium carbide pellets"
+  ],
+  "topics": ["discontinued", "vanished-product", "burn-hazard", "nostalgia"],
+  "overview_md": "**Austin Magic Pistol** was a late-1940s/1950s toy gun that used **calcium carbide + water** to produce acetylene gas; a spark ignited it with a loud bang and smoke. It caused burns and eye injuries and faded from stores by the mid-1950s as safety norms changed.",
+  "timeline": [
+    { "date": "1946", "text": "Introduced in the post-war toy market." },
+    { "date": "1950-1955", "text": "Injury reports (burns/eye injuries) accumulate amid chemistry-toy craze." },
+    { "date": "1956", "text": "Production/distribution tapers off; toy disappears from shelves." },
+    { "date": "1972", "text": "CPSC established; concept later regarded as inherently hazardous." }
+  ],
+  "links": {
+    "wikipedia_carbide": "https://en.wikipedia.org/wiki/Calcium_carbide"
+  },
+  "sources": [
+    { "label": "Wikipedia — Calcium carbide (reaction basis)", "url": "https://en.wikipedia.org/wiki/Calcium_carbide" }
+  ]
+}

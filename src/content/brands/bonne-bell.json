@@ -1,0 +1,51 @@
+{
+  "brand": "Bonne Bell",
+  "slug": "bonne-bell",
+  "category": "Consumer Products/Beauty",
+  "seo_category": "consumer-products",
+  "country": "US",
+  "active": { "start": 1927, "end": 2015 },
+  "hook": "Iconic Lip Smacker brand discontinued after 88 years in business",
+  "fate": "Sold to Markwins International in 2015; Bonne Bell brand discontinued while Lip Smacker continues separately",
+  "summary": "American cosmetics company best known for Lip Smacker flavored lip balms that became a cultural phenomenon among teenage girls from the 1970s-2000s. The company was sold and the Bonne Bell brand retired in 2015.",
+  "notable_products": [
+    "Lip Smacker flavored lip balm",
+    "Ten-O-Six lotion",
+    "Skin Musk fragrance",
+    "Lip Lites lip gloss"
+  ],
+  "topics": ["discontinued", "vanished-product", "teen-products", "90s-nostalgia", "lip-balm"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Bonne_Bell"
+  },
+  "overview_md": "**Bonne Bell** was an American cosmetics and skincare company founded in 1927 by Jesse Bell in Cincinnati, Ohio, that became a defining brand for teenage girls across multiple generations. While the company produced various beauty products, it achieved iconic status through **Lip Smacker**, the flavored lip balm that became required equipment in every teenage girl's purse from the 1970s through the 2000s.\n\nJesse Bell named the company after his daughter Bonne, and for decades it remained a family-run business focused on wholesome, affordable beauty products for young women. The company's philosophy emphasized fresh, natural ingredients and simple formulations—revolutionary concepts in an era when cosmetics were often heavy and artificial.\n\nThe breakthrough came in **1973** when Bonne Bell introduced **Lip Smacker**, a flavored lip balm that transformed the category. Prior lip balms were medicinal and boring; Lip Smacker made lip care fun with flavors like **Strawberry**, **Dr Pepper**, **Bubble Gum**, and **Root Beer Float**. The product became an instant sensation, particularly among preteen and teenage girls who collected dozens of flavors and traded them like currency on school playgrounds.\n\nLip Smacker's success was driven by clever flavor licensing partnerships. Bonne Bell secured deals with **Dr Pepper**, **7-Up**, **Skittles**, **Starburst**, **Tootsie Roll**, and dozens of other candy and soda brands, creating lip balms that actually tasted like the products they represented. The packaging was colorful and eye-catching, designed to appeal to young consumers. At its peak, Lip Smacker offered over **100 different flavors**, and the brand sold billions of units.\n\nThe product became a **cultural touchstone**. For millions of Gen X and Millennial women, Lip Smacker was their first beauty product—the gateway between childhood and makeup. The flavors evoke powerful nostalgia: the taste of **Cotton Candy** Lip Smacker instantly transports women back to middle school lockers, slumber parties, and mall trips with friends. The brand appeared in movies, TV shows, and teen magazines as a symbol of teenage girlhood.\n\nBeyond Lip Smacker, Bonne Bell had other successful products. **Ten-O-Six lotion**, introduced in 1933, was a cult-favorite acne treatment that remained popular for decades. **Skin Musk** fragrance was a teen staple in the 1970s-80s. The company also produced foundations, blushes, and other color cosmetics under the Bonne Bell name, though none achieved Lip Smacker's dominance.\n\nHowever, by the 2000s, Bonne Bell faced challenges. The beauty market had become intensely competitive, with new brands like **Bath & Body Works**, **Victoria's Secret Beauty**, and prestige brands expanding into younger demographics. Teen tastes were shifting toward more sophisticated products. Retail was consolidating, and Bonne Bell's traditional drugstore distribution channels were under pressure.\n\nThe Bell family, after nearly 90 years of ownership, decided to sell. In **2015**, Bonne Bell was acquired by **Markwins International**, a Los Angeles-based beauty company. The acquisition was bittersweet for nostalgic consumers: Markwins kept the **Lip Smacker brand** (too valuable to abandon) but **discontinued the Bonne Bell name** entirely.\n\nToday, Lip Smacker continues under Markwins ownership, still offering flavored lip balms in drugstores and online. The formulations and flavors remain similar, and the brand retains its teen appeal. However, the **Bonne Bell** name—which once appeared on every tube—is gone. The Ten-O-Six lotion, Skin Musk, and other Bonne Bell-branded products were discontinued. The family company that Jesse Bell built in 1927 no longer exists.\n\nFor women who grew up in the 1970s-2000s, the loss of the Bonne Bell name represents the end of an era. The brand was more than just cosmetics—it was a rite of passage, a shared experience across generations. Mothers who wore Lip Smacker in the 1970s passed the tradition to daughters in the 1990s and 2000s. That continuity, that connection to girlhood memories, made Bonne Bell irreplaceable.\n\nThe brand's story reflects broader changes in American retail and corporate ownership. Small, family-owned companies with loyal customer bases are increasingly acquired by large corporations that value individual product brands but see little worth in the company names behind them. Bonne Bell became another casualty of consolidation—remembered fondly, but ultimately deemed expendable in a portfolio strategy focused on maximizing individual product profitability.",
+  "timeline": [
+    { "date": "1927", "text": "Jesse Bell founds Bonne Bell cosmetics company in Cincinnati, Ohio" },
+    { "date": "1933", "text": "Ten-O-Six lotion introduced; becomes cult acne treatment" },
+    { "date": "1973", "text": "Lip Smacker flavored lip balm launched; instant success with teenagers" },
+    { "date": "1975-1990", "text": "Lip Smacker expands with soda and candy flavor licenses (Dr Pepper, Skittles, etc.)" },
+    { "date": "1990s", "text": "Peak popularity; Lip Smacker becomes cultural icon for Gen X and Millennial girls" },
+    { "date": "2000s", "text": "Increased competition from Bath & Body Works, Victoria's Secret Beauty, and others" },
+    { "date": "2015", "text": "Bonne Bell sold to Markwins International; Bell family exits after 88 years" },
+    { "date": "2015", "text": "Markwins retains Lip Smacker brand but discontinues Bonne Bell name" },
+    { "date": "2016", "text": "All remaining Bonne Bell-branded products (Ten-O-Six, etc.) phased out" }
+  ],
+  "sources": [
+    { 
+      "label": "Wikipedia - Bonne Bell", 
+      "url": "https://en.wikipedia.org/wiki/Bonne_Bell" 
+    },
+    { 
+      "label": "Lip Smacker official site", 
+      "url": "https://lipsmacker.com/" 
+    },
+    { 
+      "label": "Beauty industry coverage: WWD, Cosmetics Business", 
+      "url": "https://wwd.com/" 
+    },
+    { 
+      "label": "Nostalgic brand retrospectives (Teen Vogue, Refinery29)", 
+      "url": "https://www.teenvogue.com/" 
+    }
+  ]
+}

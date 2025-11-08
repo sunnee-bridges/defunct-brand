@@ -1,0 +1,32 @@
+{
+  "brand": "Fruit Stripe",
+  "slug": "fruit-stripe-gum",
+  "aliases": ["Fruit Stripe Gum", "Yipes! Stripes!"],
+  "category": "Food/Snacks",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 1969, "end": 2024 },
+  "hook": "Rainbow-striped gum with Yipes the zebra—discontinued in 2024.",
+  "fate": "Ferrara Candy Company discontinued Fruit Stripe in January 2024 following a portfolio review.",
+  "summary": "Launched in 1969 by Beech-Nut, Fruit Stripe became a cult-favorite chewing gum known for its rainbow sticks, quick-fading fruit flavors, and temporary tattoos featuring mascot Yipes the zebra. After multiple ownership changes, Ferrara (a Ferrero company) confirmed the gum’s discontinuation in 2024.",
+  "notable_products": ["Fruit Stripe 5-Flavor gum (Melon, Cherry, Lemon, Orange, Peach)"],
+  "topics": ["vanished-product", "nostalgia", "candy"],
+  "overview_md": "**Fruit Stripe** was an American chewing gum line famous for its rainbow stripes and mascot **Yipes the zebra**. First introduced by **Beech-Nut in 1969**, it later passed through several owners before landing at **Ferrara Candy Company**. Packs often included **temporary tattoos**, and the brand’s five fruit flavors became a nostalgic touchstone—remembered lovingly for flavor that faded fast. In **January 2024**, Ferrara said it would **sunset** Fruit Stripe, ending more than five decades of a quirky pop-culture favorite.",
+  "timeline": [
+    { "date": "1969-01", "text": "Fruit Stripe debuts under Beech-Nut with striped sticks and fruit flavors." },
+    { "date": "1990s-01", "text": "Yipes the zebra gains cult status; temporary tattoos become a signature pack extra." },
+    { "date": "2024-01-10", "text": "Ferrara confirms it will discontinue Fruit Stripe after a portfolio review." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Fruit_Stripe",
+    "news_ap": "https://apnews.com/article/624b16ee0066c638154464bf47c4ac9d",
+    "news_foodandwine": "https://www.foodandwine.com/fruit-stripe-gum-discontinued-7978734",
+    "news_bizinsider": "https://www.businessinsider.com/fruit-stripe-gum-discontinued-fans-joke-best-few-seconds-lives-2024-1"
+  },
+  "sources": [
+    { "label": "Wikipedia — Fruit Stripe", "url": "https://en.wikipedia.org/wiki/Fruit_Stripe" },
+    { "label": "AP — Fruit Stripe to ‘bite the dust’ after half a century (Jan 12, 2024)", "url": "https://apnews.com/article/624b16ee0066c638154464bf47c4ac9d" },
+    { "label": "Food & Wine — Ferrara confirms Fruit Stripe is discontinued (Jan 9–10, 2024)", "url": "https://www.foodandwine.com/fruit-stripe-gum-discontinued-7978734" },
+    { "label": "Business Insider — Fans react to discontinuation (Jan 2024)", "url": "https://www.businessinsider.com/fruit-stripe-gum-discontinued-fans-joke-best-few-seconds-lives-2024-1" }
+  ]
+}
