@@ -1,0 +1,49 @@
+{
+  "brand": "Salon Selectives",
+  "slug": "salon-selectives",
+  "category": "Consumer Products/Beauty",
+  "seo_category": "consumer-products",
+  "country": "US",
+  "active": { "start": 1987, "end": 2006 },
+  "hook": "Drugstore hair care with 'salon formula' that vanished in the 2000s",
+  "fate": "Discontinued in mid-2000s as parent company Unilever streamlined hair care portfolio",
+  "summary": "Premium drugstore shampoo and conditioner line by Helene Curtis that promised salon-quality formulas at affordable prices. Discontinued after nearly 20 years when Unilever consolidated brands.",
+  "notable_products": [
+    "Salon Selectives shampoo and conditioner",
+    "Complex formulas with silk proteins",
+    "Styling products line",
+    "Treatment masks"
+  ],
+  "topics": ["discontinued", "hair-care", "drugstore", "90s-beauty", "nostalgia"],
+  "links": {
+    "unilever": "https://www.unilever.com/"
+  },
+  "overview_md": "**Salon Selectives** was a premium drugstore hair care brand launched in 1987 by Helene Curtis that promised salon-quality results at affordable prices. With its tagline \"Salon formula, drugstore price,\" the brand captured the aspirations of women who wanted professional hair care without salon costs.\n\nThe late 1980s and 1990s brought changes in American beauty culture. Women were working outside the home, had more disposable income, and understood the difference between basic shampoo and professional products. They wanted salon results but couldn't afford $20 bottles of Aveda or regular salon visits.\n\nSalon Selectives bridged this gap. The formulations featured silk proteins, botanical extracts, and ingredients commonly found in salon brands but rare in drugstore products. The conditioners were particularly praised for their richness—thick, creamy formulas that left hair genuinely softer and more manageable.\n\nThe packaging signaled prestige within the drugstore context. Unlike basic plastic bottles of budget brands, Salon Selectives came in sleek containers with sophisticated graphics and detailed ingredient lists. The bottles looked like they belonged in a salon, not a grocery store.\n\nThe marketing reinforced the value message. Advertising showed professional-looking women who discovered they didn't need to pay salon prices for salon-quality hair. The campaigns emphasized intelligence—you're not being cheap, you're being smart.\n\nFor many Gen X and older Millennial women, Salon Selectives was the first \"nice\" shampoo they could afford in their teens and twenties. The brand represented aspiration within reach—you may not afford a $150 salon blowout, but you could afford $6 shampoo that brought you closer to that ideal.\n\nThe product line expanded throughout the 1990s to include styling products (mousse, gel, hairspray), treatment masks, and specialized formulas for different hair types. The brand maintained quality positioning while keeping prices accessible, typically $4-7 per bottle.\n\nBy the early 2000s, the competitive landscape shifted. Pantene Pro-V and Herbal Essences upscaled their formulations, eroding Salon Selectives' quality advantage. Salon brands like Paul Mitchell began appearing at TJ Maxx and Marshalls at near-drugstore prices. Suave launched \"Suave Professionals,\" directly copying Salon Selectives' positioning.\n\nMost significantly, Unilever (which acquired Helene Curtis in 1996) was consolidating its hair care portfolio. The company owned multiple brands—Dove, Suave, TRESemmé, Nexxus—and saw redundancy. Salon Selectives, while profitable, wasn't differentiated enough to justify continued investment. The decision was made to discontinue the brand and reallocate resources to TRESemmé.\n\nSalon Selectives was quietly phased out in the mid-2000s, around 2005-2006. There was no announcement or explanation to loyal customers. Products simply stopped appearing on shelves as retailers sold through inventory. By 2007, the brand was essentially gone.\n\nThe discontinuation sparked frustration among loyal users. Beauty forums filled with posts: \"Why did they discontinue Salon Selectives?\" \"Where can I find it?\" Many women had used the same formula for years and suddenly had to find replacements.\n\nToday, Salon Selectives exists primarily in nostalgia. For Gen X women especially, the brand represents young adulthood, first apartments, learning self-care, and the pride of choosing quality products on a budget. It was hair care for aspiring professionals building careers and lives.\n\nThe brand's disappearance reflects larger trends in consumer goods: portfolio consolidation and brand rationalization. Salon Selectives didn't fail—it was deemed unnecessary in a world where companies need simpler, more focused brand portfolios.",
+  "timeline": [
+    { "date": "1987", "text": "Salon Selectives launched by Helene Curtis with 'salon formula, drugstore price' positioning" },
+    { "date": "1990-1995", "text": "Peak popularity; brand becomes premium drugstore hair care leader" },
+    { "date": "1996", "text": "Helene Curtis acquired by Unilever; Salon Selectives becomes part of large portfolio" },
+    { "date": "2000-2004", "text": "Increased competition from Pantene Pro-V, Herbal Essences, and Suave Professionals" },
+    { "date": "2005", "text": "Unilever begins consolidating hair care brands; Salon Selectives marked for discontinuation" },
+    { "date": "2005-2006", "text": "Products gradually phased out of retailers" },
+    { "date": "2007", "text": "Brand fully discontinued; no longer in production" }
+  ],
+  "sources": [
+    { 
+      "label": "Unilever (parent company)", 
+      "url": "https://www.unilever.com/" 
+    },
+    { 
+      "label": "Hair care industry analysis: Cosmetics Business", 
+      "url": "https://www.cosmeticsbusiness.com/" 
+    },
+    { 
+      "label": "Beauty nostalgia retrospectives", 
+      "url": "https://www.refinery29.com/" 
+    },
+    { 
+      "label": "Consumer product history archives", 
+      "url": "https://www.groceteria.com/" 
+    }
+  ]
+}

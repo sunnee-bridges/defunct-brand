@@ -157,63 +157,77 @@ declare module 'astro:content' {
   slug: "50-iconic-brands-no-longer-exist-2025";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "blockbuster-50m-mistake.mdx": {
 	id: "blockbuster-50m-mistake.mdx";
   slug: "blockbuster-50m-mistake";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "borders-bn-deal.mdx": {
 	id: "borders-bn-deal.mdx";
   slug: "borders-bn-deal";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "bring-back-discontinued-foods.mdx": {
 	id: "bring-back-discontinued-foods.mdx";
   slug: "bring-back-discontinued-foods";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "circuit-city-firing-doomed-them.mdx": {
 	id: "circuit-city-firing-doomed-them.mdx";
   slug: "circuit-city-firing-doomed-them";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
+"discontinued-90s-drinks.mdx": {
+	id: "discontinued-90s-drinks.mdx";
+  slug: "discontinued-90s-drinks";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
+"discontinued-snapple-flavors.mdx": {
+	id: "discontinued-snapple-flavors.mdx";
+  slug: "discontinued-snapple-flavors";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "pan-am-lockerbie-collapse.mdx": {
 	id: "pan-am-lockerbie-collapse.mdx";
   slug: "pan-am-lockerbie-collapse";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "radioshake-death-spiral.mdx": {
 	id: "radioshake-death-spiral.mdx";
   slug: "radioshack-death-spiral";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "tower-records-found-wouldnt-let-go.mdx": {
 	id: "tower-records-found-wouldnt-let-go.mdx";
   slug: "tower-records-founder-wouldnt-let-go";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 "toys-r-us-debt.mdx": {
 	id: "toys-r-us-debt.mdx";
   slug: "toys-r-us-debt";
   body: string;
   collection: "post";
-  data: any
+  data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
 };
 
@@ -446,8 +460,18 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"rave-hairspray": {
+	id: "rave-hairspray";
+  collection: "brands";
+  data: any
+};
 "ritz-camera": {
 	id: "ritz-camera";
+  collection: "brands";
+  data: any
+};
+"salon-selectives": {
+	id: "salon-selectives";
   collection: "brands";
   data: any
 };
@@ -478,6 +502,11 @@ declare module 'astro:content' {
 };
 "skyy-blue-us": {
 	id: "skyy-blue-us";
+  collection: "brands";
+  data: any
+};
+"snapple-elements": {
+	id: "snapple-elements";
   collection: "brands";
   data: any
 };
@@ -683,7 +712,7 @@ declare module 'astro:content' {
 "topics": {
 	id: "topics";
   collection: "topics";
-  data: any
+  data: InferEntrySchema<"topics">
 };
 };
 
@@ -691,5 +720,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("../../src/content/config.js");
 }
