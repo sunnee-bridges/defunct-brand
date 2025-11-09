@@ -66,7 +66,6 @@ const itemListLd = {
   })),
 };
 ---
-
 <Base title={PAGE_TITLE} description={PAGE_DESC}>
   <!-- 🔎 SEO head -->
   <Fragment slot="head">
@@ -82,25 +81,24 @@ const itemListLd = {
     <meta name="twitter:title" content={PAGE_TITLE} />
     <meta name="twitter:description" content={PAGE_DESC} />
 
-    <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
+    <!-- ✅ inject raw JSON, not literal {…} -->
+    <script type="application/ld+json" set:html={JSON.stringify(itemListLd)} />
 
-    <style>
+    <!-- ✅ inline styles to avoid scoping/parse issues in head slot -->
+    <style is:inline>
       /* Enhanced decade card with better hover states */
       .decade-card {
         position: relative;
         transition: all 0.2s ease;
       }
-      
       .decade-card:hover {
         transform: scale(1.02);
         filter: brightness(1.15);
       }
-
       /* Badge styling for counts */
       .count-badge {
         display: inline-block;
         background: rgba(15, 23, 42, 0.06);
-        
         padding: 0.125rem 0.5rem;
         border-radius: 9999px;
         font-size: 0.875rem;
@@ -108,8 +106,6 @@ const itemListLd = {
       }
     </style>
   </Fragment>
-
-  <!-- No wrapper needed - main container already provides max-width and centering -->
 
   <!-- 🧭 Navigation -->
   <nav class="mb-3 flex flex-wrap gap-2 justify-start" aria-label="Breadcrumb">
@@ -129,19 +125,22 @@ const itemListLd = {
     <p class="text-slate-600 dark:text-slate-400">No decades available yet.</p>
   ) : (
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      {decades.map((d) => (
-        <li>
-          <a
-            href={`/decade/${d}/`}
-            class="chip focus-ring block decade-card"
-            title={`${counts.get(d)} ${counts.get(d) === 1 ? "brand" : "brands"} in the ${d}`}
-            aria-label={`${d} (${counts.get(d)} ${counts.get(d) === 1 ? "brand" : "brands"})`}
-          >
-            <span class="font-medium">{d}</span>
-            <span class="count-badge text-gray-400">({counts.get(d)})</span>
-          </a>
-        </li>
-      ))}
+      {decades.map((d) => {
+        const n = counts.get(d) ?? 0;
+        return (
+          <li>
+            <a
+              href={`/decade/${d}/`}
+              class="chip focus-ring block decade-card"
+              title={`${n} ${n === 1 ? "brand" : "brands"} in the ${d}`}
+              aria-label={`${d} (${n} ${n === 1 ? "brand" : "brands"})`}
+            >
+              <span class="font-medium">{d}</span>
+              <span class="count-badge text-gray-400">({n})</span>
+            </a>
+          </li>
+        );
+      })}
     </ul>
   )}
 
