@@ -229,6 +229,13 @@ declare module 'astro:content' {
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
+"when-did-brands-close.mdx": {
+	id: "when-did-brands-close.mdx";
+  slug: "when-did-brands-close";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
 };
 
 	};
