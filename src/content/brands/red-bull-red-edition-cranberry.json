@@ -1,0 +1,33 @@
+{
+  "brand": "Red Bull Red Edition (Cranberry)",
+  "slug": "red-bull-red-edition-cranberry",
+  "category": "Beverages/Energy Drinks",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 2013, "end": 2020 },
+  "hook": "The original Red Edition flavor—cranberry—quietly vanished when Watermelon took its place.",
+  "fate": "Cranberry Red Edition discontinued in the U.S. and effectively replaced by Red Edition Watermelon around 2020.",
+  "summary": "Red Bull’s first Red Edition launched as **Cranberry** in 2013 and built a steady following. In the U.S., the ‘Red Edition’ later switched to **Watermelon** (keeping the Red Edition name), and cranberry disappeared from shelves by ~2020. Today, Red Edition in the U.S. means Watermelon; cranberry is considered discontinued here.",
+  "topics": ["discontinued-flavor", "energy-drinks", "nostalgia"],
+  "taglines": [
+    { "text": "Vitalizes Body and Mind.", "source": "Brand line" }
+  ],
+  "links": {
+    "red_bull_product_page_current": "https://www.redbull.com/us-en/energydrink/red-bull-red-edition",
+    "retail_listings_watermelon": "https://www.harristeeter.com/p/red-bull-red-edition-watermelon-energy-drink/0061126900086"
+  },
+  "overview_md": "The **Red Edition** debuted in the early 2010s with **cranberry** as its U.S. flavor. For years the can read *The Red Edition (Cranberry)* alongside Blue (Blueberry) and Silver (Lime). Around **2020**, Red Bull shifted the U.S. Red Edition to **Watermelon**, and the cranberry SKU exited mainstream distribution. The *Red Edition* name stayed—only the taste changed—so fans generally treat cranberry as a **discontinued U.S. flavor**.",
+  "timeline": [
+    { "date": "2013-03", "text": "Red Bull introduces the ‘Editions’ line in the U.S. with **Cranberry (Red)**, **Blueberry (Blue)**, and **Lime (Silver)**." },
+    { "date": "2016-01", "text": "Cranberry Red Edition widely available; lineup coexists with seasonal ‘Summer Edition’ SKUs." },
+    { "date": "2020-01", "text": "U.S. **Red Edition switches to Watermelon**; **cranberry** effectively discontinued in this market." }
+  ],
+  "sources": [
+    { "label": "Red Bull – Red Edition (current, Watermelon)", "url": "https://www.redbull.com/us-en/energydrink/red-bull-red-edition" },
+    { "label": "Harris Teeter – Red Edition Watermelon listing", "url": "https://www.harristeeter.com/p/red-bull-red-edition-watermelon-energy-drink/0061126900086" }
+  ],
+  "notes": [
+    "Wayback snapshots for the exact historic cranberry product URL are not available; trade press from 2013 confirms the cranberry launch.",
+    "Watermelon appears as the permanent U.S. Red Edition from 2020 onward; cranberry not in current U.S. lineup."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "brand": "Jujubes",
+  "slug": "jujubes",
+  "category": "Food/Candy",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 1920, "end": "Present (limited)" },
+  "hook": "Movie theater gummy candy that nearly vanished before limited comeback",
+  "fate": "Production halted multiple times; currently produced in limited quantities by Ferrara Candy Company but rarely found in stores compared to golden era",
+  "summary": "Chewy, sugar-coated gummy candies introduced in 1920 that became iconic movie theater staples. After decades of popularity, production became sporadic in the 2000s-2010s with the brand changing hands multiple times, making them difficult to find.",
+  "notable_products": [
+    "Original Jujubes (assorted fruit flavors)",
+    "Jujubes theater boxes",
+    "Jujyfruits (sister product, mint flavored shapes)"
+  ],
+  "topics": ["candy", "movie-theaters", "discontinued", "hard-to-find", "nostalgic", "1920s", "ferrara"],
+  "links": {
+    "ferrara": "https://www.ferrarausa.com/"
+  },
+  "overview_md": "**Jujubes** are chewy, sugar-coated gummy candies introduced in 1920 that became synonymous with American movie theaters for generations. The colorful, fruit-flavored gummies in their distinctive yellow box were a cinema staple from the 1920s through the 1990s. While Jujubes technically still exist today under Ferrara Candy Company, production has been sporadic and availability minimal, making them essentially discontinued in the eyes of fans who remember easily finding them at every theater.\n\nCreated by the **Heide Candy Company** in 1920, Jujubes were named after the jujube fruit, though they don't actually taste like it. The candies featured bright colors and fruit flavors—lemon, lime, orange, cherry, and violet—in a chewy, slightly firm texture that required serious jaw work. That distinctive chewiness became their signature, for better or worse.\n\nJujubes achieved **movie theater ubiquity** by the mid-20th century. The small cardboard theater boxes became as essential to cinema as popcorn. The candies' long shelf life and individual packaging made them ideal for concession stands. For decades, going to the movies meant choosing between Jujubes, Milk Duds, and Raisinets. Jujubes were the choice for people who wanted their candy to last the entire film.\n\nThe **texture** was polarizing. Jujubes were genuinely difficult to chew, especially when cold or slightly stale. Some people loved the extended chewing experience—one box could last a two-hour movie. Others found them jaw-achingly hard and sticky. The candies notoriously stuck to teeth and dental work, leading to jokes about Jujubes pulling out fillings. This reputation didn't hurt sales; it became part of their character.\n\n**Jujyfruits**, Jujubes' sister candy introduced in 1920, featured similar texture but mint flavoring and distinctive fruit shapes. Both candies coexisted for decades under Heide ownership. Jujyfruits have their own cult following and similarly complicated modern history.\n\nHeide Candy Company was acquired by **Hershey** in 1995. Under Hershey, Jujubes remained available but never received significant marketing investment. In 2002, Hershey sold several candy brands including Jujubes to **Farley's & Sathers**. This began a period of ownership instability that hurt the brand's availability.\n\nBy the **mid-2000s**, Jujubes became increasingly difficult to find. Movie theaters stopped carrying them as candy options modernized and multiplexed. Retail distribution shrank. Production seemed sporadic, with long gaps where the candies vanished from shelves entirely. Fans noticed and began asking: \"Are Jujubes discontinued?\"\n\nFarley's & Sathers filed for bankruptcy in 2012, and Jujubes' ownership transferred again. The brand eventually landed with **Ferrara Candy Company** (owned by Ferrero) in 2017. Ferrara technically continues producing Jujubes, but in very limited quantities with minimal distribution. Finding them requires luck or online ordering.\n\nToday's **availability crisis** means Jujubes exist in a gray area—not officially discontinued, but effectively unavailable for most consumers. Online retailers occasionally stock them, but they sell out quickly. Some dollar stores carry old inventory. Movie theaters almost never have them. For people who remember Jujubes being everywhere, the current scarcity feels like discontinuation.\n\nThe **nostalgia market** keeps Jujubes alive in memory and conversation. Online forums regularly discuss where to find them. People share childhood memories of sticky Jujubes at Saturday matinees. The yellow theater box is instantly recognizable to anyone who attended movies in the 1960s-1990s. Jujubes represent a specific era of cinema culture before stadium seating and gourmet concessions.\n\nSome fans theorize Jujubes' decline reflects changing candy preferences. Modern consumers want softer textures—gummy bears, not jaw-breaking chews. Dental health awareness makes super-sticky candies less appealing. Younger generations never developed Jujubes loyalty because they weren't available during their formative years. The brand lost momentum and never recovered.\n\nFor **Boomers and Gen X**, Jujubes trigger powerful movie theater memories—dark cinemas, sticky floors, and candies that lasted through double features. The specific combination of artificial fruit flavor and exhausting chewiness is unique and irreplaceable. No modern candy replicates the Jujubes experience, for better or worse.\n\nWhether Jujubes make a genuine comeback remains uncertain. Ferrara could revive production and distribution if demand warranted investment. But given the candy's age, texture issues, and decades of declining availability, a full resurrection seems unlikely. Jujubes may remain in permanent limbo—technically existing, but functionally discontinued for most consumers who remember them fondly.",
+  "timeline": [
+    { "date": "1920", "text": "Jujubes introduced by Heide Candy Company along with Jujyfruits" },
+    { "date": "1930s-1990s", "text": "Golden era: Jujubes become movie theater staple; widespread availability" },
+    { "date": "1995", "text": "Heide Candy Company acquired by Hershey; Jujubes remain in production" },
+    { "date": "2002", "text": "Hershey sells Jujubes brand to Farley's & Sathers; distribution begins declining" },
+    { "date": "2005-2010", "text": "Availability becomes sporadic; fans notice Jujubes harder to find" },
+    { "date": "2012", "text": "Farley's & Sathers bankruptcy; Jujubes ownership uncertain" },
+    { "date": "2017", "text": "Ferrara Candy Company (Ferrero) acquires Jujubes brand" },
+    { "date": "2018-present", "text": "Limited production continues; minimal distribution; rarely found in stores" }
+  ],
+  "sources": [
+    { 
+      "label": "Ferrara Candy Company (current owner)", 
+      "url": "https://www.ferrarausa.com/" 
+    },
+    { 
+      "label": "Candy history: CandyFavorites, Candy Store Blog", 
+      "url": "https://www.candyfavorites.com/" 
+    },
+    { 
+      "label": "Movie theater candy history and nostalgia coverage", 
+      "url": "https://www.mentalfloss.com/" 
+    },
+    { 
+      "label": "Retro candy retrospectives: Thrillist, Bon Appétit", 
+      "url": "https://www.thrillist.com/" 
+    }
+  ]
+}

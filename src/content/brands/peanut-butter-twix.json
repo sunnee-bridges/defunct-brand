@@ -1,0 +1,34 @@
+{
+  "brand": "Peanut Butter Twix (Twix PB)",
+  "slug": "peanut-butter-twix",
+  "category": "Food/Confectionery",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 1983, "end": null },
+  "hook": "Twix’s cult peanut-butter variant that disappeared, came back, and won a permanent spot in many candy aisles.",
+  "fate": "Ongoing in the U.S. with periodic reformulations and packaging updates; availability has varied by region and year.",
+  "summary": "First sold in the U.S. in the **1980s**, **Peanut Butter Twix** (often labeled **Twix PB**) swaps Twix’s caramel for a **peanut-butter layer** over a **chocolate cookie**, enrobed in milk chocolate. The SKU has cycled in and out of national distribution—**discontinued in the late 1990s**, revived in the **2000s**, and widely reintroduced around **2014**—but today remains a recognized, rotating core flavor alongside Caramel.",
+  "topics": ["variant-history", "peanut-butter", "nostalgia", "90s"],
+  "taglines": [
+    { "text": "Left. Right. Peanut Butter.", "source": "Packaging/advertising copy (2010s)" }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Twix",
+    "brand_owner": "https://www.mars.com/",
+    "product_finder_search": "https://www.google.com/search?q=Peanut+Butter+Twix+where+to+buy",
+    "ads_search_80s": "https://www.youtube.com/results?search_query=Peanut+Butter+Twix+commercial+1980s"
+  },
+  "overview_md": "**Peanut Butter Twix** (aka **Twix PB**) is the long-running peanut-butter spin on Mars’ biscuit-bar classic. Instead of caramel over a shortbread finger, PB Twix uses a **peanut-butter layer** on a **chocolate cookie base**, then coats the bar in milk chocolate. U.S. shoppers first saw it in the **1980s**, it went **missing in the late 1990s**, returned in the **2000s** (with packaging shifting between “Twix PB” and “Peanut Butter Twix”), and by the **mid-2010s** it was back in broad distribution. Availability still varies by retailer and season, but as of 2025 it’s commonly found in standard and share sizes.",
+  "timeline": [
+    { "date": "1983", "text": "U.S. launch of Peanut Butter Twix (early national/regionals; exact month varies by source)." },
+    { "date": "1997", "text": "Variant disappears from many chains; effectively discontinued nationally by the late 1990s (regional stock lingers)." },
+    { "date": "2000-2007", "text": "Returns intermittently; packaging alternates between “Twix PB” and “Peanut Butter Twix.”" },
+    { "date": "2014", "text": "Wider reintroduction; PB becomes a regular flavor alongside Caramel in many U.S. sets." },
+    { "date": "2020-2025", "text": "Ongoing distribution with periodic packaging/assortment refreshes; regional availability may vary." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Twix (variant overview)", "url": "https://en.wikipedia.org/wiki/Twix" },
+    { "label": "Mars, Incorporated (brand owner)", "url": "https://www.mars.com/" },
+    { "label": "Historical ads & packaging (fan archives/videos)", "url": "https://www.youtube.com/results?search_query=Peanut+Butter+Twix+commercial" }
+  ]
+}

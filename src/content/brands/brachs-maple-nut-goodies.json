@@ -1,0 +1,35 @@
+{
+  "brand": "Brach’s Maple Nut Goodies",
+  "slug": "brachs-maple-nut-goodies",
+  "category": "Food/CPG",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 1940, "end": 2022 },
+  "hook": "Maple toffee–peanut clusters that quietly disappeared in the early 2020s",
+  "fate": "Discontinued by Ferrara around 2022 after recipe/manufacturing changes and declining distribution; no announced return.",
+  "summary": "Classic Brach’s candy: roasted peanuts wrapped in chewy maple-flavored toffee with a thin candy shell. After a controversial late-2010s process change that made pieces much harder, retail availability dwindled and Ferrara discontinued the item circa 2022.",
+  "notable_products": ["Maple Nut Goodies"],
+  "topics": ["discontinued", "nostalgia", "candy"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Brach%27s",
+    "wayback": "https://web.archive.org/web/*/https://www.brachs.com/",
+    "images_search": "https://www.google.com/search?q=Brach%E2%80%99s+Maple+Nut+Goodies"
+  },
+  "overview_md": "**Brach’s Maple Nut Goodies** were a long-running staple of the brand’s peg-bag line—**roasted peanuts** in a **chewy maple toffee** with a thin candy shell. Fans remember the maple aroma and soft-chewy center. In the late 2010s a manufacturing change reportedly made pieces noticeably **harder**, drawing complaints. Distribution shrank through the early 2020s, and by ~2022 Ferrara had **discontinued** the product, with no formal relaunch announced as of 2025.\n\nCollectors still trade vintage bags and look for substitutes (e.g., maple-coated peanuts), but the particular chewy-maple profile of Maple Nut Goodies hasn’t been replicated by major brands.",
+  "timeline": [
+    { "date": "1940", "text": "Maple Nut Goodies enter Brach’s assortments (mid-20th-century staple)." },
+    { "date": "2018", "text": "Manufacturing/process change leads to consumer reports of much harder pieces." },
+    { "date": "2020-2022", "text": "Widespread out-of-stock at retailers; Ferrara customer service indicates discontinuation." }
+  ],
+ "sources": [
+  {
+    "label": "Brach’s — Facebook comment confirming discontinuation (archived)",
+    "url": "http://archive.today/qY4Mf"
+  },
+  {
+    "label": "Brach’s — Facebook comment (live link)",
+    "url": "https://www.facebook.com/photo?fbid=663777242555704&set=a.595358182730944&comment_id=952748962355342&reply_comment_id=701539228542727"
+  }
+]
+
+}

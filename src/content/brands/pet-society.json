@@ -1,0 +1,56 @@
+{
+  "brand": "Pet Society",
+  "slug": "pet-society",
+  "category": "Games/Social Media",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 2008, "end": 2013 },
+  "hook": "Beloved Facebook virtual pet game with 70 million players shut down by EA in 2013",
+  "fate": "Shut down June 14, 2013 by Playfish/EA after 5 years; servers permanently closed despite being one of Facebook's most popular games with tens of millions of players",
+  "summary": "Virtual pet game on Facebook by Playfish where players adopted pets, decorated homes, played mini-games, and visited friends. Launched 2008, reached 70+ million players at peak before EA shut it down in 2013, devastating the massive player base.",
+  "notable_products": [
+    "Pet Society Facebook game",
+    "Playfish Cash (premium currency)",
+    "Virtual pet clothing and accessories",
+    "Home furniture and decorations"
+  ],
+  "topics": ["discontinued", "facebook-games", "virtual-pets", "playfish", "ea", "2000s", "2010s", "server-shutdown"],
+  "links": {
+    "ea": "https://www.ea.com/"
+  },
+"overview_md": "**Pet Society** was one of Facebook's most beloved games, a virtual pet simulation developed by Playfish that launched in 2008 and captivated over 70 million players worldwide. Players adopted adorable round pets, decorated elaborate homes, played mini-games, and visited friends' pets daily. Despite massive popularity, Electronic Arts shut down Pet Society on June 14, 2013, sparking one of the largest player outcries in Facebook gaming history.\n\nLaunched in **August 2008**, Pet Society arrived early in Facebook gaming's explosion. The game's charm was immediate—colorful graphics, adorable pets, and simple but engaging gameplay made it accessible to all ages. Players adopted customizable pets that waddled around and reacted to actions, creating instant emotional attachment.\n\nGameplay involved **caring for your pet** by keeping it clean, fed, and happy. Washing your pet was a mini-game with soap and sponge. Feeding involved buying food with coins earned through activities. Daily care created gentle pressure to return regularly, building habit and attachment.\n\n**Home decoration** was where Pet Society truly shined. Players designed elaborate houses room by room with massive furniture catalogs—beach houses, gothic mansions, modern apartments, fantasy castles. Some players created museum-quality designs that friends visited to admire. The creative freedom was limitless.\n\nThe **social features** defined the experience. Visiting friends' pets daily was essential for earning coins and maintaining friendships. Many players had daily visiting routes, checking dozens of friends' pets every morning. These rituals fostered genuine connections across the platform.\n\n**Mini-games** provided entertainment and income. Racing against friends' pets became particularly popular, with players obsessively beating records. Playfish monetized through premium currency that bought exclusive items. Many players spent hundreds of dollars on dream homes and pet outfits.\n\nPet Society reached its peak in **2009-2010** with over **70 million monthly active players**, making it one of Facebook's top games. The community was massive and engaged, transcending demographics—kids, teens, adults, and seniors all played.\n\nPlayfish's **acquisition by EA** in November 2009 for $400 million initially seemed positive. However, as Facebook gaming declined in the early 2010s, Pet Society's fate became uncertain. In **April 2013**, EA announced the shutdown for **June 14, 2013**, devastating players who had invested five years of daily care.\n\nThe **\"Save Pet Society\" movement** became one of gaming's largest protests. Change.org petitions gathered over 100,000 signatures. Facebook groups organized campaigns with tens of thousands of members. Players who had spent hundreds or thousands of dollars received no compensation. The digital items they purchased simply ceased to exist.\n\nAs shutdown approached, players held virtual farewell parties and took final screenshots. Many reported genuine grief over losing virtual pets they'd named after deceased relatives. Children cried over losing pets they'd cared for years. The emotional response highlighted how virtual experiences create real feelings.\n\nFormer players created **memorial websites** preserving Pet Society memories. Some communities still exist today, a decade later. No spiritual successor captured Pet Society's unique combination of social features, decoration depth, and charming aesthetic.\n\nToday, Pet Society is completely unplayable—no private servers, no archives, no alternatives. For the **tens of millions** who played, it represents a golden moment in social gaming when Facebook games felt magical and innocent, and daily pet care rituals created genuine community that vanished forever.",
+  "timeline": [
+    { "date": "2008-08", "text": "Pet Society launches on Facebook by Playfish; immediate popularity" },
+    { "date": "2009-11", "text": "Playfish acquired by Electronic Arts for $400 million" },
+    { "date": "2009-2010", "text": "Peak popularity: 70+ million monthly active players" },
+    { "date": "2010-2012", "text": "Regular updates add new furniture, clothing, mini-games, and seasonal events" },
+    { "date": "2012-2013", "text": "Facebook gaming declines; EA begins consolidating social game portfolio" },
+    { "date": "2013-04", "text": "EA announces Pet Society will shut down June 14, 2013" },
+    { "date": "2013-04-05", "text": "Save Pet Society protests begin; petitions gather 100,000+ signatures" },
+    { "date": "2013-06-14", "text": "Servers permanently shut down; game becomes unplayable" },
+    { "date": "2013-06", "text": "Players hold virtual funerals and farewell parties; widespread grief reported" },
+    { "date": "2013-present", "text": "Memorial communities preserve memories; no spiritual successor captures original magic" }
+  ],
+  "sources": [
+    { 
+      "label": "Electronic Arts (parent company)", 
+      "url": "https://www.ea.com/" 
+    },
+    { 
+      "label": "Facebook gaming history: Social Times, Inside Social Games archives", 
+      "url": "https://www.adweek.com/social-marketing/" 
+    },
+    { 
+      "label": "Gaming industry coverage: Gamasutra, Kotaku", 
+      "url": "https://kotaku.com/" 
+    },
+    { 
+      "label": "Player communities and Save Pet Society campaign coverage", 
+      "url": "https://www.reddit.com/r/gaming/" 
+    },
+    { 
+      "label": "Playfish game history and retrospectives", 
+      "url": "https://www.gamedeveloper.com/" 
+    }
+  ]
+}
