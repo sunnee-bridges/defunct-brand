@@ -1,10 +1,10 @@
 {
-  "brand": "MaMa Rosa's Pizza",
+  "brand": "Mama Rosa’s Pizza",
   "slug": "mama-rosas-pizza",
-  "category": "Food/Frozen Foods",
+  "category": "Food/CPG",
   "seo_category": "food-beverage",
   "country": "US",
-  "active": { "start": 1950s, "end": "Present (limited)" },
+  "active": { "start": "1950s", "end": "Present (limited)" },
   "hook": "Frozen pizza brand that dominated the 80s-90s before fading into obscurity",
   "fate": "Still produced in limited quantities but virtually disappeared from major retailers; once ubiquitous brand now nearly impossible to find",
   "summary": "Frozen pizza brand popular in the 1980s-1990s, now rarely available despite technically still being produced.",
