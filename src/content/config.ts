@@ -11,8 +11,9 @@ const isValidDate = (v: unknown) =>
 const post = defineCollection({
   type: "content",
   schema: z.object({
-    // Basics
+    // Required basics (make the "required" error explicit)
     title: z.string().min(1, "title is required"),
+    // ⬇️ was max(160). Relax it so marketing blurbs don’t fail.
     description: z.string().min(1, "description is required").max(260, "description must be ≤260 chars"),
 
     // One of these is required (enforced below)
@@ -31,7 +32,6 @@ const post = defineCollection({
         source: z.string().optional(),   // e.g., Commons page
         license: z.string().optional(),  // e.g., "CC BY 4.0"
         attribution_html: z.string().optional(),
-        fit: z.enum(["cover","contain"]).optional(), // <-- add this to support collage contain
       }),
       z.string(),
     ]).optional(),
@@ -77,13 +77,6 @@ const post = defineCollection({
   }),
 });
 
-/**
- * Existing map-style topics data (unchanged)
- * Example shape:
- * {
- *   "90s-nostalgia": { label: "...", desc: "..." }
- * }
- */
 const topics = defineCollection({
   type: "data",
   schema: z.record(z.object({
@@ -95,25 +88,4 @@ const topics = defineCollection({
   })),
 });
 
-/**
- * NEW: taxonomy collection for dynamic /category/* and /topics/* intros
- * Create files like:
- *   /src/content/taxonomy/category-consumer-products.json
- *   /src/content/taxonomy/topic-90s-nostalgia.json
- */
-const taxonomy = defineCollection({
-  type: "data",
-  schema: z.object({
-    kind: z.enum(["category","topic"]),
-    slug: z.string(),             // e.g. "consumer-products" or "90s-nostalgia"
-    title: z.string().optional(), // optional human-readable title
-    intro_md: z.string().optional(), // Markdown intro you render on the page
-    hero: z.object({
-      src: z.string(),
-      alt: z.string().optional(),
-    }).optional(),
-    lastmod: z.string().optional(), // e.g. "2025-11-10"
-  }),
-});
-
-export const collections = { post, topics, taxonomy };
+export const collections = { post, topics };

@@ -12,9 +12,6 @@ import {
   truncateInline,
 } from "../../lib/brandUtils";
 
-// Taxonomy + Markdown renderer
-import { getCollection } from "astro:content";
-
 /** Build-time: enumerate all SEO categories and precompute the items for each */
 export async function getStaticPaths() {
   const modules = import.meta.glob("/src/content/brands/*.json", {
@@ -43,53 +40,27 @@ export async function getStaticPaths() {
   }
   const brands = Array.from(bySlug.values());
 
-  // Slugs from brand data
-  const brandCatSlugs = new Set(brands.map((b) => b.__seo_category));
-
-  // Load taxonomy collection (optional)
-  const taxonomy = (await getCollection("taxonomy").catch(() => [])) as any[];
-  const byCatMeta = new Map<string, any>();
-  for (const t of taxonomy || []) {
-    const d = t?.data;
-    if (d?.kind === "category" && d?.slug) {
-      byCatMeta.set(String(d.slug).trim().toLowerCase(), d);
-    }
-  }
-  const taxCatSlugs = new Set(byCatMeta.keys());
-
-  // Union so taxonomy-only categories still get pages
-  const allSlugs = Array.from(new Set([...brandCatSlugs, ...taxCatSlugs])).sort();
+  // Unique SEO category slugs (sorted)
+  const slugs = Array.from(new Set(brands.map((b) => b.__seo_category))).sort();
 
   // Page props per category
-  return allSlugs.map((catSlug) => {
+  return slugs.map((catSlug) => {
     const items = brands
       .filter((b) => b.__seo_category === catSlug)
       .sort((a, b) => String(a.brand).localeCompare(String(b.brand)));
 
-    // Derive label from taxonomy meta → hard meta → prettified slug
-    const hardMeta = CATEGORY_META[catSlug] ?? {};
-    const taxMeta = byCatMeta.get(catSlug);
+    // Derive label from meta (fallback to prettified slug)
+    const meta = CATEGORY_META[catSlug] ?? {};
     const label =
-      taxMeta?.title ||
-      hardMeta.label ||
+      meta.label ||
       catSlug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-    return {
-      params: { category: catSlug },
-      props: {
-        label,
-        catSlug,
-        items,
-        allCats: allSlugs,
-        intro_md: taxMeta?.intro_md || "",
-        hero: taxMeta?.hero || null,
-      },
-    };
+    return { params: { category: catSlug }, props: { label, catSlug, items, allCats: slugs } };
   });
 }
 
 /** Props from getStaticPaths */
-const { label, catSlug, items, intro_md, hero } = Astro.props;
+const { label, catSlug, items } = Astro.props;
 
 /** Final render-time guard (belt & suspenders) */
 const _seen = new Set<string>();
@@ -106,13 +77,10 @@ const uniqueItems = items.filter((b: any) => {
 const categoryPath = `/category/${catSlug}/`;
 const canonical = Astro.site ? new URL(categoryPath, Astro.site).href : categoryPath;
 
-// Use taxonomy intro (plain-texted) if available; else fallback
-const introPlain = intro_md ? intro_md.replace(/[*_`>#-]/g, "").slice(0, 220) : "";
-const metaDescBase =
-  CATEGORY_META[catSlug]?.desc ??
-  (introPlain || null) ??
-  `Explore ${uniqueItems.length} defunct or discontinued brands in ${label}.`;
 const title = `Defunct Brands in ${label}`;
+const metaDesc =
+  CATEGORY_META[catSlug]?.desc ??
+  `Explore ${uniqueItems.length} defunct or discontinued brands in ${label}.`;
 
 const itemListLd = {
   "@context": "https://schema.org",
@@ -130,14 +98,11 @@ const itemListLd = {
       : `/brand/${encodeURIComponent(b.slug)}/`,
   })),
 };
-
-// Render Markdown intro safely
-const renderedIntro = intro_md ? (await Astro.renderMarkdown(intro_md)).html : "";
 ---
 
 <Base
   title={title}
-  description={metaDescBase}
+  description={metaDesc}
   canonical={canonical}
   jsonLd={[itemListLd]}
 >
@@ -203,10 +168,6 @@ const renderedIntro = intro_md ? (await Astro.renderMarkdown(intro_md)).html : "
       border:1px solid rgb(226 232 240); background:white; color:#0f172a;
     }
     .dark .badge { border-color: rgb(51 65 85); background: rgb(2 6 23); color: white; }
-
-    /* Intro */
-    .intro { margin:.4rem 0 1rem; }
-    .intro :where(p,ul,ol){ margin:.35rem 0; }
   </style>
 
   <nav class="mb-3">
@@ -218,19 +179,6 @@ const renderedIntro = intro_md ? (await Astro.renderMarkdown(intro_md)).html : "
     <h1 class="text-2xl md:text-3xl font-bold">{label} — defunct brands</h1>
     <span class="badge" aria-label={`${uniqueItems.length} brands`}>{uniqueItems.length}</span>
   </div>
-
-  <!-- Optional taxonomy intro (Markdown rendered) -->
-  {renderedIntro && (
-    <div class="intro text-slate-700 dark:text-slate-300" set:html={renderedIntro} />
-  )}
-
-  <!-- Optional hero image from taxonomy -->
-  {hero?.src && (
-    <figure class="mb-3">
-      <img src={hero.src} alt={hero.alt || ""} loading="lazy" decoding="async" />
-    </figure>
-  )}
-
   <p class="text-slate-700 dark:text-slate-300 mb-3">
     {CATEGORY_META[catSlug]?.desc ?? `Browse brands in ${label}.`}
   </p>
