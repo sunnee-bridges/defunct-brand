@@ -1,0 +1,33 @@
+{
+  "brand": "Apple Newtons",
+  "slug": "apple-newtons",
+  "category": "Food/CPG",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": "late 1980s", "end": "2010s (discontinued)" },
+  "hook": "The fruit-filled Newton cookie—spun off from Fig Newtons—with an apple-cinnamon filling.",
+  "fate": "Discontinued as the Newtons lineup was pared back; the classic apple flavor quietly vanished by the 2010s.",
+  "summary": "A Nabisco/Newtons line extension that swapped fig for apple-cinnamon filling inside the familiar soft cake cookie. Apple Newtons had devoted fans through the 1990s–2000s but were eventually retired as the brand simplified its flavors and shifted focus.",
+  "topics": ["discontinued-flavor", "snacks", "90s-nostalgia", "cookies"],
+  "notable_products": ["Apple Newtons (soft fruit-filled cookies)"],
+  "taglines": [
+    { "text": "A more fruit, less cookie kind of cookie.", "source": "Newtons brand slogan (period advertising/packaging)" }
+  ],
+  "links": {
+    "wikipedia_newtons": "https://en.wikipedia.org/wiki/Newtons_(cookie)",
+    "image_search_packaging": "https://www.google.com/search?q=Apple+Newtons+box+Nabisco",
+    "wayback_newtons_home": "https://web.archive.org/web/*/http://www.nabiscoworld.com/newtons*"
+  },
+  "overview_md": "**Apple Newtons** were a fruit-filled spin on the classic **Fig Newtons** cookie: the same soft cake exterior, but with a **spiced apple-cinnamon** filling. Sold under the **Newtons** umbrella (Nabisco/Kraft → Mondelēz), Apple joined other varieties (strawberry, raspberry, etc.) that proliferated in the **1990s–2000s** as the brand leaned into “more fruit, less cookie” positioning.\n\nAs cookie aisles consolidated and the lineup was trimmed, fringe flavors disappeared. By the **2010s**, **Apple Newtons** had effectively **vanished** from mainstream U.S. retail while core SKUs (e.g., fig, sometimes strawberry) continued. Today, Apple Newtons live on in nostalgia threads and old box photos—one of several beloved Newton flavors that didn’t survive portfolio simplification.",
+  "timeline": [
+    { "date": "late-1980s", "text": "Apple Newtons appear as a flavor extension of Fig Newtons." },
+    { "date": "1990s", "text": "National distribution alongside other fruit varieties; heavy grocery presence." },
+    { "date": "2000s", "text": "Line refreshes and packaging updates; flavor assortment changes by retailer/region." },
+    { "date": "2010s", "text": "Apple flavor phased out as Newtons reduces SKUs and focuses on core offerings." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Newtons (brand background & varieties)", "url": "https://en.wikipedia.org/wiki/Newtons_(cookie)" },
+    { "label": "Wayback — Nabisco/Newtons archived pages (assortment snapshots)", "url": "https://web.archive.org/web/*/http://www.nabiscoworld.com/newtons*" },
+    { "label": "Packaging/ads reference (visual confirmation of Apple Newtons boxes)", "url": "https://www.google.com/search?q=Apple+Newtons+box+Nabisco" }
+  ]
+}

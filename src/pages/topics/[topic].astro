@@ -1,74 +1,105 @@
 ---
 // src/pages/topics/[topic].astro
 import Base from "../../layouts/Base.astro";
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
-/* ---------- Build static paths from topics found in brand JSON ---------- */
-export function getStaticPaths() {
+/* ---------- Build static paths from topics in brands + taxonomy ---------- */
+export async function getStaticPaths() {
+  // Topics discovered from brand JSON
   const brandModules = import.meta.glob("/src/content/brands/*.json", {
     eager: true,
     import: "default",
-  });
+  }) as Record<string, any>;
 
-  const topics = new Set();
+  const fromBrands = new Set<string>();
   for (const mod of Object.values(brandModules)) {
     const list = Array.isArray(mod?.topics) ? mod.topics : [];
-    for (const t of list) topics.add(String(t).toLowerCase());
+    for (const t of list) fromBrands.add(String(t).toLowerCase());
   }
-  return [...topics].map((topic) => ({ params: { topic } }));
+
+  // Topics declared in taxonomy (kind: "topic")
+  const taxonomy = (await getCollection("taxonomy").catch(() => [])) as any[];
+  const fromTaxonomy = new Set<string>();
+  for (const t of taxonomy || []) {
+    const d = t?.data;
+    if (d?.kind === "topic" && d?.slug) {
+      fromTaxonomy.add(String(d.slug).trim().toLowerCase());
+    }
+  }
+
+  // Union → ensure we build pages for taxonomy-only topics too
+  const all = Array.from(new Set([...fromBrands, ...fromTaxonomy])).sort();
+
+  return all.map((topic) => ({ params: { topic } }));
 }
 
-/* ---------- Runtime: separate glob for render time ---------- */
+/* ---------- Runtime brand load ---------- */
 const brandModulesRuntime = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
-});
+}) as Record<string, any>;
 
 /* ---------- Helpers ---------- */
-function prettyLabel(slug) {
-  return String(slug)
+const prettyLabel = (slug: string) =>
+  String(slug)
     .split("-")
     .map((s) => (s ? s[0].toUpperCase() + s.slice(1) : s))
     .join(" ");
-}
 
-/* ---------- Params & topic meta ---------- */
+/* ---------- Params & taxonomy meta ---------- */
 const { topic } = Astro.params;
-const slug = String(topic).toLowerCase();
+const slug = String(topic || "").toLowerCase();
 
-// Try to load centralized meta from content/topics/topics.json (if present)
-let TOPIC_META = {};
-try {
-  const topicsEntry = await getEntry("topics", "topics");
-  TOPIC_META = (topicsEntry?.data ?? {});
-} catch {
-  // no topics collection; fine to continue
+// Load taxonomy (optional)
+const taxonomy = (await getCollection("taxonomy").catch(() => [])) as any[];
+const byTopicMeta = new Map<string, any>();
+for (const t of taxonomy || []) {
+  const d = t?.data;
+  if (d?.kind === "topic" && d?.slug) {
+    byTopicMeta.set(String(d.slug).trim().toLowerCase(), d);
+  }
 }
+const metaRaw = byTopicMeta.get(slug) || {};
+const label = metaRaw.title ?? prettyLabel(slug);
+const intro_md: string = metaRaw.intro_md || "";
+const hero = metaRaw.hero || null;
+const faq: Array<{ q: string; a: string }> = Array.isArray(metaRaw.faq) ? metaRaw.faq : [];
 
-const meta = TOPIC_META[slug] ?? {
-  label: prettyLabel(slug),
-  desc: "Browse related discontinued brands collected under this topic.",
-};
+// Safe markdown intro render
+const renderedIntro = intro_md ? (await Astro.renderMarkdown(intro_md)).html : "";
 
 /* ---------- Collect brands tagged with this topic ---------- */
+const seen = new Set<string>();
 const items = Object.values(brandModulesRuntime)
   .filter(
-    (b) =>
+    (b: any) =>
       Array.isArray(b?.topics) &&
-      b.topics.map((x) => String(x).toLowerCase()).includes(slug)
+      b.topics.map((x: any) => String(x).toLowerCase()).includes(slug)
   )
-  .map((b) => ({
+  .map((b: any) => ({
     name: b.brand,
     slug: b.slug,
     category: b.category ?? null,
   }))
+  .filter((b) => {
+    const k = String(b.slug || "").toLowerCase();
+    if (!k || seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  })
   .sort((a, b) => a.name.localeCompare(b.name));
 
 /* ---------- SEO / Canonical & JSON-LD ---------- */
 const hubPath = `/topics/${encodeURIComponent(slug)}/`;
-const title = `${meta.label} • Topic Hub`;
-const desc = meta.desc;
 const canonical = Astro.site ? new URL(hubPath, Astro.site).href : hubPath;
+
+// Description: prefer taxonomy intro (plain-texted) → fallback default
+const introPlain = intro_md ? intro_md.replace(/[*_`>#-]/g, "").slice(0, 220) : "";
+const desc =
+  introPlain ||
+  "Browse related discontinued brands collected under this topic.";
+
+const title = `${label} • Topic Hub`;
 
 const ldItems = items.map((b, i) => ({
   "@type": "ListItem",
@@ -102,15 +133,39 @@ const breadcrumbsLd = {
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
     { "@type": "ListItem", position: 2, name: "Topics", item: Astro.site ? new URL("/topics/", Astro.site).href : "/topics/" },
-    { "@type": "ListItem", position: 3, name: meta.label, item: canonical },
+    { "@type": "ListItem", position: 3, name: label, item: canonical },
   ],
 };
+
+// Optional FAQPage LD if taxonomy provides FAQ
+const faqLd = faq.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map((f: any) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    }
+  : null;
+
+// If empty topic, gently noindex (avoid thin-content indexation)
+const shouldNoIndex = items.length === 0;
 ---
 
-<Base title={title} description={desc} canonical={canonical} jsonLd={[collectionPageLd, breadcrumbsLd, itemListLd]}>
+<Base
+  title={title}
+  description={desc}
+  canonical={canonical}
+  jsonLd={[collectionPageLd, breadcrumbsLd, itemListLd, ...(faqLd ? [faqLd] : [])]}
+>
   <Fragment slot="head">
-    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href={canonical} />
+    <meta
+      name="robots"
+      content={shouldNoIndex ? "noindex,follow" : "max-snippet:-1, max-image-preview:large, max-video-preview:-1"}
+    />
   </Fragment>
 
   {/* Breadcrumbs */}
@@ -121,21 +176,19 @@ const breadcrumbsLd = {
   </nav>
 
   {/* Header */}
-  <h1 class="text-2xl md:text-3xl font-bold mb-1">{meta.label} • Topic Hub</h1>
+  <h1 class="text-2xl md:text-3xl font-bold mb-1">{label} • Topic Hub</h1>
   <p class="text-slate-600 dark:text-slate-300 mb-4">{desc}</p>
 
-  {/* Optional hero */}
-  {meta.heroImage && (
+  {/* Optional hero from taxonomy */}
+  {hero?.src && (
     <div class="mb-5 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-      <img src={meta.heroImage} alt={`${meta.label} hero`} class="w-full h-auto block" loading="lazy" />
+      <img src={hero.src} alt={hero.alt || `${label} hero`} class="w-full h-auto block" loading="lazy" decoding="async" />
     </div>
   )}
 
-  {/* Optional richer intro */}
-  {meta.descLong && (
-    <div class="prose dark:prose-invert max-w-none mb-6">
-      <p>{meta.descLong}</p>
-    </div>
+  {/* Optional intro markdown from taxonomy */}
+  {renderedIntro && (
+    <div class="prose dark:prose-invert max-w-none mb-6" set:html={renderedIntro} />
   )}
 
   {/* Results summary */}
@@ -172,4 +225,19 @@ const breadcrumbsLd = {
     <a href="/category/" class="chip focus-ring">Categories</a>
     <a href="/decade/" class="chip focus-ring">Decades</a>
   </div>
+
+  {/* Optional on-page FAQ render */}
+  {faq.length > 0 && (
+    <section class="mt-8">
+      <h2 class="text-xl font-semibold mb-2">FAQ</h2>
+      <div class="space-y-3">
+        {faq.map((f) => (
+          <details class="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
+            <summary class="font-medium cursor-pointer">{f.q}</summary>
+            <div class="mt-2 text-slate-700 dark:text-slate-300">{f.a}</div>
+          </details>
+        ))}
+      </div>
+    </section>
+  )}
 </Base>

@@ -1,0 +1,11 @@
+{
+  "kind": "topic",
+  "slug": "reformulated",
+  "title": "Reformulated",
+  "intro_md": "Brands and products that **changed their formulas**—new recipes, sweeteners, or ingredients that altered taste, nutrition, or performance. This hub tracks when and why reformulations happened (cost, regulations, supply, nutrition targets), how fans reacted, and whether the change stuck.\n\n**Typical reasons:** sugar reductions and sweetener swaps, removal of artificial colors/flavors, supply chain substitutions, cost engineering (\"shrinkflation\" in recipes), allergen or labeling rules, and regional compliance.\n\n**Browse examples:** Snapple classics with modern sweeteners, candy lines that dropped artificial dyes, sodas that moved from HFCS to cane sugar (or vice-versa), and snacks simplified for *clean label* goals.",
+  "hero": {
+    "src": "/images/topics/reformulated.webp",
+    "alt": "Before-and-after packaging representing a product formula change"
+  },
+  "lastmod": "2025-11-10"
+}

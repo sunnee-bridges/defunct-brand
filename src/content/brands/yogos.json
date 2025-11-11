@@ -1,0 +1,32 @@
+{
+  "brand": "Yogos",
+  "slug": "yogos",
+  "category": "Food/CPG",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 2005, "end": 2010 },
+  "hook": "Kellogg’s yogurt-covered fruit snacks kids begged for in the mid-2000s.",
+  "fate": "Discontinued in the U.S. around 2010 after a short but intense run; no formal relaunch.",
+  "summary": "Kellogg’s **Yogos** were bite-size fruit snacks with a chewy fruit center and a tangy yogurt-style coating, sold in pouches and marketed to kids. Launched in the mid-2000s, they spun off mini **Yogos Bits** before fading from shelves by ~2010.",
+  "notable_products": [
+    "Yogos (original pouches)",
+    "Yogos Bits (mini format)"
+  ],
+  "topics": ["vanished-product","discontinued", "kids-snack", "2000s", "fruit-snack"],
+  "links": {
+    "label": "Change.org – Bring back Yogos Bits (fan petition)", "url": "https://www.change.org/p/kellogg-make-kellogg-bring-back-yogos-bits" ,
+    "ads_tv_spots": "https://www.youtube.com/results?search_query=Kellogg%27s+Yogos+commercial",
+    "wikipedia_kellogg": "https://en.wikipedia.org/wiki/Kellanova"
+  },
+  "overview_md": "**Yogos** were Kellogg’s mid-2000s attempt to mash up fruit snacks with a sweet-tart yogurt-style shell. Sold in single-serve pouches, the candies were positioned as a fun, slightly tangy alternative to standard gummy fruit snacks and were heavily advertised on kids’ TV.\n\nThe line briefly expanded into **Yogos Bits** (smaller spheres in a multi-piece format) and rotated flavors/pack designs typical of the category. Despite strong awareness, Yogos had a relatively short lifecycle: by **~2010**, the brand had largely disappeared from major U.S. retailers. Fans still surface on social media asking for a comeback, but there’s been no official relaunch.\n\nYogos fit a common 2000s snack arc: fast trial from catchy ads and novelty texture, then fade as portfolios were streamlined and parents shifted toward snacks with simpler labels or perceived nutrition benefits.",
+  "timeline": [
+    { "date": "2005", "text": "Yogos launch in the U.S. with TV ads targeting kids." },
+    { "date": "2007", "text": "Spin-off **Yogos Bits** mini format rolls out." },
+    { "date": "2010", "text": "Brand disappears from most U.S. retailers; effectively discontinued." }
+  ],
+  "sources": [
+     { "label": "Change.org – Bring back Yogos Bits (fan petition)", "url": "https://www.change.org/p/kellogg-make-kellogg-bring-back-yogos-bits" },
+    { "label": "TV ad archives (commercials/packaging era cues)", "url": "https://www.youtube.com/results?search_query=Kellogg%27s+Yogos+commercial" },
+    { "label": "Corporate background (Kellogg’s/Kellanova)", "url": "https://en.wikipedia.org/wiki/Kellanova" }
+  ]
+}

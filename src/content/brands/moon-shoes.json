@@ -1,0 +1,33 @@
+{
+  "brand": "Moon Shoes",
+  "slug": "moon-shoes",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 1992, "end": 2000 },
+  "hook": "“Mini-trampolines for your feet” hyped on 90s kids’ TV",
+  "fate": "Faded from shelves by the early 2000s; occasional limited reissues/nostalgia runs appear, but not a steady national presence.",
+  "summary": "Strap-on bounce platforms marketed as ‘mini-trampolines for your feet,’ Moon Shoes were a 1990s staple in kids’ infomercials and Nickelodeon ad breaks. Players stood in hard plastic frames with heavy elastic bands to get a springy, moon-walk feel. Fun and iconic—but bulky, noisy, and prone to ankle tweaks—so the craze waned as the decade ended.",
+  "notable_products": [
+    "Moon Shoes (classic 90s edition)",
+    "Nickelodeon-branded Moon Shoes"
+  ],
+  "topics": ["90s-nostalgia", "toys-games", "fad-toy", "discontinued"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Moon_Shoes",
+    "nick_commercials_search": "https://www.youtube.com/results?search_query=Nickelodeon+Moon+Shoes+commercial",
+    "catalog_ad_ephemera": "https://www.google.com/search?q=%22Moon+Shoes%22+toy+catalog+1990s"
+  },
+  "overview_md": "**Moon Shoes**—often billed as *“mini-trampolines for your feet”*—let kids strap into rigid plastic platforms laced with thick elastic bands to add a spring to each step. The look (chunky frames and bright colors) and the promise (a ‘moon-walk’ bounce) fit perfectly into **1990s** kids’ TV culture, with heavy rotation during Nickelodeon blocks and weekend cartoon hours.\n\nThey delivered momentary thrills but weren’t exactly graceful: the bounce was choppy, they were loud on sidewalks, and rolled ankles weren’t uncommon if you landed off-center. As the fad cooled and safety-minded toys rose, **shelf space shrank**. By the early **2000s** they’d mostly disappeared, resurfacing now and then in nostalgia-themed reissues or limited regional runs.\n\nToday, Moon Shoes live on in memory (and in old commercials on YouTube) as a snapshot of 90s toy marketing—big promises, bright plastic, and a catchy pitch you could hear between episodes of your favorite Nick shows.",
+  "timeline": [
+    { "date": "1992", "text": "Moon Shoes arrive at U.S. mass retail; positioned as 'mini-trampolines for your feet'." },
+    { "date": "1994-1998", "text": "Advertising peaks alongside Nickelodeon and weekend cartoon blocks; becomes a recognizable 90s fad toy." },
+    { "date": "1999-2001", "text": "Sales cool; line loses wide distribution as retailers reset toward core sellers." },
+    { "date": "2010s", "text": "Periodic nostalgia-driven reissues/limited runs appear; no consistent national program." }
+  ],
+  "sources": [
+    { "label": "Wikipedia – Moon Shoes (overview)", "url": "https://en.wikipedia.org/wiki/Moon_Shoes" },
+    { "label": "Vintage TV ads (context & positioning)", "url": "https://www.youtube.com/results?search_query=Nickelodeon+Moon+Shoes+commercial" },
+    { "label": "Retail ephemera & catalogs (90s placement)", "url": "https://www.google.com/search?q=%22Moon+Shoes%22+toy+catalog+1990s" }
+  ]
+}

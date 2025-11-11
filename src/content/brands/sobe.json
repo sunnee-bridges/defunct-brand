@@ -1,0 +1,35 @@
+{
+  "brand": "SoBe (South Beach Beverage Co.)",
+  "slug": "sobe",
+  "category": "Beverages/Soft Drinks",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 1995, "end": "Present (limited U.S. availability)" },
+  "hook": "Lizard-branded teas, juices, and elixirs that owned late-90s coolers, later fading under PepsiCo.",
+  "fate": "Acquired by PepsiCo in 2000; many SKUs discontinued over the 2010s–2020s. Brand persists with limited flavors/availability.",
+  "summary": "Launched in the mid-1990s, SoBe rode herbal/functional trends with teas, juice blends, ‘Elixir’ bottles, and Y2K-era iconography (the lizard). PepsiCo bought the company in 2000; over time the lineup was pared back in the U.S. While numerous flavors quietly disappeared, SoBe hasn’t been formally retired—select products still appear via PepsiCo’s locator and regional distribution.",
+  "notable_products": [
+    "SoBe Elixir (juice blends)",
+    "SoBe Green Tea / Black Tea",
+    "SoBe Lifewater (enhanced water line)",
+    "SoBe Adrenaline Rush (energy – early 2000s)",
+    "Mr. Green (guarana soda, short-lived)"
+  ],
+  "topics": ["90s-nostalgia", "beverages", "discontinued-flavors", "energy-drinks", "tea"],
+  "links": {
+    "label": "Wikipedia – SoBe (South Beach Beverage Company) overview", "url": "https://en.wikipedia.org/wiki/SoBe",
+    "wikipedia_overview": "https://en.wikipedia.org/wiki/John_Bello"}
+  },
+  "overview_md": "**SoBe** (short for South Beach Beverage Company) helped define late-1990s cooler culture with herbal teas, juice blends, and flashy ‘Elixir’ bottles capped by a lizard logo. Founded in **1995**, the brand leaned into ginseng, guarana, and New Age flavor names just as functional beverages were breaking into the mainstream.\n\n**Identity & design.** SoBe’s instantly recognizable **dueling lizards**—two mirrored, gecko-like figures in a yin-yang posture—served as a bold shelf signal on bottles, caps, and case trays. The high-contrast lizard mark, oversized type, and saturated label colors made SoBe pop in crowded coolers and on endcaps.\n\n**Guerrilla buzz.** Early growth leaned on **guerrilla marketing** more than big TV buys: college-rep sampling, street teams at action-sports and music events, sticker packs, and convenience-store cooler takeovers. The result was word-of-mouth heat and strong presence where teens and twenty-somethings shopped.\n\nPepsiCo **acquired SoBe in 2000**, bringing national muscle—but as the 2010s progressed, category shifts and portfolio pruning cut many SKUs. Lines like **Lifewater**, specialty teas, and niche flavors were gradually trimmed, and distribution waned.\n\nDespite frequent “Is SoBe discontinued?” chatter, PepsiCo still lists SoBe and offers a **product locator**, signaling the brand isn’t officially dead—just **limited**. For most U.S. shoppers, SoBe now lives in nostalgia (and the occasional regional sighting), emblematic of the 90s/00s wave of functional drinks that later consolidated under bigger, simpler lineups.",
+  "timeline": [
+    { "date": "1995-01", "text": "South Beach Beverage Company (SoBe) founded; early herbal teas and elixirs roll out." },
+    { "date": "1999-01", "text": "National profile surges with lizard branding and functional ingredients." },
+    { "date": "2000-10", "text": "PepsiCo announces acquisition of SoBe (~$370M), expanding distribution." },
+    { "date": "2007-2012", "text": "Lifewater and assorted extensions see rotation; several flavors phased out." },
+    { "date": "2015-2024", "text": "U.S. availability recedes; many SKUs discontinued, but brand remains listed with locator support." }
+  ],
+  "sources": [
+    { "label": "Wikipedia – SoBe (South Beach Beverage Company) overview", "url": "https://en.wikipedia.org/wiki/SoBe"},
+    {"label": "Background on founder John S. Bello (Wikipedia)", "url": "https://en.wikipedia.org/wiki/John_Bello" }
+  ]
+}
