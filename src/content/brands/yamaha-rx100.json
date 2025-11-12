@@ -1,0 +1,31 @@
+{
+  "brand": "Yamaha RX100",
+  "slug": "yamaha-rx100",
+  "category": "Motorcycles/Automotive",
+  "seo_category": "automotive",
+  "country": "IN",
+  "active": { "start": 1985, "end": 1996 },
+  "hook": "Featherweight 2-stroke that punched far above 100cc—and became a cult icon in India.",
+  "fate": "Indian production ended in 1996 as emissions rules tightened and the market moved to cleaner 4-stroke engines.",
+  "summary": "The **Yamaha RX100** was a nimble, air-cooled 98cc two-stroke sold in India from the mid-1980s to 1996 (via Escorts Yamaha). Loved less for its looks than for the sheer fun per kilogram, it delivered quick throttle response, a lively exhaust note, and surprising real-world pace. Period tests and enthusiast reports often cite ~14–15 seconds for a standing quarter mile—remarkable for a 100cc commuter of its era. Though discontinued in 1996, the RX100’s light weight, punchy mid-range, and simplicity turned it into a long-lived enthusiast favorite.",
+  "notable_products": ["RX100 (98cc, 2-stroke)"],
+  "topics": ["discontinued", "motorcycles", "two-stroke", "india", "nostalgia"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Yamaha_RX_100",
+    "specs_overview": "https://www.bikewale.com/yamaha-bikes/rx100/",
+    "retro_review_search": "https://www.google.com/search?q=Yamaha+RX100+retrospective+India",
+    "period_ads_search": "https://www.google.com/search?q=Yamaha+RX100+vintage+advertisement"
+  },
+  "overview_md": "Launched in India in the **mid-1980s** through **Escorts Yamaha**, the **RX100** distilled motorcycling to the essentials: a responsive **98cc two-stroke**, a slick 4-speed box, and a kerb weight light enough to make every ride feel eager. Owners prized the bike’s crisp throttle, tractable low-end pull, and the way it hustled through traffic. \n\nOn paper it was modest, but in practice it felt quick—contemporary road tests and rider lore frequently cite **~14–15s quarter-mile runs**, a figure that speaks more to the RX100’s excellent **power-to-weight** than outright horsepower. Maintenance was straightforward, parts were plentiful, and the exhaust note became part of its identity. \n\nBy the **mid-1990s**, tighter **emission norms** and a market pivot toward **4-stroke** efficiency ended RX100 production (**1996**). Successors like the RXG/RX135 tried to carry the torch, but the original’s recipe—light, lively, and simple—cemented the RX100’s status as a cultural touchstone. Today it survives in restorations, classifieds, and weekend rides, celebrated as the bike that proved ‘fun’ isn’t about engine size.",
+  "timeline": [
+    { "date": "1985-01", "text": "RX100 goes on sale in India via Escorts Yamaha; quickly gains a reputation for performance per rupee." },
+    { "date": "1990-01", "text": "Builds a devoted following among commuters and enthusiasts; parts and service networks deepen." },
+    { "date": "1996-12", "text": "Indian production ends amid tightening emissions and a shift to 4-stroke models." },
+    { "date": "2000-01", "text": "Used RX100 prices firm up as the model gains ‘modern classic’ status; restoration scene grows." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Yamaha RX-100", "url": "https://en.wikipedia.org/wiki/Yamaha_RX_100" },
+    { "label": "BikeWale — RX100 specs & overview", "url": "https://www.bikewale.com/yamaha-bikes/rx100/" },
+    { "label": "Autocar India — RX100 retrospective (search)", "url": "https://www.google.com/search?q=Autocar+India+Yamaha+RX100+retrospective" }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "brand": "Zandar (G.I. Joe action figure)",
+  "slug": "zandar-gi-joe",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 1986, "end": "1990s (feature retired)" },
+  "hook": "Cobra Dreadnok whose figure turned bluish in sunlight.",
+  "fate": "The 1980s UV color-change gimmick was dropped in later releases; the character continues in modern lines without the sunlight effect.",
+  "summary": "Introduced in **1986** for *G.I. Joe: A Real American Hero*, **Zandar** (Zartan’s brother, a Dreadnok) used UV-reactive plastic so exposed ‘skin’ shifted to a **bluish tone in sunlight**. Packed with disguise-themed gear, he complemented Zartan and Zarana in the color-change trio. Later Zandar figures usually kept the character but **omitted** the UV gimmick.",
+  "notable_products": [
+    "Zandar v1 (1986) — UV color-change ‘skin’ in sunlight",
+    "Related: Zarana (1986) and Zartan (1984) with color-change features",
+    "Subsequent Zandar releases without UV feature"
+  ],
+  "topics": ["toys", "80s-90s", "color-change", "g.i.-joe", "nostalgia", "discontinued-feature"],
+  "links": {
+    "wikipedia_zandar": "https://en.wikipedia.org/wiki/Zandar",
+    "yojoe_zandar_v1": "https://www.yojoe.com/action/86/zandar.shtml",
+    "commercials_search": "https://www.youtube.com/results?search_query=Zandar+G.I.+Joe+commercial+1986",
+    "hasbro_overview": "https://en.wikipedia.org/wiki/Hasbro"
+  },
+  "overview_md": "**Zandar** joined the 3.75\" *G.I. Joe* roster in **1986** as a **Dreadnok** and brother to Zartan. Like his siblings, the original figure employed **UV-reactive plastic** so that in **sunlight** his exposed ‘skin’ **turned bluish**, selling the ‘chameleon/disguise’ fantasy on the playground. He arrived with covert-ops style accessories (bandanna/scarf, backpack, weapons) and a grim camo color palette that tied him to the swamp-raider aesthetic.\n\nAcross the late 80s and 90s, Hasbro refreshed the character and team, but the **sunlight color-change** was **phased out** as materials and play features evolved. Modern Zandar figures emphasize sculpt, articulation, and gear rather than photochromic tricks, leaving the **1986 version** iconic for its UV effect alongside **Zartan** and **Zarana**.",
+  "timeline": [
+    { "date": "1986", "text": "Zandar v1 debuts; UV-reactive ‘skin’ shifts bluish in sunlight." },
+    { "date": "late 1980s", "text": "Dreadnok lineup expands; color-change trio (Zartan/Zarana/Zandar) becomes a playground favorite." },
+    { "date": "1990s", "text": "UV/photochromic features largely retired from new releases." },
+    { "date": "2000s–present", "text": "Character reappears in reissues/new scales, typically without UV color-change." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Zandar (character & toy background)", "url": "https://en.wikipedia.org/wiki/Zandar" },
+    { "label": "YoJoe.com — Zandar (v1, 1986) archive (parts, notes)", "url": "https://www.yojoe.com/action/86/zandar.shtml" },
+    { "label": "Vintage TV spots / archival clips (search)", "url": "https://www.youtube.com/results?search_query=Zandar+G.I.+Joe+commercial+1986" }
+  ]
+}

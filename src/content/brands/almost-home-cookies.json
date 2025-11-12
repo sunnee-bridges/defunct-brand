@@ -1,0 +1,29 @@
+{
+  "brand": "Almost Home Cookies (Nabisco)",
+  "slug": "almost-home-cookies",
+  "category": "Food/Snacks",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": "early 1980s", "end": "mid-1990s" },
+  "hook": "Nabisco’s soft, “homemade-style” cookie line remembered for bakery-like flavors.",
+  "fate": "Discontinued as Nabisco consolidated cookie lines in the 1990s; favorites migrated to or were replaced by other brands (e.g., Chips Ahoy! extensions).",
+  "summary": "Nabisco’s **Almost Home** was positioned as soft, bakery-style cookies—chocolate chip, oatmeal raisin, peanut butter and seasonal varieties—aimed at delivering a ‘fresh from the oven’ vibe without baking. The line built a steady following in the **1980s–1990s**, then faded as the company trimmed slower-moving SKUs and focused on bigger umbrellas like **Chips Ahoy!** and **SnackWell’s**. Today it survives mostly in nostalgia posts, vintage ads, and collectors’ packaging photos.",
+  "topics": ["discontinued", "nostalgia", "cookies", "80s-90s"],
+  "links": {
+    "wikipedia_nabisco": "https://en.wikipedia.org/wiki/Nabisco",
+    "youtube_ad_search": "https://www.youtube.com/results?search_query=Nabisco+%22Almost+Home%22+cookies+commercial",
+    "newspapers_ad_search": "https://www.google.com/search?q=%22Almost+Home%22+cookies+Nabisco+ad"
+  },
+  "overview_md": "Nabisco’s **Almost Home** line brought the ‘soft batch’ trend to supermarket aisles in the **1980s**, framing itself as a *homemade-style* cookie you didn’t have to bake. Packages commonly featured chocolate chip, **oatmeal raisin**, **peanut butter**, and other comfort flavors with a softer, chewier texture than classic crisp cookies.\n\nAs the **1990s** progressed, Nabisco pursued portfolio shake-ups (diet-leaning **SnackWell’s**, new **Chips Ahoy!** variants, and broader line rationalization). **Almost Home** gradually disappeared from major chains and then from planograms entirely. While there was no splashy recall or single shutdown date, retail presence dwindled and the line was ultimately **discontinued**.\n\nThe brand lives on in **vintage circulars and TV spots** that surface online, plus packaging photos shared by collectors. For many Gen X shoppers, Almost Home evokes after-school snacks, lunchbox trades, and that specific ‘soft cookie in a box’ texture that’s hard to find today.",
+  "timeline": [
+    { "date": "early 1980s", "text": "Nabisco introduces Almost Home as a soft, homemade-style cookie line." },
+    { "date": "late 1980s", "text": "Line expands across grocery chains; ads highlight chewy texture and classic flavors." },
+    { "date": "1990s", "text": "Portfolio shifts (SnackWell’s, Chips Ahoy! extensions) crowd shelf space; slow fade begins." },
+    { "date": "mid-1990s", "text": "Brand effectively discontinued in the U.S. amid SKU rationalization." }
+  ],
+  "sources": [
+    { "label": "Nabisco overview (brand owner context)", "url": "https://en.wikipedia.org/wiki/Nabisco" },
+    { "label": "Vintage commercials (search results often surface period TV spots)", "url": "https://www.youtube.com/results?search_query=Nabisco+%22Almost+Home%22+cookies+commercial" },
+    { "label": "Contemporary ads/mentions (newspaper & catalog scans; query)", "url": "https://www.google.com/search?q=%22Almost+Home%22+cookies+Nabisco+ad" }
+  ]
+}

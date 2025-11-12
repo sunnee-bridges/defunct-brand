@@ -1,0 +1,32 @@
+{
+  "brand": "Orko (He-Man & Masters of the Universe)",
+  "slug": "orko-motu",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 1983, "end": "present" },
+  "hook": "The floating Trollan magician who turned mishaps into heart for He-Man’s crew.",
+  "fate": "Enduring franchise character; appears across cartoons, comics, and multiple toy lines since the 1980s.",
+ "summary": "**Orko** is the franchise’s primary magician—an earnest, floating **Trollan** from another dimension—introduced in Filmation’s 1983 cartoon and quickly merchandised by Mattel. The vintage 1980s action figure used a rip-cord mechanism that made him **spin in circles** to mimic floating. Comic relief on TV and a fan-favorite in the toy aisle, Orko has reappeared in later reboots (2002, 2021+) and modern collector lines.",
+  "notable_products": [
+    "Mattel vintage Orko (1980s) with rip-cord spinning base",
+    "Masters of the Universe Classics (collector line)",
+    "Masters of the Universe Origins / Masterverse modern figures"
+  ],
+  "topics": ["action-figures", "80s-90s", "cartoons", "nostalgia", "fantasy"],
+  "links": {
+    "wikipedia_orko": "https://en.wikipedia.org/wiki/Orko_(character)",
+    "wikipedia_motu": "https://en.wikipedia.org/wiki/Masters_of_the_Universe"
+  },
+  "overview_md": "**Orko** debuted in the 1983 *He-Man and the Masters of the Universe* cartoon as a well-meaning but accident-prone **magician from Trolla**. On screen he added humor and heart, often botching spells but offering moral support and the show’s trademark PSA moments. Mattel turned Orko into a distinctive figure with a **rip-cord spinning base** instead of standard legs, leaning into his floating design. \n\nAcross reboots, Orko’s look and tone evolved—from Filmation’s slapstick sidekick to more capable (and sometimes heroic) versions in the 2002 series and modern Netflix iterations. Collectors continue to get updated sculpts in **Classics**, **Origins**, and **Masterverse** lines, cementing Orko as a core Masters character alongside He-Man, Skeletor, Teela, and Man-At-Arms.",
+  "timeline": [
+    { "date": "1983", "text": "Animated debut in Filmation’s *He-Man and the Masters of the Universe*; Mattel issues first Orko figure with spinning base." },
+    { "date": "2002", "text": "Returns in the 2002 reboot with refined backstory and more capable magic." },
+    { "date": "2010s", "text": "Collector-focused **MOTU Classics** line includes updated Orko releases." },
+    { "date": "2021", "text": "Appears in Netflix era (*Revelation* and related lines); modern figures arrive in **Origins** and **Masterverse**." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Orko (character)", "url": "https://en.wikipedia.org/wiki/Orko_(character)" },
+    { "label": "Wikipedia — Masters of the Universe (franchise background)", "url": "https://en.wikipedia.org/wiki/Masters_of_the_Universe" }
+  ]
+}

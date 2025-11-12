@@ -1,0 +1,32 @@
+{
+  "brand": "Seven Up (Candy Bar)",
+  "slug": "seven-up-candy-bar",
+  "category": "Food/CPG",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 1930, "end": 1979 },
+  "hook": "Pearson’s segmented chocolate bar with seven different fillings in one.",
+  "fate": "Discontinued in 1979; no official relaunch since.",
+  "summary": "Pearson’s **Seven Up** was a segmented milk-chocolate bar introduced in the 1930s. The bar was molded into seven small chambers, each holding a different filling. Lineups varied over time, but fan-favorite centers often included coconut, butterscotch caramel, buttercream, fudge, Brazil nut, cherry cream, and orange jelly. Production ended in 1979, though the bar still inspires intense nostalgia among candy collectors.",
+  "notable_products": [
+    "Seven Up (7-chamber bar)"
+  ],
+  "topics": ["discontinued", "nostalgia", "chocolate", "1930s-brands"],
+  "links": {
+    "company_wikipedia": "https://en.wikipedia.org/wiki/Pearson%27s_Candy_Company",
+    "image_search": "https://www.google.com/search?q=%22Seven+Up%22+candy+bar+Pearson%27s+wrapper+ad",
+    "youtube_search": "https://www.youtube.com/results?search_query=%22Seven+Up%22+candy+bar+commercial",
+    "archival_catalogs_search": "https://archive.org/search?query=%22Seven+Up%22+candy+bar"
+  },
+  "overview_md": "The **Seven Up** candy bar came from Pearson’s Candy Company during the **1930s** and stood out for a clever format: **seven bite-size sections** under one milk-chocolate shell, each with a different filling. The exact mix changed across decades and regions, but longtime fans remember combinations like **coconut**, **butterscotch caramel**, **buttercream**, **fudge**, **Brazil nut**, **cherry cream**, and **orange jelly**.\n\nThat ‘sampler in a single bar’ idea gave Seven Up a small cult following—shoppers who liked variety and the surprise of not knowing which flavor you’d hit next. By the late 1970s, shifting costs, changing tastes, and a crowded confectionery aisle caught up with it. Pearson’s **ended production in 1979**, and the bar never returned to national shelves. Today it lives on in **candy-history blogs, wrapper archives, and collector forums**, where it’s often cited as one of the most-missed novelty bars of the mid-20th century.",
+  "timeline": [
+    { "date": "1930-01", "text": "Pearson’s introduces Seven Up, a chocolate bar divided into seven filled sections." },
+    { "date": "1940s-1960s", "text": "Fillings rotate over time; core favorites develop among regional buyers." },
+    { "date": "1979-01", "text": "Seven Up candy bar is discontinued by Pearson’s." }
+  ],
+  "sources": [
+    { "label": "Wikipedia – Pearson’s Candy Company (Seven Up Bar section)", "url": "https://en.wikipedia.org/wiki/Pearson%27s_Candy_Company" },
+    { "label": "Bon Appétit – Discontinued candy bars with cult followings", "url": "https://www.bonappetit.com/entertaining-style/holidays/article/discontinued-candy-bars" },
+    { "label": "The Takeout – Vintage snacks (1930s) mentioning Seven Up", "url": "https://www.thetakeout.com/1999280/vintage-snacks-people-loved-1930s/" }
+  ]
+}

@@ -13,6 +13,15 @@ image:
   license: "CC BY 4.0"
 ---
 
+import ArticleHero from '@components/ArticleHero.astro';
+
+<ArticleHero
+  title={frontmatter.title}
+  description={frontmatter.description}
+  date={frontmatter.updated ?? frontmatter.date}
+  image={frontmatter.image}
+/>
+
 "What Really Happened to Toys R Us? The Billions in Debt That Killed Childhood"
 The Mystery Hook:
 

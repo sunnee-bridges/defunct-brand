@@ -1,0 +1,35 @@
+{
+  "brand": "Zartan (G.I. Joe action figure)",
+  "slug": "zartan-gi-joe",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 1984, "end": "1990s (feature retired)" },
+  "hook": "Cobra master of disguise whose skin turned bluish in sunlight.",
+  "fate": "The original 1980s figure’s UV color-change gimmick was phased out in later releases; the character continues in modern G.I. Joe lines without the sunlight effect.",
+  "summary": "Hasbro’s **Zartan** debuted in **1984** for *G.I. Joe: A Real American Hero* with a signature gimmick: his exposed ‘skin’ plastic shifted to a **bluish** tone in **sunlight (UV exposure)**. Packed with a removable mask and the **Chameleon Swamp Skier**, Zartan quickly became a fan-favorite. Later versions kept the character but generally dropped the UV color-change feature due to material and durability tradeoffs.",
+  "notable_products": [
+    "Zartan v1 (1984) with Chameleon Swamp Skier and mask",
+    "Zarana & Zandar (related characters with color-change gimmicks in some releases)",
+    "Subsequent Zartan figures (various reissues without UV feature)"
+  ],
+  "topics": ["toys", "80s-90s", "color-change", "g.i.-joe", "nostalgia", "discontinued-feature"],
+  "links": {
+    "wikipedia_zartan": "https://en.wikipedia.org/wiki/Zartan",
+    "yojoe_zartan_v1": "https://www.yojoe.com/action/84/zartan.shtml",
+    "commercials_search": "https://www.youtube.com/results?search_query=Zartan+G.I.+Joe+commercial+1984",
+    "hasbro_brand_overview": "https://en.wikipedia.org/wiki/Hasbro"
+  },
+  "overview_md": "**Zartan** entered the 3.75-inch *G.I. Joe* line in **1984** as Cobra’s chameleon-like infiltrator. The v1 figure used UV-reactive plastic so that, in **sunlight**, his ‘skin’ **shifted to a bluish color**—a standout 80s gimmick that kids could demo instantly on the playground. He shipped as a deluxe figure with the **Chameleon Swamp Skier**, a hood, chest armor, and a removable **mask** to sell the disguise theme.\n\nThroughout the late 80s and into the 90s, Hasbro refreshed Zartan and related characters, sometimes experimenting with temperature/UV-reactive parts. Over time, the **UV color-change** was **retired** as materials and safety/durability standards evolved, and as the line cycled toward new play features. Modern Zartan figures focus on sculpt, articulation, and accessories rather than photochromic plastic—but the 1984 version remains iconic for its **sunlight color shift**.",
+  "timeline": [
+    { "date": "1984", "text": "Zartan v1 debuts: UV-reactive ‘skin’ turns bluish in sunlight; includes Chameleon Swamp Skier." },
+    { "date": "late 1980s", "text": "Additional Zartan/Zarana/Zandar releases; some use color-change plastics or decals." },
+    { "date": "1990s", "text": "UV/temperature color-change features largely phased out in favor of other play mechanisms." },
+    { "date": "2000s–present", "text": "Character continues in reissues and new scales (typically **without** UV color-change)." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Zartan (character & toy background)", "url": "https://en.wikipedia.org/wiki/Zartan" },
+    { "label": "YoJoe.com — Zartan (v1, 1984) archive with parts & notes", "url": "https://www.yojoe.com/action/84/zartan.shtml" },
+    { "label": "Vintage TV spots / archival clips (search)", "url": "https://www.youtube.com/results?search_query=Zartan+G.I.+Joe+commercial+1984" }
+  ]
+}

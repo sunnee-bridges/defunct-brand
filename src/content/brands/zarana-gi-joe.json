@@ -1,0 +1,35 @@
+{
+  "brand": "Zarana (G.I. Joe action figure)",
+  "slug": "zarana-gi-joe",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 1986, "end": "1990s (feature retired)" },
+  "hook": "Dreadnok chameleon whose figure shifted color in sunlight.",
+  "fate": "Later releases kept the character but dropped the 1980s UV color-change gimmick.",
+  "summary": "Debuting in **1986** for *G.I. Joe: A Real American Hero*, **Zarana** (Zartan’s sister, a Dreadnok) used **UV-reactive plastic** so exposed ‘skin’ **turned bluish in sunlight**—a signature play feature shared with Zartan and Zandar. Subsequent figures typically preserved the character but omitted the sunlight color-change.",
+  "notable_products": [
+    "Zarana v1 (1986) — sunlight/UV color-change effect",
+    "Related: Zartan (1984) & Zandar (1986) color-change figures",
+    "Later Zarana figures without UV feature"
+  ],
+  "topics": ["toys", "80s-90s", "color-change", "g.i.-joe", "nostalgia", "discontinued-feature"],
+  "links": {
+    "wikipedia_zarana": "https://en.wikipedia.org/wiki/Zarana",
+    "yojoe_zarana_v1": "https://www.yojoe.com/action/86/zarana.shtml",
+    "commercials_search": "https://www.youtube.com/results?search_query=Zarana+G.I.+Joe+commercial+1986",
+    "hasbro_overview": "https://en.wikipedia.org/wiki/Hasbro"
+  },
+  "overview_md": "**Zarana** hit the 3.75\" *G.I. Joe* line in **1986** as a **Dreadnok** infiltrator and sister to Zartan. Her original figure featured **UV-reactive plastic** so that, in **sunlight**, exposed ‘skin’ areas **shifted to a bluish tone**, reinforcing the clan’s disguise/chameleon theme. Packed with gear and a punk-inspired sculpt, she rounded out the trio of color-changing siblings (Zartan, Zarana, Zandar).\n\nIn the **1990s and beyond**, Hasbro refreshed characters and scales, but the **sunlight color-change** was largely **retired** in favor of updated sculpts, articulation, and accessories—leaving **Zarana v1 (1986)** the iconic release for the UV effect.",
+  "timeline": [
+    { "date": "1986", "text": "Zarana v1 debuts with sunlight/UV color-change plastic." },
+    { "date": "late 1980s", "text": "Color-change Dreadnok trio becomes a playground favorite." },
+    { "date": "1990s", "text": "UV/photochromic gimmicks phased out of most new releases." },
+    { "date": "2000s–present", "text": "Reissues/new lines bring Zarana back without the UV feature." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Zarana (character & toy background)", "url": "https://en.wikipedia.org/wiki/Zarana" },
+    { "label": "YoJoe.com — Zarana (v1, 1986) archive (parts, notes)", "url": "https://www.yojoe.com/action/86/zarana.shtml" },
+    { "label": "Vintage TV spots / archival clips (search)", "url": "https://www.youtube.com/results?search_query=Zarana+G.I.+Joe+commercial+1986" }
+  ]
+}

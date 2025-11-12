@@ -1,0 +1,36 @@
+{
+  "brand": "Marathon (U.S. braided caramel bar)",
+  "slug": "marathon-bar-us",
+  "category": "Food/CPG",
+  "seo_category": "food-beverage",
+  "country": "US",
+  "active": { "start": 1973, "end": 1981 },
+  "hook": "8-inch braided caramel bar with a ruler on the wrapper—“lasts a good long time.”",
+  "fate": "Discontinued in the U.S. by the early 1980s; no ongoing national production.",
+  "summary": "Mars’s U.S. **Marathon bar** (1973–1981) was a braided caramel rope covered in milk chocolate, famously sold in an extra-long 8-inch format with a printed ruler on the wrapper and the tagline **“lasts a good long time.”** It built a small cult following but was dropped as Mars rationalized its lineup. The name **Marathon** later causes confusion with the U.K., where **Snickers** was called Marathon until 1990 (the U.K. briefly revived the *Marathon* branding for nostalgia in 2019–2020).",
+  "notable_products": [
+    "Marathon braided caramel bar (8-inch ruler wrapper)"
+  ],
+  "topics": ["discontinued", "nostalgia", "1970s", "candy-bars"],
+  "taglines": [
+    { "text": "Lasts a good long time.", "source": "Advertising slogan (1970s)" }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Marathon_(chocolate_bar)",
+    "ad_spot_search": "https://www.youtube.com/results?search_query=Marathon+bar+commercial+1970s"
+  },
+  "overview_md": "The U.S. **Marathon bar** was Mars’s extra-long, **braided caramel** candy bar coated in milk chocolate, launched in **1973**. Its signature gimmick was the **8-inch ruler** printed on the wrapper to emphasize length and chew time, supported by the tagline **“lasts a good long time.”** Despite memorable marketing and a small cult following, the product was **discontinued by 1981** as Mars trimmed slower sellers.\n\nA common point of confusion: in the **U.K.**, the name **Marathon** referred to what Americans know as **Snickers** until **1990**. That U.K. naming was temporarily revived for nostalgia promotions in **2019–2020**—but that has nothing to do with the U.S. braided caramel **Marathon** bar, which remains discontinued.",
+  "timeline": [
+    { "date": "1973-08", "text": "Marathon bar launches in the U.S.: braided caramel in chocolate, 8-inch wrapper ruler." },
+    { "date": "late-1970s", "text": "TV spots and print ads push the “lasts a good long time” positioning." },
+    { "date": "1981", "text": "Product discontinued in the U.S. as Mars rationalizes its portfolio." },
+    { "date": "1990", "text": "U.K. ‘Marathon’ brand name officially changes to Snickers (context note)." },
+    { "date": "2019-2020", "text": "U.K. briefly revives ‘Marathon’ branding for Snickers as a nostalgia promo (context note)." }
+  ],
+ "sources": [
+  { "label": "Wikipedia — Marathon (chocolate bar) overview", "url": "https://en.wikipedia.org/wiki/Marathon_(chocolate_bar)" },
+  { "label": "YouTube — 1970s/80s Marathon TV commercials (search)", "url": "https://www.youtube.com/results?search_query=Marathon+bar+commercial" },
+  { "label": "Mars, Incorporated — company history (context, not ad proof)", "url": "https://www.mars.com/about" }
+]
+
+}

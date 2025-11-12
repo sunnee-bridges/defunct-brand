@@ -1,0 +1,34 @@
+{
+  "brand": "Orkut",
+  "slug": "orkut",
+  "category": "Software/Internet",
+  "seo_category": "software-internet",
+  "country": "US/BR",
+  "active": { "start": 2004, "end": 2014 },
+  "hook": "Google’s early social network that ruled Brazil and India before shutting down in 2014.",
+  "fate": "Service discontinued on 2014-09-30 as Google shifted focus to other social products.",
+  "summary": "**Orkut** was Google’s first major social network, launched in **2004** and wildly popular in **Brazil** and **India**. It centered on **communities**, **scraps** (public messages), **testimonials**, and photo sharing—years before Facebook became dominant worldwide. As Google redirected effort to newer products (Buzz, then Google+), Orkut stagnated and was **shut down September 30, 2014**. Its cultural footprint remains strongest in Brazil and India, where ‘scraps’ and Orkut communities defined the mid-2000s social web.",
+  "notable_products": [
+    "Communities",
+    "Scraps (public wall posts)",
+    "Testimonials",
+    "Photo albums"
+  ],
+  "topics": ["social-network", "discontinued", "software-internet", "nostalgia"],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Orkut",
+    "support_archive": "https://support.google.com/orkut/answer/3474945?hl=en"
+  },
+  "overview_md": "**Orkut** launched in **January 2004** as an invite-only social network built by Google engineer **Orkut Büyükkökten**. Its design revolved around **interest-based communities** and quick-hit **scraps** on user profiles, plus **testimonials** friends could leave. While it never led in the US, Orkut became *the* social network in **Brazil** and **India**, shaping how millions first experienced the social web.\n\nCompetition (Facebook, regional networks) and Google’s shifting attention (Buzz, then Google+) left Orkut with few updates in its later years. On **June 30, 2014**, Google announced Orkut’s end; the site **closed on 2014-09-30** with a takeout option for users to export their data. Orkut’s legacy is a mid-2000s snapshot of social networking built around shared interests—not just friend graphs.",
+  "timeline": [
+    { "date": "2004-01-22", "text": "Orkut launches (invite-only) under Google." },
+    { "date": "2005-2008", "text": "Rapid growth and dominance in Brazil; strong adoption in India." },
+    { "date": "2010-2011", "text": "Google pivots to Buzz and then Google+, updates to Orkut slow." },
+    { "date": "2014-06-30", "text": "Google announces Orkut will be discontinued; data export via Google Takeout offered." },
+    { "date": "2014-09-30", "text": "Orkut shuts down; public communities preserved as a read-only archive for a period." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Orkut", "url": "https://en.wikipedia.org/wiki/Orkut" },
+    { "label": "Google Support — Orkut retirement FAQ", "url": "https://support.google.com/orkut/answer/3474945?hl=en" }
+  ]
+}

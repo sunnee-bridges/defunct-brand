@@ -1,0 +1,34 @@
+{
+  "brand": "Megatron (Transformers action figure)",
+  "slug": "megatron-gun-to-tank",
+  "category": "Toys/Games",
+  "seo_category": "toys-games",
+  "country": "US",
+  "active": { "start": 1984, "end": "present (alt-mode policy changed)" },
+  "hook": "From realistic handgun to tanks and sci-fi cannons — a shift driven by safety rules and brand perception.",
+  "fate": "The original G1 Megatron toy transformed into a realistic Walther-style handgun. From the 1990s onward, mass-market releases in the U.S. largely moved to tanks or sci-fi cannons. Realistic ‘gun’ versions are generally limited, require bright markings, and are positioned for adult collectors.",
+  "summary": "Early **Megatron** figures (G1, 1984) transformed into a realistic **Walther P38–style handgun**—striking on shelves but easy to mistake for a real firearm. As U.S. safety standards, retailer policies, and public perception tightened, Hasbro/Takara shifted Megatron’s alternate mode to **tanks** or **futuristic cannons**. Modern U.S. releases avoid realistic firearm forms; any handgun-based editions are typically collector imports with **blaze-orange plugs** and other compliance markings.",
+  "notable_products": [
+    "G1 Megatron (1984) — realistic pistol alt-mode",
+    "Various 1990s–present Megatron figures — tank or sci-fi cannon alt-modes",
+    "Masterpiece/collector versions — handgun alt-mode with required orange tip in U.S."
+  ],
+  "topics": ["toys", "80s-90s", "safety", "color-change/markings", "transformers", "retailer-policy", "retool/rebrand"],
+  "links": {
+    "wikipedia_megatron": "https://en.wikipedia.org/wiki/Megatron",
+    "wikipedia_transformers_toys": "https://en.wikipedia.org/wiki/Transformers:_Generation_1",
+    "ecfr_blaze_orange": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-II/subchapter-D/part-272"
+  },
+  "overview_md": "In **1984**, *Transformers* launched with a bold idea: **Megatron**, the Decepticon leader, transformed into a realistic, Walther-style handgun. The toy’s chrome finish and working mechanics made it memorable — and increasingly problematic. As U.S. **toy firearm marking rules** (blaze-orange tips), retailer standards, and public concerns grew through the late 1980s/1990s, Hasbro/Takara **pivoted Megatron’s alt-mode** toward **tanks** and **futuristic cannons** that read as fantasy rather than real-steel.\n\nCollector-aimed handgun versions haven’t vanished entirely, but modern U.S. distribution typically requires an **orange plug** and conspicuous markings; many retailers avoid realistic toy guns altogether. The result: for most fans, the default modern Megatron is a **tank/cannon**, while the old pistol form survives as a niche collector throwback.\n\n**Why the change?** A mix of **safety compliance** (blaze-orange tips & imitation-firearm rules), **retailer policy**, and **brand risk** (confusability with real firearms, PR concerns). The franchise found a durable solution: keep the character’s silhouette and menace, but shift the alt-mode to something clearly fictional or militarized (tanks) that satisfies both safety expectations and play value.",
+  "timeline": [
+    { "date": "1984", "text": "G1 Megatron released; transforms into a realistic pistol." },
+    { "date": "late 1980s–1990s", "text": "Retailer standards and public safety expectations rise; move toward non-realistic alt-modes." },
+    { "date": "1990s–present", "text": "Mainline U.S. Megatron toys predominantly tanks or sci-fi cannons." },
+    { "date": "2000s–present", "text": "Collector handgun versions appear intermittently; U.S. sales typically require blaze-orange plugs and compliance labeling." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Megatron (character & toy history)", "url": "https://en.wikipedia.org/wiki/Megatron" },
+    { "label": "Wikipedia — Transformers toys (context for alt-mode shifts)", "url": "https://en.wikipedia.org/wiki/Transformers:_Generation_1" },
+    { "label": "U.S. regulation — Blaze orange marking for toy/‘imitation’ firearms (15 CFR Part 272)", "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-II/subchapter-D/part-272" }
+  ]
+}
