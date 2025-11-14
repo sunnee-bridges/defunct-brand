@@ -2,18 +2,35 @@
   "brand": "Yahoo! Messenger",
   "slug": "yahoo-messenger",
   "category": "Software/Internet",
+  "seo_category": "software-internet",
   "country": "US",
-  "active": {
-    "start": 1998,
-    "end": 2018
-  },
+  "active": { "start": 1998, "end": 2018 },
   "fate": "Discontinued",
-  "summary": "Once-popular IM service discontinued in 2018.",
+  "hook": "The buzzy IM with Audibles, webcam chat, and the infamous window-shaking “Buzz.”",
+  "summary": "Once-dominant instant messenger retired in 2018 after a 20-year run. **Fun fact:** it launched in 1998 as **Yahoo! Pager** and, for a time in the mid-2000s, could **interoperate with MSN/Windows Live Messenger**, letting users chat across the two networks.",
   "notable_products": [
     "Instant messaging",
-    "Chat"
+    "Group chat & chat rooms",
+    "Webcam/video chat",
+    "File transfer",
+    "Audibles & Buzz"
   ],
+  "topics": ["discontinued", "messaging", "2000s-internet", "nostalgia"],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Yahoo!_Messenger"
-  }
+    "wikipedia": "https://en.wikipedia.org/wiki/Yahoo!_Messenger",
+    "press_archive_search": "https://www.google.com/search?q=Yahoo+Messenger+shutdown+2018"
+  },
+  "overview_md": "**Yahoo! Messenger** (originally **Yahoo! Pager**) was a fixture of late-1990s and 2000s online life—free IM with presence (away/idle), custom statuses, webcam chat, file transfer, group rooms, and playful features like **Audibles** and the window-shaking **Buzz**. It added mobile tie-ins and even a period of **interoperability with MSN/Windows Live Messenger** before the walled-garden era returned. As social networks, smartphones, and encrypted chat apps took over, usage fell. Yahoo discontinued the service in **2018** after attempting modern rewrites.",
+  "timeline": [
+    { "date": "1998-03", "text": "Launch as **Yahoo! Pager**; early desktop IM era begins." },
+    { "date": "1999-2001", "text": "Renamed **Yahoo! Messenger**; adds webcam chat, file sharing, chat rooms, Audibles/Buzz." },
+    { "date": "2005-2006", "text": "Introduces limited **interoperability with MSN/Windows Live Messenger**." },
+    { "date": "2012", "text": "Legacy chat rooms shut down as focus shifts to mobile/social." },
+    { "date": "2015-2017", "text": "New Yahoo Messenger app launches; legacy client deprecated." },
+    { "date": "2018-07", "text": "Service **discontinued**; users offered chat history download window." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — Yahoo! Messenger (history/features)", "url": "https://en.wikipedia.org/wiki/Yahoo!_Messenger" },
+    { "label": "News coverage — shutdown in 2018 (search hub)", "url": "https://www.google.com/search?q=Yahoo+Messenger+shutdown+2018" }
+  ]
 }

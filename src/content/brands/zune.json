@@ -1,33 +1,30 @@
 {
   "brand": "Zune",
   "slug": "zune",
-  "category": "Consumer electronics",
+  "category": "Consumer electronics/MP3 Players",
   "seo_category": "consumer-electronics",
   "country": "US",
   "active": { "start": 2006, "end": 2012 },
-  "hook": "Microsoft's iPod killer that never killed anything",
-  "fate": "Hardware discontinued; software/services folded into Xbox Music (later Groove) and eventually retired.",
-  "summary": "Microsoft’s digital media player line (2006–2012) known for Zune HD’s OLED screen and a subscription ‘Zune Pass.’ Hardware ended in 2011–2012 as Microsoft shifted to phone and streaming strategies.",
-  "topics": ["music-players", "portable-audio", "nostalgia"],
-  "notable_products": ["Zune 30", "Zune 80/120", "Zune HD"],
-  "overview_md": "**Zune** was Microsoft’s bid to rival the iPod with tightly integrated hardware, software, and the **Zune Pass** music subscription. Launched in **2006**, early Zunes emphasized Wi-Fi sharing and a bold UI; the **Zune HD** (2009) earned praise for its OLED display, capacitive touch, and snappy NVIDIA Tegra chipset. Despite a loyal following, Zune never reached iPod scale, and Microsoft wound down the hardware as it prioritized Windows Phone and, later, Xbox-branded music services.\n\nIn today’s climate, interest in **standalone music players** has ticked up again. Some listeners are frustrated that streaming fees keep rising and that access can vanish when licenses change—highlighting the difference between **renting** and **owning** music. Nostalgic Zune owners and new hobbyists alike value offline libraries, long battery life, and distraction-free listening. That doesn’t make Zune “current,” but it explains why refurbished units and modern DAPs see renewed attention: they restore a sense of collection ownership, predictable costs, and control over audio quality.\n\nZune’s design language—typography-forward, metro-influenced, and playful—left a mark on Microsoft UX. Its story is a time capsule of the shift from personal media libraries to cloud subscriptions, and the pendulum that occasionally swings back toward local files and dedicated devices.",
-  "timeline": [
-    { "date": "2006-11-14", "text": "First Zune (30 GB) launches in North America with Zune Marketplace and subscription option." },
-    { "date": "2007-11-13", "text": "Second-gen Zunes (flash and 80 GB) ship with revised UI and wireless syncing." },
-    { "date": "2009-09-15", "text": "Zune HD launches with OLED display, multitouch UI, and Tegra-based performance." },
-    { "date": "2011-10-03", "text": "Microsoft confirms the end of Zune hardware production in favor of Windows Phone." },
-    { "date": "2012-06-04", "text": "Zune software/services transition under Xbox Music branding (later Groove); Zune era effectively ends." }
-  ],
+  "fate": "Discontinued",
+  "hook": "Microsoft’s iPod-era rival with Wi-Fi sharing and the Zune Pass subscription.",
+  "summary": "Microsoft's digital media player ecosystem—hardware, software, and music store—launched in 2006 and was fully discontinued by 2012. Despite a well-liked UI and the Zune HD, it couldn’t overcome iPod/iTunes dominance and the shift to smartphones.",
+  "notable_products": ["Zune 30", "Zune 80/120", "Zune 4/8/16", "Zune HD"],
+  "topics": ["scandal", "discontinued", "mp3-player", "microsoft", "2000s-tech"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Zune",
-    "ms_support_hardware_end": "https://support.microsoft.com/topic/zune-players-are-no-longer-manufactured-article",
-    "ms_support_service_retire": "https://support.microsoft.com/topic/zune-services-to-be-retired-november-15-2015-article",
-    "theverge_2011": "https://www.theverge.com/2011/10/3/2465853/microsoft-ends-zune-hardware"
+    "news_search": "https://www.google.com/search?q=Microsoft+discontinues+Zune+2011+2012",
+    "video_ads_search": "https://www.youtube.com/results?search_query=Zune+commercial"
   },
+  "overview_md": "**Zune** was Microsoft’s end-to-end music platform—portable players, the Zune desktop app, Marketplace, and the **Zune Pass** subscription. It introduced Wi-Fi track sharing and a distinctive, typography-forward UI. Later, the **Zune HD** earned strong reviews, but the iPod/iTunes lead and the rapid move to smartphones limited adoption. Hardware and brand were sunset by **2012**, and services were folded into Xbox/Groove before being retired.",
+  "timeline": [
+    { "date": "2006-11", "text": "Zune 30 launches with Wi-Fi sharing and Zune Marketplace." },
+    { "date": "2007-2008", "text": "Second-gen HDD (80/120) and flash models (4/8/16) ship; Zune Pass subscription gains attention." },
+    { "date": "2009-09", "text": "Zune HD debuts with OLED display and refined touch UI." },
+    { "date": "2011-2012", "text": "Zune hardware/brand discontinued; services transition toward Xbox Music (later Groove)." }
+  ],
   "sources": [
-    { "label": "Wikipedia – Zune", "url": "https://en.wikipedia.org/wiki/Zune" },
-    { "label": "Microsoft Support – Zune players discontinued", "url": "https://support.microsoft.com/topic/zune-players-are-no-longer-manufactured-article" },
-    { "label": "Microsoft Support – Zune services retired (Nov 15, 2015)", "url": "https://support.microsoft.com/topic/zune-services-to-be-retired-november-15-2015-article" },
-    { "label": "The Verge – Microsoft ends Zune hardware (2011)", "url": "https://www.theverge.com/2011/10/3/2465853/microsoft-ends-zune-hardware" }
+    { "label": "Wikipedia — Zune (history & models)", "url": "https://en.wikipedia.org/wiki/Zune" },
+    { "label": "News coverage — Zune discontinued (search hub)", "url": "https://www.google.com/search?q=Microsoft+discontinues+Zune+2011+2012" },
+    { "label": "Commercials/launch spots (video search)", "url": "https://www.youtube.com/results?search_query=Zune+commercial" }
   ]
 }

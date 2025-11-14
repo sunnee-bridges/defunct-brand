@@ -1,0 +1,34 @@
+{
+  "brand": "Wet Seal",
+  "slug": "wet-seal",
+  "category": "Retail/Apparel",
+  "seo_category": "retail",
+  "country": "US",
+  "active": { "start": 1962, "end": 2017 },
+  "hook": "Mall-era fast fashion for teens and young women; twice-bankrupt, shuttered stores in 2017.",
+  "fate": "Filed Chapter 11 in 2015 and again in 2017; all brick-and-mortar stores closed in 2017. Brand later operated online under new ownership before going quiet/intermittent.",
+  "summary": "Founded in 1962 (originally as a surf shop that evolved into junior fashion), Wet Seal became a mall staple in the 1990s–2000s and also owned Arden B and former Contempo Casuals locations. Debt, shrinking mall traffic, and fast-fashion competition led to Chapter 11 in 2015 and a second collapse in 2017, when all remaining stores closed and the brand shifted to online-only under new owners.",
+  "topics": ["mall-era", "fast-fashion", "bankruptcy", "online-revival"],
+  "notable_products": [
+    "Junior/young women’s fast-fashion apparel",
+    "Arden B (sister brand; now defunct)"
+  ],
+  "timeline": [
+    { "date": "1962", "text": "Company origins in Southern California; later evolves into junior/fast-fashion retailer." },
+    { "date": "1995", "text": "Acquires Contempo Casuals from Neiman Marcus; many stores later converted to Wet Seal/Arden B." },
+    { "date": "2000s", "text": "Peak mall-era presence with hundreds of stores across the U.S." },
+    { "date": "2015-02", "text": "Files Chapter 11; announces large-scale store closures amid declining mall traffic." },
+    { "date": "2017-01", "text": "Announces closure of all remaining stores after losing financing." },
+    { "date": "2017-02", "text": "Second bankruptcy; intellectual property sold, brand pivots to online-only under new ownership." }
+  ],
+  "links": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Wet_Seal",
+    "brand_archive_wayback": "https://web.archive.org/web/20160701000000*/http://wetseal.com"
+  },
+  "sources": [
+    {
+      "label": "Business Insider (archived) – Wet Seal closing all locations (2017)",
+      "url": "https://archive.ph/WsH11"
+    }
+  ]
+}

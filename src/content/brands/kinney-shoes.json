@@ -1,0 +1,34 @@
+{
+  "brand": "Kinney Shoes",
+  "slug": "kinney-shoes",
+  "category": "Retail/Footwear",
+  "seo_category": "retail",
+  "country": "US",
+  "active": { "start": 1894, "end": 1998 },
+  "fate": "Closed; athletic specialty banners (e.g., Foot Locker) continued under the corporate successor",
+  "hook": "The shoe chain that quietly launched Foot Locker — and then disappeared when the parent company doubled down on sneakers.",
+  "summary": "Founded in 1894 by George R. Kinney, **Kinney Shoes** grew into a nationwide, value-priced footwear chain. Acquired by **F.W. Woolworth** in the 1960s, Kinney later **created Foot Locker in 1974** as an athletic-focused specialty concept. As Woolworth restructured in the late 1990s, it shuttered the remaining Kinney stores in **1998** and concentrated on the faster-growing Foot Locker banners. The corporate lineage lives on as **Foot Locker, Inc.**, but Kinney-branded stores are gone.",
+  "topics": ["retail", "spinoff", "rebrand", "90s-closures"],
+  "notable_products": [
+    "Kinney value footwear stores",
+    "Foot Locker (launched by Kinney division, 1974)",
+    "Lady Foot Locker (specialty offshoot)"
+  ],
+  "links": {
+    "wikipedia_kinney": "https://en.wikipedia.org/wiki/G.R._Kinney_Company",
+    "wikipedia_foot_locker": "https://en.wikipedia.org/wiki/Foot_Locker"
+  },
+  "overview_md": "**Kinney Shoes** began in 1894 and became a coast-to-coast shoe retailer known for affordable family footwear. Under **F.W. Woolworth** ownership, Kinney incubated the specialty athletic concept **Foot Locker** (1974), which quickly outpaced the legacy Kinney format. During Woolworth’s late-1990s restructuring, the company closed the remaining **Kinney** stores in **1998** to focus on athletic banners; the parent later became **Foot Locker, Inc.** Kinney’s name vanished, but its most successful offshoot defines the successor company.",
+  "timeline": [
+    { "date": "1894", "text": "G.R. Kinney Company founded; expands as a value footwear chain." },
+    { "date": "1963", "text": "Acquired by F.W. Woolworth (later The Venator Group, then Foot Locker, Inc.)." },
+    { "date": "1974", "text": "Kinney division launches **Foot Locker** as an athletic-focused specialty retailer." },
+    { "date": "1997", "text": "Parent exits general-merchandise Woolworth stores; emphasis shifts to specialty banners." },
+    { "date": "1998-09", "text": "Remaining **Kinney Shoes** stores closed; company concentrates on Foot Locker banners." },
+    { "date": "2001", "text": "Corporate successor adopts the **Foot Locker, Inc.** name." }
+  ],
+  "sources": [
+    { "label": "Wikipedia — G.R. Kinney Company (Kinney Shoes)", "url": "https://en.wikipedia.org/wiki/G.R._Kinney_Company" },
+    { "label": "Wikipedia — Foot Locker (corporate history & origins in Kinney division)", "url": "https://en.wikipedia.org/wiki/Foot_Locker" }
+  ]
+}

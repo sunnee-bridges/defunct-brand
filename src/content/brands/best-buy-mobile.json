@@ -1,0 +1,36 @@
+{
+  "brand": "Best Buy Mobile",
+  "slug": "best-buy-mobile",
+  "category": "Retail",
+  "seo_category": "retail",
+  "country": "US",
+  "active": { "start": 2007, "end": 2018 },
+  "hook": "Best Buy’s mall-format phone shops that peaked in the smartphone boom, then quietly shut.",
+  "fate": "Standalone mall stores closed in 2018; mobile departments continued inside full-line Best Buy stores.",
+  "summary": "Launched in 2007 during the early smartphone surge, **Best Buy Mobile** was a small-format concept focused on carrier activations, phones, plans, and accessories. It expanded quickly into malls and strip centers, then wound down as carriers pushed their own stores, online upgrades grew, and margins tightened. **Fun fact:** the concept began as a joint effort with **Carphone Warehouse**, and it popularized the in-store setup promise branded **“Walk Out Working.”**",
+  "topics": ["retail-format", "mall-store", "category-specialist", "spinoff-closed"],
+  "notable_products": [
+    "Carrier activations & upgrades (AT&T, Verizon, T-Mobile, etc.)",
+    "Smartphones & feature phones",
+    "Accessories (cases, chargers, headphones)",
+    "Trade-in & protection plans",
+    "Geek Squad setup (“Walk Out Working”)"
+  ],
+  "timeline": [
+    { "date": "2006", "text": "Best Buy partners with Carphone Warehouse to build a dedicated mobile retail concept." },
+    { "date": "2007", "text": "First Best Buy Mobile shops open; rapid U.S. rollout follows." },
+    { "date": "2010–2014", "text": "Peak footprint across malls and small formats during the smartphone upgrade cycle." },
+    { "date": "2015–2017", "text": "Traffic shifts online and to carrier-owned stores; profitability tightens." },
+    { "date": "2018-03", "text": "Best Buy announces closure of all ~250 U.S. standalone Best Buy Mobile stores; mobile departments remain inside big-box stores." }
+  ],
+  "links": {
+    "wikipedia_best_buy": "https://en.wikipedia.org/wiki/Best_Buy",
+    "corporate_news_2018": "https://corporate.bestbuy.com/",
+    "news_closures_2018": "https://archive.ph/wxIVH"
+  },
+  "sources": [
+    { "label": "Best Buy to close all 250 of its smaller, mobile phone stores (archived)", "url": "https://archive.ph/wxIVH" },
+    { "label": "Best Buy corporate newsroom (general background)", "url": "https://corporate.bestbuy.com/" },
+    { "label": "Wikipedia – Best Buy (history & ventures)", "url": "https://en.wikipedia.org/wiki/Best_Buy" }
+  ]
+}

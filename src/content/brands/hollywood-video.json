@@ -1,0 +1,34 @@
+{
+  "brand": "Hollywood Video",
+  "slug": "hollywood-video",
+  "category": "Retail/Video Rental",
+  "seo_category": "retail",
+  "country": "US",
+  "active": { "start": 1988, "end": 2010 },
+  "hook": "Blockbuster’s biggest 1990s rival that vanished in the streaming era.",
+  "fate": "Acquired by Movie Gallery in 2005; parent company liquidated in 2010, closing all Hollywood Video stores.",
+  "summary": "**Hollywood Video** grew into the No. 2 U.S. video-rental chain through the 1990s, competing head-to-head with Blockbuster on big-box stores, new releases, and late-fee promos. After a 2005 acquisition by **Movie Gallery**, heavy debt, shrinking DVD rentals, and the rise of mail/streaming services pushed the business into bankruptcy. By **2010**, the parent liquidated and Hollywood Video stores closed nationwide. *Fun fact:* many locations housed an in-store game shop called **Game Crazy**, which ran trade-ins years before that model became mainstream.",
+  "topics": ["video-rental", "acquisition", "bankruptcy", "streaming-disruption", "nostalgia-90s"],
+  "notable_products": [
+    "Movie & TV rentals (VHS → DVD)",
+    "Game rentals & sales (Game Crazy shop-in-shop)",
+    "Membership and late-fee promotions"
+  ],
+  "timeline": [
+    { "date": "1988", "text": "Hollywood Video founded; rapid store expansion through the 1990s." },
+    { "date": "1999–2004", "text": "Peak footprint as Blockbuster’s main national rival; launches Game Crazy shop-in-shop." },
+    { "date": "2005", "text": "Acquired by Movie Gallery, creating a combined national rental giant." },
+    { "date": "2007", "text": "Movie Gallery files Chapter 11 amid industry decline; restructuring follows." },
+    { "date": "2010", "text": "Movie Gallery files again and liquidates; all Hollywood Video stores close." }
+  ],
+  "links": {
+    "wikipedia_hollywood_video": "https://en.wikipedia.org/wiki/Hollywood_Video",
+    "wikipedia_movie_gallery": "https://en.wikipedia.org/wiki/Movie_Gallery",
+    "wikipedia_game_crazy": "https://en.wikipedia.org/wiki/GameCrazy"
+  },
+  "sources": [
+    { "label": "Wikipedia — Hollywood Video (history & closure)", "url": "https://en.wikipedia.org/wiki/Hollywood_Video" },
+    { "label": "Wikipedia — Movie Gallery (acquisition & liquidation)", "url": "https://en.wikipedia.org/wiki/Movie_Gallery" },
+    { "label": "Wikipedia — Game Crazy (shop-in-shop concept)", "url": "https://en.wikipedia.org/wiki/GameCrazy" }
+  ]
+}
