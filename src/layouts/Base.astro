@@ -178,6 +178,39 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
       .fade-out{transition:opacity .12s ease-in;opacity:.2}
     </style>
 
+    <!-- Fix for select dropdown options visibility -->
+<style is:inline>
+  /* Light mode select options */
+  select option {
+    background-color: white;
+    color: rgb(15 23 42); /* slate-900 */
+  }
+
+  /* Dark mode select options */
+  @media (prefers-color-scheme: dark) {
+    select option {
+      background-color: rgb(15 23 42); /* slate-900 */
+      color: rgb(241 245 249); /* slate-100 */
+    }
+  }
+
+  /* Placeholder option styling */
+  select option[value=""] {
+    color: rgb(100 116 139); /* slate-500 */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    select option[value=""] {
+      color: rgb(148 163 184); /* slate-400 */
+    }
+  }
+
+  /* Ensure select itself has proper contrast */
+  select {
+    appearance: auto;
+  }
+</style>
+
     <!-- ✅ Fix nav wrapping differences by stabilizing viewport width -->
     <style is:inline>
       :root { scrollbar-gutter: stable both-edges; } /* modern */

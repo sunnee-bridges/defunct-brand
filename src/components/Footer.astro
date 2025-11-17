@@ -3,10 +3,9 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
 ---
 
 
-
 <footer
   class="relative max-w-[1040px] mx-auto px-4
-         mt-8 md:mt-12            /* a bit tighter now that divider is outside */
+         mt-8 md:mt-12
          pb-10 md:pb-14
          mb-[env(safe-area-inset-bottom)]
          text-sm text-slate-600 dark:text-slate-400
@@ -43,6 +42,16 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
         Data (CSV)
       </a>
 
+      <!-- 👇 New Contact link (mobile) -->
+      <a
+        href="/contact/"
+        class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none"
+        title="Contact the Vanished Brands Archive"
+        aria-label="Contact the Vanished Brands Archive"
+      >
+        Contact
+      </a>
+
       <a
         href={`/brand/${fallbackSlug}/`}
         class="btn-primary focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none"
@@ -57,12 +66,34 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
 
     <!-- CTA row: md+ screens -->
     <nav class="hidden md:flex gap-3" aria-label="Footer quick links (desktop)">
-      <a href="/az/" class="chip focus-ring" title="Browse all brands A–Z" aria-label="Browse all defunct brands A to Z">
+      <a
+        href="/az/"
+        class="chip focus-ring"
+        title="Browse all brands A–Z"
+        aria-label="Browse all defunct brands A to Z"
+      >
         Browse A&ndash;Z
       </a>
-      <a href="/data/" class="chip focus-ring" title="Download the Defunct Brands CSV dataset" aria-label="Defunct Brands CSV dataset">
+
+      <a
+        href="/data/"
+        class="chip focus-ring"
+        title="Download the Defunct Brands CSV dataset"
+        aria-label="Defunct Brands CSV dataset"
+      >
         Data (CSV)
       </a>
+
+      <!-- 👇 New Contact link (desktop) -->
+      <a
+        href="/contact/"
+        class="chip focus-ring"
+        title="Contact the Vanished Brands Archive"
+        aria-label="Contact the Vanished Brands Archive"
+      >
+        Contact
+      </a>
+
       <a
         href={`/brand/${fallbackSlug}/`}
         class="btn-primary focus-ring"
