@@ -1,0 +1,56 @@
+---
+import Base from "../../layouts/Base.astro";
+
+const PAGE_TITLE = "Thank you • Vanished Brands Archive";
+const PAGE_DESC = "Thanks for contacting the Vanished Brands Archive.";
+const CANONICAL = Astro.site
+  ? new URL("/contact/thanks/", Astro.site).href
+  : "/contact/thanks/";
+---
+
+<Base title={PAGE_TITLE} description={PAGE_DESC}>
+  <Fragment slot="head">
+    <link rel="canonical" href={CANONICAL} />
+    <meta name="description" content={PAGE_DESC} />
+  </Fragment>
+
+  <nav class="mb-4 flex flex-wrap gap-2">
+    <a href="/" class="chip focus-ring">← Home</a>
+    <a href="/contact/" class="chip focus-ring">← Back to contact</a>
+    <span class="chip opacity-70 cursor-default" aria-current="page">Thank you</span>
+  </nav>
+
+  <main class="pb-16">
+    <section class="mt-2 md:mt-3 max-w-2xl">
+      <h1 class="text-2xl md:text-3xl font-bold">Thank you for your message</h1>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I’ve received your submission and will review it as soon as I can.
+        If a reply is needed, I’ll reach out to the email address you provided.
+      </p>
+      <p class="mt-4 text-slate-600 dark:text-slate-300">
+        In the meantime, you can continue browsing the archive or suggest more brands any time.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2
+                 text-sm font-medium text-white shadow-sm hover:bg-indigo-700
+                 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+        >
+          Back to home
+        </a>
+        <a
+          href="/contact/"
+          class="inline-flex items-center justify-center rounded-md border border-slate-300
+                 dark:border-slate-700 px-4 py-2 text-sm font-medium
+                 text-slate-800 dark:text-slate-100 hover:bg-slate-50
+                 dark:hover:bg-slate-900 focus:outline-none focus-visible:ring-2
+                 focus-visible:ring-indigo-500"
+        >
+          Send another message
+        </a>
+      </div>
+    </section>
+  </main>
+</Base>
