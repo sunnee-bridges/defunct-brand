@@ -51,8 +51,9 @@ const CANONICAL = Astro.site
       <form
         name="contact"
         method="POST"
+        action="/contact/"
         data-netlify="true"
-        data-netlify-honeypot="bot-field"
+        netlify-honeypot="bot-field"
         class="mt-4 grid gap-5 max-w-2xl rounded-lg border border-slate-200 dark:border-slate-700
                bg-white/80 dark:bg-slate-900/60 p-5 md:p-6 shadow-sm"
       >
@@ -69,38 +70,38 @@ const CANONICAL = Astro.site
 
         <!-- Reason / type -->
         <div>
-  <label
-    class="block text-sm font-medium text-slate-800 dark:text-slate-100 mb-1"
-    for="reason"
-  >
-    What are you reaching out about?
-  </label>
-  <div class="relative">
-    <select
-      id="reason"
-      name="reason"
-      required
-      class="block w-full rounded-md border border-slate-300 dark:border-slate-700
-             !bg-white dark:!bg-slate-900 px-3 py-2 pr-10 text-sm
-             !text-slate-900 dark:!text-slate-100 shadow-sm
-             focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500
-             appearance-none cursor-pointer"
-    >
-      <option value="" class="!bg-white !text-slate-500 dark:!bg-slate-900 dark:!text-slate-400">Select an option…</option>
-      <option value="support" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Support / bug report</option>
-      <option value="brand-suggestion" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Suggest a brand to research</option>
-      <option value="data-correction" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Data correction / accuracy issue</option>
-      <option value="collaboration" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Collaboration / press / academic use</option>
-      <option value="other" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Something else</option>
-    </select>
-    <!-- Custom dropdown arrow -->
-    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-700 dark:text-slate-300">
-      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-      </svg>
-    </div>
-  </div>
-</div>
+          <label
+            class="block text-sm font-medium text-slate-800 dark:text-slate-100 mb-1"
+            for="reason"
+          >
+            What are you reaching out about?
+          </label>
+          <div class="relative">
+            <select
+              id="reason"
+              name="reason"
+              required
+              class="block w-full rounded-md border border-slate-300 dark:border-slate-700
+                     !bg-white dark:!bg-slate-900 px-3 py-2 pr-10 text-sm
+                     !text-slate-900 dark:!text-slate-100 shadow-sm
+                     focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500
+                     appearance-none cursor-pointer"
+            >
+              <option value="" class="!bg-white !text-slate-500 dark:!bg-slate-900 dark:!text-slate-400">Select an option…</option>
+              <option value="support" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Support / bug report</option>
+              <option value="brand-suggestion" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Suggest a brand to research</option>
+              <option value="data-correction" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Data correction / accuracy issue</option>
+              <option value="collaboration" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Collaboration / press / academic use</option>
+              <option value="other" class="!bg-white !text-slate-900 dark:!bg-slate-900 dark:!text-slate-100">Something else</option>
+            </select>
+            <!-- Custom dropdown arrow -->
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-700 dark:text-slate-300">
+              <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        </div>
 
         <!-- Contact details -->
         <div class="grid gap-4 md:grid-cols-2">
@@ -231,11 +232,10 @@ const CANONICAL = Astro.site
         Prefer email? You can also write to
         <a
           href="mailto:hello@vanishedbrands.com"
-           class="underline decoration-indigo-500 decoration-2 underline-offset-2 hover:decoration-indigo-600"
+          class="underline decoration-indigo-500 decoration-2 underline-offset-2 hover:decoration-indigo-600"
         >
-          hello@vanishedbrands.example
-        </a>
-        (replace this address with your real contact email).
+          hello@vanishedbrands.com
+        </a>.
       </p>
     </section>
   </main>
