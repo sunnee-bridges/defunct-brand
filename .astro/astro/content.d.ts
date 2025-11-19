@@ -319,11 +319,6 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"bartles-and-jaymes": {
-	id: "bartles-and-jaymes";
-  collection: "brands";
-  data: any
-};
 "battlestar-galactica-viper": {
 	id: "battlestar-galactica-viper";
   collection: "brands";
