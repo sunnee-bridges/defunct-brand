@@ -187,6 +187,13 @@ declare module 'astro:content' {
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
+"discontinued-80s-candy.mdx": {
+	id: "discontinued-80s-candy.mdx";
+  slug: "discontinued-80s-candy";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
 "discontinued-90s-drinks.mdx": {
 	id: "discontinued-90s-drinks.mdx";
   slug: "discontinued-90s-drinks";
@@ -260,6 +267,13 @@ declare module 'astro:content' {
 "when-did-brands-close.mdx": {
 	id: "when-did-brands-close.mdx";
   slug: "when-did-brands-close";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
+"why-was-freshen-up-gum-discontinued.mdx": {
+	id: "why-was-freshen-up-gum-discontinued.mdx";
+  slug: "why-was-freshen-up-gum-discontinued";
   body: string;
   collection: "post";
   data: InferEntrySchema<"post">
