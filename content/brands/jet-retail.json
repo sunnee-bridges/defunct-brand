@@ -2,17 +2,40 @@
   "brand": "Jet (retail)",
   "slug": "jet-retail",
   "category": "E-commerce",
+  "seo_category": "retail",
   "country": "US",
-  "active": {
-    "start": 2015,
-    "end": 2020
-  },
-  "fate": "Discontinued",
-  "summary": "Walmart-owned marketplace brand retired in 2020.",
+  "active": { "start": 2015, "end": 2020 },
+  "hook": "Walmart bought Jet.com for $3.3B in 2016, then folded its tech into Walmart.com and retired the Jet brand in 2020.",
+  "fate": "Acquired by Walmart in 2016; Jet brand discontinued in 2020 as Walmart integrated Jet’s pricing engine, marketplace ops, and urban-focused learnings into Walmart.com.",
+  "summary": "Jet.com launched in 2015 with a real-time “Smart Cart” pricing model and aggressive marketplace strategy. Walmart acquired Jet for $3.3B in 2016 to accelerate its e-commerce push. Over 2017–2019, Jet’s team, tech, and seller base were absorbed into Walmart’s core site. In May 2020, Walmart officially wound down the Jet brand while keeping the underlying capabilities.",
   "notable_products": [
-    "Online marketplace"
+    "Jet.com online marketplace",
+    "Smart Cart dynamic pricing engine",
+    "Jet Anywhere / JetCash promotional credits",
+    "Jet’s urban-market playbook (city-targeted assortment & logistics)",
+    "Jetblack (concierge shopping pilot, text-to-shop)"
+  ],
+  "topics": [
+    "e-commerce",
+    "retail",
+    "acquisition",
+    "walmart",
+    "marketplace",
+    "discontinued-brand",
+    "portfolio-pruning"
+  ],
+  "overview_md": "**Jet.com** launched in **2015** with a bold idea: lower your price in real time as you optimized your cart—skip returns, choose slower shipping, or buy from nearby sellers and the **Smart Cart** would pass savings back instantly. The growth playbook leaned on marketplace breadth, rebates (**JetCash/Jet Anywhere** promos), and an urban-millennial merchandising lens.\n\nIn **2016**, **Walmart acquired Jet for $3.3B**, using Jet’s tech, talent (including founder **Marc Lore**), and seller network to jump-start Walmart.com. Over the next few years, Walmart steadily **integrated Jet’s pricing/fulfillment logic** and category teams into its core site. Jet experimented with city-specific experiences and incubations like **Jetblack** (a text-to-shop concierge pilot), but the strategy ultimately converged on a single Walmart.com brand.\n\nIn **May 2020**, Walmart **retired the Jet brand**, noting that Jet’s capabilities were fully embedded into Walmart’s broader e-commerce stack. For shoppers, Jet.com disappeared; for Walmart, Jet’s legacy lives on in **marketplace scale, price optimization, and last-mile learnings**.",
+  "timeline": [
+    { "date": "2015-07", "text": "Jet.com launches in the U.S. with Smart Cart dynamic pricing and marketplace focus." },
+    { "date": "2015-10", "text": "Drops paid membership model; leans into everyday low pricing + cart optimization." },
+    { "date": "2016-08", "text": "Walmart announces acquisition of Jet.com for ~$3.3B; Marc Lore to lead U.S. e-commerce." },
+    { "date": "2017-2019", "text": "Jet tech, teams, and sellers progressively integrated into Walmart.com; city-targeted merchandising tests; Jetblack concierge pilot launches then winds down." },
+    { "date": "2020-05", "text": "Walmart announces discontinuation of the Jet brand; operations and tech retained inside Walmart.com." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Jet.com"
+    "wikipedia": "https://en.wikipedia.org/wiki/Jet.com",
+    "walmart_2016_acquisition_pr": "https://corporate.walmart.com/news/2016/08/08/walmart-to-acquire-jet-com",
+    "walmart_2020_discontinue_jet": "https://corporate.walmart.com/news/2020/05/19/walmart-releases-q1-fy21-results",
+    "news_analysis_example": "https://www.cnbc.com/2020/05/19/walmart-to-discontinue-jetcom-focus-on-walmartcom.html"
   }
 }
