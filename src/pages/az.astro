@@ -21,10 +21,37 @@ const firstLetter = (s = "") => {
   const ch = (s[0] || "").toUpperCase();
   return /[A-Z]/.test(ch) ? ch : "#";
 };
-const anchorIdFor = (L: string) => (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
+const anchorIdFor = (L: string) =>
+  (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
 
-/* Sort & group */
-const sorted = brands.slice().sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
+/* 🔎 Search index for live suggestions */
+const searchIndex = brands
+  .filter((b) => b?.brand && b?.slug)
+  .map((b) => ({
+    name: String(b.brand),
+    url: `/brand/${encodeURIComponent(b.slug)}/`,
+    category: String(b.__seo_category_label || b.category || "Brand"),
+  }));
+
+const searchIndexJson = JSON.stringify(searchIndex);
+
+/* Search query (simple filter by name or category) */
+const qRaw = Astro.url.searchParams.get("q") || "";
+const q = qRaw.trim().toLowerCase();
+
+/* Base list: filtered if q present */
+const baseList = q
+  ? brands.filter((b) => {
+      const name = String(b.brand || "").toLowerCase();
+      const cat = String(b.__seo_category_label || b.category || "").toLowerCase();
+      return name.includes(q) || cat.includes(q);
+    })
+  : brands;
+
+/* Sort & group (now based on baseList) */
+const sorted = baseList
+  .slice()
+  .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
 const groups: Record<string, any[]> = {};
 for (const b of sorted) {
   const key = firstLetter(b.brand);
@@ -32,7 +59,9 @@ for (const b of sorted) {
 }
 const letters = Object.keys(groups)
   .filter((k) => groups[k]?.length)
-  .sort((a, b) => (a === "#" ? 1 : b === "#" ? -1 : a.localeCompare(b)));
+  .sort((a, b) =>
+    a === "#" ? 1 : b === "#" ? -1 : a.localeCompare(b)
+  );
 const total = sorted.length;
 
 /* SEO */
@@ -55,7 +84,12 @@ const breadcrumbLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: Astro.site ? new URL("/", Astro.site).href : "/",
+    },
     { "@type": "ListItem", position: 2, name: "A–Z", item: CANONICAL },
   ],
 };
@@ -69,29 +103,137 @@ const itemListLd = {
 };
 ---
 
-<Base title={PAGE_TITLE} description={PAGE_DESC} canonical={CANONICAL} jsonLd={[breadcrumbLd, itemListLd]}>
+<Base
+  title={PAGE_TITLE}
+  description={PAGE_DESC}
+  canonical={CANONICAL}
+  jsonLd={[breadcrumbLd, itemListLd]}
+>
   <style is:inline>
     .fcard-sm {
-      position: relative; border-radius: .875rem;
+      position: relative;
+      border-radius: .875rem;
       border: 1px solid var(--card-border, rgb(226 232 240));
       background:
-        linear-gradient(180deg, color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 10%, transparent) 0%, transparent 24%),
+        linear-gradient(
+          180deg,
+          color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 10%, transparent) 0%,
+          transparent 24%
+        ),
         var(--card-bg, #fff);
-      padding:.75rem .85rem; overflow:hidden;
+      padding: .75rem .85rem;
+      overflow: hidden;
       transition: transform .16s ease, box-shadow .16s ease;
     }
-    .fcard-sm:hover { transform: translateY(-1px); box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); }
-    .dark .fcard-sm { --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
-    .meta-row { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.35rem }
-    .chip-lite { display:inline-flex; align-items:center; gap:.35rem; padding:.2rem .5rem; border-radius:9999px; font-size:.7rem; font-weight:600; background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 14%, white); border: 1px solid color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 28%, white); color: oklch(0.28 0 0); }
-    .dark .chip-lite { background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 22%, rgb(2 6 23)); border-color: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 45%, rgb(2 6 23)); color: white; }
-    .hook { margin-top:.25rem; font-size:.85rem; line-height:1.2rem; color: rgb(71 85 105); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-    .dark .hook { color: rgb(203 213 225); }
+    .fcard-sm:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18);
+    }
+    .dark .fcard-sm {
+      --card-bg: rgb(2 6 23);
+      --card-border: rgb(51 65 85);
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: .35rem;
+    }
+    .chip-lite {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .2rem .5rem;
+      border-radius: 9999px;
+      font-size: .7rem;
+      font-weight: 600;
+      background: color-mix(
+        in oklab,
+        var(--tint, oklch(0.7 0 0)) 14%,
+        white
+      );
+      border: 1px solid color-mix(
+        in oklab,
+        var(--tint, oklch(0.7 0 0)) 28%,
+        white
+      );
+      color: oklch(0.28 0 0);
+    }
+    .dark .chip-lite {
+      background: color-mix(
+        in oklab,
+        var(--tint, oklch(0.7 0 0)) 22%,
+        rgb(2 6 23)
+      );
+      border-color: color-mix(
+        in oklab,
+        var(--tint, oklch(0.7 0 0)) 45%,
+        rgb(2 6 23)
+      );
+      color: white;
+    }
+    .hook {
+      margin-top: .25rem;
+      font-size: .85rem;
+      line-height: 1.2rem;
+      color: rgb(71 85 105);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .dark .hook {
+      color: rgb(203 213 225);
+    }
+
+    /* 🔽 Live suggestions dropdown — sized to the search input */
+    .live-suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 4px;
+      max-height: 260px;
+      overflow-y: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: white;
+      box-shadow: 0 8px 22px -14px rgba(0, 0, 0, 0.25);
+      z-index: 30;
+    }
+    .dark .live-suggestions {
+      background: rgb(15 23 42);
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+    .live-suggestions a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: rgb(30 41 59);
+      text-decoration: none;
+    }
+    .dark .live-suggestions a {
+      color: rgb(226 232 240);
+    }
+    .live-suggestions a:hover {
+      background: rgb(239 246 255);
+    }
+    .dark .live-suggestions a:hover {
+      background: rgb(30 64 175 / 0.35);
+    }
+    .live-suggestions .subtext {
+      display: block;
+      font-size: 11px;
+      color: rgb(100 116 139);
+    }
+    .dark .live-suggestions .subtext {
+      color: rgb(148 163 184);
+    }
   </style>
 
   <p class="sr-only">
-    Defunct Brands A–Z index. Explore discontinued brands alphabetically with quick links to
-    brand timelines, categories, and outcomes.
+    Defunct Brands A–Z index. Explore discontinued brands alphabetically with
+    quick links to brand timelines, categories, and outcomes.
   </p>
 
   <div class="max-w-6xl mx-auto px-4">
@@ -104,74 +246,242 @@ const itemListLd = {
     <p class="text-slate-700 dark:text-slate-300 mb-4">
       A cleaned CSV of brands, categories, active years, and fate.
     </p>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Total brands: {total}</p>
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
+      Total brands: {total}
+    </p>
+
+    <!-- 🔎 Search within A–Z (with live suggestions) -->
+    <form action="/az/" method="GET" class="mb-6 flex flex-wrap gap-2 items-center">
+      <label
+        for="az-search"
+        class="text-sm text-slate-700 dark:text-slate-300"
+      >
+        Search by brand name or category:
+      </label>
+
+      <div class="flex gap-2 w-full max-w-2xl">
+         <div class="relative flex-1">
+          <input
+            id="az-search"
+            type="search"
+            name="q"
+            value={qRaw}
+            placeholder="e.g., PB Max, Blockbuster"
+            autocomplete="off"
+            class="w-full rounded-md border border-slate-300 dark:border-slate-700
+                   bg-white dark:bg-slate-900 px-3 py-1.5 text-sm
+                   text-slate-900 dark:text-slate-100"
+          />
+          <div
+            id="az-search-suggestions"
+            class="live-suggestions hidden"
+            role="listbox"
+            aria-label="Brand suggestions"
+          ></div>
+        </div>
+
+        <button
+          type="submit"
+          class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-1.5
+                 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none
+                 focus-visible:ring-2 focus-visible:ring-indigo-500"
+        >
+          Search
+        </button>
+      </div>
+
+      {q && (
+        <p class="w-full text-xs text-slate-500 dark:text-slate-400 mt-1">
+          Showing results for <strong>{qRaw}</strong> ({total} match
+          {total === 1 ? "" : "es"}).
+          <a href="/az/" class="ml-1 underline">Clear</a>
+        </p>
+      )}
+    </form>
 
     <!-- Jump bar -->
-    <div class="flex flex-wrap gap-2 mb-6" role="navigation" aria-label="Jump to letter">
-      {letters.map((L) => {
-        const anchor = L === "#" ? "0-9" : L;
-        return <a href={`#${anchor}`} class="chip focus-ring">{L}</a>;
-      })}
-    </div>
+    {total > 0 && (
+      <div class="flex flex-wrap gap-2 mb-6" role="navigation" aria-label="Jump to letter">
+        {letters.map((L) => {
+          const anchor = L === "#" ? "0-9" : L;
+          return (
+            <a href={`#${anchor}`} class="chip focus-ring">
+              {L}
+            </a>
+          );
+        })}
+      </div>
+    )}
 
-    <div class="space-y-10">
-      {letters.map((L) => {
-        const anchor = L === "#" ? "0-9" : L;
-        return (
-          <section id={anchor} role="region" aria-labelledby={`h-${anchor}`}>
-            <div class="flex items-baseline gap-2 mb-3">
-              <h2 id={`h-${anchor}`} class="text-xl font-semibold">{L}</h2>
-              <span class="text-sm text-slate-500 dark:text-slate-400">({groups[L].length})</span>
-            </div>
+    {total === 0 ? (
+      <p class="mt-4 text-sm text-slate-600 dark:text-slate-300">
+        No brands matched your search. Try a different name, spelling, or
+        category.
+      </p>
+    ) : (
+      <div class="space-y-10">
+        {letters.map((L) => {
+          const anchor = L === "#" ? "0-9" : L;
+          return (
+            <section id={anchor} role="region" aria-labelledby={`h-${anchor}`}>
+              <div class="flex items-baseline gap-2 mb-3">
+                <h2 id={`h-${anchor}`} class="text-xl font-semibold">
+                  {L}
+                </h2>
+                <span class="text-sm text-slate-500 dark:text-slate-400">
+                  ({groups[L].length})
+                </span>
+              </div>
 
-            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {groups[L].map((b: any) => {
-                const yrs = yearsOf(b);
-                const cat = b.__seo_category_label || b.category || "Brand";
-                // derive a stable tint from category label
-                let h = 0; const s = (cat || "brand") + "-vb"; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-                const tint = `oklch(0.7 0.12 ${h % 360})`;
-                const icon = fateIconOf(b);
-                const fateType = fateTypeOf(b) || "other";
-                const text = truncateInline(primaryTextOf(b), 120);
+              <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {groups[L].map((b: any) => {
+                  const yrs = yearsOf(b);
+                  const cat = b.__seo_category_label || b.category || "Brand";
+                  // derive a stable tint from category label
+                  let h = 0;
+                  const s = (cat || "brand") + "-vb";
+                  for (let i = 0; i < s.length; i++) {
+                    h = (h * 31 + s.charCodeAt(i)) >>> 0;
+                  }
+                  const tint = `oklch(0.7 0.12 ${h % 360})`;
+                  const icon = fateIconOf(b);
+                  const fateType = fateTypeOf(b) || "other";
+                  const text = truncateInline(primaryTextOf(b), 120);
 
-                return (
-                  <li>
-                    <article class="fcard-sm group h-full" style={{ "--tint": tint }}>
-                      <a
-                        href={`/brand/${encodeURIComponent(b.slug)}/`}
-                        class="stretched-link focus-ring rounded"
-                        aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
-                      ></a>
+                  return (
+                    <li>
+                      <article
+                        class="fcard-sm group h-full"
+                        style={{ "--tint": tint }}
+                      >
+                        <a
+                          href={`/brand/${encodeURIComponent(b.slug)}/`}
+                          class="stretched-link focus-ring rounded"
+                          aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${
+                            cat ? ` — ${cat}` : ""
+                          }`}
+                        ></a>
 
-                      <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-1.5 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
-                        {b.brand}
-                      </h3>
+                        <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-1.5 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
+                          {b.brand}
+                        </h3>
 
-                      {text && (
-                        <p class="hook">
-                          <span aria-hidden="true">{icon}</span>
-                          <span class="sr-only">Fate: {fateType}</span>
-                          {" "}{text}
-                        </p>
-                      )}
+                        {text && (
+                          <p class="hook">
+                            <span aria-hidden="true">{icon}</span>
+                            <span class="sr-only">Fate: {fateType}</span>
+                            {" "}{text}
+                          </p>
+                        )}
 
-                      <div class="meta-row">
-                        {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
-                        {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
-                      </div>
-                    </article>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        );
-      })}
-    </div>
+                        <div class="meta-row">
+                          {yrs && (
+                            <span
+                              class="chip-lite"
+                              aria-label={`Years active ${yrs}`}
+                            >
+                              {yrs}
+                            </span>
+                          )}
+                          {cat && (
+                            <span
+                              class="chip-lite"
+                              title={`Category: ${cat}`}
+                            >
+                              🏷️ {cat}
+                            </span>
+                          )}
+                        </div>
+                      </article>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          );
+        })}
+      </div>
+    )}
 
     <div class="mt-10">
-      <a href="#top" class="chip focus-ring">↑ Back to top</a>
+      <a href="#top" class="chip focus-ring">
+        ↑ Back to top
+      </a>
     </div>
   </div>
+
+  <!-- 🧠 Live suggestions script for /az/ -->
+ <!-- 🧠 Live suggestions script for /az/ -->
+<script is:inline define:vars={{ searchIndexJson }}>
+  (function () {
+    const input = document.getElementById("az-search");
+    const dropdown = document.getElementById("az-search-suggestions");
+    if (!input || !dropdown) return;
+
+    // 🚀 searchIndexJson is now a real JS string injected by Astro
+    let INDEX = [];
+    try {
+      INDEX = JSON.parse(searchIndexJson) || [];
+    } catch (e) {
+      console.error("Failed to parse A–Z searchIndexJson", e);
+      INDEX = [];
+    }
+
+    function clearSuggestions() {
+      dropdown.innerHTML = "";
+      dropdown.classList.add("hidden");
+    }
+
+    function renderSuggestions(items) {
+      if (!items.length) {
+        clearSuggestions();
+        return;
+      }
+
+      dropdown.innerHTML = items
+        .map(
+          (item) => `
+            <a href="${item.url}" role="option">
+              <span>${item.name}</span>
+              ${
+                item.category
+                  ? `<span class="subtext">${item.category}</span>`
+                  : ""
+              }
+            </a>
+          `
+        )
+        .join("");
+
+      dropdown.classList.remove("hidden");
+    }
+
+    input.addEventListener("input", function (event) {
+      const q = event.target.value.trim().toLowerCase();
+      if (!q) {
+        clearSuggestions();
+        return;
+      }
+
+      const matches = INDEX.filter((item) => {
+        const name = (item.name || "").toLowerCase();
+        const category = (item.category || "").toLowerCase();
+        return name.includes(q) || category.includes(q);
+      }).slice(0, 8);
+
+      renderSuggestions(matches);
+    });
+
+    // Hide dropdown shortly after blur so clicks still register
+    input.addEventListener("blur", () => {
+      setTimeout(clearSuggestions, 150);
+    });
+
+    // Prevent blur from killing clicks inside the dropdown
+    dropdown.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+    });
+  })();
+</script>
+
 </Base>

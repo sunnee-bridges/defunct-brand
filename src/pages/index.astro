@@ -22,6 +22,16 @@ const raw = import.meta.glob("/src/content/brands/*.json", {
 /* ---------- Normalize brands (dedupe + taxonomy merge) ---------- */
 const brands: any[] = normalizeBrands(raw);
 
+/* ---------- Search index for live suggestions ---------- */
+const searchIndex = brands
+  .filter((b) => b?.brand && b?.slug)
+  .map((b) => ({
+    name: String(b.brand),
+    url: `/brand/${encodeURIComponent(b.slug)}/`,
+    category: String(b.__seo_category_label || b.category || "Brand"),
+  }));
+
+
 /* ---------- Categories (unique, alpha) ---------- */
 const categories = Array.from(
   new Map(
@@ -346,6 +356,49 @@ const currentPath = Astro.url.pathname;
       background: color-mix(in oklab, rgb(99 102 241) 10%, white);
       border: 1px solid color-mix(in oklab, rgb(99 102 241) 22%, white); text-decoration: none;
     }
+     .live-suggestions {
+      position: absolute;
+      top: 100%;        /* sit directly below the search bar */
+      left: 0;
+      right: 0;         /* makes it exactly width of .search */
+      margin-top: 4px;
+      max-height: 260px;
+      overflow-y: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: white;
+      box-shadow: 0 8px 22px -14px rgba(0, 0, 0, 0.25);
+      z-index: 30;
+    }
+    .dark .live-suggestions {
+      background: rgb(15 23 42);
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+    .live-suggestions a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: rgb(30 41 59);
+      text-decoration: none;
+    }
+    .dark .live-suggestions a {
+      color: rgb(226 232 240);
+    }
+    .live-suggestions a:hover {
+      background: rgb(239 246 255);
+    }
+    .dark .live-suggestions a:hover {
+      background: rgb(30 64 175 / 0.35);
+    }
+    .live-suggestions .subtext {
+      display: block;
+      font-size: 11px;
+      color: rgb(100 116 139);
+    }
+    .dark .live-suggestions .subtext {
+      color: rgb(148 163 184);
+    }
+
     .dark .chip {
       color: white;
       background: color-mix(in oklab, rgb(99 102 241) 22%, rgb(2 6 23));
@@ -395,9 +448,20 @@ const currentPath = Astro.url.pathname;
           id="brandSearch"
           placeholder={`Search ${totalAll} brands: Blockbuster, Circuit City, Toys R Us…`}
           aria-label="Search defunct brands"
+          autocomplete="off"
         />
         <button class="search-btn" type="submit">Search</button>
+
+        <!-- 🔽 Live suggestions dropdown (now inside .search) -->
+        <div
+          id="brandSearch-suggestions"
+          class="live-suggestions hidden"
+          role="listbox"
+          aria-label="Search suggestions"
+        ></div>
       </div>
+
+      <!-- Example search chips -->
       <div class="suggestions" aria-label="Example searches">
         <a href="/az/?q=Blockbuster" class="chip">Blockbuster</a>
         <a href="/az/?q=Circuit%20City" class="chip">Circuit City</a>
@@ -405,6 +469,14 @@ const currentPath = Astro.url.pathname;
         <a href="/decade/1990s/" class="chip">1990s</a>
       </div>
     </form>
+  <!-- Inline brand search index for live suggestions -->
+  <script
+    id="brand-index"
+    type="application/json"
+    is:inline
+    set:html={JSON.stringify(searchIndex)}
+  />
+
   </section>
 
   <!-- Minimal “why this matters” tucked away -->
@@ -639,4 +711,83 @@ const currentPath = Astro.url.pathname;
       })}
     </div>
   </section>
+    <script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+      const input = document.getElementById("brandSearch");
+      const dropdown = document.getElementById("brandSearch-suggestions");
+      const indexScript = document.getElementById("brand-index");
+
+      if (!input || !dropdown || !indexScript) {
+        console.warn("Search suggestions: missing input, dropdown, or index script");
+        return;
+      }
+
+      let index = [];
+      try {
+        const raw = indexScript.textContent || "[]";
+        index = JSON.parse(raw);
+      } catch (e) {
+        console.error("Search suggestions: failed to parse index JSON", e);
+        index = [];
+      }
+
+      if (!Array.isArray(index) || index.length === 0) {
+        console.warn("Search suggestions: index is empty");
+      }
+
+      function clearSuggestions() {
+        dropdown.innerHTML = "";
+        dropdown.classList.add("hidden");
+      }
+
+      function renderSuggestions(items) {
+        if (!items.length) {
+          clearSuggestions();
+          return;
+        }
+
+        dropdown.innerHTML = items
+          .map(
+            (item) => `
+              <a href="${item.url}" role="option">
+                <span>${item.name}</span>
+                ${item.category ? `<span class="subtext">${item.category}</span>` : ""}
+              </a>
+            `
+          )
+          .join("");
+
+        dropdown.classList.remove("hidden");
+      }
+
+      input.addEventListener("input", (event) => {
+        const q = event.target.value.trim().toLowerCase();
+
+        if (!q) {
+          clearSuggestions();
+          return;
+        }
+
+        const matches = index
+          .filter((item) => {
+            const name = (item.name || "").toLowerCase();
+            const category = (item.category || "").toLowerCase();
+            return name.includes(q) || category.includes(q);
+          })
+          .slice(0, 8);
+
+        renderSuggestions(matches);
+      });
+
+      // Hide dropdown shortly after blur so clicks still register
+      input.addEventListener("blur", () => {
+        setTimeout(clearSuggestions, 150);
+      });
+
+      // Prevent blur from killing clicks inside the dropdown when clicking a suggestion
+      dropdown.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+      });
+    });
+  </script>
 </Base>

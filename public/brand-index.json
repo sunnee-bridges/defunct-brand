@@ -1,0 +1,21 @@
+[
+  {
+    "name": "PB Max",
+    "slug": "pb-max",
+    "url": "/brand/pb-max/",
+    "category": "Snack foods"
+  },
+  {
+    "name": "Mama Rosa's Pizza",
+    "slug": "mama-rosas-pizza",
+    "url": "/brand/mama-rosas-pizza/",
+    "category": "Frozen / refrigerated foods"
+  },
+  {
+    "name": "Bartles & Jaymes",
+    "slug": "bartles-and-jaymes",
+    "url": "/brand/bartles-and-jaymes/",
+    "category": "Beverages"
+  }
+  
+]

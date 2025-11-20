@@ -14,21 +14,61 @@ function fmtDateSafe(v: unknown) {
   if (!d) return { iso: "", text: "Undated" };
   return {
     iso: d.toISOString(),
-    text: d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" }),
+    text: d.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    }),
   };
 }
 
 /* ---------- Load posts (exclude drafts) ---------- */
-const posts = (await getCollection("post", p => !p.data.draft))
+const allPosts = (await getCollection("post", (p) => !p.data.draft))
   .sort((a, b) => {
     const bd = parseDate(b.data.updated ?? b.data.date);
     const ad = parseDate(a.data.updated ?? a.data.date);
     return (+bd! || 0) - (+ad! || 0);
   });
 
+/* ---------- Simple search on title / description / tags ---------- */
+const qRaw = Astro.url.searchParams.get("q") || "";
+const q = qRaw.trim().toLowerCase();
+
+const posts = q
+  ? allPosts.filter((p) => {
+      const title = String(p.data.title || "").toLowerCase();
+      const desc = String(p.data.description || "").toLowerCase();
+      const tags = Array.isArray(p.data.tags)
+        ? p.data.tags.map((t: any) => String(t).toLowerCase())
+        : [];
+
+      return (
+        title.includes(q) ||
+        desc.includes(q) ||
+        tags.some((t) => t.includes(q))
+      );
+    })
+  : allPosts;
+
+const totalAll = allPosts.length;
+const totalVisible = posts.length;
+
 const title = "Vanished Brands Blog";
-const desc  = "Plain-language explainers, timelines, and data stories.";
+const desc = "Plain-language explainers, timelines, and data stories.";
 const canonical = Astro.site ? new URL("/blog/", Astro.site).href : "/blog/";
+
+/* ---------- Client-side search index for live suggestions ---------- */
+const searchIndex = allPosts.map((p) => ({
+  title: String(p.data.title || ""),
+  url: `/blog/${p.slug}/`,
+  description: String(p.data.description || ""),
+  tags: Array.isArray(p.data.tags)
+    ? p.data.tags.map((t: any) => String(t))
+    : [],
+}));
+
+// JSON that will be embedded in a <script type="application/json">
+const searchIndexJson = JSON.stringify(searchIndex);
 
 /* ---------- Read-time estimate (best effort) ---------- */
 function estReadMins(entry: any) {
@@ -39,16 +79,15 @@ function estReadMins(entry: any) {
 
 /* ---------- Image helpers (frontmatter first; no fabricated fallbacks) ---------- */
 function cardImageForPost(p: any) {
-  // Accept: image { src, alt?, credit?, source?, license?, fit? } OR string
   const fm = p.data?.image ?? p.data?.hero ?? p.data?.cover ?? null;
   const fmObj = typeof fm === "string" ? { src: fm, alt: "" } : fm;
 
-  const src     = fmObj?.src || "";
-  const alt     = fmObj?.alt || p.data?.title || "Article image";
-  const credit  = fmObj?.credit  || "";
-  const source  = fmObj?.source  || "";
+  const src = fmObj?.src || "";
+  const alt = fmObj?.alt || p.data?.title || "Article image";
+  const credit = fmObj?.credit || "";
+  const source = fmObj?.source || "";
   const license = fmObj?.license || "";
-  const fit     = (fmObj?.fit === "contain") ? "contain" : "cover";
+  const fit = fmObj?.fit === "contain" ? "contain" : "cover";
 
   return { src, alt, credit, source, license, fit };
 }
@@ -67,7 +106,9 @@ const itemListLd = {
       "@type": "ListItem",
       position: i + 1,
       name: p.data.title,
-      url: Astro.site ? new URL(`/blog/${p.slug}/`, Astro.site).href : `/blog/${p.slug}/`,
+      url: Astro.site
+        ? new URL(`/blog/${p.slug}/`, Astro.site).href
+        : `/blog/${p.slug}/`,
       ...(dp ? { datePublished: dp.toISOString() } : {}),
       ...(dm ? { dateModified: dm.toISOString() } : {}),
     };
@@ -92,15 +133,14 @@ const itemListLd = {
     .dark .card { border-color: rgb(51 65 85); background: rgb(2 6 23); }
     .card:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -18px rgba(0,0,0,.45); }
 
-    /* Media box */
     .thumb {
       position: relative;
       aspect-ratio: 16/9;
       display: grid; place-items: center;
       color: white; overflow: hidden;
-      background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%); /* only for no-image fallback */
+      background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
     }
-    .thumb.has-img { background: #000; } /* Avoid gradient band when an image exists */
+    .thumb.has-img { background: #000; }
 
     .thumb picture, .thumb img { width: 100%; height: 100%; display: block; }
     .thumb img.fit-cover   { object-fit: cover;   object-position: center top; }
@@ -129,7 +169,15 @@ const itemListLd = {
     }
     .dark .desc { color: rgb(203 213 225); }
 
-    .meta { margin-top: 10px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size: 12px; color: rgb(100 116 139); }
+    .meta {
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      font-size: 12px;
+      color: rgb(100 116 139);
+    }
     .dark .meta { color: rgb(148 163 184); }
 
     .chip {
@@ -143,53 +191,175 @@ const itemListLd = {
       color: white;
     }
 
-    .badge { position: absolute; top: 10px; left: 10px; font-size: 11px; font-weight: 700; padding: .28rem .5rem; border-radius: 9999px;
-      background: rgba(255,255,255,.92); color: #111827; border: 1px solid rgba(0,0,0,.06); }
-    .dark .badge { background: rgba(2,6,23,.7); color: white; border-color: rgba(255,255,255,.16); }
+    .badge {
+      position: absolute; top: 10px; left: 10px;
+      font-size: 11px; font-weight: 700;
+      padding: .28rem .5rem; border-radius: 9999px;
+      background: rgba(255,255,255,.92); color: #111827;
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .dark .badge {
+      background: rgba(2,6,23,.7); color: white;
+      border-color: rgba(255,255,255,.16);
+    }
+
+    /* 🔽 Live suggestions dropdown for blog search */
+    .live-suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 4px;
+      max-height: 260px;
+      overflow-y: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: white;
+      box-shadow: 0 8px 22px -14px rgba(0, 0, 0, 0.25);
+      z-index: 30;
+    }
+    .dark .live-suggestions {
+      background: rgb(15 23 42);
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+    .live-suggestions a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: rgb(30 41 59);
+      text-decoration: none;
+    }
+    .dark .live-suggestions a {
+      color: rgb(226 232 240);
+    }
+    .live-suggestions a:hover {
+      background: rgb(239 246 255);
+    }
+    .dark .live-suggestions a:hover {
+      background: rgb(30 64 175 / 0.35);
+    }
+    .live-suggestions .subtext {
+      display: block;
+      font-size: 11px;
+      color: rgb(100 116 139);
+    }
+    .dark .live-suggestions .subtext {
+      color: rgb(148 163 184);
+    }
   </style>
 
-  <nav class="mb-4"><a href="/" class="chip focus-ring">← Home</a></nav>
+  <nav class="mb-4">
+    <a href="/" class="chip focus-ring">← Home</a>
+  </nav>
 
   <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
   <p class="text-slate-600 dark:text-slate-300 mb-5">{desc}</p>
 
   <p class="text-slate-600 dark:text-slate-300 mb-5 max-w-2xl">
-    Have your own memories, corrections, or a brand story to share?
-    {" "}
+    Have your own memories, corrections, or a brand story to share?{" "}
     <a
-  href="/contact/"
-  class="underline decoration-indigo-500 decoration-2 underline-offset-2 hover:decoration-indigo-600
-         -mx-1 px-1 rounded-sm font-medium
-         text-indigo-700 hover:text-indigo-900
-         dark:text-indigo-300 dark:hover:text-indigo-200
-         hover:bg-indigo-50 dark:hover:bg-slate-800"
->
-  Get in touch via the contact form
-</a>.
+      href="/contact/"
+      class="underline decoration-indigo-500 decoration-2 underline-offset-2 hover:decoration-indigo-600
+             -mx-1 px-1 rounded-sm font-medium
+             text-indigo-700 hover:text-indigo-900
+             dark:text-indigo-300 dark:hover:text-indigo-200
+             hover:bg-indigo-50 dark:hover:bg-slate-800"
+    >
+      Get in touch via the contact form
+    </a>.
   </p>
 
+  <!-- 🔎 Blog search by title / description / tags -->
+  <form
+    action="/blog/"
+    method="GET"
+    class="mb-6 flex flex-wrap gap-2 items-center"
+  >
+    <label
+      for="blog-search"
+      class="text-sm text-slate-700 dark:text-slate-300"
+    >
+      Search blog posts:
+    </label>
+
+    <div class="flex gap-2 w-full max-w-2xl">
+      <div class="relative flex-1">
+        <input
+          id="blog-search"
+          type="search"
+          name="q"
+          value={qRaw}
+          placeholder="e.g., PB Max, 80s candy, Whipper Snapple"
+          class="w-full rounded-md border border-slate-300 dark:border-slate-700
+                 bg-white dark:bg-slate-900 px-3 py-1.5 text-sm
+                 text-slate-900 dark:text-slate-100"
+          autocomplete="off"
+        />
+        <div
+          id="blog-search-suggestions"
+          class="live-suggestions hidden"
+          role="listbox"
+          aria-label="Blog post suggestions"
+        ></div>
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-1.5
+               text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none
+               focus-visible:ring-2 focus-visible:ring-indigo-500"
+      >
+        Search
+      </button>
+    </div>
+
+    {q && (
+      <p class="w-full text-xs text-slate-500 dark:text-slate-400 mt-1">
+        Showing {totalVisible} of {totalAll} posts for <strong>{qRaw}</strong>.
+        <a href="/blog/" class="ml-1 underline">Clear</a>
+      </p>
+    )}
+  </form>
+
   {posts.length === 0 ? (
-    <p class="text-slate-600 dark:text-slate-400">No posts yet.</p>
+    q ? (
+      <p class="text-slate-600 dark:text-slate-400">
+        No posts matched your search. Try a different keyword, spelling, or tag.
+      </p>
+    ) : (
+      <p class="text-slate-600 dark:text-slate-400">No posts yet.</p>
+    )
   ) : (
     <ul class="blog-grid">
       {posts.map((p) => {
         const d = fmtDateSafe(p.data.updated ?? p.data.date);
         const mins = estReadMins(p);
-        const tags: string[] = Array.isArray(p.data.tags) ? p.data.tags.slice(0, 2) : [];
-        const isUpdated = Boolean(parseDate(p.data.updated) && parseDate(p.data.date) && (p.data.updated !== p.data.date));
+        const tags: string[] = Array.isArray(p.data.tags)
+          ? p.data.tags.slice(0, 2)
+          : [];
+        const isUpdated = Boolean(
+          parseDate(p.data.updated) &&
+            parseDate(p.data.date) &&
+            p.data.updated !== p.data.date
+        );
 
         const img = cardImageForPost(p);
         const hasCredit = Boolean(img.credit || img.source || img.license);
 
         return (
           <li class="card">
-            <a href={`/blog/${p.slug}/`} class="stretched-link" aria-label={p.data.title}></a>
+            <a
+              href={`/blog/${p.slug}/`}
+              class="stretched-link"
+              aria-label={p.data.title}
+            ></a>
 
             <div class={`thumb ${img.src ? "has-img" : ""}`}>
               {img.src ? (
                 <picture>
-                  {/* Keep WebP if provided; no fake JPG fallback */}
-                  {/\.webp($|\?)/i.test(img.src) && <source type="image/webp" srcset={img.src} />}
+                  {/\.webp($|\?)/i.test(img.src) && (
+                    <source type="image/webp" srcset={img.src} />
+                  )}
                   <img
                     src={img.src}
                     alt={img.alt}
@@ -199,19 +369,27 @@ const itemListLd = {
                   />
                 </picture>
               ) : (
-                <div class="fallback" aria-hidden="true">📰</div>
+                <div class="fallback" aria-hidden="true">
+                  📰
+                </div>
               )}
               {isUpdated && <span class="badge">Updated</span>}
 
               {hasCredit && (
                 <small class="credit">
                   {img.source ? (
-                    <a href={img.source} target="_blank" rel="noopener noreferrer">
-                      {img.credit || "Image"}{img.license ? ` — ${img.license}` : ""}
+                    <a
+                      href={img.source}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {img.credit || "Image"}
+                      {img.license ? ` — ${img.license}` : ""}
                     </a>
                   ) : (
                     <>
-                      {img.credit || "Image"}{img.license ? ` — {img.license}` : ""}
+                      {img.credit || "Image"}
+                      {img.license ? ` — ${img.license}` : ""}
                     </>
                   )}
                 </small>
@@ -220,10 +398,17 @@ const itemListLd = {
 
             <div class="content">
               <h2 class="title">
-                <a class="focus-ring rounded-sm" href={`/blog/${p.slug}/`}>{p.data.title}</a>
+                <a
+                  class="focus-ring rounded-sm"
+                  href={`/blog/${p.slug}/`}
+                >
+                  {p.data.title}
+                </a>
               </h2>
 
-              {p.data.description && <p class="desc">{p.data.description}</p>}
+              {p.data.description && (
+                <p class="desc">{p.data.description}</p>
+              )}
 
               <div class="meta">
                 <time {...(d.iso ? { datetime: d.iso } : {})}>{d.text}</time>
@@ -232,8 +417,8 @@ const itemListLd = {
                 {tags.length > 0 && (
                   <>
                     <span aria-hidden="true">•</span>
-                    {tags.map(t => (
-                      <span class="chip" title={`Tag: ${t}`}>#{t}</span>
+                    {tags.map((t) => (
+                      <span class="chip" title={`Tag: {t}`}>#{t}</span>
                     ))}
                   </>
                 )}
@@ -245,6 +430,100 @@ const itemListLd = {
     </ul>
   )}
 
+  <!-- 🔎 Inline JSON index for blog search (parsed by the script below) -->
+  <script
+    id="blog-search-index"
+    type="application/json"
+    is:inline
+    set:html={searchIndexJson}
+  />
+
+  <!-- 🧠 Blog live search suggestions -->
+  <script is:inline>
+    (function () {
+      const input = document.getElementById("blog-search");
+      const dropdown = document.getElementById("blog-search-suggestions");
+      const indexScript = document.getElementById("blog-search-index");
+      if (!input || !dropdown || !indexScript) {
+        console.warn("[blog search] Missing input/dropdown/indexScript");
+        return;
+      }
+
+      let INDEX = [];
+      try {
+        INDEX = JSON.parse(indexScript.textContent || "[]");
+        console.log("[blog search] Loaded index with", INDEX.length, "posts");
+      } catch (e) {
+        console.error("[blog search] Failed to parse index JSON", e);
+        INDEX = [];
+      }
+
+      function clearSuggestions() {
+        dropdown.innerHTML = "";
+        dropdown.classList.add("hidden");
+      }
+
+      function renderSuggestions(items) {
+        if (!items.length) {
+          clearSuggestions();
+          return;
+        }
+
+        dropdown.innerHTML = items
+          .map((item) => {
+            const tags = Array.isArray(item.tags) ? item.tags.slice(0, 3) : [];
+            const tagLine = tags.length ? tags.join(", ") : "";
+            return `
+              <a href="${item.url}" role="option">
+                <span>${item.title}</span>
+                ${
+                  tagLine
+                    ? `<span class="subtext">${tagLine}</span>`
+                    : ""
+                }
+              </a>
+            `;
+          })
+          .join("");
+
+        dropdown.classList.remove("hidden");
+      }
+
+      input.addEventListener("input", function (event) {
+        const q = event.target.value.trim().toLowerCase();
+        if (!q) {
+          clearSuggestions();
+          return;
+        }
+
+        const matches = INDEX.filter((item) => {
+          const title = (item.title || "").toLowerCase();
+          const desc = (item.description || "").toLowerCase();
+          const tags = Array.isArray(item.tags)
+            ? item.tags.map((t) => String(t).toLowerCase())
+            : [];
+          return (
+            title.includes(q) ||
+            desc.includes(q) ||
+            tags.some((t) => t.includes(q))
+          );
+        }).slice(0, 8);
+
+        console.log("[blog search] Query:", q, "matches:", matches.length);
+        renderSuggestions(matches);
+      });
+
+      input.addEventListener("blur", () => {
+        setTimeout(clearSuggestions, 150);
+      });
+
+      dropdown.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+      });
+    })();
+  </script>
+
+  <!-- Date prettifier -->
   <script is:inline>
     (function () {
       try {
