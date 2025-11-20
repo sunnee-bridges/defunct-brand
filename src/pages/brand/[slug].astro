@@ -29,12 +29,17 @@ const modKey = `/src/content/brands/${slug}.json`;
 const brand = (brandModules[modKey] as any) ?? null;
 const notFound = !brand;
 
+const slogan =
+  brand?.slogan ??
+  (Array.isArray(brand?.taglines) && brand.taglines.length ? brand.taglines[0].text : undefined);
+
 /* ---------------- Helpers ---------------- */
 function catToPath(cat?: string) {
   if (!cat) return null;
   const s = cat.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   return `/category/${encodeURIComponent(s)}/`;
 }
+
 function titleFromSlug(s: string) {
   return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
@@ -51,6 +56,7 @@ function escapeHtml(s: string) {
   return String(s || "")
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
+
 function mdToHtml(md: string) {
   md = String(md || "").replace(/\r\n?/g, "\n").trim();
   if (!md) return "";
@@ -108,6 +114,69 @@ function inlineMd(s: string) {
   return t;
 }
 
+/** Truncate text to character limit */
+function truncateText(text: string, limit: number = 155): string {
+  if (!text || text.length <= limit) return text;
+  return text.substring(0, limit - 3).trim() + '...';
+}
+
+/** Check if brand has displayable quick facts */
+function hasQuickFacts(brand: any): boolean {
+  // Check quick_facts object
+  if (brand?.quick_facts) {
+    const facts = Object.values(brand.quick_facts).filter(
+      v => v !== null && v !== undefined && v !== ''
+    );
+    if (facts.length > 0) return true;
+  }
+  
+  // Check stats object for displayable retail/business stats
+  if (brand?.stats) {
+    const displayableKeys = [
+      'peak_stores', 'years_in_business', 'years_available',
+      'employees_at_peak', 'peak_year', 'founding_year',
+      'closure_year', 'alcohol_content', 'category'
+    ];
+    return displayableKeys.some(key => {
+      const val = brand.stats[key];
+      return val !== null && val !== undefined && val !== '';
+    });
+  }
+  
+  return false;
+}
+
+/** Format field name for display */
+function formatFieldName(key: string): string {
+  const labelMap: Record<string, string> = {
+    'product_type': 'Product Type',
+    'alcohol_content': 'Alcohol Content',
+    'launch_year': 'Launch Year',
+    'discontinued_year': 'Discontinued',
+    'years_available': 'Years Active',
+    'signature_feature': 'Signature Feature',
+    'flavor_profile': 'Flavor',
+    'bottle_size': 'Bottle Size',
+    'typical_price': 'Typical Price',
+    'target_market': 'Target Market',
+    'parent_company': 'Parent Company',
+    'primary_competitor': 'Main Competitor',
+    'market_position': 'Market Position',
+    'distribution': 'Distribution',
+    'actual_vodka_content': 'Vodka Content',
+    'peak_stores': 'Peak Stores',
+    'years_in_business': 'Years Active',
+    'employees_at_peak': 'Employees (Peak)',
+    'peak_year': 'Peak Year',
+    'founding_year': 'Founded',
+    'closure_year': 'Closed'
+  };
+  
+  return labelMap[key] || key
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
 /** Years-only helpers */
 const startY = brand?.active?.start;
 const endY   = brand?.active?.end;
@@ -125,6 +194,7 @@ const fateIcons: Record<string, string> = {
   shutdown: "🔒", closed: "🔒",
   crisis: "🚨", insolvency: "🚨",
 };
+
 function pickFateIcon(fate?: string, topics?: string[]) {
   const tset = new Set((topics || []).map((x) => String(x).toLowerCase()));
   for (const k of tset) {
@@ -149,6 +219,7 @@ let jsonLdBlocks: any[] = [];
 let ogImage = "";
 let ogImageAlt = "";
 let twitterCard = "summary_large_image";
+let keywords = "";
 
 type LinkItem = { href: string; label: string; external?: boolean; rel?: string };
 let internalLinks: LinkItem[] = [];
@@ -156,7 +227,7 @@ let authorityLinks: LinkItem[] = [];
 let mediaLinks: LinkItem[] = [];
 
 let overviewHtml = "";
-let timeline: Array<{ date: string; text?: string }> = [];
+let timeline: Array<{ date: string; text?: string; year?: number; milestone?: string }> = [];
 let sources: Array<{ label?: string; url: string }> = [];
 
 /* Pull a 4-digit year (or echo original date) */
@@ -166,6 +237,8 @@ if (!notFound) {
   // Prefer author's Markdown body
   if (brand?.overview_md) {
     overviewHtml = mdToHtml(String(brand.overview_md));
+  } else if (brand?.content?.introduction) {
+    overviewHtml = mdToHtml(String(brand.content.introduction));
   }
 
   // Timeline/Sources (optional)
@@ -177,35 +250,90 @@ if (!notFound) {
       ? [{ label: "Wikipedia", url: brand.links.wikipedia }]
       : [];
 
-  // SEO bits — prefer hook, else fate, else summary
+  // SEO bits — prefer SEO fields, then hook, else fate, else summary
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
   const descPref = (brand.hook || brand.fate || brand.summary || "").trim();
 
-  pageTitle = `What Happened to ${brand.brand}? (Timeline & Fate)`;
-  pageDesc  = descPref ? `${brand.brand}: ${descPref}` : `${brand.brand}: active ${activeStr}.`;
+  // SEO-optimized title
+  pageTitle = brand?.seo?.meta_title || 
+    `What Happened to ${brand.brand}?${years ? ` (${years})` : ''} - Complete Story`;
 
-  const brandPath = `/brand/${encodeURIComponent(brand.slug || slug)}/`;
-  canonical = Astro.site ? new URL(brandPath, Astro.site).href : brandPath;
+  // SEO-optimized description (max 155 characters)
+  pageDesc = brand?.seo?.meta_description || 
+    truncateText(`${brand.brand}${years ? ` (${years})` : ''}: ${descPref}`, 155);
+
+  // Keywords
+  keywords = brand?.seo?.keywords?.join(', ') || '';
+
+  const brandPath = brand?.url || `/brand/${encodeURIComponent(brand.slug || slug)}/`;
+  canonical = brand?.canonical || (Astro.site ? new URL(brandPath, Astro.site).href : brandPath);
 
   const siteOrigin = Astro.site?.origin || "https://vanishedbrands.com";
   const perBrandOg  = `/og/brand/${encodeURIComponent(brand.slug || slug)}.png`;
-  ogImage     = new URL(perBrandOg, siteOrigin).toString();
-  ogImageAlt  = `What happened to ${brand.brand}?`;
+  ogImage     = brand?.og?.image || new URL(perBrandOg, siteOrigin).toString();
+  ogImageAlt  = brand?.og?.image_alt || `What happened to ${brand.brand}?`;
+  twitterCard = brand?.twitter?.card || "summary_large_image";
 
   const sameAs: string[] = [];
   if (brand?.links?.wikipedia) sameAs.push(String(brand.links.wikipedia));
+  if (brand?.schema?.sameAs) {
+    sameAs.push(...(Array.isArray(brand.schema.sameAs) ? brand.schema.sameAs : [brand.schema.sameAs]));
+  }
 
+  // Enhanced Brand Schema
   const brandLd = {
     ["@context"]: "https://schema.org",
-    ["@type"]: "Brand",
+    ["@type"]: brand?.schema?.["@type"] || "Brand",
     ["@id"]: canonical + "#brand",
     name: brand.brand,
+    alternateName: brand?.schema?.alternateName,
     description: descPref || undefined,
     url: canonical,
     sameAs: sameAs.length ? sameAs : undefined,
-    foundingDate: brand.active?.start || undefined,
-    dissolutionDate: brand.active?.end || undefined,
+    foundingDate: brand?.schema?.foundingDate || (brand?.active?.start ? `${brand.active.start}` : undefined),
+    dissolutionDate: brand?.schema?.dissolutionDate || (brand?.active?.end ? `${brand.active.end}` : undefined),
     category: brand.category || undefined,
+    founder: brand?.schema?.founder,
+    location: brand?.schema?.location,
+    parentOrganization: brand?.schema?.parentOrganization,
+  };
+
+  // Enhanced Article Schema
+  const articleLd = {
+    ["@context"]: "https://schema.org",
+    ["@type"]: "Article",
+    headline: pageTitle,
+    description: pageDesc,
+    image: ogImage,
+    datePublished: brand?.publishing?.published_date || 
+      brand?.publishing?.datePublished ||
+      (brand?.active?.start ? `${brand.active.start}-01-01` : undefined),
+    dateModified: brand?.publishing?.last_updated || 
+      brand?.publishing?.dateModified ||
+      new Date().toISOString().split('T')[0],
+    author: brand?.publishing?.author ? {
+      ["@type"]: brand.publishing.author.name ? "Person" : "Organization",
+      name: brand.publishing.author.name || "Vanished Brands Editorial Team",
+      url: brand.publishing.author.url
+    } : {
+      ["@type"]: "Organization",
+      name: "Vanished Brands Editorial Team"
+    },
+    publisher: {
+      ["@type"]: "Organization",
+      name: "Vanished Brands",
+      url: siteOrigin,
+      logo: {
+        ["@type"]: "ImageObject",
+        url: new URL("/logo.png", siteOrigin).toString()
+      }
+    },
+    mainEntityOfPage: {
+      ["@type"]: "WebPage",
+      ["@id"]: canonical
+    },
+    wordCount: brand?.publishing?.word_count,
+    keywords: keywords || undefined
   };
 
   const webPageLd = {
@@ -216,11 +344,13 @@ if (!notFound) {
     description: pageDesc,
     mainEntity: { ["@id"]: canonical + "#brand" },
     primaryImageOfPage: { ["@type"]: "ImageObject", url: ogImage },
+    breadcrumb: { ["@id"]: canonical + "#breadcrumb" }
   };
 
   const breadcrumbsLd = {
     ["@context"]: "https://schema.org",
     ["@type"]: "BreadcrumbList",
+    ["@id"]: canonical + "#breadcrumb",
     itemListElement: [
       { ["@type"]: "ListItem", position: 1, name: "Home", item: Astro.site ? new URL("/", Astro.site).href : "/" },
       { ["@type"]: "ListItem", position: 2, name: "A–Z",  item: Astro.site ? new URL("/az/", Astro.site).href : "/az/" },
@@ -228,7 +358,50 @@ if (!notFound) {
     ],
   };
 
-  jsonLdBlocks = [brandLd, webPageLd, breadcrumbsLd];
+  jsonLdBlocks = [brandLd, articleLd, webPageLd, breadcrumbsLd];
+
+  // FAQ Schema
+  if (Array.isArray(brand?.content?.faq) && brand.content.faq.length > 0) {
+    const faqLd = {
+      ["@context"]: "https://schema.org",
+      ["@type"]: "FAQPage",
+      mainEntity: brand.content.faq.map((item: any) => ({
+        ["@type"]: "Question",
+        name: item.question,
+        acceptedAnswer: {
+          ["@type"]: "Answer",
+          text: item.answer
+        }
+      }))
+    };
+    jsonLdBlocks.push(faqLd);
+  }
+
+  // Image Schema
+  if (brand?.images?.hero) {
+    const imageLd = {
+      ["@context"]: "https://schema.org",
+      ["@type"]: "ImageObject",
+      url: brand.images.hero.url,
+      description: brand.images.hero.alt,
+      width: brand.images.hero.width || 1200,
+      height: brand.images.hero.height || 630,
+      caption: brand.images.hero.caption
+    };
+    jsonLdBlocks.push(imageLd);
+  }
+
+  // Set Last-Modified header
+  if (brand?.publishing?.last_updated) {
+    try {
+      Astro.response.headers.set(
+        'Last-Modified',
+        new Date(brand.publishing.last_updated).toUTCString()
+      );
+    } catch (e) {
+      // Ignore if headers already sent
+    }
+  }
 
   // ---------- LearnMore links ----------
   internalLinks = [{ href: "/az/", label: "Browse A–Z" }];
@@ -242,6 +415,13 @@ if (!notFound) {
         href: `/topics/${encodeURIComponent(t)}/`,
         label: `More in ${titleFromSlug(t)}`
       });
+    });
+  }
+
+  // Add related articles
+  if (Array.isArray(brand?.related_articles) && brand.related_articles.length > 0) {
+    brand.related_articles.slice(0, 3).forEach((article: string) => {
+      internalLinks.push({ href: article, label: article.split('/').pop()?.replace(/-/g, ' ') || 'Related Article' });
     });
   }
 
@@ -267,17 +447,33 @@ if (!notFound) {
   <Fragment slot="head">
     <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     {notFound && <meta name="robots" content="noindex,follow" />}
+    {keywords && <meta name="keywords" content={keywords} />}
+    
     {!notFound && (
       <>
-        <meta property="og:type" content="website" />
+        {/* Open Graph */}
+        <meta property="og:type" content={brand?.og?.type || "website"} />
         <meta property="og:site_name" content="Vanished Brands" />
+        <meta property="og:title" content={brand?.og?.title || pageTitle} />
+        <meta property="og:description" content={brand?.og?.description || pageDesc} />
+        <meta property="og:url" content={brand?.og?.url || canonical} />
         <meta property="og:image" content={ogImage} />
         <meta property="og:image:alt" content={ogImageAlt} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        
+        {/* Twitter Card */}
         <meta name="twitter:card" content={twitterCard} />
-        <meta name="twitter:image" content={ogImage} />
-        <meta name="twitter:image:alt" content={ogImageAlt} />
+        <meta name="twitter:title" content={brand?.twitter?.title || pageTitle} />
+        <meta name="twitter:description" content={brand?.twitter?.description || pageDesc} />
+        <meta name="twitter:image" content={brand?.twitter?.image || ogImage} />
+        <meta name="twitter:image:alt" content={brand?.twitter?.image_alt || ogImageAlt} />
+        {brand?.twitter?.site && <meta name="twitter:site" content={brand.twitter.site} />}
+        {brand?.twitter?.creator && <meta name="twitter:creator" content={brand.twitter.creator} />}
+        
+        {/* Additional SEO */}
+        <link rel="alternate" hreflang="en" href={canonical} />
+        <link rel="alternate" hreflang="x-default" href={canonical} />
       </>
     )}
   </Fragment>
@@ -293,6 +489,33 @@ if (!notFound) {
     </>
   ) : (
     <>
+      {/* Breadcrumb Navigation */}
+      <nav aria-label="Breadcrumb" class="mb-4">
+        <ol class="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+          <li>
+            <a href="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/az/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">A–Z</a>
+          </li>
+          {brand.category && catToPath(brand.category) && (
+            <>
+              <li aria-hidden="true">›</li>
+              <li>
+                <a href={catToPath(brand.category)} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  {brand.category}
+                </a>
+              </li>
+            </>
+          )}
+          <li aria-hidden="true">›</li>
+          <li aria-current="page" class="font-semibold text-slate-900 dark:text-slate-100">
+            {brand.brand}
+          </li>
+        </ol>
+      </nav>
+
       <nav class="flex flex-wrap items-center gap-2 my-3">
         <a href="/" class="chip focus-ring">← Home</a>
         <a href="/az/" class="chip focus-ring">Browse A–Z</a>
@@ -311,10 +534,14 @@ if (!notFound) {
         )}
       </h1>
 
-      {/* Metadata row: years & category */}
-      {(years || brand.category) && (
+      {/* Metadata row: years, category, read time */}
+      {(years || brand.category || brand?.publishing?.estimated_read_time) && (
         <div class="text-sm text-slate-700 dark:text-slate-300 mb-3 flex flex-wrap items-center gap-2">
-          {years && <span class="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-700 dark:bg-slate-900">{years}</span>}
+          {years && (
+            <span class="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-700 dark:bg-slate-900">
+              {years}
+            </span>
+          )}
           {brand.category && (
             <a href={catToPath(brand.category) || "#"} class="chip focus-ring">
               {brand.category}
@@ -323,10 +550,15 @@ if (!notFound) {
           {brand.country && (
             <span class="text-slate-500 dark:text-slate-400">• {countryLabel(brand.country)}</span>
           )}
+          {brand?.publishing?.estimated_read_time && (
+            <span class="text-slate-500 dark:text-slate-400">
+              • ⏱️ {brand.publishing.estimated_read_time} min read
+            </span>
+          )}
         </div>
       )}
 
-      {/* Fate (prominent on brand page; we do NOT show the hook here) */}
+      {/* Fate (prominent on brand page) */}
       {brand.fate && (
         <p class="mt-2 text-base text-slate-800 dark:text-slate-200">
           <strong>{pickFateIcon(brand.fate, brand.topics)} Fate:</strong>{" "}
@@ -334,51 +566,275 @@ if (!notFound) {
         </p>
       )}
 
-      {/* Optional short summary retained for backwards compatibility */}
-      {brand.summary && (
+      {/* Hook/Excerpt if available */}
+      {brand.hook && (
+        <p class="mt-3 text-lg font-medium text-slate-700 dark:text-slate-300 border-l-4 border-blue-500 pl-4">
+          {brand.hook}
+        </p>
+      )}
+
+      {/* Optional short summary for backwards compatibility */}
+      {brand.summary && !brand.hook && (
         <p class="mt-3 text-gray-700 dark:text-slate-300">{brand.summary}</p>
       )}
 
+      {/* Quick Facts Card - Supports both quick_facts and stats */}
+      {hasQuickFacts(brand) && (
+        <aside class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+          <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-3">Quick Facts</h3>
+          <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            {/* Prefer quick_facts if available */}
+            {brand?.quick_facts ? (
+              <>
+                {Object.entries(brand.quick_facts).map(([key, value]) => {
+                  if (!value) return null;
+                  return (
+                    <>
+                      <dt class="text-slate-600 dark:text-slate-400">{formatFieldName(key)}:</dt>
+                      <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                        {typeof value === 'number' ? value.toLocaleString() : value}
+                      </dd>
+                    </>
+                  );
+                })}
+              </>
+            ) : (
+              <>
+                {/* Fallback to stats */}
+                {brand.stats.peak_stores && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Peak Stores:</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.peak_stores.toLocaleString()}
+                    </dd>
+                  </>
+                )}
+                {brand.stats.years_in_business && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Years Active:</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.years_in_business}
+                    </dd>
+                  </>
+                )}
+                {brand.stats.years_available && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Years Available:</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.years_available}
+                    </dd>
+                  </>
+                )}
+                {brand.stats.employees_at_peak && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Employees (Peak):</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.employees_at_peak.toLocaleString()}
+                    </dd>
+                  </>
+                )}
+                {brand.stats.peak_year && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Peak Year:</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.peak_year}
+                    </dd>
+                  </>
+                )}
+                {brand.stats.founding_year && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Founded:</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.founding_year}
+                    </dd>
+                  </>
+                )}
+                {brand.stats.closure_year && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Closed:</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.closure_year}
+                    </dd>
+                  </>
+                )}
+                {brand.stats.alcohol_content && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Alcohol Content:</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.alcohol_content}
+                    </dd>
+                  </>
+                )}
+                {brand.stats.category && (
+                  <>
+                    <dt class="text-slate-600 dark:text-slate-400">Category:</dt>
+                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                      {brand.stats.category}
+                    </dd>
+                  </>
+                )}
+              </>
+            )}
+          </dl>
+        </aside>
+      )}
+
+      {/* Table of Contents */}
+      {Array.isArray(brand?.content?.sections) && brand.content.sections.length > 3 && (
+        <nav class="my-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700" aria-label="Table of contents">
+          <h2 class="text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100">Contents</h2>
+          <ol class="space-y-2 list-decimal list-inside text-sm">
+            {brand.content.sections.map((section: any) => (
+              <li>
+                <a 
+                  href={`#${section.slug || section.id}`}
+                  class="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  {section.heading}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
       {/* Overview body (Markdown) */}
-      {(brand.overview_md || overviewHtml) && (
-        <section aria-label="Overview" class="prose prose-sm dark:prose-invert max-w-none mt-4">
-          <Fragment set:html={overviewHtml || mdToHtml(String(brand.overview_md || ""))} />
+      {(brand.overview_md || overviewHtml || brand?.content?.introduction) && (
+        <section aria-label="Overview" class="prose prose-sm dark:prose-invert max-w-none mt-6">
+          <Fragment set:html={overviewHtml || mdToHtml(String(brand.overview_md || brand?.content?.introduction || ""))} />
         </section>
+      )}
+
+      {/* Main Content Sections */}
+      {Array.isArray(brand?.content?.sections) && brand.content.sections.length > 0 && (
+        <div class="mt-8 space-y-8">
+          {brand.content.sections.map((section: any) => (
+            <section 
+              id={section.slug || section.id} 
+              aria-labelledby={`heading-${section.slug || section.id}`}
+              class="scroll-mt-20"
+            >
+              <h2 
+                id={`heading-${section.slug || section.id}`}
+                class="text-2xl font-bold mb-4 text-slate-900 dark:text-slate-100"
+              >
+                {section.heading}
+              </h2>
+              <div class="prose prose-sm dark:prose-invert max-w-none">
+                <Fragment set:html={mdToHtml(section.content)} />
+              </div>
+            </section>
+          ))}
+        </div>
       )}
 
       {/* Timeline */}
       {Array.isArray(timeline) && timeline.length > 0 && (
-        <section aria-label="Timeline" class="mt-6">
-          <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
+        <section aria-label="Timeline" class="mt-8">
+          <h2 class="text-xl font-bold mb-4 text-slate-900 dark:text-slate-100">
             Timeline
-          </h3>
-          <ul class="list-disc pl-5 space-y-1">
+          </h2>
+          <ul class="space-y-3 border-l-2 border-blue-500 pl-4">
             {timeline.map((t) => (
-              <li>
-                <strong>{yearOf(t.date)}</strong>
-                {t.text ? <span> — <Fragment set:html={inlineMd(t.text)} /></span> : null}
+              <li class="relative">
+                <div class="absolute -left-[21px] top-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white dark:border-slate-900"></div>
+                <div>
+                  <strong class="text-slate-900 dark:text-slate-100">{yearOf(t.date)}</strong>
+                  {t.text && (
+                    <p class="mt-1 text-slate-700 dark:text-slate-300">
+                      <Fragment set:html={inlineMd(t.text)} />
+                    </p>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
         </section>
       )}
 
+      {/* FAQ Section */}
+      {Array.isArray(brand?.content?.faq) && brand.content.faq.length > 0 && (
+        <section aria-label="Frequently Asked Questions" class="mt-10">
+          <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-slate-100">
+            Frequently Asked Questions
+          </h2>
+          <div class="space-y-6">
+            {brand.content.faq.map((item: any) => (
+              <div class="border-l-4 border-blue-500 pl-4 py-2">
+                <h3 class="text-lg font-semibold mb-2 text-slate-800 dark:text-slate-200">
+                  {item.question}
+                </h3>
+                <div class="text-slate-700 dark:text-slate-300 prose prose-sm dark:prose-invert max-w-none">
+                  <Fragment set:html={mdToHtml(item.answer)} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Related Brands */}
+      {Array.isArray(brand?.related_brands) && brand.related_brands.length > 0 && (
+        <section aria-label="Related brands" class="mt-10 border-t pt-8 border-slate-200 dark:border-slate-700">
+          <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-slate-100">Related Brands</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {brand.related_brands.map((related: any) => (
+              <a 
+                href={`/brand/${related.slug}/`}
+                class="block p-4 border rounded-lg hover:shadow-md transition-all
+                       bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700
+                       hover:border-blue-500 dark:hover:border-blue-400"
+              >
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                  {related.name}
+                </h3>
+                {related.relationship && (
+                  <p class="text-sm text-slate-600 dark:text-slate-400">
+                    {related.relationship}
+                  </p>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Sources */}
       {Array.isArray(sources) && sources.length > 0 && (
-        <section aria-label="Sources" class="mt-6">
-          <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2">
-            Sources
+        <section aria-label="Sources" class="mt-8">
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-3">
+            Sources & References
           </h3>
-          <ul class="list-disc pl-5 space-y-1 text-sm">
+          <ul class="list-disc pl-5 space-y-2 text-sm">
             {sources.map((s) => (
               <li>
-                <a href={s.url} target="_blank" rel="noopener noreferrer">
+                <a 
+                  href={s.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="text-blue-600 dark:text-blue-400 hover:underline"
+                >
                   {s.label || s.url}
                 </a>
               </li>
             ))}
           </ul>
         </section>
+      )}
+
+      {/* Publishing metadata */}
+      {brand?.publishing && (
+        <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400">
+          {brand.publishing.published_date && (
+            <p>Published: {new Date(brand.publishing.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          )}
+          {brand.publishing.last_updated && (
+            <p>Last updated: {new Date(brand.publishing.last_updated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          )}
+          {brand.publishing.author?.name && (
+            <p>Author: {brand.publishing.author.name}</p>
+          )}
+        </div>
       )}
 
       {/* Existing UI */}

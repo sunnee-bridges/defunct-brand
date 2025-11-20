@@ -215,13 +215,13 @@ declare module 'astro:content' {
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
-"nissan-altima-discontinued.mdx.md": {
-	id: "nissan-altima-discontinued.mdx.md";
-  slug: "nissan-altima-discontinuedmdx";
+"nissan-altima-discontinued.mdx": {
+	id: "nissan-altima-discontinued.mdx";
+  slug: "nissan-altima-discontinued";
   body: string;
   collection: "post";
   data: InferEntrySchema<"post">
-} & { render(): Render[".md"] };
+} & { render(): Render[".mdx"] };
 "pan-am-lockerbie-collapse.mdx": {
 	id: "pan-am-lockerbie-collapse.mdx";
   slug: "pan-am-lockerbie-collapse";

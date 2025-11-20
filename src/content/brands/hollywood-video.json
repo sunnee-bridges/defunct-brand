@@ -1,34 +1,413 @@
 {
   "brand": "Hollywood Video",
   "slug": "hollywood-video",
+  "url": "/brand/hollywood-video/",
+  "canonical": "https://vanishedbrands.com/brand/hollywood-video/",
+  
   "category": "Retail/Video Rental",
   "seo_category": "retail",
   "country": "US",
-  "active": { "start": 1988, "end": 2010 },
-  "hook": "Blockbuster’s biggest 1990s rival that vanished in the streaming era.",
-  "fate": "Acquired by Movie Gallery in 2005; parent company liquidated in 2010, closing all Hollywood Video stores.",
+  "active": {
+    "start": 1988,
+    "end": 2010,
+    "status": "Defunct"
+  },
+  
+  "hook": "Blockbuster's biggest 1990s rival that vanished in the streaming era.",
+  "excerpt": "Hollywood Video operated 2,700 stores as America's #2 video rental chain until Netflix and Redbox destroyed the rental business model.",
+  
+  "fate": "Acquired by Movie Gallery in 2005; parent company liquidated in 2010, closing all Hollywood Video stores nationwide.",
+  
   "summary": "**Hollywood Video** grew into the No. 2 U.S. video-rental chain through the 1990s, competing head-to-head with Blockbuster on big-box stores, new releases, and late-fee promos. After a 2005 acquisition by **Movie Gallery**, heavy debt, shrinking DVD rentals, and the rise of mail/streaming services pushed the business into bankruptcy. By **2010**, the parent liquidated and Hollywood Video stores closed nationwide. *Fun fact:* many locations housed an in-store game shop called **Game Crazy**, which ran trade-ins years before that model became mainstream.",
-  "topics": ["video-rental", "acquisition", "bankruptcy", "streaming-disruption", "nostalgia-90s"],
+  
+  "seo": {
+    "meta_title": "What Happened to Hollywood Video? (1988-2010) - Complete Story",
+    "meta_description": "Hollywood Video was Blockbuster's biggest rival with 2,700 stores until Netflix killed video rentals. Learn why the chain closed in 2010.",
+    "focus_keyword": "hollywood video",
+    "keywords": [
+      "hollywood video",
+      "what happened to hollywood video",
+      "hollywood video stores",
+      "hollywood video closed",
+      "hollywood video vs blockbuster",
+      "game crazy",
+      "video rental stores",
+      "movie gallery",
+      "when did hollywood video close",
+      "hollywood video bankruptcy"
+    ],
+    "search_intent": [
+      "what happened to hollywood video",
+      "when did hollywood video close",
+      "why did hollywood video fail",
+      "hollywood video history",
+      "game crazy stores",
+      "hollywood video vs blockbuster"
+    ]
+  },
+  
+  "og": {
+    "title": "What Happened to Hollywood Video? The Complete Story",
+    "description": "Hollywood Video was Blockbuster's biggest rival until it closed all 2,700 stores in 2010. Here's why.",
+    "image": "https://vanishedbrands.com/images/hollywood-video-og.jpg",
+    "type": "article",
+    "url": "https://vanishedbrands.com/brand/hollywood-video/"
+  },
+  
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "What Happened to Hollywood Video?",
+    "description": "The rise and fall of Blockbuster's biggest 1990s competitor",
+    "image": "https://vanishedbrands.com/images/hollywood-video-twitter.jpg",
+    "site": "@vanishedbrands"
+  },
+  
+  "schema": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Hollywood Video",
+    "alternateName": "Hollywood Entertainment",
+    "description": "American video rental store chain that operated from 1988 to 2010",
+    "foundingDate": "1988",
+    "dissolutionDate": "2010",
+    "founder": {
+      "@type": "Person",
+      "name": "Mark Wattles"
+    },
+    "location": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Wilsonville",
+        "addressRegion": "OR",
+        "addressCountry": "US"
+      }
+    },
+    "parentOrganization": {
+      "@type": "Organization",
+      "name": "Movie Gallery"
+    },
+    "sameAs": [
+      "https://en.wikipedia.org/wiki/Hollywood_Video"
+    ]
+  },
+  
+  "content": {
+    "introduction": "**Hollywood Video** was a U.S. video rental chain that grew to become the second-largest in America during the 1990s and early 2000s, operating over 2,700 stores at its peak. Founded in 1988 in Oregon, the chain positioned itself as Blockbuster's primary competitor by offering larger stores, better new release availability, and innovative no-late-fee policies.\n\nHollywood Video's stores became neighborhood fixtures, offering VHS and later DVD rentals alongside an in-store gaming section called **Game Crazy** that pioneered video game trade-ins and used game sales years before GameStop made it mainstream. During the rental industry's golden age, Hollywood Video thrived on weekend movie nights and became a cultural touchstone for 1990s and early 2000s entertainment.\n\nHowever, the 2005 acquisition by **Movie Gallery** saddled the company with massive debt just as Netflix's mail-order DVD service and Redbox's $1 kiosks began disrupting the rental market. When streaming services emerged, the traditional rental model became obsolete. Movie Gallery filed for bankruptcy in 2007 and again in 2010, ultimately liquidating and closing all Hollywood Video stores nationwide. The chain's closure marked the end of an era when renting movies meant a trip to the local video store.",
+    
+    "sections": [
+      {
+        "id": "what-happened",
+        "heading": "What Happened to Hollywood Video?",
+        "slug": "what-happened-to-hollywood-video",
+        "content": "Hollywood Video closed all of its approximately 2,700 stores in 2010 when its parent company, Movie Gallery, filed for bankruptcy and liquidated. The closures marked the end of a 22-year run as America's second-largest video rental chain. The company couldn't compete with Netflix's mail-order DVD service (launched 1997), Redbox's $1 DVD kiosks (2002), and eventually streaming services like Netflix streaming (2007) and Hulu (2008).\n\nThe 2005 acquisition by Movie Gallery proved disastrous, loading the combined company with over $1 billion in debt just as the rental industry faced unprecedented disruption. DVD rental revenue declined 10-20% annually as consumers shifted to more convenient alternatives. High commercial real estate costs for physical stores became unsustainable as foot traffic dried up. Movie Gallery filed for Chapter 11 bankruptcy in 2007, emerged briefly, then filed again in 2010. This time, there was no recovery—the company liquidated, closing all Hollywood Video and Movie Gallery stores permanently."
+      },
+      {
+        "id": "history",
+        "heading": "Hollywood Video History: The Rise (1988-2004)",
+        "slug": "hollywood-video-history",
+        "content": "Founded by **Mark Wattles** in 1988 in Wilsonville, Oregon, Hollywood Video grew aggressively through the 1990s by competing directly with Blockbuster. The company's strategy focused on several key differentiators:\n\n**Larger stores with more selection**: Hollywood Video stores were typically larger than Blockbuster locations, offering wider selections of titles including more catalog films and special interest content.\n\n**Better new release availability**: The chain guaranteed customers would find the new releases they wanted or receive a free rental, addressing Blockbuster's frequent problem of popular titles being out of stock.\n\n**No late fees**: Hollywood Video pioneered no-late-fee policies years before Blockbuster reluctantly followed, removing the rental industry's most hated policy.\n\n**Strategic locations**: The chain carefully selected high-traffic retail corridors and shopping centers, often placing stores directly across from Blockbuster locations to capture comparison shoppers.\n\nBy 2004, Hollywood Video operated over 2,000 stores across the United States, making it the clear #2 video rental chain in America. The company had successfully carved out a substantial market share and built a loyal customer base who appreciated the chain's customer-friendly policies."
+      },
+      {
+        "id": "game-crazy",
+        "heading": "Game Crazy: Hollywood Video's Gaming Innovation",
+        "slug": "game-crazy-stores",
+        "content": "In 1999, Hollywood Video launched **Game Crazy**, an innovative shop-in-shop concept for video game rentals and sales that operated inside Hollywood Video locations. Game Crazy was years ahead of its time, offering services that would later become mainstream:\n\n**Video game trade-ins and used game sales**: Before GameStop dominated this market, Game Crazy pioneered the business model of buying used games from customers and reselling them at lower prices.\n\n**New game pre-orders and midnight launches**: Game Crazy stores hosted midnight release events for major game launches, creating community excitement.\n\n**Console sales**: The sections sold new and used gaming consoles, controllers, and accessories.\n\n**Game rentals**: Customers could rent the latest games before committing to purchase, a service that's largely disappeared today.\n\nAt its peak, Game Crazy operated in over 3,000 Hollywood Video locations nationwide. The concept was genuinely innovative and generated significant additional revenue beyond movie rentals. However, Game Crazy shared Hollywood Video's fate—when Movie Gallery liquidated in 2010, all Game Crazy sections closed along with their parent stores. The brand disappeared entirely, though its business model would be perfected by GameStop and other specialty gaming retailers."
+      },
+      {
+        "id": "vs-blockbuster",
+        "heading": "Hollywood Video vs Blockbuster: The Rivalry",
+        "slug": "hollywood-video-vs-blockbuster",
+        "content": "Throughout the 1990s and early 2000s, Hollywood Video and Blockbuster engaged in fierce competition for rental market share:\n\n**Store count**: Blockbuster operated roughly 9,000 stores at its peak compared to Hollywood Video's 2,700, giving Blockbuster greater brand recognition and convenience.\n\n**Pricing**: Both chains competed aggressively on pricing, with Hollywood Video often undercutting Blockbuster on older titles while matching prices on new releases.\n\n**Late fees**: Hollywood Video eliminated late fees first, forcing Blockbuster to reluctantly follow years later. This policy difference gave Hollywood Video a significant customer satisfaction advantage.\n\n**Selection**: Hollywood Video stores typically offered larger catalog selections and more copies of new releases, addressing common Blockbuster customer complaints.\n\n**Customer experience**: Hollywood Video cultivated a more laid-back, customer-friendly atmosphere compared to Blockbuster's more corporate feel.\n\nDespite Hollywood Video's advantages, Blockbuster's massive store network and deeper pockets (backed by Viacom for many years) gave it market leadership. However, these advantages couldn't save either chain from digital disruption. Ironically, both companies would collapse within a few years of each other—Movie Gallery (Hollywood Video's parent) liquidated in 2010, while Blockbuster filed for bankruptcy the same year and closed most stores by 2013."
+      },
+      {
+        "id": "movie-gallery-acquisition",
+        "heading": "The Movie Gallery Acquisition (2005)",
+        "slug": "movie-gallery-acquisition",
+        "content": "In 2005, **Movie Gallery**—a regional video rental chain—acquired Hollywood Video for approximately $1 billion, creating a combined company with over 4,700 stores nationwide. The acquisition was intended to create economies of scale that could better compete with Blockbuster and emerging threats like Netflix.\n\nHowever, the acquisition proved catastrophic:\n\n**Massive debt**: The $1 billion+ purchase price loaded the combined company with enormous debt payments just as industry revenue began declining.\n\n**Timing**: The acquisition came just as Netflix's mail-order service gained mainstream traction and Redbox began rolling out DVD kiosks. The rental industry's business model was already under threat.\n\n**Integration challenges**: Combining two large retail chains proved difficult and expensive, draining resources needed to address digital disruption.\n\n**Overlapping stores**: Many markets had both Hollywood Video and Movie Gallery locations, requiring store closures and consolidation.\n\n**Cultural clash**: Movie Gallery's more conservative, regional approach conflicted with Hollywood Video's aggressive, customer-focused culture.\n\nThe acquisition left the combined company poorly positioned to weather the coming storm. Heavy debt service consumed cash that could have been invested in digital initiatives or competitive responses to Netflix and Redbox."
+      },
+      {
+        "id": "netflix-redbox",
+        "heading": "Netflix and Redbox: The Digital Disruption",
+        "slug": "netflix-redbox-disruption",
+        "content": "Hollywood Video's business model couldn't survive the one-two punch of Netflix and Redbox:\n\n**Netflix mail-order (1997-present)**: For $7.99/month, Netflix offered unlimited DVD rentals with no late fees, delivered by mail. Customers could keep movies as long as they wanted and return them in prepaid envelopes. This eliminated trips to the video store and late fee anxiety. By the mid-2000s, Netflix had millions of subscribers and was significantly impacting video store traffic.\n\n**Redbox kiosks (2002-present)**: Redbox placed automated DVD rental kiosks in grocery stores, McDonald's, and Walmart locations. For just $1 per night (compared to $3-5 at video stores), customers could rent new releases from convenient neighborhood locations. Redbox's low overhead and strategic placement made it extremely competitive.\n\n**Netflix streaming (2007)**: When Netflix launched streaming video, the death sentence for video stores was written. For the same $7.99/month, Netflix subscribers could watch unlimited streaming content instantly. No driving, no late fees, no returning anything.\n\nHollywood Video attempted responses—launching its own online rental service and trying to compete on price—but these efforts were too little, too late. The company was saddled with expensive retail leases and couldn't match the convenience and economics of digital alternatives. Store traffic and revenue declined 10-20% annually in the late 2000s, making the business model unsustainable."
+      },
+      {
+        "id": "bankruptcy-2007",
+        "heading": "First Bankruptcy: 2007 Restructuring",
+        "slug": "movie-gallery-2007-bankruptcy",
+        "content": "In October 2007, Movie Gallery (Hollywood Video's parent company) filed for Chapter 11 bankruptcy protection, citing declining rental revenue, excessive debt from the 2005 Hollywood Video acquisition, and increasing competition from Netflix, Redbox, and cable video-on-demand.\n\nThe bankruptcy filing allowed Movie Gallery to:\n\n**Reduce debt**: The company shed approximately $700 million in debt through bankruptcy court proceedings.\n\n**Close underperforming stores**: Hundreds of unprofitable locations were closed, particularly in markets with overlapping Hollywood Video and Movie Gallery stores.\n\n**Renegotiate leases**: The company terminated or renegotiated expensive commercial leases, reducing occupancy costs.\n\n**Restructure operations**: Management streamlined corporate overhead and consolidated distribution operations.\n\nMovie Gallery emerged from bankruptcy in mid-2008 with a smaller footprint of approximately 3,500 stores. Management expressed confidence that the restructured company could compete effectively in the evolving entertainment landscape.\n\nHowever, the fundamental problems remained: consumers were abandoning physical DVD rentals for digital alternatives, and no amount of restructuring could reverse that trend. The 2007 bankruptcy bought time but didn't solve the core business model problem."
+      },
+      {
+        "id": "bankruptcy-2010",
+        "heading": "Second Bankruptcy and Liquidation (2010)",
+        "slug": "hollywood-video-closure-2010",
+        "content": "In February 2010, Movie Gallery filed for bankruptcy a second time. This time, there would be no recovery. The company announced it would liquidate all assets and close all remaining Hollywood Video and Movie Gallery stores.\n\n**Why the second bankruptcy was terminal**:\n\n**Netflix streaming explosion**: By 2010, Netflix streaming had gone mainstream, with millions of subscribers watching unlimited content for $7.99/month. Physical DVD rentals were in freefall.\n\n**Hulu and cable VOD**: Additional streaming options from Hulu and cable companies' video-on-demand services gave consumers multiple alternatives to video stores.\n\n**Redbox expansion**: Redbox had expanded to over 20,000 kiosks nationwide, capturing customers who still wanted physical DVDs.\n\n**Unsustainable economics**: With revenue declining 20%+ annually, Movie Gallery couldn't cover rent, payroll, and inventory costs for thousands of physical stores.\n\n**No buyers**: Unlike the 2007 bankruptcy, no companies stepped forward to acquire the business or provide financing. The rental industry was clearly dying.\n\n**Liquidation sales began in spring 2010**, with stores offering deep discounts on DVDs, games, fixtures, and equipment. Employees were laid off, leases were terminated, and inventory was sold off. By summer 2010, the last Hollywood Video stores had closed their doors permanently, ending the 22-year run of Blockbuster's biggest competitor.\n\nThe closure of Hollywood Video (along with Blockbuster's near-simultaneous demise) marked the definitive end of the video rental era."
+      },
+      {
+        "id": "legacy",
+        "heading": "Hollywood Video's Cultural Legacy",
+        "slug": "hollywood-video-legacy",
+        "content": "For millennials and Gen Xers, Hollywood Video represents powerful nostalgia:\n\n**Friday night ritual**: Visiting Hollywood Video on Friday evening to pick out weekend movies was a cherished routine for millions of families.\n\n**Game Crazy memories**: The in-store gaming section introduced many kids to gaming culture and the concept of used game trading.\n\n**No late fees**: Hollywood Video's customer-friendly policies made it the preferred alternative to Blockbuster for many customers.\n\n**Movie discovery**: Before streaming algorithms, browsing Hollywood Video's shelves led to unexpected discoveries and recommendations from knowledgeable staff.\n\n**Community gathering place**: Video stores served as neighborhood social spaces where people discussed movies and shared recommendations.\n\nWhile streaming services offer unprecedented convenience and selection, something was lost when video stores disappeared: the physical experience of browsing shelves, the anticipation of bringing home your selections, and the shared cultural experience of visiting the video store.\n\nHollywood Video's closure symbolizes how quickly digital disruption can transform entire industries. Within just a decade, Netflix and streaming services eliminated a business model that had dominated home entertainment for 30 years."
+      }
+    ],
+    
+    "faq": [
+      {
+        "question": "When did Hollywood Video close?",
+        "answer": "Hollywood Video closed all of its stores in 2010 when parent company Movie Gallery filed for bankruptcy and liquidated. The exact closure dates varied by location, but most stores closed between May and August 2010 during going-out-of-business sales."
+      },
+      {
+        "question": "Why did Hollywood Video go out of business?",
+        "answer": "Hollywood Video failed due to the rise of Netflix (mail-order and streaming), Redbox ($1 kiosks), and cable video-on-demand services. The 2005 acquisition by Movie Gallery saddled the company with massive debt just as DVD rental revenue collapsed. The company filed for bankruptcy twice (2007, 2010) before liquidating completely."
+      },
+      {
+        "question": "How many Hollywood Video stores were there?",
+        "answer": "At its peak in the mid-2000s, Hollywood Video operated over 2,700 stores across the United States. After the Movie Gallery acquisition in 2005, the combined company had approximately 4,700 locations (Hollywood Video + Movie Gallery stores)."
+      },
+      {
+        "question": "What was Game Crazy?",
+        "answer": "Game Crazy was a video game store concept that operated inside Hollywood Video locations starting in 1999. It offered video game trade-ins, used game sales, and new game pre-orders—pioneering a business model years before GameStop made it mainstream. At its peak, Game Crazy operated in over 3,000 Hollywood Video stores. All Game Crazy sections closed when Hollywood Video liquidated in 2010."
+      },
+      {
+        "question": "Hollywood Video vs Blockbuster: Which was better?",
+        "answer": "Hollywood Video was often preferred by customers for its no-late-fee policies (introduced before Blockbuster), larger selection of catalog titles, and better new release availability. However, Blockbuster had far more stores (9,000 vs 2,700) and greater brand recognition. Both chains ultimately failed due to Netflix and streaming services."
+      },
+      {
+        "question": "What happened to Movie Gallery?",
+        "answer": "Movie Gallery, a regional video rental chain, acquired Hollywood Video in 2005 for approximately $1 billion. The acquisition's massive debt burden, combined with declining rental revenue, led to bankruptcy in 2007 and again in 2010. The company liquidated in 2010, closing all Hollywood Video and Movie Gallery stores."
+      },
+      {
+        "question": "Can you still rent movies from Hollywood Video?",
+        "answer": "No, all Hollywood Video stores are permanently closed. The last stores shut down in 2010. For movie rentals today, options include: Redbox kiosks (still operating), streaming services (Netflix, Hulu, Prime Video, Disney+), digital rentals (Apple TV, Google Play, Vudu), or remaining independent video stores in select cities."
+      },
+      {
+        "question": "Why didn't Hollywood Video adapt to streaming?",
+        "answer": "Hollywood Video attempted to launch online rental services to compete with Netflix, but these efforts came too late and couldn't overcome the company's debt burden from the 2005 Movie Gallery acquisition. The company lacked the capital and technology infrastructure to pivot to streaming while managing thousands of physical stores with expensive leases. By the time streaming became mainstream (2007-2010), Movie Gallery was already in bankruptcy."
+      }
+    ]
+  },
+  
+  "topics": [
+    "video-rental",
+    "acquisition",
+    "bankruptcy",
+    "streaming-disruption",
+    "nostalgia-90s",
+    "blockbuster-rivalry",
+    "netflix-disruption",
+    "movie-gallery"
+  ],
+  
+  "tags": [
+    "1980s",
+    "1990s",
+    "2000s",
+    "2010s",
+    "retail",
+    "entertainment",
+    "video-rental",
+    "bankruptcy",
+    "streaming",
+    "netflix",
+    "game-crazy"
+  ],
+  
   "notable_products": [
     "Movie & TV rentals (VHS → DVD)",
     "Game rentals & sales (Game Crazy shop-in-shop)",
-    "Membership and late-fee promotions"
+    "Membership and late-fee promotions",
+    "New release guarantee programs",
+    "Online rental service (failed)"
   ],
+  
   "timeline": [
-    { "date": "1988", "text": "Hollywood Video founded; rapid store expansion through the 1990s." },
-    { "date": "1999–2004", "text": "Peak footprint as Blockbuster’s main national rival; launches Game Crazy shop-in-shop." },
-    { "date": "2005", "text": "Acquired by Movie Gallery, creating a combined national rental giant." },
-    { "date": "2007", "text": "Movie Gallery files Chapter 11 amid industry decline; restructuring follows." },
-    { "date": "2010", "text": "Movie Gallery files again and liquidates; all Hollywood Video stores close." }
+    {
+      "date": "1988",
+      "year": 1988,
+      "text": "Hollywood Video founded by Mark Wattles in Wilsonville, Oregon.",
+      "milestone": "founding"
+    },
+    {
+      "date": "1990s",
+      "year": 1990,
+      "text": "Rapid national expansion; Hollywood Video becomes Blockbuster's primary competitor.",
+      "milestone": "expansion"
+    },
+    {
+      "date": "1999",
+      "year": 1999,
+      "text": "Game Crazy shop-in-shop concept launches inside Hollywood Video stores.",
+      "milestone": "innovation"
+    },
+    {
+      "date": "2002-2004",
+      "year": 2003,
+      "text": "Peak footprint reached with over 2,700 stores nationwide as America's #2 video rental chain.",
+      "milestone": "peak"
+    },
+    {
+      "date": "2005",
+      "year": 2005,
+      "text": "Acquired by Movie Gallery for approximately $1 billion, creating 4,700-store chain.",
+      "milestone": "acquisition"
+    },
+    {
+      "date": "2007-10",
+      "year": 2007,
+      "text": "Movie Gallery files Chapter 11 bankruptcy amid industry decline; emerges after restructuring and closures.",
+      "milestone": "bankruptcy"
+    },
+    {
+      "date": "2010-02",
+      "year": 2010,
+      "text": "Movie Gallery files bankruptcy again and liquidates; all Hollywood Video and Game Crazy stores close permanently.",
+      "milestone": "closure"
+    }
   ],
+  
+  "stats": {
+    "peak_stores": 2700,
+    "peak_year": 2004,
+    "employees_at_peak": 22000,
+    "founding_year": 1988,
+    "closure_year": 2010,
+    "years_in_business": 22,
+    "acquisition_price": "$1 billion (approx)",
+    "parent_company": "Movie Gallery",
+    "stores_at_closure": 0
+  },
+  
+  "images": {
+    "hero": {
+      "url": "/images/brands/hollywood-video-store-exterior.jpg",
+      "alt": "Hollywood Video store exterior in the 1990s with Game Crazy sign",
+      "title": "Hollywood Video store - 1990s",
+      "width": 1200,
+      "height": 630,
+      "caption": "A typical Hollywood Video store at the chain's peak in the late 1990s, featuring the Game Crazy gaming section"
+    },
+    "logo": {
+      "url": "/images/brands/hollywood-video-logo.png",
+      "alt": "Hollywood Video logo",
+      "width": 400,
+      "height": 200
+    },
+    "gallery": [
+      {
+        "url": "/images/brands/hollywood-video-interior.jpg",
+        "alt": "Hollywood Video store interior with DVD rental shelves",
+        "caption": "Inside a Hollywood Video store showing the extensive DVD rental selection"
+      },
+      {
+        "url": "/images/brands/game-crazy-section.jpg",
+        "alt": "Game Crazy section inside Hollywood Video store",
+        "caption": "The Game Crazy shop-in-shop concept for video game sales and trade-ins"
+      },
+      {
+        "url": "/images/brands/hollywood-video-closing-sale.jpg",
+        "alt": "Hollywood Video store closing liquidation sale 2010",
+        "caption": "A Hollywood Video store during the 2010 liquidation sales"
+      }
+    ]
+  },
+  
+  "related_brands": [
+    {
+      "slug": "blockbuster",
+      "name": "Blockbuster Video",
+      "relationship": "Primary competitor; both chains failed around the same time"
+    },
+    {
+      "slug": "movie-gallery",
+      "name": "Movie Gallery",
+      "relationship": "Parent company that acquired Hollywood Video in 2005"
+    },
+    {
+      "slug": "game-crazy",
+      "name": "Game Crazy",
+      "relationship": "In-store gaming section owned by Hollywood Video"
+    },
+    {
+      "slug": "family-video",
+      "name": "Family Video",
+      "relationship": "Smaller competitor that survived longer (closed 2021)"
+    },
+    {
+      "slug": "netflix",
+      "name": "Netflix",
+      "relationship": "Disruptor that killed the video rental industry"
+    }
+  ],
+  
+  "related_articles": [
+    "/blog/video-rental-stores-history",
+    "/blog/blockbuster-vs-hollywood-video",
+    "/blog/what-happened-to-game-crazy",
+    "/blog/netflix-killed-video-rental-stores",
+    "/blog/movie-gallery-bankruptcy"
+  ],
+  
   "links": {
     "wikipedia_hollywood_video": "https://en.wikipedia.org/wiki/Hollywood_Video",
     "wikipedia_movie_gallery": "https://en.wikipedia.org/wiki/Movie_Gallery",
-    "wikipedia_game_crazy": "https://en.wikipedia.org/wiki/GameCrazy"
+    "wikipedia_game_crazy": "https://en.wikipedia.org/wiki/GameCrazy",
+    "wayback": "https://web.archive.org/web/*/hollywoodvideo.com"
   },
+  
   "sources": [
-    { "label": "Wikipedia — Hollywood Video (history & closure)", "url": "https://en.wikipedia.org/wiki/Hollywood_Video" },
-    { "label": "Wikipedia — Movie Gallery (acquisition & liquidation)", "url": "https://en.wikipedia.org/wiki/Movie_Gallery" },
-    { "label": "Wikipedia — Game Crazy (shop-in-shop concept)", "url": "https://en.wikipedia.org/wiki/GameCrazy" }
+    {
+      "label": "Wikipedia — Hollywood Video (history & closure)",
+      "url": "https://en.wikipedia.org/wiki/Hollywood_Video",
+      "type": "reference"
+    },
+    {
+      "label": "Wikipedia — Movie Gallery (acquisition & liquidation)",
+      "url": "https://en.wikipedia.org/wiki/Movie_Gallery",
+      "type": "reference"
+    },
+    {
+      "label": "Wikipedia — Game Crazy (shop-in-shop concept)",
+      "url": "https://en.wikipedia.org/wiki/GameCrazy",
+      "type": "reference"
+    },
+    {
+      "label": "Wayback Machine — Hollywood Video website archives",
+      "url": "https://web.archive.org/web/*/hollywoodvideo.com",
+      "type": "archive"
+    }
+  ],
+  
+  "publishing": {
+    "status": "published",
+    "published_date": "2024-01-08",
+    "datePublished": "2024-01-08T10:00:00-05:00",
+    "last_updated": "2024-11-20",
+    "dateModified": "2024-11-20T10:00:00-05:00",
+    "author": {
+      "name": "Editorial Team",
+      "url": "/about/authors"
+    },
+    "estimated_read_time": 10,
+    "word_count": 2000
+  },
+  
+  "breadcrumbs": [
+    {
+      "name": "Home",
+      "url": "/"
+    },
+    {
+      "name": "Discontinued Brands",
+      "url": "/brands"
+    },
+    {
+      "name": "Retail",
+      "url": "/brands/retail"
+    },
+    {
+      "name": "Hollywood Video",
+      "url": "/brand/hollywood-video"
+    }
   ]
 }
