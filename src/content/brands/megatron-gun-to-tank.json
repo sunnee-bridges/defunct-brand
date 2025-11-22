@@ -4,31 +4,92 @@
   "category": "Toys/Games",
   "seo_category": "toys-games",
   "country": "US",
-  "active": { "start": 1984, "end": "present (alt-mode policy changed)" },
-  "hook": "From realistic handgun to tanks and sci-fi cannons — a shift driven by safety rules and brand perception.",
-  "fate": "The original G1 Megatron toy transformed into a realistic Walther-style handgun. From the 1990s onward, mass-market releases in the U.S. largely moved to tanks or sci-fi cannons. Realistic ‘gun’ versions are generally limited, require bright markings, and are positioned for adult collectors.",
-  "summary": "Early **Megatron** figures (G1, 1984) transformed into a realistic **Walther P38–style handgun**—striking on shelves but easy to mistake for a real firearm. As U.S. safety standards, retailer policies, and public perception tightened, Hasbro/Takara shifted Megatron’s alternate mode to **tanks** or **futuristic cannons**. Modern U.S. releases avoid realistic firearm forms; any handgun-based editions are typically collector imports with **blaze-orange plugs** and other compliance markings.",
+
+  "active": {
+    "start": 1984,
+    "end": null
+  },
+
+  "hook": "From realistic handgun to tanks and sci-fi cannons — a shift driven by safety rules, retailer bans, and brand risk.",
+
+  "fate": "Realistic handgun alt-mode largely retired from U.S. mass retail; modern Megatron toys default to tanks or sci-fi cannons, with handgun versions mostly limited to adult collectors.",
+
+  "summary": "Early 1984 **Megatron** figures in the U.S. transformed into a realistic Walther P38–style handgun, imported from Takara’s Micro Change \"Gun Robo\" toy. As U.S. toy gun laws, blaze-orange marking rules, and retailer policies tightened from the late 1980s onward, Hasbro and Takara shifted Megatron’s alternate mode toward tanks and futuristic cannons that read as fantasy hardware instead of a real firearm. Today, mainstream U.S. Megatron toys avoid realistic handgun forms; pistol-mode releases survive mainly as adult-collector imports or special editions with bright safety markings and restricted distribution.",
+
   "notable_products": [
-    "G1 Megatron (1984) — realistic pistol alt-mode",
-    "Various 1990s–present Megatron figures — tank or sci-fi cannon alt-modes",
-    "Masterpiece/collector versions — handgun alt-mode with required orange tip in U.S."
+    "G1 Megatron (1984) — realistic Walther P38–style pistol alt-mode",
+    "Pre-Transformers Micro Change MC-13 Gun Robo Walther P-38 (Japanese source mold)",
+    "1990s–present mainline Megatron figures — tank or sci-fi cannon alt-modes",
+    "Masterpiece/collector Megatron releases — handgun alt-mode with required orange tip and compliance markings in many markets"
   ],
-  "topics": ["toys", "80s-90s", "safety", "markings", "transformers", "retailer-policy", "rebrand"],
+
+  "topics": [
+    "toys",
+    "80s-90s",
+    "safety",
+    "imitation-firearms-law",
+    "retailer-policy",
+    "transformers",
+    "rebrand",
+    "character-evolution"
+  ],
+
   "links": {
     "wikipedia_megatron": "https://en.wikipedia.org/wiki/Megatron",
     "wikipedia_transformers_toys": "https://en.wikipedia.org/wiki/Transformers:_Generation_1",
-    "ecfr_blaze_orange": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-II/subchapter-D/part-272"
+    "ecfr_blaze_orange": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-II/subchapter-H/part-272",
+    "uscode_imitation_firearms": "https://www.govinfo.gov/content/pkg/USCODE-2011-title15/html/USCODE-2011-title15-chap76.htm"
   },
-  "overview_md": "In **1984**, *Transformers* launched with a bold idea: **Megatron**, the Decepticon leader, transformed into a realistic, Walther-style handgun. The toy’s chrome finish and working mechanics made it memorable — and increasingly problematic. As U.S. **toy firearm marking rules** (blaze-orange tips), retailer standards, and public concerns grew through the late 1980s/1990s, Hasbro/Takara **pivoted Megatron’s alt-mode** toward **tanks** and **futuristic cannons** that read as fantasy rather than real-steel.\n\nCollector-aimed handgun versions haven’t vanished entirely, but modern U.S. distribution typically requires an **orange plug** and conspicuous markings; many retailers avoid realistic toy guns altogether. The result: for most fans, the default modern Megatron is a **tank/cannon**, while the old pistol form survives as a niche collector throwback.\n\n**Why the change?** A mix of **safety compliance** (blaze-orange tips & imitation-firearm rules), **retailer policy**, and **brand risk** (confusability with real firearms, PR concerns). The franchise found a durable solution: keep the character’s silhouette and menace, but shift the alt-mode to something clearly fictional or militarized (tanks) that satisfies both safety expectations and play value.",
+
+  "overview_md": "When **Transformers** hit U.S. shelves in **1984**, Megatron was more than a cartoon villain — he was a chrome, working **handgun toy**.\n\nThe original G1 Megatron mold came from Takara’s *Micro Change* line in Japan, where the MC-13 **Gun Robo Walther P-38** transformed from a realistic pistol into a robot. Hasbro imported that tooling as Megatron, complete with long barrel, scope, and stock. On the box and in catalog photos, kids were shown holding what looked very much like a real Walther P38.\n\nAt the time, that wasn’t unusual: cap guns, water pistols, and sci-fi blasters often leaned on realistic firearm silhouettes. But by the late 1980s, U.S. **imitation firearm rules** and public concern had shifted. Federal law began requiring a **blaze-orange plug** or similarly distinctive markings on toy guns that could be confused for real weapons, and some states and cities went further, restricting realistic colors or gun-like shapes altogether. Retailers, wary of bad press and legal complexity, started to treat ultra-realistic toy guns as more trouble than they were worth.\n\nFor Megatron, that created a brand problem: his classic alt-mode was essentially a replica firearm. To keep the character alive in mass-market toy lines, Hasbro and Takara gradually **pivoted his alternate mode** away from a realistic pistol and toward:\n\n- **Tanks** — still aggressive and militarized, but clearly vehicles rather than handguns.\n- **Sci-fi cannons or fusion cannons** — oversized fantasy weapons that read as space hardware instead of something a police officer might mistake for a real sidearm.\n\nBy the **1990s and 2000s**, the *default* Megatron on U.S. toy shelves was a **tank or futuristic cannon**, not a pistol. The gun mode never vanished completely, but it moved into narrow lanes:\n\n- **Adult-collector releases** (such as Masterpiece-style Megatron toys) sold primarily to hobbyists rather than kids.\n- **Imports and specialty runs** where packaging, safety plugs, and bright markings could satisfy local law or where the handgun form was less controversial.\n\nEven in those collector runs, the toy is usually required to have **permanent orange tips or other conspicuous markings**, and big-box retailers may still refuse to stock anything that looks too much like a real firearm. That’s why discussions among fans often center on *\"Why can’t we get a proper G1 gun Megatron at retail?\"* — the answer is a mix of **law, liability, and optics**, not just engineering.\n\nFrom a brand-history perspective, Megatron is a neat case study in how **regulation and public sentiment reshape toys**. The character’s core traits — imposing helmet, fusion cannon, ruthless leader of the Decepticons — stay intact, but the physical metaphor changes: from a handgun a child might point, to armored vehicles and sci-fi artillery that feel safer, easier to display, and less likely to cause real-world problems. For most modern fans, Megatron *is* a tank or cannon, and the old pistol form has become a strangely controversial relic of 1980s toy culture.",
+
   "timeline": [
-    { "date": "1984", "text": "G1 Megatron released; transforms into a realistic pistol." },
-    { "date": "late 1980s–1990s", "text": "Retailer standards and public safety expectations rise; move toward non-realistic alt-modes." },
-    { "date": "1990s–present", "text": "Mainline U.S. Megatron toys predominantly tanks or sci-fi cannons." },
-    { "date": "2000s–present", "text": "Collector handgun versions appear intermittently; U.S. sales typically require blaze-orange plugs and compliance labeling." }
+    {
+      "date": "1983-01",
+      "text": "Takara releases the Micro Change MC-13 Gun Robo Walther P-38 in Japan, the handgun toy that will become the basis for Megatron."
+    },
+    {
+      "date": "1984-01",
+      "text": "Hasbro launches Transformers in the U.S.; G1 Megatron debuts as a realistic Walther P38–style handgun that converts into a robot."
+    },
+    {
+      "date": "late-1980s",
+      "text": "U.S. toy and imitation-firearm laws begin requiring blaze-orange plugs or other distinctive markings on realistic toy guns; public concern over look-alike firearms grows."
+    },
+    {
+      "date": "1990s",
+      "text": "Hasbro and Takara move most **mainline** Megatron toys away from handgun alt-modes and toward tanks and sci-fi cannons better suited to new safety and retailer expectations."
+    },
+    {
+      "date": "2000s",
+      "text": "Handgun-based Megatron toys continue intermittently as **collector-oriented releases**, often with bright safety tips, restricted distribution, and limited presence in U.S. mass retail."
+    },
+    {
+      "date": "2010s–present",
+      "text": "For most fans, the standard Megatron toy is a tank or sci-fi cannon. Gun-mode Megatrons survive mainly in adult-collector lines and nostalgia pieces rather than in children’s aisles."
+    }
   ],
+
   "sources": [
-    { "label": "Wikipedia — Megatron (character & toy history)", "url": "https://en.wikipedia.org/wiki/Megatron" },
-    { "label": "Wikipedia — Transformers toys (context for alt-mode shifts)", "url": "https://en.wikipedia.org/wiki/Transformers:_Generation_1" },
-    { "label": "U.S. regulation — Blaze orange marking for toy/‘imitation’ firearms (15 CFR Part 272)", "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-II/subchapter-D/part-272" }
+    {
+      "label": "Megatron (character & toy history) — Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Megatron"
+    },
+    {
+      "label": "Transformers: Generation 1 toy line context",
+      "url": "https://en.wikipedia.org/wiki/Transformers:_Generation_1"
+    },
+    {
+      "label": "Micro Change Gun Robo Walther P-38 (pre-Transformers source mold)",
+      "url": "https://www.transformerland.com/wiki/toy-info/microman-microchange-gun-robo-walther-p-38-uncle-mc-13-/40084/"
+    },
+    {
+      "label": "U.S. blaze-orange and imitation firearm marking rules (15 U.S.C. § 5001 / 15 CFR Part 272)",
+      "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-II/subchapter-H/part-272"
+    },
+    {
+      "label": "Fan & industry discussion of gun-mode Megatron, safety, and retailer policy",
+      "url": "https://tfwiki.net/wiki/For_safety_reasons"
+    }
   ]
 }

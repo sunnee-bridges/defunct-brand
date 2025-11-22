@@ -4,28 +4,72 @@
   "category": "Food/CPG",
   "seo_category": "food-beverage",
   "country": "US",
-  "active": { "start": 1990, "end": 2000 },
-  "hook": "Packaged cookies that couldn't break through the market",
-  "fate": "Discontinued",
-  "summary": "Nabisco packaged cookie line remembered from the 1990s; later discontinued.",
-  "topics": ["vanished-product", "1990s", "snacks"],
-  "notable_products": ["Cookie Break cookies"],
-  "overview_md": "**Cookie Break** was a Nabisco-branded packaged cookie line remembered by many U.S. shoppers from the 1990s. Positioned as an everyday sweet snack, it appeared in typical grocery and mass retail channels alongside Chips Ahoy! and other category leaders. While flavors and formats varied by region and year, the line leaned into familiar chocolate and sandwich-cookie profiles with low-friction, lunchbox-friendly packaging.\n\nThe brand never became a headliner for Nabisco, which prioritized its franchise labels with larger ad budgets and permanent shelf programs. As snack aisles consolidated around top sellers, second-tier SKUs like Cookie Break lost space and faded from resets. By the early 2000s, the line had largely disappeared in favor of stronger national brands and private label alternatives.\n\nNostalgia threads keep the name alive, with former fans recalling school snacks, vending-machine sightings, and supermarket endcaps. Surviving packaging and coupons occasionally surface in ephemera groups, but there has been no formal revival. Cookie Break is a snapshot of 1990s grocery culture: broad experimentation, frequent limited-time runs, and a long tail of smaller lines that quietly exited as retail tightened assortments.",
-  "timeline": [
-    { "date": "1990-01", "text": "Cookie Break appears in regional grocery circulars as a Nabisco snack line." },
-    { "date": "1993-06", "text": "Wider distribution into mass retail and club stores during a 1990s snack expansion." },
-    { "date": "1996-09", "text": "Category resets emphasize core brands; secondary SKUs begin losing shelf space." },
-    { "date": "1999-08", "text": "Reports of discontinuations and regional delistings as Nabisco streamlines portfolio." },
-    { "date": "2001-03", "text": "Brand effectively absent from national shelves; lives on through nostalgia mentions." }
-  ],
-  "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Nabisco",
-    "wayback": "https://web.archive.org/web/*/http://www.nabisco.com",
-    "ebay": "https://www.ebay.com/sch/i.html?_nkw=nabisco+cookie+break",
-    "images_search": "https://www.google.com/search?q=%22Cookie+Break%22+Nabisco+packaging"
+
+  "active": {
+    "start": 1970,
+    "end": 2000
   },
-  "sources": [
-    { "label": "Nabisco (background)", "url": "https://en.wikipedia.org/wiki/Nabisco" },
-    { "label": "Wayback snapshots of Nabisco site", "url": "https://web.archive.org/web/*/http://www.nabisco.com" }
-  ]
+
+  "hook": "Nabisco vanilla sandwich cookies that faded from shelves when there “weren’t enough consumers” buying them.",
+
+  "fate": "Discontinued (low sales)",
+
+  "summary": "Cookie Break was a Nabisco vanilla cookie line sold in U.S. grocery stores from the 1970s onward, remembered by shoppers as a simple everyday cookie that the company no longer makes. The COOKIE BREAK mark was first used in commerce in 1970, registered in 1975, and later allowed to expire as Nabisco discontinued the product. When consumers later asked about it, Nabisco’s explanation was that there were not enough buyers to support continued production, so the line was quietly retired and now mainly lives on in nostalgia threads and trademark records.",
+
+
+  "topics": [
+    "vanished-product",
+    "snacks",
+    "vanilla-cookies",
+    "grocery-aisle",
+    "low-sales-discontinuation"
+  ],
+
+  "notable_products": [
+    "Cookie Break vanilla cookies"
+  ],
+
+  "overview_md": "**Cookie Break** was a Nabisco cookie line sold in the United States and remembered by shoppers as a straightforward vanilla cookie that the company no longer makes. In consumer Q&A, it is often cited when people ask what Nabisco vanilla cookies were called before they disappeared from shelves.\n\nAccording to the U.S. trademark record, *COOKIE BREAK* was first used in commerce in 1970, filed as a mark in September 1974, and registered in 1975 in the \"Staple Food Products\" category. The mark was later allowed to expire and is listed as dead/expired by the mid-2000s.\n\nPeople who actually bought the product recall it simply as **Nabisco Cookie Break vanilla cookies**, not as a heavily engineered or gimmick format. Descriptions that portray Cookie Break as a generic \"rectangular, glossy cookie designed to be broken apart\" appear to be AI-generated filler and do not match first-hand memories.\n\nWhen customers later contacted Nabisco about why Cookie Break was discontinued, the company’s explanation was that there were *\"not enough consumers buying the products to support its continued production.\"* In other words, the line was dropped for demand and portfolio reasons rather than a safety issue or public scandal.\n\nFor many shoppers, Cookie Break now shows up mainly in nostalgia threads and trademark lookups: a discontinued, everyday Nabisco vanilla cookie that quietly left the aisle once it no longer drew enough repeat buyers.",
+
+  "timeline": [
+    {
+      "date": "1970-05",
+      "text": "COOKIE BREAK mark first used in commerce in the United States, according to Nabisco’s trademark filing."
+    },
+    {
+      "date": "1974-09",
+      "text": "Nabisco files the COOKIE BREAK trademark (serial no. 73031545) in the Staple Food Products category."
+    },
+    {
+      "date": "1975-09",
+      "text": "COOKIE BREAK trademark is registered (reg. no. 1020647) to Nabisco, Inc."
+    },
+    {
+      "date": "1980-01",
+      "text": "Cookie Break vanilla cookies are recalled by shoppers as a regular Nabisco item in U.S. supermarkets and pantries through the 1980s and 1990s."
+    },
+    {
+      "date": "2000-01",
+      "text": "In response to consumer inquiries, Nabisco explains that Cookie Break was discontinued because there were not enough consumers buying the product to support continued production."
+    },
+    {
+      "date": "2006-06",
+      "text": "COOKIE BREAK trademark is listed as dead/expired in U.S. trademark records, reflecting the brand’s retirement."
+    }
+  ],
+
+  "links": {
+  "wikipedia": "https://en.wikipedia.org/wiki/Nabisco",
+  "wayback": "https://web.archive.org/web/*/http://www.nabisco.com",
+  "ebay": "https://www.ebay.com/sch/i.html?_nkw=nabisco+cookie+break",
+  "images_search": "https://www.google.com/search?q=%22Nabisco%22+%22Cookie+Break%22+cookies",
+  "pinterest_packaging": "https://www.pinterest.com/pin/443534263295342345/"
+},
+"sources": [
+  {
+    "label": "Vintage Cookie Break packaging (Pinterest)",
+    "url": "https://www.pinterest.com/pin/443534263295342345/"
+  }
+]
+
 }
