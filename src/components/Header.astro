@@ -7,20 +7,23 @@ const lastBrandLabel:  string = Astro.props.lastBrandLabel  ?? "Borders";
 
 /* ---------- Primary nav links ---------- */
 const links = [
-  { href: "/category/",  label: "Categories (browse)",  match: (p: string) => p.startsWith("/category/") },
-  { href: "/az/",        label: "A–Z (all brands)",     match: (p: string) => p.startsWith("/az/") },
-  { href: "/decade/",    label: "Decades (timelines)",  match: (p: string) => p.startsWith("/decade/") },
+  { href: "/category/",  label: "Categories",       match: (p: string) => p.startsWith("/category/") },
+  { href: "/az/",        label: "A–Z",              match: (p: string) => p.startsWith("/az/") },
+  { href: "/decade/",    label: "Decades",          match: (p: string) => p.startsWith("/decade/") },
 
-  // Products hub (vanished products/cult favorites)
-  { href: "/products/",  label: "Products",             match: (p: string) => p.startsWith("/products/") },
+  // Products hub (vanished products / cult favorites)
+  { href: "/products/",  label: "Products",         match: (p: string) => p.startsWith("/products/") },
 
-  { href: "/blog/",      label: "Brand Stories",        match: (p: string) => p.startsWith("/blog/") },
-  { href: "/data/",      label: "Data (CSV dataset)",   match: (p: string) => p.startsWith("/data/") },
+  { href: "/blog/",      label: "Brand stories",    match: (p: string) => p.startsWith("/blog/") },
+  { href: "/data/",      label: "Dataset (CSV)",    match: (p: string) => p.startsWith("/data/") },
 ];
 
 const path = Astro.url.pathname;
-const isHome = path === "/";
 const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
+
+/* Split links into "explore" group and dataset link for UI grouping */
+const datasetLink = links.find((l) => l.href === "/data/");
+const primaryLinks = links.filter((l) => l.href !== "/data/");
 
 /* ---------- Load brand JSON & compute dynamic stats ---------- */
 const modules = import.meta.glob("/src/content/brands/*.json", {
@@ -53,6 +56,27 @@ const minY = yearPool.length ? Math.min(...yearPool) : undefined;
 const maxY = yearPool.length ? Math.max(...yearPool) : undefined;
 const yearSpan = (minY && maxY) ? `${minY}\u2013${maxY}` : "—";
 
+/* ---------- Random brand index for client-side serendipity ---------- */
+const randomIndex = items
+  .filter((b: any) => b?.slug && b?.brand)
+  .map((b: any) => {
+    const cat = String(b.__seo_category_label || b.category || "Brand");
+    const s = toYear(b?.active?.start);
+    const e = toYear(b?.active?.end);
+    const anyYear = e ?? s;
+    const decade = typeof anyYear === "number" ? Math.floor(anyYear / 10) * 10 : undefined;
+    const decadeLabel = decade ? `${decade}s` : undefined;
+    const summary = String(b.fate || b.hook || "").slice(0, 160);
+
+    return {
+      slug: String(b.slug),
+      name: String(b.brand),
+      category: cat,
+      decade: decadeLabel,
+      summary,
+    };
+  });
+
 /* ---------- Safe inline JSON-LD for site nav ---------- */
 const urlFor = (p: string) => (Astro.site ? new URL(p, Astro.site).href : p);
 const navNames = links.map(l => l.label.replace(/\s*\([^)]*\)\s*/g, "").trim());
@@ -70,23 +94,28 @@ const toSafeJson = (obj: any) =>
     .replace(/\u2028|\u2029/g, '');
 ---
 
-<header class="max-w-[1040px] mx-auto px-4">
-  <!-- Top row: title + theme toggle -->
+<header class="max-w-[1040px] mx-auto px-4" role="banner">
+  <!-- Top row: site brand + theme toggle -->
   <div class="mt-8 flex items-center justify-between gap-4">
     <div>
-      {isHome ? (
-        <h1 class="text-2xl md:text-3xl font-bold">
-          🕰️ Vanished Brands Archive
-        </h1>
-      ) : (
-        <p class="text-2xl md:text-3xl font-bold" role="heading" aria-level="2">
-          🕰️ Vanished Brands Archive
-        </p>
-      )}
+      <!-- Site name is branding, not the main document heading -->
+      <p class="text-2xl md:text-3xl font-bold">
+        <a
+          href="/"
+          class="inline-flex items-center gap-1 hover:underline hover:underline-offset-2"
+          aria-label="Vanished Brands home"
+        >
+          <span aria-hidden="true">🕰️</span>
+          <span>Vanished Brands Archive</span>
+        </a>
+      </p>
 
-      <!-- ✅ Dynamic tagline -->
-      <p class="text-gray-600 dark:text-slate-300 mt-1">
-        Track {totalBrands} discontinued brands from <strong>{firstBrandLabel}</strong> to <strong>{lastBrandLabel}</strong> ({yearSpan})
+      <!-- Compact info strip: counts + span + example brands -->
+      <p class="text-xs md:text-sm text-gray-600 dark:text-slate-300 mt-1">
+        {totalBrands} discontinued &amp; defunct brands · {yearSpan}
+        <span class="hidden sm:inline">
+          {" "}— from <strong>{firstBrandLabel}</strong> to <strong>{lastBrandLabel}</strong>
+        </span>
       </p>
     </div>
 
@@ -106,7 +135,7 @@ const toSafeJson = (obj: any) =>
     </button>
   </div>
 
-  <!-- Primary nav: single row, scrollable if needed -->
+  <!-- Primary nav: Explore group (left) + Dataset + Random (right) -->
   <nav
     role="navigation"
     aria-label="Primary"
@@ -118,71 +147,241 @@ const toSafeJson = (obj: any) =>
       nav[data-site-nav]::-webkit-scrollbar { height: 0; }
     </style>
 
-    {links.map((l) => {
-      const isCurrent = l.match(path);
-      return (
-        <a
-          href={l.href}
-          class={`shrink-0 inline-flex chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
-          aria-current={isCurrent ? "page" : undefined}
-        >
-          {l.label}
-        </a>
-      );
-    })}
+    <!-- Explore links -->
+    <div class="flex items-center gap-3" aria-label="Explore vanished brands">
+      {primaryLinks.map((l) => {
+        const isCurrent = l.match(path);
+        return (
+          <a
+            href={l.href}
+            class={`shrink-0 inline-flex chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
+            aria-current={isCurrent ? "page" : undefined}
+          >
+            {l.label}
+          </a>
+        );
+      })}
+    </div>
 
-    <!-- Keep Random Brand on the same row -->
-    <a
-      href={`/brand/${fallbackSlug}/`}
-      class="shrink-0 inline-flex btn-primary focus-ring ml-1"
-      data-random
-      onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
-    >
-      Random Brand
-    </a>
+    <!-- Dataset + Random Brand grouped on the right -->
+    <div class="flex items-center gap-2 ml-auto" aria-label="Tools and dataset">
+      {datasetLink && (
+        (() => {
+          const isCurrent = datasetLink.match(path);
+          return (
+            <a
+              href={datasetLink.href}
+              class={`shrink-0 inline-flex chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
+              aria-current={isCurrent ? "page" : undefined}
+            >
+              {datasetLink.label}
+            </a>
+          );
+        })()
+      )}
+
+      <a
+        href={`/brand/${fallbackSlug}/`}
+        class="shrink-0 inline-flex btn-primary focus-ring"
+        data-random
+        onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
+        aria-label="Jump to a random vanished brand"
+      >
+        <span aria-hidden="true">🎲</span>
+        <span class="ml-1 hidden sm:inline">Surprise me</span>
+        <span class="ml-1 sm:hidden">Random</span>
+      </a>
+    </div>
   </nav>
 </header>
 
 <!-- Inline SiteNavigationElement JSON-LD (safely escaped) -->
 <script type="application/ld+json" is:inline set:html={toSafeJson(navSchema)} />
 
-<!-- Theme toggle logic -->
+<!-- Random brand index for client-side serendipity -->
+<script
+  id="vb-random-index"
+  type="application/json"
+  is:inline
+  set:html={JSON.stringify(randomIndex)}
+/>
+
+<!-- Toast styles -->
+<style is:inline>
+  .vb-toast {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 50;
+    max-width: 20rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.75rem;
+    background: rgba(15, 23, 42, 0.96);
+    color: white;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+  .vb-toast strong {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+  .vb-toast button {
+    margin-top: 0.35rem;
+    border: 0;
+    background: transparent;
+    color: rgb(191, 219, 254);
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .vb-toast {
+      transform: translateY(8px);
+      opacity: 0;
+      animation: vb-toast-in 0.25s ease-out forwards;
+    }
+    @keyframes vb-toast-in {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  }
+</style>
+
+<!-- Theme toggle logic + random-brand + toast -->
 <script is:inline>
   (function () {
-    const KEY = 'theme';
+    /* ---------- Theme toggle ---------- */
+    const THEME_KEY = 'theme';
     const btn = document.getElementById('themeToggleBtn');
-    if (!btn) return;
-
-    function currentTheme() {
-      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-    }
-
-    function setStateFromTheme(theme) {
-      btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-    }
-
-    function setTheme(next) {
-      if (window.toggleTheme) {
-        const cur = currentTheme();
-        if (cur !== next) window.toggleTheme();
-      } else {
-        document.documentElement.classList.toggle('dark', next === 'dark');
-        document.documentElement.dataset.theme = next;
-        try { localStorage.setItem(KEY, next); } catch (_) {}
-        const meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', next === 'dark' ? '#0b0b0f' : '#ffffff');
+    if (btn) {
+      function currentTheme() {
+        return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
       }
-      setStateFromTheme(next);
+
+      function setStateFromTheme(theme) {
+        btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      }
+
+      function setTheme(next) {
+        if (window.toggleTheme) {
+          const cur = currentTheme();
+          if (cur !== next) window.toggleTheme();
+        } else {
+          document.documentElement.classList.toggle('dark', next === 'dark');
+          document.documentElement.dataset.theme = next;
+          try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#0b0b0f' : '#ffffff');
+        }
+        setStateFromTheme(next);
+      }
+
+      setStateFromTheme(currentTheme());
+
+      btn.addEventListener('click', function () {
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+
+      const mo = new MutationObserver(() => setStateFromTheme(currentTheme()));
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
 
-    setStateFromTheme(currentTheme());
+    /* ---------- Random brand + toast ---------- */
+    const STORAGE_KEY = 'vb_random_brand_toast';
 
-    btn.addEventListener('click', function () {
-      const next = currentTheme() === 'dark' ? 'light' : 'dark';
-      setTheme(next);
-    });
+    function loadRandomIndex() {
+      const el = document.getElementById('vb-random-index');
+      if (!el) return [];
+      try {
+        const raw = el.textContent || '[]';
+        const data = JSON.parse(raw);
+        return Array.isArray(data) ? data : [];
+      } catch (e) {
+        console.warn('Random brand: failed to parse index', e);
+        return [];
+      }
+    }
 
-    const mo = new MutationObserver(() => setStateFromTheme(currentTheme()));
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    const randomIndexData = loadRandomIndex();
+
+    window.__goRandomBrand = function (event) {
+      if (event && event.preventDefault) event.preventDefault();
+
+      if (!randomIndexData.length) {
+        const link = event && event.currentTarget;
+        if (link && link.href) {
+          window.location.href = link.href;
+        }
+        return false;
+      }
+
+      const pick = randomIndexData[Math.floor(Math.random() * randomIndexData.length)];
+
+      try {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+          name: pick.name,
+          category: pick.category,
+          decade: pick.decade,
+          summary: pick.summary
+        }));
+      } catch (e) {
+        // non-fatal; toast just won't show
+      }
+
+      window.location.href = '/brand/' + encodeURIComponent(pick.slug) + '/';
+      return false;
+    };
+
+    function showRandomToastIfNeeded() {
+      try {
+        const raw = sessionStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        sessionStorage.removeItem(STORAGE_KEY);
+
+        if (!location.pathname.startsWith('/brand/')) return;
+
+        const data = JSON.parse(raw);
+        if (!data || !data.name) return;
+
+        const div = document.createElement('div');
+        div.className = 'vb-toast';
+
+        const parts = [];
+        const bits = [];
+        if (data.decade) bits.push(data.decade);
+        if (data.category) bits.push(data.category);
+        if (bits.length) parts.push(bits.join(' · '));
+        if (data.summary) parts.push(data.summary);
+
+        div.innerHTML = `
+          <strong>You landed on ${data.name}</strong>
+          <span>${parts.join(' — ')}</span>
+          <button type="button" aria-label="Dismiss notification">Close</button>
+        `;
+
+        const closeBtn = div.querySelector('button');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function () {
+            div.remove();
+          });
+        }
+
+        document.body.appendChild(div);
+
+        setTimeout(function () {
+          div.remove();
+        }, 6000);
+      } catch (e) {
+        // ignore storage / parsing errors
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', showRandomToastIfNeeded);
   })();
 </script>

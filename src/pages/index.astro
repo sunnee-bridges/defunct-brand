@@ -31,7 +31,6 @@ const searchIndex = brands
     category: String(b.__seo_category_label || b.category || "Brand"),
   }));
 
-
 /* ---------- Categories (unique, alpha) ---------- */
 const categories = Array.from(
   new Map(
@@ -199,51 +198,51 @@ const currentPath = Astro.url.pathname;
   <!-- Shared card + UI styles -->
   <style is:inline>
     /* Featured collections */
-.featured-collections { margin: 44px 0; }
-.featured-collections > h2 { font-size: 22px; margin: 0 0 22px 0; }
+    .featured-collections { margin: 44px 0; }
+    .featured-collections > h2 { font-size: 22px; margin: 0 0 22px 0; }
 
-.collection {
-  margin: 28px 0 44px;
-}
+    .collection {
+      margin: 28px 0 44px;
+    }
 
-/* ✅ Clear separation between adjacent collections */
-.collection + .collection {
-  margin-top: 44px;
-  padding-top: 22px;
-  position: relative;
-}
+    /* ✅ Clear separation between adjacent collections */
+    .collection + .collection {
+      margin-top: 44px;
+      padding-top: 22px;
+      position: relative;
+    }
 
-/* Hairline divider (soft gradient that works in light & dark) */
-.collection + .collection::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto auto 0;
-  right: 0;
-  height: 1px;
-  top: 0;
-  background: linear-gradient(90deg, transparent, rgba(2, 6, 23, 0.08), transparent);
-}
-.dark .collection + .collection::before {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
-}
+    /* Hairline divider (soft gradient that works in light & dark) */
+    .collection + .collection::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      right: 0;
+      height: 1px;
+      top: 0;
+      background: linear-gradient(90deg, transparent, rgba(2, 6, 23, 0.08), transparent);
+    }
+    .dark .collection + .collection::before {
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+    }
 
-.collection-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px; /* a bit more room above the grid */
-}
+    .collection-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px; /* a bit more room above the grid */
+    }
 
-.brand-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px; /* slightly larger to avoid crowding across collections */
-}
+    .brand-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px; /* slightly larger to avoid crowding across collections */
+    }
 
-@media (max-width: 768px) {
-  .brand-grid { gap: 14px; }
-}
+    @media (max-width: 768px) {
+      .brand-grid { gap: 14px; }
+    }
 
     .fcard {
       position: relative;
@@ -262,8 +261,10 @@ const currentPath = Astro.url.pathname;
         0 8px 16px -8px color-mix(in oklab, var(--tint) 35%, transparent),
         0 2px 10px -6px rgb(0 0 0 / .12);
     }
-    .fcard-sm { position:relative; border-radius:.875rem; border:1px solid var(--card-border, rgb(226 232 240));
-      background: var(--card-bg, #fff); padding:.75rem .85rem; overflow:hidden; transition: transform .16s ease, box-shadow .16s ease; }
+    .fcard-sm {
+      position:relative; border-radius:.875rem; border:1px solid var(--card-border, rgb(226 232 240));
+      background: var(--card-bg, #fff); padding:.75rem .85rem; overflow:hidden; transition: transform .16s ease, box-shadow .16s ease;
+    }
     .fcard-sm:hover{ transform: translateY(-1px); box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); }
     .dark .fcard-sm{ --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
 
@@ -290,41 +291,130 @@ const currentPath = Astro.url.pathname;
     .dark .hook { color: rgb(203 213 225); }
     .card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-    /* ===== Modern Stats + Search ===== */
-    .hero-cta { margin: 18px 0 22px; display: grid; gap: 16px; }
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+    /* ===== Hero + compact stats + search ===== */
+    .hero-section {
+      margin-top: 0.5rem;
+      margin-bottom: 1.75rem;
     }
-    @media (max-width: 900px) { .metrics { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 520px) { .metrics { grid-template-columns: 1fr 1fr; } }
 
-    .metric {
-      position: relative; border-radius: 16px; padding: 14px 14px 12px;
-      border: 1px solid color-mix(in oklab, rgb(99 102 241) 25%, transparent);
-      background:
-        linear-gradient(180deg, color-mix(in oklab, rgb(99 102 241) 10%, transparent), transparent 60%),
-        color-mix(in oklab, white 80%, transparent);
-      backdrop-filter: saturate(1.2) blur(2px);
-      box-shadow: 0 6px 18px -10px rgb(0 0 0 / .18);
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
-    .dark .metric{
-      border-color: color-mix(in oklab, rgb(99 102 241) 35%, transparent);
-      background:
-        linear-gradient(180deg, color-mix(in oklab, rgb(99 102 241) 18%, transparent), transparent 60%),
-        rgb(2 6 23 / .7);
-      box-shadow: 0 8px 24px -12px rgb(0 0 0 / .6);
-    }
-    .metric .icon { width: 28px; height: 28px; display:grid; place-items:center; border-radius: 10px;
-      background: color-mix(in oklab, rgb(99 102 241) 22%, white); color: #111827; margin-bottom: 8px; font-size: 15px; }
-    .dark .metric .icon { background: color-mix(in oklab, rgb(99 102 241) 40%, rgb(2 6 23)); color: white; }
-    .metric .value { font-weight: 800; letter-spacing: .2px; font-size: clamp(20px, 2vw, 24px); color: rgb(15 23 42); }
-    .dark .metric .value { color: white; }
-    .metric .label { font-size: 12px; color: rgb(71 85 105); margin-top: 2px; }
-    .dark .metric .label { color: rgb(203 213 225); }
 
-    .searchwrap { display: grid; gap: 10px; }
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: rgb(15 23 42);
+    }
+    .dark .hero-title {
+      color: rgb(241 245 249);
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      line-height: 1.5rem;
+      color: rgb(71 85 105);
+      max-width: 44rem;
+    }
+    .dark .hero-subtitle {
+      color: rgb(203 213 225);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.35rem;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .hero-btn-primary {
+      background: linear-gradient(135deg, #6366f1, #7c3aed);
+      color: white;
+    }
+    .hero-btn-primary:hover {
+      filter: brightness(1.05);
+    }
+
+    .hero-btn-secondary {
+      background: transparent;
+      border-color: rgba(148, 163, 184, 0.8);
+      color: rgb(15 23 42);
+    }
+    .dark .hero-btn-secondary {
+      color: rgb(226 232 240);
+      border-color: rgba(148, 163, 184, 0.9);
+    }
+
+    .hero-btn-ghost {
+      background: transparent;
+      color: rgb(79 70 229);
+    }
+    .dark .hero-btn-ghost {
+      color: rgb(165 180 252);
+    }
+
+    .hero-stats {
+      margin-top: 0.5rem;
+    }
+
+    .hero-stats-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgb(100 116 139);
+    }
+    .dark .hero-stats-list {
+      color: rgb(148 163 184);
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .hero-stat dt {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: rgb(15 23 42);
+    }
+    .dark .hero-stat dt {
+      color: rgb(226 232 240);
+    }
+
+    .hero-stat dd {
+      font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+      .hero-actions {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+
+    /* Search + chips + suggestions */
+    .searchwrap { display: grid; gap: 10px; margin-top: 0.75rem; }
     .search {
       display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px;
       background: linear-gradient(180deg, color-mix(in oklab, rgb(124 58 237) 8%, transparent), transparent 60%), white;
@@ -356,11 +446,12 @@ const currentPath = Astro.url.pathname;
       background: color-mix(in oklab, rgb(99 102 241) 10%, white);
       border: 1px solid color-mix(in oklab, rgb(99 102 241) 22%, white); text-decoration: none;
     }
-     .live-suggestions {
+
+    .live-suggestions {
       position: absolute;
-      top: 100%;        /* sit directly below the search bar */
+      top: 100%;
       left: 0;
-      right: 0;         /* makes it exactly width of .search */
+      right: 0;
       margin-top: 4px;
       max-height: 260px;
       overflow-y: auto;
@@ -406,77 +497,91 @@ const currentPath = Astro.url.pathname;
     }
   </style>
 
-  <!-- ✅ SEO-safe, uncluttered hero -->
-  <section class="mt-2" aria-label="Intro">
-    <h1 class="sr-only">Vanished Brands — Defunct & Discontinued Brands Archive</h1>
-    <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">
-      Quick timelines, clear categories, and sourced summaries.
-    </p>
-  </section>
+  <!-- ⭐ Hero: single punchy sentence + CTAs + compact stats + search -->
+  <section class="hero-section" aria-label="Vanished Brands intro">
+    <div class="hero-inner">
+      <h1 class="hero-title">
+        The searchable archive of brands that disappeared.
+      </h1>
 
-  <!-- ⭐ Modern Stats + Search -->
-  <section class="hero-cta" aria-label="Site overview">
-    <div class="metrics">
-      <div class="metric">
-        <div class="icon" aria-hidden="true">🏷️</div>
-        <div class="value">{totalAll}</div>
-        <div class="label">Defunct Brands</div>
+      <p class="hero-subtitle">
+        <strong>Vanished Brands</strong> is a searchable archive of {totalAll} defunct and discontinued brands,
+        browsable by decade, category, and fate — with a research-ready CSV dataset for journalists, analysts,
+        and the merely nostalgic.
+      </p>
+
+      <div class="hero-actions" aria-label="Primary actions">
+        <a href="/az/" class="hero-btn hero-btn-primary focus-ring">
+          Browse brands A–Z
+        </a>
+        <a href="/decade/" class="hero-btn hero-btn-secondary focus-ring">
+          Explore by decade
+        </a>
+        <a href="/data/" class="hero-btn hero-btn-ghost focus-ring">
+          Download dataset (CSV)
+        </a>
       </div>
-      <div class="metric">
-        <div class="icon" aria-hidden="true">🗓️</div>
-        <div class="value">{yearSpan}</div>
-        <div class="label">Years Covered</div>
+
+      <div class="hero-stats" aria-label="Archive summary">
+        <dl class="hero-stats-list">
+          <div class="hero-stat">
+            <dt>{totalAll}</dt>
+            <dd>Defunct brands</dd>
+          </div>
+          <div class="hero-stat">
+            <dt>{yearSpan}</dt>
+            <dd>Years covered</dd>
+          </div>
+          <div class="hero-stat">
+            <dt>{catCount}</dt>
+            <dd>Categories</dd>
+          </div>
+          <div class="hero-stat">
+            <dt>Free sample</dt>
+            <dd>CSV dataset</dd>
+          </div>
+        </dl>
       </div>
-      <div class="metric">
-        <div class="icon" aria-hidden="true">🗂️</div>
-        <div class="value">{catCount}</div>
-        <div class="label">Categories</div>
-      </div>
-      <div class="metric">
-        <div class="icon" aria-hidden="true">📄</div>
-        <div class="value">Free</div>
-        <div class="label">CSV Dataset</div>
-      </div>
+
+      <form class="searchwrap" role="search" action="/az/" method="GET">
+        <div class="search">
+          <span class="search-icon" aria-hidden="true">🔎</span>
+          <input
+            type="search"
+            name="q"
+            id="brandSearch"
+            placeholder={`Search ${totalAll} brands: Blockbuster, Circuit City, Toys R Us…`}
+            aria-label="Search defunct brands"
+            autocomplete="off"
+          />
+          <button class="search-btn" type="submit">Search</button>
+
+          <!-- Live suggestions dropdown -->
+          <div
+            id="brandSearch-suggestions"
+            class="live-suggestions hidden"
+            role="listbox"
+            aria-label="Search suggestions"
+          ></div>
+        </div>
+
+        <!-- Example search chips -->
+        <div class="suggestions" aria-label="Example searches">
+          <a href="/az/?q=Blockbuster" class="chip">Blockbuster</a>
+          <a href="/az/?q=Circuit%20City" class="chip">Circuit City</a>
+          <a href="/az/?q=Napster" class="chip">Napster</a>
+          <a href="/decade/1990s/" class="chip">1990s</a>
+        </div>
+      </form>
+
+      <!-- Inline brand search index for live suggestions -->
+      <script
+        id="brand-index"
+        type="application/json"
+        is:inline
+        set:html={JSON.stringify(searchIndex)}
+      />
     </div>
-
-    <form class="searchwrap" role="search" action="/az/" method="GET">
-      <div class="search">
-        <span class="search-icon" aria-hidden="true">🔎</span>
-        <input
-          type="search"
-          name="q"
-          id="brandSearch"
-          placeholder={`Search ${totalAll} brands: Blockbuster, Circuit City, Toys R Us…`}
-          aria-label="Search defunct brands"
-          autocomplete="off"
-        />
-        <button class="search-btn" type="submit">Search</button>
-
-        <!-- 🔽 Live suggestions dropdown (now inside .search) -->
-        <div
-          id="brandSearch-suggestions"
-          class="live-suggestions hidden"
-          role="listbox"
-          aria-label="Search suggestions"
-        ></div>
-      </div>
-
-      <!-- Example search chips -->
-      <div class="suggestions" aria-label="Example searches">
-        <a href="/az/?q=Blockbuster" class="chip">Blockbuster</a>
-        <a href="/az/?q=Circuit%20City" class="chip">Circuit City</a>
-        <a href="/az/?q=Napster" class="chip">Napster</a>
-        <a href="/decade/1990s/" class="chip">1990s</a>
-      </div>
-    </form>
-  <!-- Inline brand search index for live suggestions -->
-  <script
-    id="brand-index"
-    type="application/json"
-    is:inline
-    set:html={JSON.stringify(searchIndex)}
-  />
-
   </section>
 
   <!-- Minimal “why this matters” tucked away -->
@@ -484,7 +589,7 @@ const currentPath = Astro.url.pathname;
     <summary class="cursor-pointer text-sm text-indigo-600 hover:underline">Why brands disappear</summary>
     <div class="prose dark:prose-invert max-w-none mt-2">
       <p>
-        When smartphones absorbed MP3 players, when e-commerce reshaped malls, when streaming remade media—
+        When smartphones absorbed MP3 players, when e-commerce reshaped malls, when streaming remade media —
         vanished brands were the first visible signals of change. Each page summarizes the basics (founded,
         defunct, fate) with sources and related reading.
       </p>
@@ -517,8 +622,11 @@ const currentPath = Astro.url.pathname;
             const text = truncateInline(primaryTextOf(b), 120);
             return (
               <article class="fcard-sm" style={{ "--tint": tint }}>
-                <a href={`/brand/${encodeURIComponent(b.slug)}/`} class="stretched-link focus-ring rounded"
-                   aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}></a>
+                <a
+                  href={`/brand/${encodeURIComponent(b.slug)}/`}
+                  class="stretched-link focus-ring rounded"
+                  aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+                ></a>
                 <h4 class="text-base font-semibold leading-snug mb-1">{b.brand}</h4>
                 {text && (
                   <p class="hook">
@@ -554,8 +662,11 @@ const currentPath = Astro.url.pathname;
             const text = truncateInline(primaryTextOf(b), 120);
             return (
               <article class="fcard-sm" style={{ "--tint": tint }}>
-                <a href={`/brand/${encodeURIComponent(b.slug)}/`} class="stretched-link focus-ring rounded"
-                   aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}></a>
+                <a
+                  href={`/brand/${encodeURIComponent(b.slug)}/`}
+                  class="stretched-link focus-ring rounded"
+                  aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+                ></a>
                 <h4 class="text-base font-semibold leading-snug mb-1">{b.brand}</h4>
                 {text && (
                   <p class="hook">
@@ -591,8 +702,11 @@ const currentPath = Astro.url.pathname;
             const text = truncateInline(primaryTextOf(b), 120);
             return (
               <article class="fcard-sm" style={{ "--tint": tint }}>
-                <a href={`/brand/${encodeURIComponent(b.slug)}/`} class="stretched-link focus-ring rounded"
-                   aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}></a>
+                <a
+                  href={`/brand/${encodeURIComponent(b.slug)}/`}
+                  class="stretched-link focus-ring rounded"
+                  aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+                ></a>
                 <h4 class="text-base font-semibold leading-snug mb-1">{b.brand}</h4>
                 {text && (
                   <p class="hook">
@@ -603,7 +717,7 @@ const currentPath = Astro.url.pathname;
                 )}
                 <div class="meta-row">
                   {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
-                  {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
+                  {cat && <span class="chip-lite" title={`Category: {cat}`}>🏷️ {cat}</span>}
                 </div>
               </article>
             );
@@ -711,7 +825,9 @@ const currentPath = Astro.url.pathname;
       })}
     </div>
   </section>
-    <script is:inline>
+
+  <!-- Live search behavior -->
+  <script is:inline>
     document.addEventListener("DOMContentLoaded", function () {
       const input = document.getElementById("brandSearch");
       const dropdown = document.getElementById("brandSearch-suggestions");

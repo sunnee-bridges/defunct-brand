@@ -21,8 +21,13 @@ const firstLetter = (s = "") => {
   const ch = (s[0] || "").toUpperCase();
   return /[A-Z]/.test(ch) ? ch : "#";
 };
-const anchorIdFor = (L: string) =>
-  (L === "#" ? "0-9" : L).replace(/[^A-Za-z0-9_-]/g, "-");
+
+/* Simple slug for category keys */
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 /* 🔎 Search index for live suggestions */
 const searchIndex = brands
@@ -35,7 +40,7 @@ const searchIndex = brands
 
 const searchIndexJson = JSON.stringify(searchIndex);
 
-/* Search query (simple filter by name or category) */
+/* Search query (server-side, by name or category) */
 const qRaw = Astro.url.searchParams.get("q") || "";
 const q = qRaw.trim().toLowerCase();
 
@@ -43,12 +48,14 @@ const q = qRaw.trim().toLowerCase();
 const baseList = q
   ? brands.filter((b) => {
       const name = String(b.brand || "").toLowerCase();
-      const cat = String(b.__seo_category_label || b.category || "").toLowerCase();
+      const cat = String(
+        b.__seo_category_label || b.category || ""
+      ).toLowerCase();
       return name.includes(q) || cat.includes(q);
     })
   : brands;
 
-/* Sort & group (now based on baseList) */
+/* Sort & group (A–Z) */
 const sorted = baseList
   .slice()
   .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
@@ -63,6 +70,51 @@ const letters = Object.keys(groups)
     a === "#" ? 1 : b === "#" ? -1 : a.localeCompare(b)
   );
 const total = sorted.length;
+
+/* ---------- Build client-side filter options ---------- */
+
+/* Categories: value = slug, label = human */
+const categoryMap = new Map<string, string>();
+for (const b of brands) {
+  const label = String(b.__seo_category_label || b.category || "").trim();
+  if (!label) continue;
+  const slug = slugify(label);
+  if (!slug) continue;
+  if (!categoryMap.has(slug)) categoryMap.set(slug, label);
+}
+const categoryOptions = Array.from(categoryMap.entries())
+  .map(([value, label]) => ({ value, label }))
+  .sort((a, b) => a.label.localeCompare(b.label));
+
+/* Fate options: value = fateTypeOf key (lowercase) */
+const fateSet = new Set<string>();
+for (const b of brands) {
+  const key = String(fateTypeOf(b) || "").trim().toLowerCase();
+  if (key) fateSet.add(key);
+}
+const fateLabelMap: Record<string, string> = {
+  bankruptcy: "Bankruptcy",
+  acquired: "Acquired / merged",
+  shutdown: "Shutdown",
+  fraud: "Fraud / scandal",
+  other: "Other / unclear",
+};
+const fateOptions = Array.from(fateSet)
+  .sort()
+  .map((value) => ({
+    value,
+    label:
+      fateLabelMap[value] || (value[0]?.toUpperCase() + value.slice(1) || value),
+  }));
+
+/* Helper: numeric year for sorting (client uses data-year) */
+const yearOf = (b: any): number => {
+  const raw = b?.active?.end || b?.active?.start || "";
+  const m = String(raw).match(/\d{3,4}/);
+  if (!m) return 0;
+  const n = parseInt(m[0], 10);
+  return Number.isFinite(n) ? n : 0;
+};
 
 /* SEO */
 const PAGE_TITLE = "Browse A–Z • Defunct Brands";
@@ -250,8 +302,13 @@ const itemListLd = {
       Total brands: {total}
     </p>
 
-    <!-- 🔎 Search within A–Z (with live suggestions) -->
-    <form action="/az/" method="GET" class="mb-6 flex flex-wrap gap-2 items-center">
+    <!-- 🔎 Search within A–Z (server-side) -->
+    <form
+      id="az-filters"
+      action="/az/"
+      method="GET"
+      class="mb-6 flex flex-wrap gap-2 items-center"
+    >
       <label
         for="az-search"
         class="text-sm text-slate-700 dark:text-slate-300"
@@ -260,7 +317,7 @@ const itemListLd = {
       </label>
 
       <div class="flex gap-2 w-full max-w-2xl">
-         <div class="relative flex-1">
+        <div class="relative flex-1">
           <input
             id="az-search"
             type="search"
@@ -297,15 +354,67 @@ const itemListLd = {
           <a href="/az/" class="ml-1 underline">Clear</a>
         </p>
       )}
+
+      <!-- Client-side filters + sort -->
+      <div class="w-full flex flex-wrap gap-2 mt-4">
+        <select
+          name="category"
+          id="az-category"
+          class="rounded-md border border-slate-300 dark:border-slate-700
+                 bg-white dark:bg-slate-900 px-2 py-1 text-xs
+                 text-slate-900 dark:text-slate-100"
+        >
+          <option value="">All categories</option>
+          {categoryOptions.map((opt) => (
+            <option value={opt.value}>{opt.label}</option>
+          ))}
+        </select>
+
+        <select
+          name="fate"
+          id="az-fate"
+          class="rounded-md border border-slate-300 dark:border-slate-700
+                 bg-white dark:bg-slate-900 px-2 py-1 text-xs
+                 text-slate-900 dark:text-slate-100"
+        >
+          <option value="">All outcomes</option>
+          {fateOptions.map((opt) => (
+            <option value={opt.value}>{opt.label}</option>
+          ))}
+        </select>
+
+        <select
+          name="sort"
+          id="az-sort"
+          class="ml-auto rounded-md border border-slate-300 dark:border-slate-700
+                 bg-white dark:bg-slate-900 px-2 py-1 text-xs
+                 text-slate-900 dark:text-slate-100"
+        >
+          <option value="az" selected>
+            A–Z
+          </option>
+          <option value="recent">
+            Most recently defunct
+          </option>
+          <option value="oldest">
+            Oldest brands first
+          </option>
+        </select>
+      </div>
     </form>
 
-    <!-- Jump bar -->
+    {/* Jump bar */}
     {total > 0 && (
-      <div class="flex flex-wrap gap-2 mb-6" role="navigation" aria-label="Jump to letter">
+      <div
+        class="flex flex-wrap gap-2 mb-6"
+        role="navigation"
+        aria-label="Jump to letter"
+        data-az-jump
+      >
         {letters.map((L) => {
           const anchor = L === "#" ? "0-9" : L;
           return (
-            <a href={`#${anchor}`} class="chip focus-ring">
+            <a href={`#${anchor}`} class="chip focus-ring" data-az-jump-link>
               {L}
             </a>
           );
@@ -323,7 +432,12 @@ const itemListLd = {
         {letters.map((L) => {
           const anchor = L === "#" ? "0-9" : L;
           return (
-            <section id={anchor} role="region" aria-labelledby={`h-${anchor}`}>
+            <section
+              id={anchor}
+              role="region"
+              aria-labelledby={`h-${anchor}`}
+              data-letter-section
+            >
               <div class="flex items-baseline gap-2 mb-3">
                 <h2 id={`h-${anchor}`} class="text-xl font-semibold">
                   {L}
@@ -336,20 +450,30 @@ const itemListLd = {
               <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {groups[L].map((b: any) => {
                   const yrs = yearsOf(b);
-                  const cat = b.__seo_category_label || b.category || "Brand";
-                  // derive a stable tint from category label
+                  const catLabel = b.__seo_category_label || b.category || "Brand";
+
+                  // Stable tint from category
                   let h = 0;
-                  const s = (cat || "brand") + "-vb";
+                  const s = (catLabel || "brand") + "-vb";
                   for (let i = 0; i < s.length; i++) {
                     h = (h * 31 + s.charCodeAt(i)) >>> 0;
                   }
                   const tint = `oklch(0.7 0.12 ${h % 360})`;
                   const icon = fateIconOf(b);
-                  const fateType = fateTypeOf(b) || "other";
+                  const fateType = (fateTypeOf(b) || "other").toLowerCase();
                   const text = truncateInline(primaryTextOf(b), 120);
+                  const yearSort = yearOf(b);
+                  const catKey = slugify(catLabel || "uncategorized");
+                  const brandKey = String(b.brand || "").toLowerCase();
 
                   return (
-                    <li>
+                    <li
+                      data-az-item
+                      data-category={catKey || "uncategorized"}
+                      data-fate={fateType}
+                      data-year={yearSort}
+                      data-brand={brandKey}
+                    >
                       <article
                         class="fcard-sm group h-full"
                         style={{ "--tint": tint }}
@@ -358,7 +482,7 @@ const itemListLd = {
                           href={`/brand/${encodeURIComponent(b.slug)}/`}
                           class="stretched-link focus-ring rounded"
                           aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${
-                            cat ? ` — ${cat}` : ""
+                            catLabel ? ` — ${catLabel}` : ""
                           }`}
                         ></a>
 
@@ -383,12 +507,12 @@ const itemListLd = {
                               {yrs}
                             </span>
                           )}
-                          {cat && (
+                          {catLabel && (
                             <span
                               class="chip-lite"
-                              title={`Category: ${cat}`}
+                              title={`Category: ${catLabel}`}
                             >
-                              🏷️ {cat}
+                              🏷️ {catLabel}
                             </span>
                           )}
                         </div>
@@ -410,78 +534,177 @@ const itemListLd = {
     </div>
   </div>
 
-  <!-- 🧠 Live suggestions script for /az/ -->
- <!-- 🧠 Live suggestions script for /az/ -->
-<script is:inline define:vars={{ searchIndexJson }}>
-  (function () {
-    const input = document.getElementById("az-search");
-    const dropdown = document.getElementById("az-search-suggestions");
-    if (!input || !dropdown) return;
+  <!-- 🧠 Live suggestions + client-side filters/sorting + jump bar sync -->
+  <script is:inline define:vars={{ searchIndexJson }}>
+    document.addEventListener("DOMContentLoaded", function () {
+      const input = document.getElementById("az-search");
+      const dropdown = document.getElementById("az-search-suggestions");
 
-    // 🚀 searchIndexJson is now a real JS string injected by Astro
-    let INDEX = [];
-    try {
-      INDEX = JSON.parse(searchIndexJson) || [];
-    } catch (e) {
-      console.error("Failed to parse A–Z searchIndexJson", e);
-      INDEX = [];
-    }
+      // --- Live suggestions (unchanged) ---
+      if (input && dropdown) {
+        let INDEX = [];
+        try {
+          INDEX = JSON.parse(searchIndexJson) || [];
+        } catch (e) {
+          console.error("Failed to parse A–Z searchIndexJson", e);
+          INDEX = [];
+        }
 
-    function clearSuggestions() {
-      dropdown.innerHTML = "";
-      dropdown.classList.add("hidden");
-    }
+        function clearSuggestions() {
+          dropdown.innerHTML = "";
+          dropdown.classList.add("hidden");
+        }
 
-    function renderSuggestions(items) {
-      if (!items.length) {
-        clearSuggestions();
-        return;
+        function renderSuggestions(items) {
+          if (!items.length) {
+            clearSuggestions();
+            return;
+          }
+
+          dropdown.innerHTML = items
+            .map(
+              (item) => `
+                <a href="${item.url}" role="option">
+                  <span>${item.name}</span>
+                  ${
+                    item.category
+                      ? `<span class="subtext">${item.category}</span>`
+                      : ""
+                  }
+                </a>
+              `
+            )
+            .join("");
+
+          dropdown.classList.remove("hidden");
+        }
+
+        input.addEventListener("input", function (event) {
+          const q = event.target.value.trim().toLowerCase();
+          if (!q) {
+            clearSuggestions();
+            return;
+          }
+
+          const matches = INDEX.filter((item) => {
+            const name = (item.name || "").toLowerCase();
+            const category = (item.category || "").toLowerCase();
+            return name.includes(q) || category.includes(q);
+          }).slice(0, 8);
+
+          renderSuggestions(matches);
+        });
+
+        input.addEventListener("blur", () => {
+          setTimeout(clearSuggestions, 150);
+        });
+
+        dropdown.addEventListener("mousedown", (e) => {
+          // keep click from blurring the input before navigation
+          e.preventDefault();
+        });
       }
 
-      dropdown.innerHTML = items
-        .map(
-          (item) => `
-            <a href="${item.url}" role="option">
-              <span>${item.name}</span>
-              ${
-                item.category
-                  ? `<span class="subtext">${item.category}</span>`
-                  : ""
-              }
-            </a>
-          `
-        )
-        .join("");
+      // --- Client-side filters + sort + jump bar sync ---
+      const categorySelect = document.getElementById("az-category");
+      const fateSelect = document.getElementById("az-fate");
+      const sortSelect = document.getElementById("az-sort");
 
-      dropdown.classList.remove("hidden");
-    }
+      const sections = Array.from(
+        document.querySelectorAll("[data-letter-section]")
+      );
+      const items = Array.from(
+        document.querySelectorAll("[data-az-item]")
+      );
+      const jumpNav = document.querySelector("[data-az-jump]");
+      const jumpLinks = jumpNav
+        ? Array.from(jumpNav.querySelectorAll("[data-az-jump-link]"))
+        : [];
 
-    input.addEventListener("input", function (event) {
-      const q = event.target.value.trim().toLowerCase();
-      if (!q) {
-        clearSuggestions();
-        return;
+      function applyFilters() {
+        const catVal = categorySelect ? categorySelect.value : "";
+        const fateVal = fateSelect ? fateSelect.value : "";
+        const sortVal = sortSelect ? sortSelect.value : "az";
+
+        // Filter visibility
+        items.forEach((el) => {
+          const itemCat = el.getAttribute("data-category") || "";
+          const itemFate = el.getAttribute("data-fate") || "";
+          let visible = true;
+
+          if (catVal && itemCat !== catVal) visible = false;
+          if (fateVal && itemFate !== fateVal) visible = false;
+
+          el.hidden = !visible;
+        });
+
+        // Hide sections with no visible items
+        sections.forEach((section) => {
+          const visibleItem = section.querySelector(
+            "[data-az-item]:not([hidden])"
+          );
+          section.hidden = !visibleItem;
+        });
+
+        // Sort items within each visible section
+        sections.forEach((section) => {
+          const list = section.querySelector("ul");
+          if (!list) return;
+
+          const sectionItems = Array.from(
+            list.querySelectorAll("[data-az-item]")
+          );
+
+          sectionItems.sort((a, b) => {
+            if (sortVal === "recent" || sortVal === "oldest") {
+              const ya = parseInt(a.getAttribute("data-year") || "0", 10);
+              const yb = parseInt(b.getAttribute("data-year") || "0", 10);
+              if (sortVal === "recent") return yb - ya;
+              return ya - yb;
+            }
+
+            // A–Z by brand
+            const nameA = (a.getAttribute("data-brand") || "").localeCompare(
+              b.getAttribute("data-brand") || ""
+            );
+            return nameA;
+          });
+
+          sectionItems.forEach((el) => list.appendChild(el));
+        });
+
+        // Sync jump bar: hide letters whose section is hidden / empty
+        jumpLinks.forEach((link) => {
+          const href = link.getAttribute("href") || "";
+          const id = href.startsWith("#") ? href.slice(1) : href;
+          const target = id ? document.getElementById(id) : null;
+          const hasVisible =
+            target &&
+            !target.hidden &&
+            target.querySelector("[data-az-item]:not([hidden])");
+
+          if (hasVisible) {
+            link.hidden = false;
+            link.setAttribute("aria-disabled", "false");
+          } else {
+            link.hidden = true;
+            link.setAttribute("aria-disabled", "true");
+          }
+        });
       }
 
-      const matches = INDEX.filter((item) => {
-        const name = (item.name || "").toLowerCase();
-        const category = (item.category || "").toLowerCase();
-        return name.includes(q) || category.includes(q);
-      }).slice(0, 8);
+      if (categorySelect) {
+        categorySelect.addEventListener("change", applyFilters);
+      }
+      if (fateSelect) {
+        fateSelect.addEventListener("change", applyFilters);
+      }
+      if (sortSelect) {
+        sortSelect.addEventListener("change", applyFilters);
+      }
 
-      renderSuggestions(matches);
+      // Initial application so jump bar reflects default (All)
+      applyFilters();
     });
-
-    // Hide dropdown shortly after blur so clicks still register
-    input.addEventListener("blur", () => {
-      setTimeout(clearSuggestions, 150);
-    });
-
-    // Prevent blur from killing clicks inside the dropdown
-    dropdown.addEventListener("mousedown", (e) => {
-      e.preventDefault();
-    });
-  })();
-</script>
-
+  </script>
 </Base>
