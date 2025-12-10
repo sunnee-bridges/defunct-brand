@@ -613,7 +613,7 @@ const currentPath = Astro.url.pathname;
           <a href="/decade/1990s/" class="see-all">See all 90s brands →</a>
         </div>
         <div class="brand-grid">
-          {C90s.map((b) => {
+          {C90s.slice(0, 4).map((b) => {
             const yrs = yearsOf(b);
             const cat = b.__seo_category_label || b.category || "Brand";
             const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
@@ -653,7 +653,7 @@ const currentPath = Astro.url.pathname;
           <a href="/category/food-beverage/" class="see-all">See all food brands →</a>
         </div>
         <div class="brand-grid">
-          {CFood.map((b) => {
+          {CFood.slice(0, 4).map((b) => {
             const yrs = yearsOf(b);
             const cat = b.__seo_category_label || b.category || "Brand";
             const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
@@ -693,7 +693,7 @@ const currentPath = Astro.url.pathname;
           <a href="/topics/bankruptcy/" class="see-all">See all bankruptcies →</a>
         </div>
         <div class="brand-grid">
-          {CFail.map((b) => {
+          {CFail.slice(0, 4).map((b) => {
             const yrs = yearsOf(b);
             const cat = b.__seo_category_label || b.category || "Brand";
             const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
