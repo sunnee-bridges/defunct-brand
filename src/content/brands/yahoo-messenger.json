@@ -5,32 +5,41 @@
   "seo_category": "software-internet",
   "country": "US",
   "active": { "start": 1998, "end": 2018 },
-  "fate": "Discontinued",
-  "hook": "The buzzy IM with Audibles, webcam chat, and the infamous window-shaking “Buzz.”",
-  "summary": "Once-dominant instant messenger retired in 2018 after a 20-year run. **Fun fact:** it launched in 1998 as **Yahoo! Pager** and, for a time in the mid-2000s, could **interoperate with MSN/Windows Live Messenger**, letting users chat across the two networks.",
+  "hook": "The playful instant messenger with Audibles, webcam chat, and the infamous window-shaking Buzz—a cultural staple of late-90s and 2000s internet life.",
+  "fate": "Discontinued in 2018 after a 20-year reign. Yahoo's failed modernization attempts and the rise of social networks, mobile chat, and encrypted messaging made the service obsolete. Yet Yahoo! Messenger remains iconic for defining how a generation learned to connect online.",
+  "summary": "**Yahoo! Messenger** (originally **Yahoo! Pager**) was the **instant messenger** that defined online culture from **1998 to 2018**. Launched at the dawn of the IM era, it grew into a feature-rich platform: free presence indicators (away/idle/custom statuses), **webcam and video chat**, **file transfer**, group chat rooms, and distinctly playful touches like **Audibles** (sound effects you could send) and the infamous **Buzz** feature—a window-shaking notification that became a staple of workplace shenanigans. At its peak in the mid-2000s, Yahoo! Messenger was where millions of people built their first online identities, flirted, networked, and simply hung out. Remarkably, for a brief period around **2005–2006**, Yahoo! Messenger achieved **interoperability with MSN/Windows Live Messenger**, a rare cross-network compatibility that let users chat across the two largest IM platforms. As social networks, smartphones, and end-to-end encrypted apps transformed communication in the 2010s, Yahoo! Messenger became a relic. The company attempted a modern rebrand with new apps and web interfaces, but the damage was done. By **2018**, after two decades of dominance, Yahoo! Messenger was **discontinued**—another casualty of the internet's relentless march toward consolidated social platforms. Yet for millions who grew up online, the Buzz sound, the away messages, and the simple joy of seeing 'User is now online' remain encoded in digital memory.",
   "notable_products": [
-    "Instant messaging",
-    "Group chat & chat rooms",
-    "Webcam/video chat",
-    "File transfer",
-    "Audibles & Buzz"
+    "Yahoo! Pager / Yahoo! Messenger (1998–2018) — the core IM platform with presence indicators and custom statuses",
+    "Webcam & video chat (pioneering feature in early 2000s)",
+    "Audibles & Buzz (playful notification system that became iconic)",
+    "Chat rooms & group messaging (early social infrastructure)",
+    "File transfer & peer-to-peer sharing",
+    "MSN Messenger interoperability (2005–2006, rare cross-platform compatibility)",
+    "Mobile apps & web reimaginations (2015–2018, unsuccessful modernization attempts)"
   ],
-  "topics": ["discontinued", "messaging", "2000s-internet", "nostalgia"],
+  "topics": ["discontinued", "instant-messaging", "2000s-internet", "nostalgia", "web-history", "dial-up-era"],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Yahoo!_Messenger",
-    "press_archive_search": "https://www.google.com/search?q=Yahoo+Messenger+shutdown+2018"
+    "wikipedia_yahoo_messenger": "https://en.wikipedia.org/wiki/Yahoo!_Messenger",
+    "techcrunch_shutdown": "https://web.archive.org/web/20250102050745/https://techcrunch.com/2018/06/08/yahoo-messenger-is-shutting-down-on-july-17-redirects-users-to-group-messaging-app-squirrel/",
+    "pcmag_history": "https://web.archive.org/web/20220522010955/https://uk.pcmag.com/internet-3/82142/goodbye-old-school-yahoo-messenger-app",
+    "variety_press_release": "https://archive.ph/T7mC3"
   },
-  "overview_md": "**Yahoo! Messenger** (originally **Yahoo! Pager**) was a fixture of late-1990s and 2000s online life—free IM with presence (away/idle), custom statuses, webcam chat, file transfer, group rooms, and playful features like **Audibles** and the window-shaking **Buzz**. It added mobile tie-ins and even a period of **interoperability with MSN/Windows Live Messenger** before the walled-garden era returned. As social networks, smartphones, and encrypted chat apps took over, usage fell. Yahoo discontinued the service in **2018** after attempting modern rewrites.",
+  "overview_md": "**Yahoo! Messenger** (originally launched as **Yahoo! Pager** in **March 1998**) was the instant messenger that defined late-90s and 2000s internet culture for millions. Born in the dial-up era when AOL Instant Messenger dominated, Yahoo! Messenger offered a free alternative with its own distinctive charm: clean interface, reliable presence indicators (away/idle/custom status messages that became an art form), and a suite of features that made it more than just text.\n\nWhat made Yahoo! Messenger special wasn't just functionality—it was **personality**. The **Audibles** system let you send sound effects and jingles to friends (\"dueling banjos,\" trumpet fanfares, or just a comical \"DING!\"). The **Buzz** feature—a window-shaking notification that made your friend's chat box vibrate—became legendary for workplace pranks and flirting. Webcam and video chat, pioneered in the early 2000s, let users actually *see* each other for the first time, transforming instant messaging from text into something more intimate. File transfer and peer-to-peer sharing meant you could swap photos, music, and documents without leaving the chat window.\n\nAt its peak in the **mid-2000s**, Yahoo! Messenger was where millions of people built their first online identities. Teenagers crafted elaborate away messages (sometimes poetic, often cryptic). Offices became hubs of subtle Buzz pranks. The service grew to support group chat, dedicated chat rooms, mobile clients, and even a remarkable period of **interoperability with MSN/Windows Live Messenger**—a rare instance of cross-platform compatibility that let the two largest IM networks talk to each other.\n\nBut the internet changed. **Social networks** (Facebook, then Snapchat and Discord) consolidated messaging into their platforms. **Smartphones** made text messaging and dedicated chat apps (WhatsApp, Signal) more practical. **Encryption** became a selling point; Yahoo! Messenger, a product of the unencrypted 1990s, struggled to modernize on security grounds. Yahoo attempted a rebrand with new apps and web interfaces in **2015–2017**, but by then the user base had evaporated. The service lingered in maintenance mode, then died quietly.\n\nIn **July 2018**, after exactly **20 years**, Yahoo! discontinued Messenger. The company offered users a brief window to download their chat history—a small mercy for digital archaeologists. Today, Yahoo! Messenger is gone, but not forgotten. Online communities still swap Buzz sounds, reminisce about away messages, and celebrate the service as a cultural landmark of dial-up-era internet. It represented a moment when instant messaging was still *playful*, when the internet felt smaller and more intimate, before everything became about scale and monetization.",
   "timeline": [
-    { "date": "1998-03", "text": "Launch as **Yahoo! Pager**; early desktop IM era begins." },
-    { "date": "1999-2001", "text": "Renamed **Yahoo! Messenger**; adds webcam chat, file sharing, chat rooms, Audibles/Buzz." },
-    { "date": "2005-2006", "text": "Introduces limited **interoperability with MSN/Windows Live Messenger**." },
-    { "date": "2012", "text": "Legacy chat rooms shut down as focus shifts to mobile/social." },
-    { "date": "2015-2017", "text": "New Yahoo Messenger app launches; legacy client deprecated." },
-    { "date": "2018-07", "text": "Service **discontinued**; users offered chat history download window." }
+    { "date": "1998-03", "text": "**Yahoo! Pager** launches—early desktop IM during the AOL Instant Messenger era. Simple but reliable presence indicators and text chat." },
+    { "date": "1999", "text": "Renamed to **Yahoo! Messenger**. Service gains traction as a free AIM alternative." },
+    { "date": "2000–2003", "text": "Golden era: Webcam/video chat added; Audibles (sound effects) and Buzz (window-shaking notifications) introduced. Chat rooms & group messaging expand. Millions adopt Yahoo! as their primary IM." },
+    { "date": "2004–2006", "text": "Peak usage. Yahoo! Messenger briefly achieves **interoperability with MSN/Windows Live Messenger**—rare cross-platform compatibility. File transfer, away messages as an art form, office culture around Buzz pranks." },
+    { "date": "2007–2011", "text": "Usage begins to decline as social networks (Facebook, MySpace) and mobile messaging (SMS) siphon users. Chat room consolidation." },
+    { "date": "2012", "text": "Chat rooms shut down. Yahoo abandons legacy features; service enters maintenance mode." },
+    { "date": "2015–2017", "text": "Unsuccessful rebrand: new Yahoo Messenger apps launched to compete with WhatsApp, Slack, Discord. Limited adoption; legacy client deprecated." },
+    { "date": "2018-07", "text": "**Service discontinued**. Users given window to download chat history. Yahoo! Messenger era ends after 20 years. Nostalgia communities form online." }
   ],
   "sources": [
-    { "label": "Wikipedia — Yahoo! Messenger (history/features)", "url": "https://en.wikipedia.org/wiki/Yahoo!_Messenger" },
-    { "label": "News coverage — shutdown in 2018 (search hub)", "url": "https://www.google.com/search?q=Yahoo+Messenger+shutdown+2018" }
+    { "label": "Wikipedia — Yahoo! Messenger (comprehensive history, features, timeline)", "url": "https://en.wikipedia.org/wiki/Yahoo!_Messenger" },
+    { "label": "TechCrunch — Coverage of Yahoo! Messenger shutdown & corporate history", "url": "https://web.archive.org/web/20250102050745/https://techcrunch.com/2018/06/08/yahoo-messenger-is-shutting-down-on-july-17-redirects-users-to-group-messaging-app-squirrel/" },
+    { "label": "PCMag — Historical analysis of Yahoo! Messenger and instant messaging era", "url": "https://web.archive.org/web/20220522010955/https://uk.pcmag.com/internet-3/82142/goodbye-old-school-yahoo-messenger-app" },
+    { "label": "Internet Archive Wayback Machine — Historical snapshots of Yahoo Messenger website/interface", "url": "https://web.archive.org/web/*/yahoo.com/messenger*" },
+    { "label": "Yahoo Press Center — Official company communications on service discontinuation", "url": "https://www.yahoo.com/news/search?p=messenger+shutdown" }
   ]
 }

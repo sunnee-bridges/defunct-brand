@@ -7,24 +7,23 @@
   "active": { "start": 2006, "end": 2012 },
   "fate": "Discontinued",
   "hook": "Microsoft’s iPod-era rival with Wi-Fi sharing and the Zune Pass subscription.",
-  "summary": "Microsoft's digital media player ecosystem—hardware, software, and music store—launched in 2006 and was fully discontinued by 2012. Despite a well-liked UI and the Zune HD, it couldn’t overcome iPod/iTunes dominance and the shift to smartphones.",
+  "summary": "Microsoft’s Zune media-player ecosystem launched in 2006 and expanded through the late 2000s, peaking with the well-reviewed Zune HD in 2009. The product line struggled against iPod/iTunes and the rapid shift to smartphones. Zune hardware was discontinued in 2011, and the Zune brand was sunset in 2012, with remaining services and technology transitioning into Microsoft’s later music offerings.",
   "notable_products": ["Zune 30", "Zune 80/120", "Zune 4/8/16", "Zune HD"],
-  "topics": ["scandal", "discontinued", "mp3-player", "microsoft", "2000s-tech"],
+  "topics": ["discontinued", "mp3-player", "microsoft", "2000s-tech"],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Zune",
-    "news_search": "https://www.google.com/search?q=Microsoft+discontinues+Zune+2011+2012",
-    "video_ads_search": "https://www.youtube.com/results?search_query=Zune+commercial"
+    "wikipedia": "https://en.wikipedia.org/wiki/Zune_HD",
+    "techcrunch": "https://techcrunch.com/2009/09/18/review-zune-hd/"
   },
-  "overview_md": "**Zune** was Microsoft’s end-to-end music platform—portable players, the Zune desktop app, Marketplace, and the **Zune Pass** subscription. It introduced Wi-Fi track sharing and a distinctive, typography-forward UI. Later, the **Zune HD** earned strong reviews, but the iPod/iTunes lead and the rapid move to smartphones limited adoption. Hardware and brand were sunset by **2012**, and services were folded into Xbox/Groove before being retired.",
+ "overview_md": "**Zune** was Microsoft’s end-to-end music platform—portable players, the Zune desktop app, Marketplace, and the **Zune Pass** subscription. It introduced Wi-Fi track sharing and a distinctive, typography-forward UI. The lineup evolved from the original Zune 30 to later HDD and flash models, culminating in the **Zune HD** (2009), which earned strong reviews for its hardware and interface. As iPod/iTunes dominance and smartphones reshaped the market, Zune’s momentum faded. Microsoft discontinued **Zune hardware in 2011**, and sunset the **Zune brand in 2012**; remaining services and underlying tech continued transitioning into Microsoft’s later music offerings before those services were eventually retired.",
   "timeline": [
-    { "date": "2006-11", "text": "Zune 30 launches with Wi-Fi sharing and Zune Marketplace." },
-    { "date": "2007-2008", "text": "Second-gen HDD (80/120) and flash models (4/8/16) ship; Zune Pass subscription gains attention." },
-    { "date": "2009-09", "text": "Zune HD debuts with OLED display and refined touch UI." },
-    { "date": "2011-2012", "text": "Zune hardware/brand discontinued; services transition toward Xbox Music (later Groove)." }
-  ],
+  { "date": "2006", "text": "Zune launches (Zune 30) with Wi-Fi sharing and the Zune Marketplace." },
+  { "date": "2007-2008", "text": "Second-gen HDD models (80/120) and flash models (4/8/16) ship; Zune Pass gains attention." },
+  { "date": "2009", "text": "Zune HD debuts with an OLED display and refined touch UI." },
+  { "date": "2011", "text": "Zune hardware is discontinued; the product line winds down." },
+  { "date": "2012", "text": "The Zune brand is sunset; remaining services/tech continue transitioning into Microsoft’s later music offerings." }
+],
   "sources": [
-    { "label": "Wikipedia — Zune (history & models)", "url": "https://en.wikipedia.org/wiki/Zune" },
-    { "label": "News coverage — Zune discontinued (search hub)", "url": "https://www.google.com/search?q=Microsoft+discontinues+Zune+2011+2012" },
-    { "label": "Commercials/launch spots (video search)", "url": "https://www.youtube.com/results?search_query=Zune+commercial" }
+    { "label": "Wikipedia — Zune (history & models)", "url": "https://en.wikipedia.org/wiki/Zune_HD" },
+    { "label": "CNET — Microsoft delivers Zune player's last rites", "url": "https://archive.nytimes.com/bits.blogs.nytimes.com/2012/06/04/r-i-p-zune/" }
   ]
 }

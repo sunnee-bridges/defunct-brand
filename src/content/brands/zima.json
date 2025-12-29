@@ -5,31 +5,91 @@
   "seo_category": "alcoholic-beverages",
   "country": "US",
   "active": { "start": 1993, "end": 2008 },
-  "hook": "Coors' citrus experiment, huge splash then slow fade",
-  "fate": "U.S. discontinuation in 2008 after declining sales; brief limited revivals in 2017 and 2018.",
-  "summary": "A clear, citrus-leaning malt beverage introduced by Coors in 1993. After a huge early splash, U.S. sales faded and Zima was discontinued in 2008, with short nostalgic returns in 2017–2018.",
+  "hook": "Coors' citrus experiment—a massive 1990s hit that David Letterman mocked into oblivion",
+  "fate": "U.S. discontinuation in 2008 after declining sales; brief limited revivals in 2017 and 2018. Zima returned in Japan in 2023 after a hiatus.",
+  "summary": "A clear, citrus-leaning malt beverage introduced by Coors in 1993 with the slogan \"Zomething Different.\" Zima became a massive pop-culture phenomenon in 1994, peaking at 1.2 million barrels sold. However, David Letterman's relentless on-air ridicule between 1993–1994 severely damaged its brand image, and mounting competition from copycat brands led to sharp sales decline. Zima was discontinued in the U.S. in October 2008. The brand made brief nostalgic returns in 2017 and 2018, confirming its cult status.",
   "notable_products": ["Zima Clearmalt", "Zima Citrus (assorted flavors)"],
-  "topics": ["vanished-product", "nostalgia", "cult-favorite"],
-  "overview_md": "**Zima** was Coors’ clear, lightly citrus-flavored malt beverage that arrived in 1993 with “it’s zomething different” positioning and frosty, translucent bottles. Riding the 1990s trend for clear, ‘lighter’ products, it sold briskly out of the gate and became a pop-culture shorthand for alternative beer. Over time, brand momentum waned as copycats crowded shelves, flavor extensions muddied the proposition, and hard lemonades/alc-pops shifted attention. By 2008, distribution wound down in the U.S.\n\nNostalgia kept the name alive. After years of jokes and retro callbacks, Zima returned as a **limited release** in summer 2017 and again in 2018, targeting curiosity, tailgates, and backyard parties. The liquid stayed true to the original concept—crisp, sweet-leaning, and highly carbonated—while packaging leaned into 1990s vibes. Outside the U.S., Zima had a longer life in Japan, where it remained available for years and even spawned local variants before being phased out.\n\nToday Zima is remembered as a defining 1990s alc-pop: a time capsule of clear-product aesthetics, early flavor experimentation, and media references that outlived its regular shelf presence. The brief revivals confirmed its cult status—**a classic vanished product** that still sparks curiosity when it appears in vintage ads or party stories.",
+  "topics": ["vanished-product", "nostalgia", "cult-favorite", "letterman-effect"],
+  "overview_md": "**Zima** was Coors' clear, lightly citrus-flavored malt beverage that arrived in 1993 with \"it's zomething different\" positioning and frosty, translucent bottles. Riding the 1990s trend for clear, 'lighter' products, it sold briskly out of the gate and became a pop-culture shorthand for alternative beer.\n\nHowever, the turning point came unexpectedly. Between 1993 and 1994, late-night host David Letterman relentlessly mocked Zima on-air, comparing it to \"liquid polymer\" and ridiculing its ambiguous identity (\"not beer, not wine\"). The ridicule devastated brand perception, causing a dramatic sales decline even at the peak of its initial popularity. Compounding this cultural headwind, copycat competitors crowded shelves—notably Smirnoff Ice (1999), which succeeded where Zima stumbled by successfully marketing to male consumers. By 2008, distribution wound down in the U.S.\n\nNostalgia kept the name alive. After years of jokes and retro callbacks, Zima returned as a **limited release** in summer 2017 and again in 2018, targeting curiosity, tailgates, and backyard parties. The liquid stayed true to the original concept—crisp, sweet-leaning, and highly carbonated—while packaging leaned into 1990s vibes. The brief revivals confirmed its cult status: **a classic vanished product** that still sparks curiosity when it appears in vintage ads or party stories.\n\nOutside the U.S., Zima had a notably longer life in Japan, where it launched in 1996 and remained available for over two decades. Unlike its reputation as a \"feminine\" drink in America, Japanese consumers embraced it across genders and age groups. Supply chain disruptions caused by COVID-19 led to its discontinuation in Japan by December 2021, but it returned in 2023 through a partnership with Hakutsuru Sake Brewing Co., maintaining a foothold in a market where it never lost appeal.",
   "timeline": [
-    { "date": "1993-06", "text": "National U.S. launch of Zima by Coors as a clear, citrusy malt beverage." },
-    { "date": "1994-12", "text": "Early-years peak: Zima becomes a 1990s pop-culture staple amid growing alc-pop competition." },
-    { "date": "2005-05", "text": "Flavor extensions and repositioning efforts continue as sales trend downward." },
-    { "date": "2008-10", "text": "U.S. discontinuation as wholesalers wind down remaining inventory." },
-    { "date": "2017-06", "text": "Limited summer revival in the U.S.; a second short run returns in 2018 before ending again." }
+    {
+      "date": "1993-06",
+      "text": "National U.S. launch of Zima Clearmalt by Coors as a clear, citrusy malt beverage with $50 million marketing campaign and 'Zomething Different' tagline."
+    },
+    {
+      "date": "1993-1994",
+      "text": "David Letterman's repeated on-air ridicule ('liquid polymer,' 'not beer, not wine' jokes) damages brand cachet; brand perception drops sharply despite strong initial sales."
+    },
+    {
+      "date": "1994-12",
+      "text": "Zima peaks: 1.2 million barrels sold; becomes defining 1990s pop-culture touchstone. However, sales begin steep decline afterward as Letterman mockery and market saturation take hold."
+    },
+    {
+      "date": "1995-1996",
+      "text": "Zima Gold (amber-colored variant marketed to attract male drinkers) launches in spring 1995 but is discontinued by early 1996 after poor reception; male consumers reject the brand despite reformulation."
+    },
+    {
+      "date": "1996",
+      "text": "Zima launches in Japan, where it proves far more popular than in its home market, appealing to both genders across age groups."
+    },
+    {
+      "date": "1999-2000",
+      "text": "Smirnoff Ice launches and successfully captures male consumers and market share; Zima's market position continues eroding as copycats proliferate."
+    },
+    {
+      "date": "2000-2008",
+      "text": "Zima's sales decline accelerates; market crowded with superior competitors (hard lemonades, craft beer, other malternatives); brand momentum fades into niche status."
+    },
+    {
+      "date": "2008-10",
+      "text": "U.S. discontinuation: MillerCoors winds down Zima production and distribution after sales dropped to 0.5% of the malt beverage market; brand officially ends."
+    },
+    {
+      "date": "2017-06",
+      "text": "Limited summer revival in the U.S.; MillerCoors brings Zima back to capitalize on 1990s nostalgia; demand exceeds expectations and inventory sells out by September."
+    },
+    {
+      "date": "2018-05",
+      "text": "Second limited-time U.S. return with 40% more inventory than 2017; brand again receives strong nostalgic interest before ending release by fall."
+    },
+    {
+      "date": "1996-2021",
+      "text": "Japan: Zima maintains continuous availability for 25+ years, becoming a stable product across retailers, vending machines, and convenience stores (unlike its U.S. trajectory)."
+    },
+    {
+      "date": "2021-12",
+      "text": "Japan: Coors ends operations; Zima discontinuation due to COVID-19 pandemic supply chain disruptions and bar/restaurant sales collapse."
+    },
+    {
+      "date": "2023",
+      "text": "Japan: Zima returns through partnership with Hakutsuru Sake Brewing Co. (280-year-old sake producer); production shifts to domestic Japanese manufacturing."
+    }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Zima_(drink)",
-    "npr_2017": "https://www.npr.org/2017/06/02/531186444/zimas-back-and-its-not-even-throwback-thursday",
-    "chicagotrib_2018": "https://www.chicagotribune.com/dining/drink/ct-food-zima-returns-20180531-story.html",
-    "molsoncoors_news": "https://www.molsoncoorsblog.com/news/zima-returns-limited-time",
-    "adage_archive": "https://adage.com/article/news/zima-sparkling-cooler-hits-stores/89611"
+    "maxim_2018": "https://web.archive.org/web/20250619213745/https://www.maxim.com/entertainment/zima-comeback-2017-2/",
+    "chicagotrib_2018": "https://web.archive.org/web/20251228052233/https://www.chicagotribune.com/2017/02/17/clearly-you-missed-it-zima-is-coming-back/"
   },
   "sources": [
-    { "label": "Wikipedia – Zima", "url": "https://en.wikipedia.org/wiki/Zima_(drink)" },
-    { "label": "NPR – Zima’s Back (Jun 2, 2017)", "url": "https://www.npr.org/2017/06/02/531186444/zimas-back-and-its-not-even-throwback-thursday" },
-    { "label": "Chicago Tribune – Zima returns for summer 2018", "url": "https://www.chicagotribune.com/dining/drink/ct-food-zima-returns-20180531-story.html" },
-    { "label": "Molson Coors (news/blog) – Limited-time comeback", "url": "https://www.molsoncoorsblog.com/news/zima-returns-limited-time" },
-    { "label": "Ad Age – Launch coverage archive", "url": "https://adage.com/article/news/zima-sparkling-cooler-hits-stores/89611" }
+    {
+      "label": "Wikipedia – Zima (drink)",
+      "url": "https://en.wikipedia.org/wiki/Zima_(drink)"
+    },
+    {
+      "label": "MAXIM – Zima is officially coming back (May 16, 2018)",
+      "url": "https://web.archive.org/web/20250619213745/https://www.maxim.com/entertainment/zima-comeback-2017-2/"
+    },
+    {
+      "label": "Chicago Tribune – Zima returns for summer 2018",
+      "url": "https://web.archive.org/web/20251228052233/https://www.chicagotribune.com/2017/02/17/clearly-you-missed-it-zima-is-coming-back/"
+    },
+    {
+      "label": "History Oasis – The Clear Downfall of Zima (detailed history)",
+      "url": "https://www.historyoasis.com/post/zima"
+    },
+    {
+      "label": "Mashed – The Untold Truth of Zima (cultural impact)",
+      "url": "https://www.mashed.com/197573/the-untold-truth-of-zima/"
+    }
   ]
 }
