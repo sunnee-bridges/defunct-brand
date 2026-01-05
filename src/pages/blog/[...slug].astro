@@ -24,9 +24,11 @@ const rawBody: string = (entry as any).body ?? "";
 const { Content } = await entry.render();
 
 // Canonical
-const canonical = Astro.site
-  ? new URL(`/blog/${entry.slug}/`, Astro.site).href
-  : `/blog/${entry.slug}/`;
+const baseUrl = Astro.site?.toString().replace(/\/$/, "") || "";
+const frontmatterCanonical = entry.data.canonical;
+const canonical = frontmatterCanonical
+  ? baseUrl + (frontmatterCanonical.startsWith("/") ? frontmatterCanonical : `/${frontmatterCanonical}`)
+  : baseUrl + `/blog/${entry.slug}/`;
 
 /** ---------- Hero detection ---------- */
 const componentHero = /<\s*ArticleHero\b/i.test(rawBody);
@@ -56,6 +58,7 @@ const articleLd = {
   "@type": "Article",
   headline: entry.data.title,
   description: entry.data.description,
+  image: imageFromFm?.src ? baseUrl + imageFromFm.src : undefined,
   author: { "@type": "Organization", name: entry.data.author || "Vanished Brands" },
   datePublished: entry.data.date ?? entry.data.publishDate,
   dateModified: entry.data.updated ?? entry.data.date ?? entry.data.publishDate,

@@ -541,11 +541,6 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
-"mtv-music-channels": {
-	id: "mtv-music-channels";
-  collection: "brands";
-  data: any
-};
 "napster-original": {
 	id: "napster-original";
   collection: "brands";
