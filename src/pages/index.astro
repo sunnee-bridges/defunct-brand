@@ -586,16 +586,30 @@ const currentPath = Astro.url.pathname;
   </section>
 
   <!-- Minimal “why this matters” tucked away -->
-  <details class="mt-2">
-    <summary class="cursor-pointer text-sm text-indigo-600 hover:underline">Why brands disappear</summary>
-    <div class="prose dark:prose-invert max-w-none mt-2">
-      <p>
-        When smartphones absorbed MP3 players, when e-commerce reshaped malls, when streaming remade media —
-        vanished brands were the first visible signals of change. Each page summarizes the basics (founded,
-        defunct, fate) with sources and related reading.
-      </p>
-    </div>
-  </details>
+  <section class="mt-6 space-y-6" aria-label="About this archive">
+  <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
+    <h2 class="text-base font-semibold mb-2 text-slate-900 dark:text-slate-100">
+      Why Brands Disappear
+    </h2>
+    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      When smartphones absorbed MP3 players, when e-commerce reshaped malls, when streaming remade media —
+      vanished brands were the first visible signals of change. Each page summarizes the basics (founded,
+      defunct, fate) with sources and related reading.
+    </p>
+  </article>
+
+  <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
+    <h2 class="text-base font-semibold mb-3 text-slate-900 dark:text-slate-100">
+      How to Use This Archive
+    </h2>
+    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+      <li><strong class="text-slate-900 dark:text-slate-100">🔍 Search:</strong> Use the box above to find brands by name with live suggestions</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">📅 By Decade:</strong> Browse brands from the {availableDecadeLabels.slice(0, 2).join(" or ")}, or explore our full timeline</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">🏷️ By Category:</strong> Filter by {catCount} categories: Tech, Retail, Food, Media, Finance, and more</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">📊 Download:</strong> Get all {totalAll} brands with dates and fates as a research-ready CSV</li>
+    </ul>
+  </article>
+</section>
 
   <p class="sr-only">
     Explore defunct and discontinued brands by category, decade, and A–Z index.
@@ -607,45 +621,7 @@ const currentPath = Astro.url.pathname;
   <section class="featured-collections" aria-label="Featured Collections">
     <h2>Featured Collections</h2>
 
-    {C90s.length > 0 && (
-      <div class="collection">
-        <div class="collection-header">
-          <h3>🕹️ 90s Brands We Still Miss</h3>
-          <a href="/decade/1990s/" class="see-all">See all 90s brands →</a>
-        </div>
-        <div class="brand-grid">
-          {C90s.slice(0, 4).map((b) => {
-            const yrs = yearsOf(b);
-            const cat = b.__seo_category_label || b.category || "Brand";
-            const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
-            const icon = fateIconOf(b);
-            const fateType = fateTypeOf(b) || "other";
-            const text = truncateInline(primaryTextOf(b), 120);
-            return (
-              <article class="fcard-sm" style={{ "--tint": tint }}>
-                <a
-                  href={`/brand/${encodeURIComponent(b.slug)}/`}
-                  class="stretched-link focus-ring rounded"
-                  aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
-                ></a>
-                <h4 class="text-base font-semibold leading-snug mb-1">{b.brand}</h4>
-                {text && (
-                  <p class="hook">
-                    <span aria-hidden="true">{icon}</span>
-                    <span class="sr-only">Fate: {fateType}</span>
-                    {" "}{text}
-                  </p>
-                )}
-                <div class="meta-row">
-                  {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
-                  {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </div>
-    )}
+  
 
     {CFood.length > 0 && (
       <div class="collection">
@@ -687,45 +663,7 @@ const currentPath = Astro.url.pathname;
       </div>
     )}
 
-    {CFail.length > 0 && (
-      <div class="collection">
-        <div class="collection-header">
-          <h3>💰 Billion-Dollar Failures</h3>
-          <a href="/topics/bankruptcy/" class="see-all">See all bankruptcies →</a>
-        </div>
-        <div class="brand-grid">
-          {CFail.slice(0, 4).map((b) => {
-            const yrs = yearsOf(b);
-            const cat = b.__seo_category_label || b.category || "Brand";
-            const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
-            const icon = fateIconOf(b);
-            const fateType = fateTypeOf(b) || "other";
-            const text = truncateInline(primaryTextOf(b), 120);
-            return (
-              <article class="fcard-sm" style={{ "--tint": tint }}>
-                <a
-                  href={`/brand/${encodeURIComponent(b.slug)}/`}
-                  class="stretched-link focus-ring rounded"
-                  aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
-                ></a>
-                <h4 class="text-base font-semibold leading-snug mb-1">{b.brand}</h4>
-                {text && (
-                  <p class="hook">
-                    <span aria-hidden="true">{icon}</span>
-                    <span class="sr-only">Fate: {fateType}</span>
-                    {" "}{text}
-                  </p>
-                )}
-                <div class="meta-row">
-                  {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
-                  {cat && <span class="chip-lite" title={`Category: {cat}`}>🏷️ {cat}</span>}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </div>
-    )}
+   
   </section>
 
   <!-- Categories -->
@@ -750,7 +688,7 @@ const currentPath = Astro.url.pathname;
   </section>
 
   <!-- Decades -->
-  <section class="mt-6" role="region" aria-label="Browse by decade">
+  <section class="mt-6 mb-32" role="region" aria-label="Browse by decade">
     <h2 class="text-lg font-semibold mb-2">Browse by Decade</h2>
     <p class="text-gray-600 dark:text-slate-300 text-sm mb-1">
       Explore brands by the decade they ended (or started when unknown).
@@ -784,47 +722,7 @@ const currentPath = Astro.url.pathname;
 
   <!-- Recently Defunct (featured) -->
   <section class="mt-6 lg:mt-8" role="region" aria-label="Recently defunct brands">
-    <h2 class="text-lg font-semibold mb-2">Recently Defunct (featured)</h2>
-
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5">
-      {featured.map((b) => {
-        const yrs = yearsOf(b);
-        const cat = b.__seo_category_label || b.category || "Brand";
-        const hue = catHue(cat);
-        const tint = `oklch(0.7 0.12 ${hue})`;
-        const icon = fateIconOf(b);
-        const fateType = fateTypeOf(b) || "other";
-        const primary = primaryTextOf(b);
-        const text = b?.hook ? primary : truncateInline(primary, 160);
-
-        return (
-          <article class="fcard group p-4" data-brand-slug={b.slug} style={{ "--tint": tint }}>
-            <h3 class="card-title text-lg font-semibold leading-snug mb-1 text-slate-900/95 dark:text-slate-100">
-              <a
-                href={`/brand/${b.slug}/`}
-                class="stretched-link focus-ring rounded-sm"
-                title={`What happened to ${b.brand}?`}
-              >
-                {b.brand}
-              </a>
-            </h3>
-
-            {text && (
-              <p class="hook">
-                <span aria-hidden="true">{icon}</span>
-                <span class="sr-only">Fate: {fateType}</span>
-                {' '}{text}
-              </p>
-            )}
-
-            <div class="meta-row">
-              {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
-              {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
-            </div>
-          </article>
-        );
-      })}
-    </div>
+  
   </section>
 
   <!-- Live search behavior -->
