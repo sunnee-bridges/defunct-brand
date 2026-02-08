@@ -409,14 +409,31 @@ if (!notFound) {
   if (catPath) internalLinks.push({ href: catPath, label: `More in ${brand.category}` });
 
   if (Array.isArray(brand?.topics) && brand.topics.length > 0) {
-    const uniq = Array.from(new Set(brand.topics.map((t: string)=> String(t))));
-    uniq.slice(0, 2).forEach((t) => {
-      internalLinks.push({
-        href: `/topics/${encodeURIComponent(t)}/`,
-        label: `More in ${titleFromSlug(t)}`
-      });
+  // normalize category to a slug so "Retail" matches "retail"
+  const categorySlug = String(brand?.category || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const uniq = Array.from(new Set(brand.topics.map((t: string) => String(t))));
+
+  // remove any topic that matches the category (e.g., topic "retail" when category is "Retail")
+  const filtered = uniq.filter((t) => {
+    const tSlug = String(t)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    return tSlug !== categorySlug;
+  });
+
+  filtered.slice(0, 2).forEach((t) => {
+    internalLinks.push({
+      href: `/topics/${encodeURIComponent(t)}/`,
+      label: `More in ${titleFromSlug(t)}`
     });
-  }
+  });
+}
+
 
   // Add related articles
   if (Array.isArray(brand?.related_articles) && brand.related_articles.length > 0) {
@@ -803,7 +820,7 @@ if (!notFound) {
       {Array.isArray(sources) && sources.length > 0 && (
         <section aria-label="Sources" class="mt-8">
           <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-3">
-            Sources & References
+            Explore More
           </h3>
           <ul class="list-disc pl-5 space-y-2 text-sm">
             {sources.map((s) => (
@@ -837,14 +854,14 @@ if (!notFound) {
         </div>
       )}
 
-      {/* Existing UI */}
-      <ExploreMore brand={brand} />
+      {/* Existing UI 
+      <ExploreMore brand={brand} /> */}
 
       {(internalLinks.length || authorityLinks.length || mediaLinks.length) && (
         <LearnMore internal={internalLinks} authority={authorityLinks} media={mediaLinks} />
       )}
 
-      <AffiliateDisclosure />
+      {/* <AffiliateDisclosure /> */}
     </>
   )}
 </Base>
