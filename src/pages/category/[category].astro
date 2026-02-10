@@ -31,10 +31,11 @@ export async function getStaticPaths() {
     if (!brandKey) continue;
 
     // Prefer seo_category; fallback to category
-    const rawCat = (b.seo_category ?? b.category ?? "").toString().trim();
+    const rawCat = (b.category ?? "").toString().trim();
     if (!rawCat) continue;
 
-    b.__seo_category = slugify(rawCat); // normalized canonical category slug
+    // keep the same field name if you want, but it's now category-derived
+    b.__seo_category = slugify(rawCat);
 
     if (!bySlug.has(brandKey)) bySlug.set(brandKey, b); // first wins
   }
@@ -51,8 +52,9 @@ export async function getStaticPaths() {
 
     // Derive label from meta (fallback to prettified slug)
     const meta = CATEGORY_META[catSlug] ?? {};
+    const labelFromData = items?.[0]?.category?.toString().trim();
     const label =
-      meta.label ||
+      (meta.label || labelFromData) ??
       catSlug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
     return { params: { category: catSlug }, props: { label, catSlug, items, allCats: slugs } };

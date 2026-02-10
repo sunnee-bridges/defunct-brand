@@ -231,7 +231,20 @@ let timeline: Array<{ date: string; text?: string; year?: number; milestone?: st
 let sources: Array<{ label?: string; url: string }> = [];
 
 /* Pull a 4-digit year (or echo original date) */
-const yearOf = (d?: string) => (String(d || "").match(/\d{4}/)?.[0] || String(d || ""));
+const yearOf = (d?: string) => {
+  const s = String(d || "");
+
+  // Prefer decade formats: 1990s or 1990's
+  const decade = s.match(/\b(1[0-9]{3}|20[0-9]{2})'?[sS]\b/);
+  if (decade) return decade[0].replace(/S$/, "s"); // normalize trailing S -> s
+
+  // Otherwise, pull a 4-digit year
+  const year = s.match(/\b(1[0-9]{3}|20[0-9]{2})\b/);
+  if (year) return year[0];
+
+  // Otherwise, echo original
+  return s;
+};
 
 if (!notFound) {
   // Prefer author's Markdown body
