@@ -6,18 +6,17 @@
   "country": "US",
   "active": { "start": 1997, "end": 2017 },
   "hook": "Pre-dated texting, couldn't outlast smartphones",
-  "fate": "Service discontinued on 2017-12-15 after usage declines amid mobile and social messaging shifts.",
+  "fate": "Service discontinued on Dec. 15, 2017 after declining usage, and shifts in mobile and social messaging.",
   "summary": "AOL’s pioneering instant-messaging service (Buddy List, away messages) launched in 1997 and shut down in 2017.",
   "notable_products": ["IM", "Buddy list", "Away messages", "Chat rooms"],
   "topics": ["instant-messaging", "software-internet", "nostalgia"],
-  "overview_md": "**AOL Instant Messenger (AIM)** was one of the defining chat clients of the dial-up and early broadband era. Launched in **1997**, it popularized the **Buddy List**, distinctive **screen names**, and the culture of **away messages**. AIM supported 1:1 and group chat and helped normalize real-time presence online. As mobile-first messengers and social apps rose, AIM’s usage fell, and AOL announced the end of the service in **October 2017**, shutting it down on **December 15, 2017**.",
+  "overview_md": "AOL Instant Messenger (AIM) was one of the defining chat clients of the dial-up and early broadband era. Launched in 1997, it popularized the Buddy List, distinctive screen names, and away messages. AIM supported 1:1 and group chat and helped normalize real-time presence online. o stay competitive against other mobile messengers and social networking applications, AOL released AIM Triton in 2005. The service offered IM, e-mail, SMS messaging, and voice and video chat. However, AIM struggled to find its place with its single focus on messaging, which fell out of favor against newer options. Social networks like Facebook, as well as a shift to mobile-friendly applications, made AIM seem dated and obsolete. As competitors rose, AIM's usage fell, and AOL announced the end of service in October 2017, officially shutting down the service on December 15, 2017.",
   "timeline": [
     { "date": "1997-05-01", "text": "AIM launches as a standalone instant-messaging client separate from the AOL desktop." },
-    { "date": "2001-01-01", "text": "Peak early-2000s era: Buddy List and away messages become mainstream in the U.S." },
-    { "date": "2005-11-01", "text": "Mid-2000s client refresh (“AIM Triton”) introduces a new UI and voice/video features. (Date approximate; keep if you add a strong source.)" },
+    { "date": "2001-01-01", "text": "Buddy List and away messages become mainstream in the U.S." },
+    { "date": "2005-11-01", "text": "Mid-2000s client refresh (“AIM Triton”) introduces a new UI and voice/video features." },
     { "date": "2012-03-01", "text": "AIM organization restructured; product enters a redesign period amid the shift to mobile messaging." },
-    { "date": "2017-10-06", "text": "AOL announces AIM will be discontinued." },
-    { "date": "2017-12-15", "text": "Service shuts down worldwide." }
+    { "date": "2017-10-06", "text": "AOL announces AIM will be discontinued and service shuts down worldwide." }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/AOL_Instant_Messenger",
@@ -27,6 +26,7 @@
   "sources": [
     { "label": "Wikipedia — AOL Instant Messenger", "url": "https://en.wikipedia.org/wiki/AOL_Instant_Messenger" },
     { "label": "The Verge — AIM will shut down after 20 years (Oct 6, 2017)", "url": "https://www.theverge.com/2017/10/6/16435690/aim-shutting-down-after-20-years-aol-instant-messenger" },
-    { "label": "AOL Help — “AIM discontinued” (archived Apr 17, 2019)", "url": "https://web.archive.org/web/20190417053907/https://help.aol.com/articles/aim-discontinued" }
+    { "label": "AOL Help — “AIM discontinued” (archived Apr 17, 2019)", "url": "https://web.archive.org/web/20190417053907/https://help.aol.com/articles/aim-discontinued" },
+    { "label": "Messaging Pipeline - AOL Launches Its Triton ", "url": "https://messagingpipeline.com/news/174401111" }
   ]
 }
