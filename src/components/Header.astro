@@ -5,6 +5,8 @@
 const firstBrandLabel: string = Astro.props.firstBrandLabel ?? "Blockbuster";
 const lastBrandLabel:  string = Astro.props.lastBrandLabel  ?? "Borders";
 
+const showStats: boolean = Astro.props.showStats ?? false;
+
 /* ---------- Primary nav links ---------- */
 const links = [
   { href: "/category/",  label: "Categories",       match: (p: string) => p.startsWith("/category/") },
@@ -111,12 +113,14 @@ const toSafeJson = (obj: any) =>
       </p>
 
       <!-- Compact info strip: counts + span + example brands -->
-      <p class="text-xs md:text-sm text-gray-600 dark:text-slate-300 mt-1">
-        {totalBrands} discontinued &amp; defunct brands · {yearSpan}
-        <span class="hidden sm:inline">
-          {" "}— from <strong>{firstBrandLabel}</strong> to <strong>{lastBrandLabel}</strong>
-        </span>
-      </p>
+      {showStats && (
+        <p class="text-xs md:text-sm text-gray-600 dark:text-slate-300 mt-1">
+          {totalBrands} discontinued &amp; defunct brands · {yearSpan}
+          <span class="hidden sm:inline">
+            {" "}— from <strong>{firstBrandLabel}</strong> to <strong>{lastBrandLabel}</strong>
+          </span>
+        </p>
+      )}
     </div>
 
     <!-- Theme toggle -->

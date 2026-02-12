@@ -4,6 +4,8 @@ import "../styles/tailwind.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
+const showHeaderStats = Astro.props.showHeaderStats ?? false;
+
 export interface Props {
   title?: string;
   description?: string;
@@ -230,7 +232,10 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <a href="#main" class="skip-link">Skip to content</a>
 
     <!-- Header -->
-    <Header allSlugs={fileSlugs} fallbackSlug={FALLBACK_SLUG} />
+    <Header allSlugs={fileSlugs} 
+            fallbackSlug={FALLBACK_SLUG} 
+            showStats={showHeaderStats}
+    />
 
     <!-- Main grows to push footer down; tabindex enables skip-link focus -->
     <!-- NOTE: containerClass provides the single, consistent page container -->
