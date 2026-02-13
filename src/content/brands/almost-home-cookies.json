@@ -7,23 +7,27 @@
   "active": { "start": "early 1980s", "end": "mid-1990s" },
   "hook": "Nabisco’s soft, “homemade-style” cookie line remembered for bakery-like flavors.",
   "fate": "Discontinued as Nabisco consolidated cookie lines in the 1990s; favorites migrated to or were replaced by other brands (e.g., Chips Ahoy! extensions).",
-  "summary": "Nabisco’s **Almost Home** was positioned as soft, bakery-style cookies—chocolate chip, oatmeal raisin, peanut butter and seasonal varieties—aimed at delivering a ‘fresh from the oven’ vibe without baking. The line built a steady following in the **1980s–1990s**, then faded as the company trimmed slower-moving SKUs and focused on bigger umbrellas like **Chips Ahoy!** and **SnackWell’s**. Today it survives mostly in nostalgia posts, vintage ads, and collectors’ packaging photos.",
+  "summary": "Nabisco’s Almost Home was positioned as soft, bakery-style cookies—chocolate chip, oatmeal raisin, peanut butter and seasonal varieties—aimed at delivering a ‘fresh from the oven’ vibe without baking. The line built a steady following in the 1980s–1990s, then faded as the company trimmed slower-moving SKUs and focused on bigger umbrellas like Chips Ahoy! and SnackWell’s. Today it survives mostly in nostalgia posts, vintage ads, and collectors’ packaging photos.",
   "topics": ["discontinued", "nostalgia", "cookies", "80s-90s"],
   "links": {
     "wikipedia_nabisco": "https://en.wikipedia.org/wiki/Nabisco",
     "youtube_ad_search": "https://www.youtube.com/results?search_query=Nabisco+%22Almost+Home%22+cookies+commercial",
     "newspapers_ad_search": "https://www.google.com/search?q=%22Almost+Home%22+cookies+Nabisco+ad"
   },
-  "overview_md": "Nabisco’s **Almost Home** line brought the ‘soft batch’ trend to supermarket aisles in the **1980s**, framing itself as a *homemade-style* cookie you didn’t have to bake. Packages commonly featured chocolate chip, **oatmeal raisin**, **peanut butter**, and other comfort flavors with a softer, chewier texture than classic crisp cookies.\n\nAs the **1990s** progressed, Nabisco pursued portfolio shake-ups (diet-leaning **SnackWell’s**, new **Chips Ahoy!** variants, and broader line rationalization). **Almost Home** gradually disappeared from major chains and then from planograms entirely. While there was no splashy recall or single shutdown date, retail presence dwindled and the line was ultimately **discontinued**.\n\nThe brand lives on in **vintage circulars and TV spots** that surface online, plus packaging photos shared by collectors. For many Gen X shoppers, Almost Home evokes after-school snacks, lunchbox trades, and that specific ‘soft cookie in a box’ texture that’s hard to find today.",
+  "overview_md": "Nabisco’s Almost Home line brought the ‘soft batch’ trend to supermarket aisles in the 1980s, framing itself as a *homemade-style* cookie you didn’t have to bake. Packages commonly featured chocolate chip, oatmeal raisin, peanut butter, and other comfort flavors with a softer, chewier texture than classic crisp cookies.\n\nAlmost Home became an unwitting player in the Great Soft Cookie Wars of the 1980s, in which Procter and Gamble sued Nabisco and other major cookie producers for a larger share of the cookie market. Even as a judge ruled in Nabisco's favor after a four-year court battle, the combination of legal defense and decreased public appetite for soft cookies precipitated Almost Home's decline.\n\nAs the 1990s progressed, Nabisco pursued portfolio shake ups, including diet-leaning SnackWell's and new Chips Ahoy! variants. Almost Home gradually disappeared from major chains and then from Nabisco's displays entirely. While there was no splashy recall or single shutdown date, retail presence dwindled and the line was ultimately discontinued.\n\nThe brand lives on in vintage circulars and TV spots that surface online, plus packaging photos shared by collectors. For many Gen X shoppers, Almost Home evokes that specific soft-cookie-in-a-box texture that’s hard to find today.",
   "timeline": [
-    { "date": "early 1980s", "text": "Nabisco introduces Almost Home as a soft, homemade-style cookie line." },
-    { "date": "late 1980s", "text": "Line expands across grocery chains; ads highlight chewy texture and classic flavors." },
-    { "date": "1990s", "text": "Portfolio shifts (SnackWell’s, Chips Ahoy! extensions) crowd shelf space; slow fade begins." },
-    { "date": "mid-1990s", "text": "Brand effectively discontinued in the U.S. amid SKU rationalization." }
+    { "date": "1983", "text": "Nabisco introduces Almost Home as a soft, homemade-style cookie line in classic flavors." },
+    { "date": "1984", "text": "Great Soft Cookie War begins with Procter and Gamble lawsuit against Nabisco, Keebler, and Frito-Lay" },
+    { "date": "1989", "text": "Nabisco wins in court, but legal costs and declining consumer interest cause Almost Home's decline. " },
+    { "date": "1990s", "text": "Portfolio shifts crowd shelf space and brand's slow fade begins." },
+    { "date": "mid-1990s", "text": "Brand effectively discontinued in the U.S." }
   ],
   "sources": [
-    { "label": "Nabisco overview (brand owner context)", "url": "https://en.wikipedia.org/wiki/Nabisco" },
+    { "label": "Nabisco company overview", "url": "https://en.wikipedia.org/wiki/Nabisco" },
     { "label": "Vintage commercials (search results often surface period TV spots)", "url": "https://www.youtube.com/results?search_query=Nabisco+%22Almost+Home%22+cookies+commercial" },
-    { "label": "Contemporary ads/mentions (newspaper & catalog scans; query)", "url": "https://www.google.com/search?q=%22Almost+Home%22+cookies+Nabisco+ad" }
+    { "label": "Los Angeles Times - Firms Tell How Soft-Cookie Sales Crumbled After a Heated Battl", "url": "https://archive.is/lV8fJ" },
+    { "label": "New York Times - New Entries in a Cookie Race", "url": "https://www.nytimes.com/1983/10/18/business/new-entries-in-a-cookie-race.html" },
+    { "label": "Justia - Procter & Gamble Co. v. Nabisco Brands, Inc. lawsuit", "url": "https://law.justia.com/cases/federal/district-courts/FSupp/604/1485/1402274/" },
+    { "label": "Justia - Procter & Gamble Co. v. Nabisco Brands, Inc. verdict", "url": "https://law.justia.com/cases/federal/district-courts/FSupp/711/759/1655127/" },
   ]
 }
