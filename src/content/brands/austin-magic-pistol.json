@@ -7,23 +7,25 @@
   "active": { "start": 1946, "end": 1956 },
   "hook": "Toy gun that created real explosions using calcium carbide and water",
   "fate": "Discontinued in the mid-1950s after burn and eye injuries; never relaunched due to inherently dangerous mechanism.",
-  "summary": "Post-war toy pistol that reacted calcium carbide with water to generate acetylene gas and a spark—producing a real explosion and smoke. After injury reports, it quietly disappeared from shelves by the 1950s.",
+  "summary": "Toy gun that created real explosions using calcium carbide and water",
   "notable_products": [
     "Austin Magic Pistol",
     "Calcium carbide pellets"
   ],
   "topics": ["discontinued", "vanished-product", "burn-hazard", "nostalgia"],
-  "overview_md": "**Austin Magic Pistol** was a late-1940s/1950s toy gun that used **calcium carbide + water** to produce acetylene gas; a spark ignited it with a loud bang and smoke. It caused burns and eye injuries and faded from stores by the mid-1950s as safety norms changed.",
+  "overview_md": "The Austin Magic Pistol was a toy gun that was released in 1946. The gun used calcium carbide and water - a dangerous chemical combination - to shoot a plastic ball out of its barrel. When the two elements combined, they created an acetylene gas fireball.\n\nAs a result, numerous children received burns and eye injuries. Production began to slow down in the late 1950s before it was eventually removed from stores. The toy was officially banned after the U.S. Consumer Product Safety Commission was created in 1972. ",
   "timeline": [
     { "date": "1946", "text": "Introduced in the post-war toy market." },
     { "date": "1950-1955", "text": "Injury reports (burns/eye injuries) accumulate amid chemistry-toy craze." },
     { "date": "1956", "text": "Production/distribution tapers off; toy disappears from shelves." },
-    { "date": "1972", "text": "CPSC established; concept later regarded as inherently hazardous." }
+    { "date": "1972", "text": "The newly established United States Consumer Product Safety Commission regards the toy's concept as inherently hazardous." }
   ],
   "links": {
     "wikipedia_carbide": "https://en.wikipedia.org/wiki/Calcium_carbide"
   },
   "sources": [
-    { "label": "Wikipedia — Calcium carbide (reaction basis)", "url": "https://en.wikipedia.org/wiki/Calcium_carbide" }
+    { "label": "Wikipedia — Calcium carbide (reaction basis)", "url": "https://en.wikipedia.org/wiki/Calcium_carbide" },
+    { "label": "Skillset Magazine - Dangerous Vintage Toys of The Good Old Days", "url": "https://skillsetmag.com/article/dangerous-toy/" },
+    { "label": "Grunge - Most Dangerous Toys Ever Sold to the Public", "url": "https://www.grunge.com/47986/dangerous-toys-ever-sold-public/" }
   ]
 }
