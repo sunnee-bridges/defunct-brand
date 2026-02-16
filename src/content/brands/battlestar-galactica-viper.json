@@ -5,7 +5,7 @@
   "seo_category": "toys-games",
   "country": "US",
   "active": { "start": 1978, "end": 1978 },
-  "hook": "Toy spaceship with firing missiles; 4-year-old choked to death on projectile",
+  "hook": "",
   "fate": "Recalled in 1978 after child's death from choking on detached missile; led to mandatory warning labels on all projectile toys",
   "summary": "Licensed toy spaceship from the Battlestar Galactica TV series featuring spring-loaded missiles. A 4-year-old boy choked to death on a red plastic missile in 1978, leading to immediate recall and landmark changes to toy safety regulations requiring warnings on all toys with small projectiles.",
   "notable_products": [
@@ -18,35 +18,29 @@
     "wikipedia_bsg": "https://en.wikipedia.org/wiki/Battlestar_Galactica_(1978_TV_series)",
     "cpsc_projectile_toys": "https://www.cpsc.gov/"
   },
-  "overview_md": "**Battlestar Galactica Colonial Viper** was a die-cast toy spaceship released in 1978 by Mattel as part of the licensed merchandise for the hit science fiction television series *Battlestar Galactica*. The show, which premiered in September 1978, was ABC's answer to *Star Wars* and became an instant pop culture phenomenon, driving strong demand for related toys.\n\nThe Colonial Viper toy was a detailed replica of the starfighter spacecraft piloted by the show's heroes. Like many action toys of the era, it featured spring-loaded projectiles—small red plastic missiles that could be loaded into the ship and launched by pressing a button. This \"firing action\" was a popular feature in 1970s toys, from Star Wars vehicles to G.I. Joe weapons.\n\nIn **December 1978**, tragedy struck when a **4-year-old boy in California choked to death** on one of the Viper's red plastic missiles. The child had put the small projectile in his mouth, and it became lodged in his throat, blocking his airway. Despite emergency efforts, the boy died from asphyxiation.\n\nThe incident sent shockwaves through the toy industry and regulatory agencies. Mattel immediately recalled the Colonial Viper and similar toys with small projectile parts. The death prompted the **Consumer Product Safety Commission (CPSC)** to take aggressive action on projectile toys, which had been a growing concern throughout the 1970s.\n\nThe tragedy led directly to **landmark regulatory changes**. The CPSC mandated that all toys with projectiles or small detachable parts must carry prominent warning labels about choking hazards for children under three years old. Manufacturers were also required to design projectiles with minimum size standards and use softer materials. The \"WARNING: CHOKING HAZARD\" labels that appear on virtually every toy package today trace their origin to this incident.\n\nMattel never relaunched the Colonial Viper toy with firing missiles. When Battlestar Galactica toys returned to market in later decades (including the 2004 series reboot), projectile features were either eliminated or redesigned with much larger, softer foam darts that couldn't fit in a child's mouth.\n\nThe Colonial Viper incident became a defining moment in toy safety history, cited in regulatory discussions for decades afterward. It demonstrated that even toys from reputable manufacturers based on popular entertainment franchises could pose lethal hazards if design features weren't carefully evaluated for child safety. The original 1978 Colonial Viper remains one of the most notorious recalled toys in American history, and surviving examples with intact missiles have become dark collectibles in toy history circles.",
+  "overview_md": "The Battlestar Galactica Colonial Viper was a die-cast toy spaceship released in 1978 by Mattel as part of the licensed merchandise for the hit science fiction television series of the same name. The show, which premiered in September 1978, was ABC's answer to \"Star Wars\" and became an instant pop culture phenomenon, driving strong demand for related toys.\n\nThe Colonial Viper toy was a detailed replica of the starfighter spacecraft piloted by the show's heroes. Like many action toys of the era, it featured spring-loaded projectiles—small red plastic missiles that could be loaded into the ship and launched by pressing a button. This firing action was a popular feature in 1970s.\n\nIn December 1978, tragedy struck when a 4-year-old boy in California choked to death on Viper's red plastic missiles. The child put the small projectile in his mouth, and it became lodged in his throat. Despite emergency efforts, the boy died from asphyxiation.\n\nThe incident sent shockwaves through the toy industry and regulatory agencies. Mattel immediately recalled the Colonial Viper and similar toys with small projectiles. The Consumer Product Safety Commission (CPSC) mandated that all toys with projectiles or small detachable parts must carry prominent warning labels about choking hazards for children under 3 years old.\n\nManufacturers were also required to design projectiles with minimum size standards and use softer materials. THe \"WARNING: CHOKING HAZARD\" labels that appear on most of today's toy packaging trace their origin to this incident. \n\nMattel never relaunched the Colonial Viper. When Battlestar Galactica toys returned to the market in later decades, projectiles were either eliminated or redesigned with larger, softer foam darts that couldn't fit in a child's mouth.\n\nThe Colonial Viper incident became a defining moment in toy safety history, cited in regulatory discussions for decades and demonstrating that even toys from reputable manufacturers could pose lethal hazards without proper evaluation. It remains one of the most notorious recalled toys in American history, and a dark collectible in toy history circles.",
   "timeline": [
-    { "date": "1978-09", "text": "Battlestar Galactica TV series premieres on ABC; toy line released by Mattel" },
-    { "date": "1978-12", "text": "4-year-old boy in California chokes to death on Colonial Viper missile" },
-    { "date": "1978-12", "text": "Mattel announces immediate voluntary recall of Colonial Viper and similar projectile toys" },
+    { "date": "1978-09", "text": "Mattel releases a toy line to promote Battlestar Galactica's premiere on ABC" },
+    { "date": "1978-12", "text": "4-year-old boy in California chokes on Colonial Viper missle, resulting in a voluntary recall of Mattel projectile toys" },
     { "date": "1979", "text": "CPSC mandates warning labels on all toys with small projectiles or detachable parts" },
-    { "date": "1979", "text": "Toy industry adopts new standards for projectile size and materials" },
-    { "date": "1980s-present", "text": "Colonial Viper never relaunched with missiles; regulatory changes remain in effect" }
+    { "date": "1979", "text": "Toy industry adopts new standards for projectile size and materials" }
   ],
   "sources": [
     { 
-      "label": "CPSC Historical Recalls Database", 
-      "url": "https://www.cpsc.gov/Recalls" 
+      "label": "Wikipedia - Battlestar Galactica legal troubles", 
+      "url": "https://en.wikipedia.org/wiki/Battlestar_Galactica_(1978_TV_series)#Legal_troubles" 
     },
     { 
-      "label": "Wikipedia - Battlestar Galactica (1978)", 
-      "url": "https://en.wikipedia.org/wiki/Battlestar_Galactica_(1978_TV_series)" 
+      "label": "Consumer Product Safety Commission recall notice", 
+      "url": "https://www.cpsc.gov/Recalls/1979/Mattel-Announces-Toy-Replacement-Program" 
     },
     { 
-      "label": "Consumer Product Safety Commission - Toy Safety", 
-      "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Toys" 
+      "label": "Vintage Toy Emporium - The Tiny Red Missile that Shook Up the Toy Industry", 
+      "url": "https://www.vintagetoyemporium.com/post/the-tiny-red-missile-that-shook-up-the-toy-industry-in-1979" 
     },
     { 
-      "label": "Toy Industry Association - Safety Standards History", 
-      "url": "https://www.toyassociation.org/" 
-    },
-    { 
-      "label": "News archives: LA Times, Washington Post (1978-1979 coverage)", 
-      "url": "https://www.latimes.com/" 
+      "label": "Star Wars Collectors' Archive collection of Colonial Viper stories", 
+      "url": "http://theswca.com/textf/toydeath.old.html" 
     }
   ]
 }
