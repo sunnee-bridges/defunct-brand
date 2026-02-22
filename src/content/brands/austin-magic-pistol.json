@@ -13,12 +13,12 @@
     "Calcium carbide pellets"
   ],
   "topics": ["discontinued", "vanished-product", "burn-hazard", "nostalgia"],
-  "overview_md": "The Austin Magic Pistol was a toy gun that was released in 1946. The gun used calcium carbide and water - a dangerous chemical combination - to shoot a plastic ball out of its barrel. When the two elements combined, they created an acetylene gas fireball.\n\nAs a result, numerous children received burns and eye injuries. Production began to slow down in the late 1950s before it was eventually removed from stores. The toy was officially banned after the U.S. Consumer Product Safety Commission was created in 1972. ",
+  "overview_md": "The Austin Magic Pistol was a toy gun that was released in 1946. The gun used calcium carbide and water - a dangerous chemical combination - to shoot a plastic ball out of its barrel. When the two elements combined, they created an acetylene gas fireball. As a result, numerous children received burns and eye injuries.\n\nProduction began to slow down in the late 1950s before it was eventually removed from stores. The toy was officially banned after the U.S. Consumer Product Safety Commission was created in 1972.",
   "timeline": [
     { "date": "1946", "text": "Introduced in the post-war toy market." },
     { "date": "1950-1955", "text": "Injury reports (burns/eye injuries) accumulate amid chemistry-toy craze." },
     { "date": "1956", "text": "Production/distribution tapers off; toy disappears from shelves." },
-    { "date": "1972", "text": "The newly established United States Consumer Product Safety Commission regards the toy's concept as inherently hazardous." }
+    { "date": "1972", "text": "The newly established United States Consumer Product Safety Commission regards the toy's concept as inherently hazardous" }
   ],
   "links": {
     "wikipedia_carbide": "https://en.wikipedia.org/wiki/Calcium_carbide"
