@@ -5,13 +5,15 @@ import Base from "../../layouts/Base.astro";
 import ExploreMore from "../../components/ExploreMore.astro";
 import AffiliateDisclosure from "../../components/AffiliateDisclosure.astro";
 import LearnMore from "../../components/LearnMore.astro";
+import ExploreMoreCallout from "../../components/ExploreMoreCallout.astro";
 
 /** Generate paths for each brand file */
 export function getStaticPaths() {
   const modules = import.meta.glob("/src/content/brands/*.json");
-  return Object.keys(modules).map((p) => {
+  return Object.keys(modules)
+  .filter((p) => !p.endsWith(".public.json"))
+  .map((p) => {
     const slug = (p.split("/").pop() || "")
-      .replace(/\.public\.json$/i, "")
       .replace(/\.json$/i, "");
     return { params: { slug } };
   });
@@ -22,6 +24,9 @@ const brandModules = import.meta.glob("/src/content/brands/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, any>;
+
+const allBrands = Object.values(brandModules) as any[];
+
 
 /** Resolve current brand */
 const { slug } = Astro.params;
@@ -851,6 +856,14 @@ if (!notFound) {
           </ul>
         </section>
       )}
+
+      {/* "Interested in more..." callout (between Explore More and Learn More) */}
+
+      <ExploreMoreCallout brand={brand} allBrands={allBrands} max={2} />
+
+
+
+
 
       {/* Publishing metadata */}
       {brand?.publishing && (

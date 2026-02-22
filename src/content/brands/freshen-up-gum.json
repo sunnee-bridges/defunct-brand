@@ -6,8 +6,8 @@
   "country": "US",
   "active": { "start": 1975, "end": 2019 },
   "hook": "Liquid-center chewing gum famous for the slogan \"the gum that goes squirt.\"",
-  "fate": "U.S. distribution ended in the early 2000s; production shifted to Brazil where it continued until 2019 when Cadbury Adams discontinued the brand globally.",
-  "summary": "Introduced in 1975 by American Chicle (later Adams/Cadbury Adams), Freshen-Up was a liquid-center chewing gum—bite to release a flavored burst—sold in Peppermint, Spearmint, Cinnamon, Bubble Gum, and a 1970s fruit variant. The product pioneered the \"fun gum\" category with its distinctive \"the gum that goes squirt\" tagline. While U.S. distribution ended in the early 2000s, production shifted to Brazil where the brand remained viable until global discontinuation in 2019.",
+  "fate": "U.S. distribution ended in the early 2000s and production shifted to Brazil where it continued until 2019 when Cadbury Adams discontinued the brand globally.",
+  "summary": "Introduced in 1975 by American Chicle (later Adams/Cadbury Adams), Freshen-Up was a liquid-center chewing gum sold in Peppermint, Spearmint, Cinnamon, Bubble Gum, and a 1970s fruit variant. The product pioneered the \"fun gum\" category with its distinctive \"the gum that goes squirt\" tagline. While U.S. distribution ended in the early 2000s, production shifted to Brazil where the brand remained viable until global discontinuation in 2019.",
   "topics": ["vanished-product", "discontinued-flavor", "nostalgia", "1970s", "liquid-center-gum"],
   "taglines": [
     { "text": "The gum that goes squirt.", "source": "Vintage TV/radio ads 1975-1990s" },
@@ -20,15 +20,15 @@
     "Freshen-Up Bubble Gum",
     "Freshen-Up Fruit (1970s variant)"
   ],
-  "overview_md": "**Freshen-Up** was the original **liquid-center chewing gum** in the U.S., launched in **1975** by **American Chicle**, a subsidiary of Warner-Lambert Company. Its entire pitch was the **liquid burst**—you'd bite in and the center would \"**go squirt**,\" a line the brand made famous in advertising. Classic flavors included Peppermint, Spearmint, Cinnamon, Bubble Gum, and a fruit variant introduced in the 1970s.\n\nThe product's manufacturing proved complex and expensive. In **1976**, an explosion at the American Chicle factory in Queens, New York killed six workers, underscoring the technical challenges of encapsulating liquid centers in gum. This incident highlighted why production costs remained persistently high.\n\nThrough the late 20th century, the brand passed from American Chicle to **Adams/Cadbury Adams** and later into the Kraft/Mondelez orbit. By the **early 2000s**, Freshen-Up had **vanished from U.S. retail** as consumer preferences shifted and production complexity made it unprofitable in the American market.\n\nInterestingly, while the product disappeared from American shelves, **manufacturing shifted to Brazil under Cadbury Adams**, where Freshen-Up became the brand's strongest international market. Brazilian-manufactured Freshen-Up was exported to North America and other markets throughout the 2010s, sustaining the brand through continued production despite global challenges in the gum sector. The product remained available through these channels until **2019**, when Cadbury Adams discontinued the brand globally as part of broader corporate shifts toward higher-growth confectionery lines.\n\nToday, Freshen-Up is remembered as a defining 1970s-1980s product—a nostalgic touchstone for those who experienced its unique \"squirting\" sensation and era-defining advertising campaigns.",
+  "overview_md": "Freshen-Up was the original liquid-center chewing gum in the U.S., launched in 1975 by American Chicle, a subsidiary of Warner-Lambert Company. Its entire pitch was the liquid burst you'd get frmo biting the center. \"Go squirt\" became a famous tagline for the brand.  At one point, Freshen-Up made up 11% of total gum sales. Classic flavors included Peppermint, Spearmint, Cinnamon, Bubble Gum, and a fruit variant introduced in the 1970s.\n\nThe product's manufacturing proved complex and expensive. In 1976, an explosion at the American Chicle factory in Queens, New York killed six workers, underscoring the technical challenges of encapsulating liquid centers in gum. This incident highlighted why production costs remained persistently high.\n\nThrough the late 20th century, the brand passed from American Chicle to Adams/Cadbury Adams. By the early 2000s, Freshen-Up had vanished from U.S. retail as consumer preferences shifted and production complexity made it unprofitable in the American market.\n\nWhile the product disappeared from American shelves, manufacturing shifted to Brazil under Cadbury Adams, where Freshen-Up became the brand's strongest international market. Brazilian-manufactured Freshen-Up shifted to North America and other markets throughout the 2010s, sustaining the brand through continued production despite global challenges in the gum sector. The product remained available through 2019, when Cadbury Adams discontinued the brand globally as part of broader corporate shifts toward higher-growth confectionery lines.",
   "timeline": [
-    { "date": "1975", "text": "Freshen-Up launches in the U.S. as a liquid-center chewing gum under American Chicle Company (Warner-Lambert subsidiary) with the tagline \"the gum that goes squirt.\" Product available in four color-coded flavors: Peppermint (blue), Spearmint (green), Cinnamon (red), Bubble Gum (pink), plus a fruit variant." },
+    { "date": "1975", "text": "Freshen-Up launches in the U.S. as a liquid-center chewing gum under American Chicle Company with the tagline \"the gum that goes squirt.\" " },
     { "date": "1976", "text": "Explosion at American Chicle factory in Queens, New York kills six workers, highlighting the manufacturing challenges and safety concerns of liquid-center gum production. Incident underscores the technical complexity and expense of encapsulating liquid centers." },
-    { "date": "1975-1990s", "text": "Freshen-Up achieves significant early success with heavy advertising backing, at one point accounting for 11% of total gum sales. Becomes iconic 1970s-1980s product with memorable ad campaigns featuring pop culture references." },
-    { "date": "1990s-early 2000s", "text": "Brand passes through ownership changes: American Chicle → Adams → Cadbury Adams as market consolidation occurs. Product maintains niche following despite increasing competition from other gum brands and changing consumer preferences." },
-    { "date": "Early 2000s", "text": "Freshen-Up ceases distribution in U.S. market as declining sales, high production costs, manufacturing complexity, and competition from simpler gum products make it unprofitable for American retail." },
-    { "date": "2000s-2019", "text": "Manufacturing and production shift to Brazil under Cadbury Adams. Brazilian-made Freshen-Up becomes the brand's strongest market, exported to North America and select other markets, sustaining sales through the 2010s." },
-    { "date": "2019", "text": "Cadbury Adams discontinues Freshen-Up globally, halting all Brazilian production and exports. Brand fully discontinued after 44-year run as Cadbury prioritizes higher-growth confectionery products." }
+    { "date": "1975-1990s", "text": "Freshen-Up achieves significant early success with heavy advertising, becoming an iconic product with memorable ad campaigns featuring pop culture references" },
+    { "date": "1990s-early 2000s", "text": "Ownership changes through market consolidation, and product maintains niche following despite increasing competition and consumer preferences" },
+    { "date": "Early 2000s", "text": "Freshen-Up ceases distribution in U.S. market as declining sales, high production costs, manufacturing complexity, and competition make it unprofitable for American retail." },
+    { "date": "2000s-2019", "text": "Manufacturing and production shift to Brazil under Cadbury Adams and Freshen-Up becomes the brand's strongest market, exported to North America and other markets, through the 2010s." },
+    { "date": "2019", "text": "After 44 years, Cadbury Adams discontinues Freshen-Up globally, prioritizing higher-growth confectionery products." }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Freshen_Up",
@@ -37,11 +37,16 @@
   },
   "sources": [
     { "label": "Wikipedia — Freshen Up", "url": "https://en.wikipedia.org/wiki/Freshen_Up" },
-    { "label": "Wikipedia — American Chicle Company (maker history)", "url": "https://en.wikipedia.org/wiki/American_Chicle_Company" },
-    { "label": "Snack History — Freshen Up Gum (detailed history and advertising)", "url": "https://www.snackhistory.com/freshen-up-gum/" },
-    { "label": "Grokipedia — Freshen Up (comprehensive product history)", "url": "https://grokipedia.com/page/Freshen_Up" },
-    { "label": "Click Americana — Vintage gum brands (historical context)", "url": "https://clickamericana.com/topics/food-drink/best-vintage-gum-brands-from-the-20th-century" },
-    { "label": "ShiftyChevre — Why Was Freshen Up Gum Discontinued (analysis)", "url": "https://shiftychevre.com/why-was-freshen-up-gum-discontinued/" },
-    { "label": "Vintage ad recordings (tagline & product positioning)", "url": "https://www.youtube.com/results?search_query=Freshen+Up+gum+commercial" }
-  ]
+    { "label": "Wikipedia — American Chicle Company", "url": "https://en.wikipedia.org/wiki/American_Chicle_Company" },
+    { "label": "Snack History — Freshen Up Gum", "url": "https://www.snackhistory.com/freshen-up-gum/" },
+    { "label": "Click Americana — Vintage gum brands", "url": "https://clickamericana.com/topics/food-drink/best-vintage-gum-brands-from-the-20th-century" },
+    { "label": "ShiftyChevre — Why Was Freshen Up Gum Discontinued", "url": "https://shiftychevre.com/why-was-freshen-up-gum-discontinued/" },
+    { "label": "YouTube: Vintage ad", "url": "https://www.youtube.com/results?search_query=Freshen+Up+gum+commercial" }
+  ],"explore_more": {
+    "category_label": "Interested in more vanished brands of gum?",
+    "brands": [
+      { "name": "Fruit Stripe Gum", "slug": "fruit-stripe-gum" },
+      { "name": "Hubba Bubba Bubble Jug", "slug": "hubba-bubba-bubble-jug" }
+    ]
+  }
 }

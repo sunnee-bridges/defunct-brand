@@ -1,0 +1,111 @@
+---
+// src/components/ExploreMoreCallout.astro
+
+type BrandLite = {
+  brand?: string;     // in main brand JSON
+  name?: string;      // in explore_more.brands
+  slug: string;
+  category?: string;
+  seo_category?: string;
+  topics?: string[];
+};
+
+interface Props {
+  brand: any;
+  allBrands: any[];
+  max?: number;
+  label?: string;
+}
+
+const { brand, allBrands, max = 2, label } = Astro.props as Props;
+
+const currentSlug = String(brand?.slug || "");
+const currentCat = String(brand?.seo_category || brand?.category || "").toLowerCase().trim();
+
+const displayName = (b: BrandLite) => String(b?.brand || b?.name || b?.slug || "");
+
+const categoryLabel =
+  label ||
+  (brand?.explore_more?.category_label ? String(brand.explore_more.category_label) : "") ||
+  (brand?.category ? String(brand.category).split("/").pop() : "") ||
+  (currentCat ? currentCat.replace(/-/g, " ") : "this category");
+
+/* 1) Prefer explicit explore_more list */
+let picked: BrandLite[] = Array.isArray(brand?.explore_more?.brands)
+  ? brand.explore_more.brands
+      .filter((b: any) => b?.slug && String(b.slug) !== currentSlug)
+      .slice(0, max)
+      .map((b: any) => ({
+        slug: String(b.slug),
+        name: String(b.name || b.brand || b.slug),
+      }))
+  : [];
+
+/* 2) Otherwise compute by same category / shared topics */
+if (picked.length === 0) {
+  const currentTopics = new Set((brand?.topics || []).map((t: any) => String(t).toLowerCase()));
+
+  const isSameCategory = (b: BrandLite) => {
+    const cat = String(b?.seo_category || b?.category || "").toLowerCase().trim();
+    return !!currentCat && cat === currentCat;
+  };
+
+  const sharedTopicScore = (b: BrandLite) => {
+    const topics = (b?.topics || []).map((t: any) => String(t).toLowerCase());
+    let score = 0;
+    for (const t of topics) if (currentTopics.has(t)) score++;
+    return score;
+  };
+
+  const candidates = (allBrands || [])
+    .filter((b) => b?.slug && String(b.slug) !== currentSlug)
+    .map((b) => ({ b: b as BrandLite, sameCat: isSameCategory(b), score: sharedTopicScore(b) }))
+    .filter((x) => x.sameCat || x.score > 0);
+
+  picked = candidates
+    .sort((a, z) => {
+      if (a.sameCat !== z.sameCat) return a.sameCat ? -1 : 1;
+      return z.score - a.score;
+    })
+    .slice(0, max)
+    .map((x) => x.b);
+}
+
+/* 3) Last resort fallback: any other brands */
+if (picked.length === 0) {
+  picked = (allBrands || [])
+    .filter((b) => b?.slug && String(b.slug) !== currentSlug)
+    .slice(0, max);
+}
+---
+
+<section
+  aria-label="Explore more brands"
+  class="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-5 text-lg leading-relaxed text-slate-700
+         dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+>
+  {picked.length > 0 ? (
+    <p>
+      {categoryLabel} Check out{" "}
+      {picked.map((b, idx) => (
+        <Fragment>
+          <a
+            href={`/brand/${b.slug}/`}
+            class="text-blue-700 hover:underline dark:text-blue-300
+                   focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+                   focus-visible:ring-offset-slate-50 dark:focus-visible:ring-offset-slate-800"
+          >
+            {displayName(b)}
+          </a>
+          {idx < picked.length - 2 ? ", " : idx === picked.length - 2 ? " and " : ""}
+        </Fragment>
+      ))}
+      .
+    </p>
+  ) : (
+    <p class="text-slate-600 dark:text-slate-400">
+      Interested in more vanished brands of {categoryLabel}? More are coming soon.
+    </p>
+  )}
+</section>
+
