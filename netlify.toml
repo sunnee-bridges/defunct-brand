@@ -53,7 +53,7 @@
 
 # ---------- Headers ----------
 [[headers]]
-  for = "/*.html"
+  for = "/*"
   [headers.values]
     Content-Type = "text/html; charset=utf-8"
     X-Content-Type-Options = "nosniff"
