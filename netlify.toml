@@ -61,7 +61,7 @@
     Referrer-Policy = "no-referrer-when-downgrade"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     Cross-Origin-Opener-Policy = "same-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://app.netlify.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' /.netlify/functions/ https://app.netlify.com"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' /.netlify/functions/ https://cloudflareinsights.com"
 
 [[headers]]
   for = "/404.html"
