@@ -53,16 +53,16 @@
 
 # ---------- Headers ----------
 [[headers]]
-  for = "/*"
+  for = "/*.html"
   [headers.values]
-    Content-Type = "text/html; charset=utf-8"
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "DENY"
     Referrer-Policy = "no-referrer-when-downgrade"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     Cross-Origin-Opener-Policy = "same-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' /.netlify/functions/ https://cloudflareinsights.com"safe-inline'; img-src 'self' data:; connect-src 'self' /.netlify/functions/ https://cloudflareinsights.com"
-
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com"
+    
 [[headers]]
   for = "/404.html"
   [headers.values]
