@@ -34,6 +34,10 @@ const modKey = `/src/content/brands/${slug}.json`;
 const brand = (brandModules[modKey] as any) ?? null;
 const notFound = !brand;
 
+const hasExplicitExploreMore =
+  Array.isArray(brand?.explore_more?.brands) &&
+  brand.explore_more.brands.length > 0;
+
 const slogan =
   brand?.slogan ??
   (Array.isArray(brand?.taglines) && brand.taglines.length ? brand.taglines[0].text : undefined);
@@ -859,7 +863,10 @@ if (!notFound) {
 
       {/* "Interested in more..." callout (between Explore More and Learn More) */}
 
-      <ExploreMoreCallout brand={brand} allBrands={allBrands} max={2} />
+      
+      {hasExplicitExploreMore && (
+        <ExploreMoreCallout brand={brand} allBrands={allBrands} max={4} />
+      )}
 
 
 
