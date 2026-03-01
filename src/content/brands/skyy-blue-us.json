@@ -64,7 +64,7 @@
   
   "schema": {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "Brand",
     "name": "Skyy Blue",
     "brand": {
       "@type": "Brand",

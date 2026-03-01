@@ -35,6 +35,12 @@
     "label": "Tasting Table - What Happened to Maple Nut Goodies:",
     "url": "https://www.tastingtable.com/1989645/whatever-happened-maple-nut-goodies/"
   }
-]
+],"explore_more": {
+    "category_label": "Need more confections to satisfy your sweet tooth?",
+    "brands": [
+      { "name": "Almost Home Cookies", "slug": "almost-home-cookies" },
+      { "name": "Fruit Stripe", "slug": "fruit-stripe-gum" }
+    ]
+  }
 
 }
