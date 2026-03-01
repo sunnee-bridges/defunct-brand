@@ -18,7 +18,7 @@
     "image_search_packaging": "https://www.google.com/search?q=Apple+Newtons+box+Nabisco",
     "wayback_newtons_home": "https://web.archive.org/web/*/http://www.nabiscoworld.com/newtons*"
   },
-  "overview_md": "Apple Newtons were a fruit-filled spin on the classic Fig Newtons cookie: the same soft cake exterior, but with a spiced apple-cinnamon filling. Sold under the Newtons umbrella, Apple joined other varieties that proliferated in the 1990s–2000s as the brand leaned into “more fruit, less cookie” positioning.\n\nAs cookie aisles consolidated, the lineup was trimmed and fringe flavors disappeared. By the 2010s, Apple Newtons had effectively vanished from mainstream U.S. retail while core offerings continued. Today, Apple Newtons live on one of several beloved Newton flavors that didn’t survive.",
+  "overview_md": "Apple Newtons were a fruit-filled spin on the classic Fig Newtons cookie: the same soft cake exterior, but with a spiced apple-cinnamon filling. Sold under the Newtons umbrella, Apple joined other varieties that proliferated in the 1990s–2000s as the brand leaned into “more fruit, less cookie” positioning.\n\nAs cookie aisles consolidated, the lineup was trimmed and fringe flavors disappeared. By the 2010s, Apple Newtons had effectively vanished from mainstream U.S. retail while core offerings continued. Today, Apple Newtons live on as one of several beloved Newton flavors that didn’t survive.",
   "timeline": [
     { "date": "1980s", "text": "Apple Newtons appear as a flavor extension of Fig Newtons." },
     { "date": "1990s", "text": "National distribution alongside other fruit varieties." },
@@ -29,5 +29,11 @@
     { "label": "Wikipedia — Newtons", "url": "https://en.wikipedia.org/wiki/Newtons_(cookie)" },
     { "label": "Dailymail - 15 Discontinued Cookies We'll Never See Again", "url": "https://www.thedailymeal.com/1297892/discontinued-cookies-never-getting-back/" },
     { "label": "Packaging/ads reference", "url": "https://www.google.com/search?q=Apple+Newtons+box+Nabisco" }
-  ]
+  ],"explore_more": {
+    "category_label": "Looking for more cookies from the past?",
+    "brands": [
+      { "name": "Almost Home", "slug": "almost-home-cookies" },
+      { "name": "Cookie Breaks", "slug": "cookie-break" }
+    ]
+  }
 }

@@ -14,7 +14,7 @@
     "youtube_ad_search": "https://www.youtube.com/results?search_query=Nabisco+%22Almost+Home%22+cookies+commercial",
     "newspapers_ad_search": "https://www.google.com/search?q=%22Almost+Home%22+cookies+Nabisco+ad"
   },
-  "overview_md": "Nabisco’s Almost Home line brought the ‘soft batch’ trend to supermarket aisles in the 1980s, framing itself as a *homemade-style* cookie you didn’t have to bake. Packages commonly featured chocolate chip, oatmeal raisin, peanut butter, and other comfort flavors with a softer, chewier texture than classic crisp cookies.\n\nAlmost Home became an unwitting player in the Great Soft Cookie Wars of the 1980s, in which Procter and Gamble sued Nabisco and other major cookie producers for a larger share of the cookie market. Even as a judge ruled in Nabisco's favor after a four-year court battle, the combination of legal defense and decreased public appetite for soft cookies precipitated Almost Home's decline.\n\nAs the 1990s progressed, Nabisco pursued portfolio shake ups, including diet-leaning SnackWell's and new Chips Ahoy! variants. Almost Home gradually disappeared from major chains and then from Nabisco's displays entirely. While there was no splashy recall or single shutdown date, retail presence dwindled and the line was ultimately discontinued.\n\nThe brand lives on in vintage circulars and TV spots that surface online, plus packaging photos shared by collectors. For many Gen X shoppers, Almost Home evokes that specific soft-cookie-in-a-box texture that’s hard to find today.",
+  "overview_md": "Nabisco’s Almost Home line brought the ‘soft batch’ trend to supermarket aisles in the 1980s, framing itself as a homemade-style cookie you didn’t have to bake. Packages commonly featured chocolate chip, oatmeal raisin, peanut butter, and other comfort flavors with a softer, chewier texture than classic crisp cookies.\n\nAlmost Home became an unwitting player in the Great Soft Cookie Wars of the 1980s, in which Procter and Gamble sued Nabisco and other major cookie producers for a larger share of the cookie market. Even as a judge ruled in Nabisco's favor after a four-year court battle, the combination of legal defense and decreased public appetite for soft cookies precipitated Almost Home's decline.\n\nAs the 1990s progressed, Nabisco pursued portfolio shake ups, including diet-leaning SnackWell's and new Chips Ahoy! variants. Almost Home gradually disappeared from major chains and then from Nabisco's displays entirely. While there was no splashy recall or single shutdown date, retail presence dwindled and the line was ultimately discontinued.\n\nThe brand lives on in vintage circulars and TV spots that surface online, plus packaging photos shared by collectors. For many Gen X shoppers, Almost Home evokes that specific soft-cookie-in-a-box texture that’s hard to find today.",
   "timeline": [
     { "date": "1983", "text": "Nabisco introduces Almost Home as a soft, homemade-style cookie line in classic flavors." },
     { "date": "1984", "text": "Great Soft Cookie War begins with Procter and Gamble lawsuit against Nabisco, Keebler, and Frito-Lay" },
@@ -29,5 +29,11 @@
     { "label": "New York Times - New Entries in a Cookie Race", "url": "https://www.nytimes.com/1983/10/18/business/new-entries-in-a-cookie-race.html" },
     { "label": "Justia - Procter & Gamble Co. v. Nabisco Brands, Inc. lawsuit", "url": "https://law.justia.com/cases/federal/district-courts/FSupp/604/1485/1402274/" },
     { "label": "Justia - Procter & Gamble Co. v. Nabisco Brands, Inc. verdict", "url": "https://law.justia.com/cases/federal/district-courts/FSupp/711/759/1655127/" }
-  ]
+  ],"explore_more": {
+    "category_label": "Looking for more cookies from the past?",
+    "brands": [
+      { "name": "Apple Newtons", "slug": "apple-newtons" },
+      { "name": "Cookie Breaks", "slug": "cookie-break" }
+    ]
+  }
 }
