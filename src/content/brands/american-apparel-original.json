@@ -10,14 +10,14 @@
   "summary": "Vertically integrated basics label famed for \"Made in USA\" production and provocative marketing; the original company went through two bankruptcies before its brand was sold in 2017.",
   "notable_products": ["Apparel", "Retail stores", "Basics (T-shirts, hoodies, bodysuits)"],
   "topics": ["retail", "apparel", "vertically-integrated", "bankruptcy", "brand-sold"],
-  "overview_md": "American Apparel began in 1989 as a North Carolina-based wholesale T-shirt maker and grew into a vertically integrated fashion brand centered on Los Angeles manufacturing, rapid replenishment, and minimalist basics—T-shirts, hoodies, leggings, and bodysuits. Its stores highlighted \"Made in USA\" labor messaging and a distinctive, often provocative advertising style that made the label a pop-culture fixture in the 2000s. By mid-decade the company expanded from wholesale into hundreds of branded stores, supported by in-house cutting, sewing, and dyeing that enabled quick turns and color range.\n\nRapid growth, leverage, and operational complexity—plus intensifying competition from fast fashion and e-commerce—strained margins. Governance controversies and leadership turmoil further distracted the business. The company restructured after filing for Chapter 11 in 2015, then filed again in 2016 as sales and liquidity pressures continued. In early 2017, Gildan Activewear acquired the American Apparel trademarks and certain assets. Remaining U.S. stores were liquidated. Under new ownership, the brand continued primarily online/wholesale, leveraging name’s recognition while themmmmm retail footprint disappeared.\n\nFor many shoppers, American Apparel still evokes a specific aesthetic—clean basics, saturated color palettes, cotton jersey—and a moment when \"Made in USA\" branding was central to a mall era that has largely shifted to digital.",
+  "overview_md": "American Apparel began in 1989 as a North Carolina-based wholesale T-shirt maker and grew into a vertically integrated fashion brand centered on Los Angeles manufacturing, rapid replenishment, and minimalist basics—T-shirts, hoodies, leggings, and bodysuits. Its stores highlighted \"Made in USA\" labor messaging and a distinctive, often provocative advertising style that made the label a pop-culture fixture in the 2000s. By mid-decade the company expanded from wholesale into hundreds of branded stores, supported by in-house cutting, sewing, and dyeing that enabled quick turns and quick turns and a range of colors.\n\nRapid growth, leverage, and operational complexity—plus intensifying competition from fast fashion and e-commerce—strained margins. Governance controversies and leadership turmoil further distracted the business. The company restructured after filing for Chapter 11 in 2015, then filed again in 2016 as sales and liquidity pressures continued. In early 2017, Gildan Activewear acquired the American Apparel trademarks and certain assets. Remaining U.S. stores were liquidated. Under new ownership, the brand continued primarily online/wholesale, leveraging name’s recognition while the retail footprint disappeared.\n\nFor many shoppers, American Apparel still evokes a specific aesthetic—clean basics, saturated color palettes, cotton jersey—and a moment when \"Made in USA\" branding was central to a mall era that has largely shifted to digital.",
   "timeline": [
     { "date": "1989-01", "text": "Company founded as a T-shirt venture." },
-    { "date": "1997", "text": "Establishes production in Los Angeles" },
-    { "date": "1999", "text": "AmmericanApparel.net was launched" },
+    { "date": "1997", "text": "Establishes production in Los Angeles." },
+    { "date": "1999", "text": "AmericanApparel.net was launched." },
     { "date": "2003-2005", "text": "Accelerates vertical integration and opens branded retail stores; moves beyond wholesale basics." },
     { "date": "2007-12", "text": "Goes public via reverse merger (Endeavor Acquisition), supporting rapid global expansion." },
-    { "date": "2015-10-05", "text": "Files for Chapter 11 bankruptcy and restructures operations amid declining sales and debt" },
+    { "date": "2015-10-05", "text": "Files for Chapter 11 bankruptcy and restructures operations amid declining sales and debt." },
     { "date": "2017-01-10", "text": "Gildan Activewear acquires American Apparel, closing U.S. stores and relaunching the brand online." }
   ],
   "links": {
@@ -28,6 +28,14 @@
   "sources": [
     { "label": "Wikipedia – American Apparel", "url": "https://en.wikipedia.org/wiki/American_Apparel" },
     { "label": "NYTimes – American Apparel Files for Bankruptcy (Oct 2015)", "url": "https://archive.is/RUkHq" },
-    { "label": "Gildan – Press Release on American Apparel IP Acquisition (Jan 2017)", "url": "https://gildancorp.com/en/media/news/gildan-completion-acquisition-american-apparel/" }
-  ]
+    { "label": "Gildan – Press Release on American Apparel IP Acquisition (Jan 2017)", "url": "https://gildancorp.com/en/media/news/gildan-completion-acquisition-american-apparel/" },
+    { "label": "Time Magazine - The Shocking True Story Behind Trainwreck: The Cult of American Apparel", "url": "https://time.com/7299185/trainwreck-cult-of-american-apparel-true-story/" },
+     { "label": "Netflix - Trainwreck: The Cult of American Apparel documentary", "url": "https://www.netflix.com/title/81763680" }
+  ],"explore_more": {
+    "category_label": "Want more retail relics?",
+    "brands": [
+      { "name": "Borders", "slug": "borders" },
+      { "name": "Circuit City", "slug": "circuit-city" }
+    ]
+  }
 }
