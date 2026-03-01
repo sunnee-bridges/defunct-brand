@@ -31,5 +31,10 @@
     { "label": "Car and Driver – GN & GNX history told by creators", "url": "https://www.caranddriver.com/features/a23739443/buick-regal-grand-national-gnx-history" },
     { "label": "RM Sotheby’s – GNX auction write-up (production 547; tech highlights)", "url": "https://rmsothebys.com/auctions/hf25/lots/r0146-1987-buick-gnx/" },
     { "label": "GMA Authority - Many People Shopping for a Buick GNX", "url": "https://gmauthority.com/blog/2025/02/many-people-shopping-for-a-buick-gnx-research-data-finds/" }
-  ]
+  ],"explore_more": {
+    "category_label": "Need even more retro speed?",
+    "brands": [
+      { "name": "Desoto", "slug": "desoto" }
+    ]
+  }
 }

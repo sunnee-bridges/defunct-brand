@@ -42,5 +42,11 @@
       "label": "Star Wars Collectors' Archive collection of Colonial Viper stories", 
       "url": "http://theswca.com/textf/toydeath.old.html" 
     }
-  ]
+  ],"explore_more": {
+    "category_label": "Want more dangerously defunct toys from yesteryear?",
+    "brands": [
+      { "name": "Austin Magic Pistol", "slug": "austin-magic-pistol" },
+      { "name": "CSI Fingerprint Examination Kit", "slug": "csi-fingerprint-kit" }
+    ]
+  }
 }

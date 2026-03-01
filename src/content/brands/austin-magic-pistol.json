@@ -27,5 +27,11 @@
     { "label": "Wikipedia — Calcium carbide (reaction basis)", "url": "https://en.wikipedia.org/wiki/Calcium_carbide" },
     { "label": "Skillset Magazine - Dangerous Vintage Toys of The Good Old Days", "url": "https://skillsetmag.com/article/dangerous-toy/" },
     { "label": "Grunge - Most Dangerous Toys Ever Sold to the Public", "url": "https://www.grunge.com/47986/dangerous-toys-ever-sold-public/" }
-  ]
+  ],"explore_more": {
+    "category_label": "Want more dangerously defunct toys from yesteryear?",
+    "brands": [
+      { "name": "CSI Fingerprint Examintation Kit", "slug": "csi-fingerprint-kit" },
+      { "name": "Battlestar Galactica Colonial Viper", "slug": "battlestar-galactica-viper" }
+    ]
+  }
 }
