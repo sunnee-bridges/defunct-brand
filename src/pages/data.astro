@@ -67,6 +67,7 @@ const datasetLd = {
     }
   ]
 };
+const datasetLdJson = JSON.stringify(datasetLd);
 ---
 
 <Base title={pageTitle} description={pageDesc}>
@@ -81,9 +82,7 @@ const datasetLd = {
     <meta name="twitter:description" content={pageDesc} />
 
     <!-- Dataset JSON-LD -->
-    <script type="application/ld+json" is:inline>
-      {JSON.stringify(datasetLd)}
-    </script>
+    <script type="application/ld+json" set:html={datasetLdJson} />
   </Fragment>
 
   <nav class="mb-4 flex flex-wrap gap-2">
