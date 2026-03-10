@@ -8,7 +8,9 @@
   "hook": "Elizabeth Holmes' $9B blood-testing fraud",
   "fate": "Dissolved following regulatory actions and fraud charges; executives later convicted in U.S. federal court",
   "summary": "Blood-testing startup that promised hundreds of tests from a finger-prick; unraveled after accuracy and regulatory failures led to shutdown and prosecutions.",
-  "topics": ["scandal", "fraud", "diagnostics"],
+  "topics": [ "scandal",
+      "discontinued",
+      "banking"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Theranos"
   },

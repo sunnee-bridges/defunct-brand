@@ -14,7 +14,10 @@
     "Testimonials",
     "Photo albums"
   ],
-  "topics": ["social-network", "discontinued", "software-internet", "nostalgia"],
+  "topics": [ "discontinued",
+      "social-network",
+      "internet-history",
+      "2000s-nostalgia"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Orkut",
     "support_archive": "https://support.google.com/orkut/answer/3474945?hl=en"

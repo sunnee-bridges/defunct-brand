@@ -8,7 +8,10 @@
   "fate": "Discontinued",
   "hook": "Kellogg's tie-in that vanished faster than the Millennium Falcon",
   "summary": "Kellogg’s Star Wars–branded cereal sold during 1984–1985.",
-  "topics": ["vanished-product", "cult-favorite", "licensed-tie-in", "80s-nostalgia", "star-wars"],
+  "topics": ["vanished-product", "discontinued",
+      "snacks",
+      "80s-nostalgia",
+      "cult-favorite"],
   "notable_products": ["C-3PO’s cereal (double-figure-8 pieces)"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/C-3PO%27s",

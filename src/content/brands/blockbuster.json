@@ -9,7 +9,10 @@
   "fate": "Filed Chapter 11 in Oct 2010. Most corporate stores closed by 2014 after asset sale to DISH Network. An independently owned franchise store in Bend, Oregon remains as a novelty.",
   "summary": "Once the dominant video-rental chain, Blockbuster collapsed amid debt, streaming disruption, and Redbox competition; corporate stores closed by 2014, with one famous franchise left in Bend, Oregon.",
   "notable_products": ["Video rental", "Game rental", "In-store membership"],
-  "topics": ["retail-entertainment", "video-rental", "nostalgia", "disruption"],
+  "topics": ["retail-entertainment",  "bankruptcy",
+      "video-rental",
+      "retail",
+      "90s-nostalgia"],
   "overview_md": "**Blockbuster** grew from a single Dallas store in 1985 into the world’s best-known video-rental chain, defined by bright blue-and-yellow aisles, Friday-night rushes, and late-fee debates. At its peak, Blockbuster delivered selection and conveninence through thousands of worldwide locations, while experimenting with game rentals, mail delivery, and in-store sales. New releases were stacked by the wall, while employees steered families to staff picks and two-for-$5 deals.\n\nBut the model was vulnerable. Competition from Netflix's DVD-by-mail subscriptions eliminated the urgency of due dates. Redbox kiosks also undercut price and convenience. And streaming services further crushed any need for physical inventory. Blockbuster scrambled to make strategic shifts - like late fee policy changes and slow adoption of subscriptions - but remained less flexible than upstarts. The company filed Chapter 11 in 2010. DISH Network acquired key assets in 2011 and tried a hybrid retail/streaming approach before shuttering most corporate stores by 2014. What remains is largely cultural memory and one beloved outpost: the Bend, Oregon franchise, now a nostalgia landmark and informal museum to the Saturday-night ritual.",
   "timeline": [
     { "date": "1985-10-19", "text": "First Blockbuster store opens in Dallas, Texas." },

@@ -189,14 +189,10 @@
   },
   
   "topics": [
-    "video-rental",
-    "acquisition",
     "bankruptcy",
-    "streaming-disruption",
-    "nostalgia-90s",
-    "blockbuster-rivalry",
-    "netflix-disruption",
-    "movie-gallery"
+      "video-rental",
+      "acquired",
+      "90s-nostalgia"
   ],
   
   "tags": [

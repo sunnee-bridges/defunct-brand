@@ -13,7 +13,9 @@
     "Masters of the Universe Classics (collector line)",
     "Masters of the Universe Origins / Masterverse modern figures"
   ],
-  "topics": ["action-figures", "80s-90s", "cartoons", "nostalgia", "fantasy"],
+  "topics": [ "action-figures",
+      "80s-nostalgia",
+      "cult-favorite"],
   "links": {
     "wikipedia_orko": "https://en.wikipedia.org/wiki/Orko_(character)",
     "wikipedia_motu": "https://en.wikipedia.org/wiki/Masters_of_the_Universe"

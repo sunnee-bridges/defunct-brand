@@ -13,7 +13,10 @@
     "Pizzarias Zesty Pepperoni",
     "Pizzarias Pizza Chips (original)"
   ],
-  "topics": ["discontinued", "snacks", "90s-food", "pizza", "keebler", "nostalgia", "chips"],
+  "topics": [ "discontinued",
+      "snacks",
+      "cult-favorite",
+      "90s-nostalgia"],
   "links": {
     "keebler": "https://www.keebler.com/"
   },

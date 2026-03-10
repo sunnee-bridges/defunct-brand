@@ -14,7 +14,10 @@
     "Virtual pet clothing and accessories",
     "Home furniture and decorations"
   ],
-  "topics": ["discontinued", "facebook-games", "virtual-pets", "playfish", "ea", "2000s", "2010s", "server-shutdown"],
+  "topics": [ "discontinued",
+      "video-games",
+      "social-network",
+      "2000s-nostalgia"],
   "links": {
     "ea": "https://www.ea.com/"
   },

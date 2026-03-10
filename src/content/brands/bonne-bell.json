@@ -14,7 +14,9 @@
     "Skin Musk fragrance",
     "Lip Lites lip gloss"
   ],
-  "topics": ["discontinued", "vanished-product", "teen-products", "90s-nostalgia", "lip-balm"],
+  "topics": ["vanished-product",  "discontinued",
+      "acquired",
+      "90s-nostalgia"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Bonne_Bell"
   },

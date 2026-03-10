@@ -13,7 +13,10 @@
     "Lunch counters",
     "Foot Locker corporate spinoff"
   ],
-  "topics": ["retail-history", "consolidation", "nostalgia"],
+  "topics": [  "discontinued",
+      "retail",
+      "big-box",
+      "80s-nostalgia"],
   "links": {
     "wikipedia_company": "https://en.wikipedia.org/wiki/F._W._Woolworth_Company",
     "wikipedia_woolworth_building": "https://en.wikipedia.org/wiki/Woolworth_Building"

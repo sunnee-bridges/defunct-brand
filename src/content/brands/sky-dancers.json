@@ -13,7 +13,10 @@
     "Dragon Flyz (boys' version)",
     "Sky Dancers TV series tie-in dolls"
   ],
-  "topics": ["safety-recall", "vanished-product", "nostalgia", "90s-toys"],
+  "topics": ["safety-recall",
+      "vanished-product",
+      "toys",
+      "90s-nostalgia"],
   "links": {
     "cpsc_recall": "https://www.cpsc.gov/Recalls/2000/cpsc-galoob-announce-recall-of-sky-dancers-flying-dolls",
     "wikipedia": "https://en.wikipedia.org/wiki/Sky_Dancers"

@@ -9,7 +9,10 @@
   "fate": "Shut down following court rulings against its centralized P2P service; company later filed Chapter 11 (2002) and the brand was reused by successors.",
   "summary": "The original peer-to-peer music-sharing service (1999–2001) that popularized MP3 swapping and triggered landmark music-industry lawsuits; shut down after court orders.",
   "notable_products": ["P2P music sharing client/network"],
-  "topics": ["internet-history", "p2p", "music", "legal-case", "nostalgia"],
+  "topics": [ "discontinued",
+      "internet-history",
+      "2000s-nostalgia",
+      "cult-favorite"],
   "overview_md": "**Napster (original)** was the catalyst of the MP3 era. Launched in **1999** by Shawn Fanning and Sean Parker, it paired a simple Windows client with a **central index of user libraries**, making it effortless to search and swap songs across millions of PCs. College campuses and broadband households adopted it at viral speed; for many, Napster was the first experience of instant, on-demand access to nearly any track.\n\nThat popularity collided with music-industry rights. Major labels and artists (famously **Metallica** and **Dr. Dre**) sued, arguing Napster enabled widespread infringement. Because the directory and authentication were centralized, courts found Napster had knowledge and control sufficient to impose liability and injunctions. A district court ordered the service to block infringing files; the **Ninth Circuit** largely affirmed, and Napster went offline in **July 2001** to comply. The company subsequently entered **Chapter 11** in **2002**, with assets changing hands and the **Napster** name later reappearing on fully licensed services.\n\nNapster’s legacy is twofold: it normalized digital, track-based listening for a generation, and it pushed labels and tech toward licensed downloads and streaming. It also remains a case study in how architecture (centralized vs. decentralized) shapes both user experience and legal exposure.",
   "timeline": [
     { "date": "1999-06", "text": "Original Napster beta launches; rapid campus and broadband adoption follows." },

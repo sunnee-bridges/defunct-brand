@@ -15,7 +15,10 @@
     "SoBe Adrenaline Rush (energy – early 2000s)",
     "Mr. Green (guarana soda, short-lived)"
   ],
-  "topics": ["90s-nostalgia", "beverages", "discontinued-flavors", "energy-drinks", "tea"],
+  "topics": [ "acquired",
+      "beverages",
+      "cult-favorite",
+      "90s-nostalgia"],
   "links": {
     "label": "Wikipedia – SoBe (South Beach Beverage Company) overview", "url": "https://en.wikipedia.org/wiki/SoBe",
     "wikipedia_overview": "https://en.wikipedia.org/wiki/John_Bello"

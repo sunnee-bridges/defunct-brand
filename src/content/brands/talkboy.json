@@ -8,7 +8,10 @@
   "hook": "Home Alone–famous voice recorder that let kids slow, speed, and prank-call like Kevin McCallister.",
   "fate": "Original Tiger Electronics line discontinued by the late 1990s/early 2000s as cassettes and gimmick recorders faded; no modern equivalent in production.",
   "summary": "A handheld cassette recorder made iconic by *Home Alone 2* (1992). Tiger Electronics turned the movie prop into a real product that could record, play back, and (on later models) change speed. Best-selling through the mid-1990s, the line ended as digital gadgets overtook cassette toys.",
-  "topics": ["nostalgia", "90s-toys", "movie-tie-in", "discontinued"],
+  "topics": [ "discontinued",
+      "toys",
+      "90s-nostalgia",
+      "cult-favorite"],
   "notable_products": [
     "Talkboy (1992/93 original)",
     "Talkboy Deluxe (variable speed)",

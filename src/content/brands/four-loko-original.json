@@ -13,7 +13,10 @@
     "23.5 oz cans (12% ABV + caffeine)",
     "Four Loko Gold (limited edition)"
   ],
-  "topics": ["banned", "caffeinated-alcohol", "regulatory", "scandal", "2000s", "college-culture"],
+  "topics": [ "banned",
+      "reformulated",
+      "scandal",
+      "2000s-nostalgia"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Four_Loko"
   },

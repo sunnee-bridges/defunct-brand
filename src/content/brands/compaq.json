@@ -9,7 +9,9 @@
   "fate": "Merged with Hewlett-Packard; HP–Compaq on May 3, 2002. The brand was later retired in many markets.",
   "summary": "PC pioneer known for IBM-compatible portables and aggressive pricing was acquired by Hewlett-Packard after a decade of scale and major acquisitions.",
   "notable_products": ["Presario", "Armada", "iPAQ (handhelds)", "Compaq Portable"],
-  "topics": ["computers", "pc-clone-era", "acquisition", "enterprise", "nostalgia"],
+  "topics": [ "acquired",
+      "internet-history",
+      "2000s-nostalgia"],
   "overview_md": "**Compaq** helped define the IBM-compatible PC era. Founded in 1982 by Rod Canion, Jim Harris, and Bill Murto, the company’s early hit—the Compaq Portable—delivered near-perfect compatibility with IBM PC software while offering mobility for sales and engineering teams. Through the 1980s and early 1990s, Compaq pushed performance with Deskpro systems, competed fiercely on price, and built a global channel that made PC clones mainstream for business.\n\nBy the mid-1990s Compaq was a Fortune-scale manufacturer spanning desktops, notebooks (Armada), and consumer lines (Presario). It moved up-market with enterprise servers and, in 1998, acquired Digital Equipment Corporation (DEC), gaining Alpha servers, services, and a de-eper sales footprint, along with complexity and integration challenges. Consumer handhelds under the iPAQ brand (Pocket PC) briefly gave Compaq a lead in PDAs just as smartphones began to loom.\n\nSeeking scale and cost synergies as PC margins thinned, Compaq agreed to merge with Hewlett-Packard. Announced in late 2001 and closed in May 2002, the deal created one of the world’s largest PC and server vendors but also sparked debate about strategy and culture. Over time, HP deemphasized the Compaq name outside value segments. Compaq’s legacy: driving PC compatibility, aggressive supply-chain execution, and the realization that scale and timing are decisive in commodity hardware markets.",
   "timeline": [
     { "date": "1982-02-16", "text": "Compaq Computer Corporation founded in Houston, Texas." },

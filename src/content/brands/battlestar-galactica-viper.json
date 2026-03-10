@@ -13,7 +13,9 @@
     "Spring-loaded red missiles",
     "Battlestar Galactica toy line"
   ],
-  "topics": ["safety-recall", "choking-hazard", "70s-toys", "nostalgia", "regulatory-impact"],
+  "topics": ["safety-recall",
+      "toys",
+      "80s-nostalgia"],
   "links": {
     "wikipedia_bsg": "https://en.wikipedia.org/wiki/Battlestar_Galactica_(1978_TV_series)",
     "cpsc_projectile_toys": "https://www.cpsc.gov/"

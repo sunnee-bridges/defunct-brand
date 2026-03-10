@@ -9,7 +9,10 @@
   "fate": "Core assets acquired by Fitbit in Dec 2016; Pebble hardware discontinued and cloud services later sunset.",
   "summary": "Crowdfunding-era smartwatch pioneer best known for long battery life, e-paper displays, and a vibrant developer community. Acquired by Fitbit in 2016; products discontinued.",
   "notable_products": ["Pebble (Classic)", "Pebble Steel", "Pebble Time", "Pebble Time Steel", "Pebble Time Round"],
-  "topics": ["wearables", "crowdfunding", "developer-ecosystem", "acquisition", "nostalgia"],
+  "topics": [ "acquired",
+      "discontinued",
+      "wearables",
+      "2000s-nostalgia"],
   "overview_md": "**Pebble** helped prove that smartwatches had an audience well before the mainstream took off. Launched via a record-breaking **Kickstarter** in 2012, Pebble’s appeal was practical: a sunlight-readable e-paper display, **week-long battery life**, simple notifications, fitness tracking, and water resistance. Its open SDK and watchface/app gallery fostered a lively developer scene, letting owners customize everything from running dashboards to retro game faces.\n\nHardware iterations—**Pebble Steel** and the **Pebble Time** family—refined materials, colors, and microphones while keeping battery life and platform neutrality (iOS and Android) as core strengths. But as Apple Watch and Android Wear matured, competition for components, distribution, and developer attention intensified. Scaling challenges and a tough fundraising environment pushed Pebble to sell key assets to **Fitbit** in **2016**; Pebble stopped making devices and the cloud services that powered voice replies, timeline sync, and app distribution were set to wind down (a community project, *Rebble*, later kept much functionality alive).\n\nPebble’s legacy is visible in today’s wearables: quick-glance UIs, focus on notification triage, and the idea that battery life and comfort matter as much as raw specs. For many, Pebble remains the quintessential “do-less-better” smartwatch—hackable, friendly, and delightfully reliable.",
   "timeline": [
     { "date": "2012-04-11", "text": "Pebble Kickstarter launches and quickly becomes one of the platform’s largest campaigns." },

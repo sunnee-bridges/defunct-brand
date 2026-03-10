@@ -9,7 +9,10 @@
   "fate": "One-year limited run of 547 units built with ASC/McLaren that discontinued at the end of the Regal-based Grand National program",
   "summary": "Ultra-limited 1987 Buick GNX — the ultimate Grand National — is now a cult icon revived in pop culture via Kendrick Lamar’s 2024 album title and imagery.",
   "notable_products": ["GNX (Grand National Experimental)", "Grand National (base platform)"],
-  "topics": ["vanished-product", "limited-production", "automotive-model"],
+  "topics": ["vanished-product", "discontinued",
+      "automotive",
+      "80s-nostalgia",
+      "cult-favorite"],
   "overview_md": "**Buick GNX** was the ultimate evolution of the turbocharged Grand National—a one-year, 1987 collaboration with ASC/McLaren that capped Buick’s dark, stealthy muscle-car era. Officially rated at 276 hp and 360 lb-ft, contemporary testing and lore suggest actual output over 300 hp, backed by suspension, transmission, and cooling upgrades that made the GNX a street legend. Only 547 examples were produced, all in black, and many were pre-sold to collectors; the run ended as the Regal platform transitioned, closing the book on Buick’s factory turbo coupe.\n\nIn the 21st century the GNX’s profile has surged again, helped by nostalgia for analog performance and by Kendrick Lamar’s 2024 album, \"GNX\", which put the name and car on a global stage. Auction headlines, feature retrospectives, and social spikes followed, as a new audience discovered why the GNX routinely beat bigger-displacement rivals in period tests. Today the car stands at the intersection of ’80s performance history, limited-edition scarcity, and modern pop culture. For enthusiasts, it’s both a technical milestone—a turbo V6 hero when V8s dominated—and a symbol of how a single-year halo model can outgrow its era to become a true cultural artifact.",
   "timeline": [
     { "date": "1987-01", "text": "GNX program with ASC/McLaren finalized for a limited 1987 model-year run." },

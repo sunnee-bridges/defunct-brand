@@ -13,7 +13,9 @@
     "DeSoto Firedome / Fireflite",
     "Adventurer performance models"
   ],
-  "topics": ["automotive", "mid-price", "brand-consolidation", "forward-look", "airflow"],
+  "topics": [ "discontinued",
+      "automotive",
+      "80s-nostalgia"],
   "overview_md": "**DeSoto** was Chrysler’s mid-price automotive brand, launched in 1928 to slot between value and premium makes and to meet fierce competition from GM. Named after explorer Hernando de Soto, the marque scored a strong debut year and quickly established a reputation for roomy bodies, dependable drivetrains, and features that migrated from Chrysler. In 1934 DeSoto embraced streamlining with the Airflow, a radical, aerodynamic design that proved influential even if sales were mixed. The following Airstream tempered the look for broader appeal.\n\nPost-war DeSotos rode the boom with Firedome, Fireflite, and later Adventurer trims, benefitting from Virgil Exner’s ‘Forward Look’ styling—longer, lower, and finned. But structural challenges mounted. The 1957–58 recession hit mid-price buyers hard, quality stumbles across the corporation eroded confidence, and dealer conflicts grew as Dodge moved upmarket and Chrysler pushed down, squeezing DeSoto’s space. By 1960 Chrysler management simplified its portfolio: the 1961 DeSoto line was pared to two models for a short run before the division was closed.\n\nToday DeSoto demonstrates how economic cycles, internal overlap, and product timing can undo a once-healthy marque.",
   "timeline": [
     { "date": "1928-08", "text": "Chrysler announces the DeSoto brand to compete in the mid-price segment." },

@@ -13,7 +13,10 @@
     "Sparks Plus (red can, 7% ABV)",
     "Sparks Light"
   ],
-  "topics": ["banned", "caffeinated-alcohol", "regulatory", "2000s", "nostalgia"],
+  "topics": [ "banned",
+      "reformulated",
+      "beverages",
+      "2000s-nostalgia"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Sparks_(drink)"
   },

@@ -13,7 +13,10 @@
     "Yogos Bits (mini spheres, 2007–2010) — the fan-favorite that never made a comeback",
     "Various flavor rotations and limited editions during the product's run"
   ],
-  "topics": ["vanished-product", "discontinued", "kids-snack", "2000s-nostalgia", "fruit-snack", "cult-favorite", "bring-back-campaign"],
+  "topics": ["vanished-product", "discontinued",
+      "snacks",
+      "cult-favorite",
+      "2000s-nostalgia"],
   "links": {
     "petition_yogos_bits": "https://www.change.org/p/kellogg-make-kellogg-bring-back-yogos-bits",
     "yogo_vanish": "https://web.archive.org/web/20251228065644/https://www.yahoo.com/lifestyle/articles/why-did-kelloggs-yogos-vanish-123500284.html"

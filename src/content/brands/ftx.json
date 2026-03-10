@@ -10,7 +10,9 @@
   "headquarters": "Nassau, Bahamas",
   "served": "retail and institutional traders",
   "products": ["Spot trading", "Derivatives", "FTT token"],
-  "topics": ["scandal"],
+  "topics": [ "bankruptcy",
+      "scandal",
+      "cryptocurrency"],
 
   "overview": {
     "what": "FTX was a cryptocurrency exchange operating from 2019–2022.",

@@ -13,7 +13,9 @@
     "MaMa Rosa's pizza crusts",
     "Value pack family-size pizzas"
   ],
-  "topics": ["frozen-food", "pizza", "80s-90s", "hard-to-find", "discontinued", "nostalgia"],
+  "topics": ["discontinued",
+      "snacks",
+      "90s-nostalgia"],
   "links": {
     "schwan": "https://www.schwans.com/"
   },

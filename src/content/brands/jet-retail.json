@@ -9,7 +9,10 @@
   "fate": "Acquired by Walmart in 2016; brand retired in 2020 while technology and talent were integrated into Walmart’s e-commerce operations.",
   "summary": "U.S. online marketplace launched in 2015 and acquired by Walmart in 2016 for $3.3B; Jet’s brand was discontinued in 2020 as Walmart centralized its digital strategy.",
   "notable_products": ["Jet.com marketplace", "Smart Cart dynamic pricing"],
-  "topics": ["acquisition", "e-commerce", "brand-retired"],
+  "topics": [ "discontinued",
+      "acquired",
+      "internet-history",
+      "2000s-nostalgia"],
   "overview_md": "**Jet (retail)** launched in 2015 as an online marketplace built around a novel “Smart Cart” model that adjusted prices in real time based on basket composition, seller options, and shipping choices. Co-founded by Marc Lore (formerly of Quidsi/Diapers.com), Jet aimed to compete with the largest e-commerce platforms by trading margin for growth and by incentivizing customers to consolidate orders for logistics efficiencies.\n\nIn **2016**, **Walmart** acquired Jet for approximately **$3.3 billion**, signaling an aggressive digital pivot. Jet’s tech stack, merchandising expertise, and leadership (including Lore as head of U.S. e-commerce) were folded into Walmart’s broader operation. Over the next few years, Walmart streamlined overlapping efforts, expanded marketplace assortment, and leveraged Jet’s pricing, fulfillment, and growth playbooks. Jet experimented with urban-focused assortments and premium positioning, but the separate brand became less central as Walmart.com scaled.\n\nBy **2020**, Walmart announced it would **retire the Jet brand**, citing the successful integration of its capabilities and the strength of Walmart.com. While the Jet site and branding were sunset, the team and underlying ideas lived on in Walmart’s marketplace, logistics, and pricing systems. Jet is often cited as a case study in acqui-integration: a fast-growing challenger whose biggest legacy is the transformation it powered inside a larger retailer.",
   "timeline": [
     { "date": "2015-07", "text": "Public launch of Jet.com with Smart Cart dynamic pricing." },

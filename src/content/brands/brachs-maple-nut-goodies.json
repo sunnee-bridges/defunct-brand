@@ -9,7 +9,9 @@
   "fate": "Discontinued by parent company Ferrara Candy Company around 2022 after declining distribution, and recipe and manufacturing changes",
   "summary": "Classic Brach’s candy: roasted peanuts wrapped in chewy maple-flavored toffee with a thin candy shell. After a controversial late-2010s process change that made pieces much harder, retail availability dwindled and Ferrara Candy Company discontinued the item around 2022.",
   "notable_products": ["Maple Nut Goodies"],
-  "topics": ["discontinued", "nostalgia", "candy"],
+  "topics": ["discontinued",
+      "candy",
+      "90s-nostalgia"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Brach%27s",
     "wayback": "https://web.archive.org/web/*/https://www.brachs.com/",

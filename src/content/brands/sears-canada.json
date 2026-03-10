@@ -11,7 +11,10 @@
   "fate": "Liquidation",
   "hook": "Outlasted catalog era, couldn't survive e-commerce",
   "summary": "Canadian department store chain liquidated in 2018.",
-  "topics": ["department-stores", "canadian-retail", "catalog-retail"],
+  "topics": [ "bankruptcy",
+      "retail",
+      "big-box",
+      "2000s-nostalgia"],
   "notable_products": [
     "Department stores",
     "Kenmore (licensed)"

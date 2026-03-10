@@ -13,7 +13,9 @@
     "Sierra Mist Cranberry Splash (2-liter bottles)",
     "Sierra Mist Cranberry Splash (cans)"
   ],
-  "topics": ["discontinued", "beverages", "sierra-mist", "pepsi", "seasonal", "holiday-drinks", "2000s"],
+  "topics": ["discontinued",
+      "beverages",
+      "2000s-nostalgia"],
   "links": {
     "pepsico": "https://www.pepsico.com/"
   },

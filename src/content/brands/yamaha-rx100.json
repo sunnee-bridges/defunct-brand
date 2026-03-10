@@ -14,7 +14,11 @@
     "Legacy successors: RXG, RX135 (1990s–2000s, attempted to carry the spirit but lacked the original's recipe)",
     "Modern revival: New Yamaha RX100 (2024–present) — contemporary 4-stroke interpretation with modern emissions compliance and safety features"
   ],
-  "topics": ["motorcycles", "two-stroke", "india", "nostalgia", "modern-classic", "cult-favorite", "revival", "reinterpretation"],
+  "topics": [ "discontinued",
+      "motorcycles",
+      "automotive",
+      "80s-nostalgia",
+      "cult-favorite"],
   "links": {
     "wikipedia_rx100": "https://en.wikipedia.org/wiki/Yamaha_RX_100",
     "bikewale_specs": "https://www.bikewale.com/yamaha-bikes/rx100/"

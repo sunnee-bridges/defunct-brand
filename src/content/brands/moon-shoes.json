@@ -12,7 +12,9 @@
     "Moon Shoes (classic 90s edition)",
     "Nickelodeon-branded Moon Shoes"
   ],
-  "topics": ["90s-nostalgia", "toys-games", "fad-toy", "discontinued"],
+  "topics": [ "discontinued",
+      "toys",
+      "90s-nostalgia"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Moon_Shoes",
     "nick_commercials_search": "https://www.youtube.com/results?search_query=Nickelodeon+Moon+Shoes+commercial",

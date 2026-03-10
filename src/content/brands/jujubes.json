@@ -13,7 +13,10 @@
     "Jujubes theater boxes",
     "Jujyfruits (sister product, mint flavored shapes)"
   ],
-  "topics": ["candy", "movie-theaters", "discontinued", "hard-to-find", "nostalgic", "1920s", "ferrara"],
+  "topics": ["discontinued",
+      "candy",
+      "90s-nostalgia",
+      "cult-favorite"],
   "links": {
     "ferrara": "https://www.ferrarausa.com/"
   },

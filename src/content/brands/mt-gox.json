@@ -7,7 +7,9 @@
   "active": { "start": 2010, "end": 2014 },
   "hook": "Lost 850,000 bitcoin in 2014 hack, still in bankruptcy",
   "fate": "Bankruptcy following massive loss of customer bitcoin; later placed into civil rehabilitation in Japan",
-  "topics": ["scandal", "exchange-hack", "bankruptcy", "customer-losses", "civil-rehabilitation"],
+  "topics": [ "bankruptcy",
+      "scandal",
+      "cryptocurrency"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Mt._Gox"
   },

@@ -8,7 +8,10 @@
   "hook": "Twix’s cult peanut-butter variant that disappeared, came back, and won a permanent spot in many candy aisles.",
   "fate": "Ongoing in the U.S. with periodic reformulations and packaging updates; availability has varied by region and year.",
   "summary": "First sold in the U.S. in the **1980s**, **Peanut Butter Twix** (often labeled **Twix PB**) swaps Twix’s caramel for a **peanut-butter layer** over a **chocolate cookie**, enrobed in milk chocolate. The SKU has cycled in and out of national distribution—**discontinued in the late 1990s**, revived in the **2000s**, and widely reintroduced around **2014**—but today remains a recognized, rotating core flavor alongside Caramel.",
-  "topics": ["variant-history", "peanut-butter", "nostalgia", "90s"],
+  "topics": [ "discontinued",
+      "candy",
+      "90s-nostalgia",
+      "cult-favorite"],
   "taglines": [
     { "text": "Left. Right. Peanut Butter.", "source": "Packaging/advertising copy (2010s)" }
   ],

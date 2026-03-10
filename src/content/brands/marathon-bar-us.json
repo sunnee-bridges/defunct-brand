@@ -11,7 +11,10 @@
   "notable_products": [
     "Marathon braided caramel bar (8-inch ruler wrapper)"
   ],
-  "topics": ["discontinued", "nostalgia", "1970s", "candy-bars"],
+  "topics": [ "discontinued",
+      "candy",
+      "80s-nostalgia",
+      "cult-favorite"],
   "taglines": [
     { "text": "Lasts a good long time.", "source": "Advertising slogan (1970s)" }
   ],

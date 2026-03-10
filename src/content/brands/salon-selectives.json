@@ -14,7 +14,9 @@
     "Styling products line",
     "Treatment masks"
   ],
-  "topics": ["discontinued", "hair-care", "drugstore", "90s-beauty", "nostalgia"],
+  "topics": [ "discontinued",
+      "90s-nostalgia",
+      "2000s-nostalgia"],
   "links": {
     "unilever": "https://www.unilever.com/"
   },

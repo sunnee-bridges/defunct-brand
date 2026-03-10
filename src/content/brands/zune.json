@@ -9,7 +9,9 @@
   "hook": "Microsoft’s iPod-era rival with Wi-Fi sharing and the Zune Pass subscription.",
   "summary": "Microsoft’s Zune media-player ecosystem launched in 2006 and expanded through the late 2000s, peaking with the well-reviewed Zune HD in 2009. The product line struggled against iPod/iTunes and the rapid shift to smartphones. Zune hardware was discontinued in 2011, and the Zune brand was sunset in 2012, with remaining services and technology transitioning into Microsoft’s later music offerings.",
   "notable_products": ["Zune 30", "Zune 80/120", "Zune 4/8/16", "Zune HD"],
-  "topics": ["discontinued", "mp3-player", "microsoft", "2000s-tech"],
+  "topics": [ "discontinued",
+      "cult-favorite",
+      "2000s-nostalgia"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Zune_HD",
     "techcrunch": "https://techcrunch.com/2009/09/18/review-zune-hd/"

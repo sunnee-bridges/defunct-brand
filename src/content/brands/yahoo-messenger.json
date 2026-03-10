@@ -17,7 +17,10 @@
     "MSN Messenger interoperability (2005–2006, rare cross-platform compatibility)",
     "Mobile apps & web reimaginations (2015–2018, unsuccessful modernization attempts)"
   ],
-  "topics": ["discontinued", "instant-messaging", "2000s-internet", "nostalgia", "web-history", "dial-up-era"],
+  "topics": [ "discontinued",
+      "instant-messaging",
+      "internet-history",
+      "2000s-nostalgia"],
   "links": {
     "wikipedia_yahoo_messenger": "https://en.wikipedia.org/wiki/Yahoo!_Messenger",
     "techcrunch_shutdown": "https://web.archive.org/web/20250102050745/https://techcrunch.com/2018/06/08/yahoo-messenger-is-shutting-down-on-july-17-redirects-users-to-group-messaging-app-squirrel/",

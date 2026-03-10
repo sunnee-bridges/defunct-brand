@@ -7,7 +7,9 @@
   "active": { "start": 1983, "end": 2023 },
   "hook": "Collapsed in 48 hours, sparked 2023 banking crisis",
   "fate": "Closed by regulators; placed into FDIC receivership; most assets and deposits sold to First Citizens Bank",
-  "topics": ["banking-crisis"],
+  "topics": [ "bankruptcy",
+      "scandal",
+      "banking"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Silicon_Valley_Bank"
   },

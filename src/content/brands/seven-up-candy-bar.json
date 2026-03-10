@@ -11,7 +11,9 @@
   "notable_products": [
     "Seven Up (7-chamber bar)"
   ],
-  "topics": ["discontinued", "nostalgia", "chocolate", "1930s-brands"],
+  "topics": [ "discontinued",
+      "candy",
+      "70s-nostalgia"],
   "links": {
     "company_wikipedia": "https://en.wikipedia.org/wiki/Pearson%27s_Candy_Company",
     "image_search": "https://www.google.com/search?q=%22Seven+Up%22+candy+bar+Pearson%27s+wrapper+ad",

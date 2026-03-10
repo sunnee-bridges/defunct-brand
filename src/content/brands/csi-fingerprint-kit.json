@@ -13,7 +13,10 @@
     "Fingerprint powder (contaminated)",
     "Brush and evidence collection materials"
   ],
-  "topics": ["safety-recall", "banned", "asbestos", "carcinogen", "2000s-toys"],
+  "topics": [ "safety-recall",
+      "banned",
+      "toys",
+      "2000s-nostalgia"],
   "links": {
     "cpsc_recall": "https://www.cpsc.gov/Recalls",
     "epa_asbestos": "https://www.epa.gov/asbestos"

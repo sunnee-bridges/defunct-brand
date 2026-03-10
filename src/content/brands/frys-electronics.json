@@ -15,7 +15,10 @@
     "Appliances",
     "Media & magazines"
   ],
-  "topics": ["retail", "electronics", "big-box", "silicon-valley", "nostalgia"],
+  "topics": ["discontinued",
+      "big-box",
+      "retail",
+      "2000s-nostalgia"],
   "overview_md": "**Fry’s Electronics** was the tech world’s quirky big-box bazaar—founded in **1985** in Silicon Valley and eventually spread across the West and South. Part warehouse, part theme park, Fry’s mixed aisles of **motherboards, GPUs, cables, and kits** with snacks, magazines, and impulse gadgets. Stores were famous for elaborate **themes**—from Mayan temples to space stations—and for being open late, making it a pilgrimage spot for builders, IT crews, and weekend tinkerers. If you needed a null-modem cable at 9:45 p.m., Fry’s probably had three.\n\nAs e-commerce matured, competition from **Amazon**, tightening vendor terms, and supply-chain challenges squeezed the model. Fry’s experimented with a **consignment** inventory approach (around the late 2010s), but that often left shelves conspicuously **empty**, turning the stores themselves into memes. Service inconsistencies and slower product cycles further eroded traffic while rivals shifted to smaller-footprint or online-first strategies. In **February 2021**, Fry’s announced it would **cease operations** and close all remaining locations, ending a distinctly West-coast brand of nerd culture—midnight GPU hunts, bargain bins, and checkout lines stocked with tech ephemera.\n\nToday, Fry’s lives on in build logs and forum nostalgia, a snapshot of when **in-person parts hunting** was part of the fun of building a PC.",
   "timeline": [
     { "date": "1985-05", "text": "First Fry’s Electronics store opens in Sunnyvale, California." },

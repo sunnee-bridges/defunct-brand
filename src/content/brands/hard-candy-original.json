@@ -14,7 +14,10 @@
     "Colored mascaras",
     "Body glitter and shimmer"
   ],
-  "topics": ["discontinued", "beauty", "90s-makeup", "cult-brand", "grunge", "vanished-product", "nostalgia"],
+  "topics": [ "discontinued",
+      "acquired",
+      "cult-favorite",
+      "90s-nostalgia", "vanished-product"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Hard_Candy_(cosmetics)"
   },
