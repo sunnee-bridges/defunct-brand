@@ -4,6 +4,7 @@ import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
 import { CATEGORY_META } from "../../lib/categoryMeta.ts";
 import {
+  normalizeCategory,
   yearsOf,
   catHue,
   fateIconOf,
@@ -31,11 +32,9 @@ export async function getStaticPaths() {
     if (!brandKey) continue;
 
     // Prefer seo_category; fallback to category
-    const rawCat = (b.category ?? "").toString().trim();
+    const rawCat = (b.seo_category ?? b.category ?? "").toString().trim();
     if (!rawCat) continue;
-
-    // keep the same field name if you want, but it's now category-derived
-    b.__seo_category = slugify(rawCat);
+    b.__seo_category = normalizeCategory(rawCat);
 
     if (!bySlug.has(brandKey)) bySlug.set(brandKey, b); // first wins
   }

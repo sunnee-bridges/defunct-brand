@@ -6,6 +6,7 @@ import { slugify } from "../lib/slug"; // adjust path if this file moves
 /* ---------- Category labels ---------- */
 export const CATEGORY_META: Record<string, { label: string }> = {
   retail: { label: "Retail" },
+  "retail-entertainment": { label: "Retail & Entertainment" },
   "food-beverage": { label: "Food & Beverage" },
   "alcoholic-beverages": { label: "Alcoholic Beverages" },
   "consumer-electronics": { label: "Consumer Electronics" },
@@ -18,7 +19,7 @@ export const CATEGORY_META: Record<string, { label: string }> = {
   "finance-payments": { label: "Finance & Payments" },
   "healthcare-diagnostics": { label: "Healthcare & Diagnostics" },
   "toys-games": { label: "Toys & Games" },
-  "consumer-products": { label: "Consumer Products & Beauty" },
+  "consumer-products": { label: "Consumer Products" },
 };
 
 /* ---------- Canonicalizer: noisy → stable SEO slug ---------- */
@@ -27,63 +28,95 @@ export function normalizeCategory(raw: string): string {
   if (!s) return "";
   const lower = s.toLowerCase();
 
-  if (lower === "retaiil" || lower === "retail ") return "retail";
-  if (["retail/entertainment", "retail & entertainment", "retail-entertainment"].includes(lower))
-    return "retail"; // merged taxonomy
+  // ── Retail ──────────────────────────────────────────────────────────
+  if (["retail", "retaiil",
+       "retail/home goods", "retail/footwear",
+       "retail/apparel"].includes(lower))
+    return "retail";
 
-  if (["food & beverage","food/beverage","food and beverage","food-beverage","food beverage"].includes(lower))
+  // ── Retail & Entertainment ───────────────────────────────────────────
+  if (["retail/entertainment", "retail & entertainment",
+       "retail-entertainment", "retail/video rental"].includes(lower))
+    return "retail-entertainment";
+
+  // ── Food & Beverage ──────────────────────────────────────────────────
+  if (["food & beverage", "food/beverage", "food and beverage",
+       "food-beverage", "food beverage", "food/cpg", "food/snacks",
+       "food/confectionery", "food/condiments", "food/candy",
+       "food/breakfast cereal", "confectionery/gum", "confectionery/candy",
+       "beverages/non-alcoholic", "beverages/soft drinks",
+       "beverages/energy drinks", "beverage/promotions"].includes(lower))
     return "food-beverage";
-  if (["alcohol","alcoholic beverages","alcoholic-beverages","alcoholic beverage"].includes(lower))
+
+  // ── Alcoholic Beverages ──────────────────────────────────────────────
+  if (["alcohol", "alcoholic beverages", "alcoholic-beverages",
+       "alcoholic beverage", "beverages/alcohol", "beverages (alcohol)",
+       "flavored malt beverage"].includes(lower))
     return "alcoholic-beverages";
 
-  if (["consumer electronics","consumer-electronics"].includes(lower))
+  // ── Consumer Electronics ─────────────────────────────────────────────
+  if (["consumer electronics", "consumer-electronics",
+       "consumer electronics/mp3 players"].includes(lower))
     return "consumer-electronics";
-  if (["computers","computers & hardware","computers-hardware","computer hardware"].includes(lower))
+
+  // ── Consumer Products ────────────────────────────────────────────────
+  if (["consumer products", "consumer-products",
+       "consumer products/beauty", "consumer products & beauty",
+       "beauty", "cosmetics", "cosmetics/beauty",
+       "personal care", "personal-care"].includes(lower))
+    return "consumer-products";
+
+  // ── Computers & Hardware ─────────────────────────────────────────────
+  if (["computers", "computers & hardware", "computers-hardware",
+       "computer hardware", "computers and hardware"].includes(lower))
     return "computers-hardware";
-  if (["mobile devices","mobile","wearables","mobile & wearables","mobile-wearables","mobile-devices","wearables & mobile"].includes(lower))
+
+  // ── Mobile & Wearables ───────────────────────────────────────────────
+  if (["mobile devices", "mobile", "wearables", "mobile & wearables",
+       "mobile-wearables", "mobile-devices", "wearables & mobile",
+       "mobile and wearables"].includes(lower))
     return "mobile-wearables";
 
-  if (["software/internet","software & internet","software - internet","software internet","software-internet"].includes(lower))
+  // ── Software & Internet ──────────────────────────────────────────────
+  if (["software/internet", "software & internet", "software - internet",
+       "software internet", "software-internet", "e-commerce", "ecommerce",
+       "games/social media", "games/mobile apps"].includes(lower))
     return "software-internet";
 
-  if ([
-    "video games & consoles","video-games-consoles","video games","video-games",
-    "video game consoles","video-game-consoles","games & consoles"
-  ].includes(lower))
+  // ── Video Games & Consoles ───────────────────────────────────────────
+  if (["video games & consoles", "video-games-consoles", "video games",
+       "video-games", "video game consoles", "video-game-consoles",
+       "games & consoles"].includes(lower))
     return "video-games-consoles";
 
-  if ([
-    "airline","airlines","aviation","airline/aviation","airline-aviation",
-    "airlines-aviation","airlines & aviation"
-  ].includes(lower))
+  // ── Airlines & Aviation ──────────────────────────────────────────────
+  if (["airline", "airlines", "aviation", "airline/aviation",
+       "airline-aviation", "airlines-aviation",
+       "airlines & aviation"].includes(lower))
     return "airlines-aviation";
 
-  if (["finance","payments","finance & payments","finance-payments","finance/banking","finance/cryptocurrency","finance/payments"].includes(lower))
-    return "finance-payments";
-
-  if (["healthcare","diagnostics","healthcare & diagnostics","healthcare-diagnostics"].includes(lower))
-    return "healthcare-diagnostics";
-
-  if (["auto","automotive"].includes(lower))
+  // ── Automotive ───────────────────────────────────────────────────────
+  if (["auto", "automotive", "motorcycles/automotive"].includes(lower))
     return "automotive";
 
-  if (["toys", "games", "toys/games", "toys & games", "toy", "board games"].includes(s))
+  // ── Finance & Payments ───────────────────────────────────────────────
+  if (["finance", "payments", "finance & payments", "finance-payments",
+       "finance/banking", "finance/cryptocurrency", "finance/payments"].includes(lower))
+    return "finance-payments";
+
+  // ── Healthcare & Diagnostics ─────────────────────────────────────────
+  if (["healthcare", "diagnostics", "healthcare & diagnostics",
+       "healthcare-diagnostics", "healthcare/diagnostics"].includes(lower))
+    return "healthcare-diagnostics";
+
+  // ── Toys & Games ─────────────────────────────────────────────────────
+  if (["toys", "games", "toys/games", "toys & games", "toys and games",
+       "toy", "board games", "toys-games"].includes(lower))  // ← lower, not s
     return "toys-games";
 
-  if ([
-    "consumer products",
-    "consumer-products",
-    "consumer products/beauty",
-    "consumer products & beauty",
-    "beauty",
-    "cosmetics",
-    "cosmetics/beauty",
-    "personal care",
-    "personal-care"
-  ].includes(s)) return "consumer-products";
-
-  const slug = slugify(s);
-  return CATEGORY_META[slug] ? slug : slug;
+  // Fallback — if you see unexpected slugs, the raw value from that
+  // brand JSON is hitting this line. Add a mapping above to catch it.
+  return slugify(s);
 }
 
 /* ---------- Years & decade helpers ---------- */

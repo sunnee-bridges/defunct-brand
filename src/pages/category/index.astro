@@ -2,12 +2,23 @@
 // src/pages/category/index.astro
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
+import { CATEGORY_META } from "./CATEGORY_META";
 
 /**
  * Canonical SEO categories + display labels/descriptions.
  * Keys MUST be slugified (kebab-case) and match the normalized category slugs.
  */
 const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
+  "consumer-products": {
+    label: "Consumer Products",
+    desc:
+      "Household names in everyday goods—cleaning, personal care, and general merchandise brands that faded from shelves.",
+  },
+  "toys-games": {
+    label: "Toys & Games",
+    desc:
+      "Toy makers, board game publishers, and playtime brands that shaped childhoods before disappearing.",
+  },
   "retail": {
     label: "Retail",
     desc:
@@ -82,33 +93,78 @@ const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
 function normalizeCategory(raw: string): string {
   const s = String(raw || "").trim();
   if (!s) return "";
-
-  // Common typos & punctuation variants → canonical slug
   const lower = s.toLowerCase();
 
-  // Direct quick fixes
-  if (lower === "retaiil") return "retail";
-  if (lower === "retail/entertainment" || lower === "retail-entertainment") return "retail-entertainment";
-  if (lower === "consumer electronics" || lower === "consumer-electronics") return "consumer-electronics";
-  if (lower === "software/internet" || lower === "software - internet") return "software-internet";
-  if (lower === "video games & consoles" || lower === "video games and consoles" || lower === "video-games" || lower === "video-game-consoles")
-    return "video-games-consoles";
-  if (lower === "airline" || lower === "airlines" || lower === "aviation" || lower === "airline/aviation" || lower === "airlines-aviation")
-    return "airlines-aviation";
-  if (lower === "computers" || lower === "computers & hardware" || lower === "computers-hardware")
-    return "computers-hardware";
-  if (lower === "mobile devices" || lower === "mobile" || lower === "wearables" || lower === "mobile & wearables" || lower === "mobile-wearables")
-    return "mobile-wearables";
-  if (lower === "food & beverage" || lower === "food/beverage" || lower === "food-beverage")
+  // ── Retail ──────────────────────────────────────────────────────────
+  if (lower === "retail" || lower === "retaiil")
+    return "retail";
+
+  // ── Retail & Entertainment ───────────────────────────────────────────
+  if (lower === "retail/entertainment" || lower === "retail-entertainment" || lower === "retail & entertainment")
+    return "retail-entertainment";
+
+  // ── Food & Beverage ──────────────────────────────────────────────────
+  if (lower === "food & beverage" || lower === "food/beverage" || lower === "food and beverage" || lower === "food-beverage")
     return "food-beverage";
-  if (lower === "beverages/alcohol" || lower === "beverages (alcohol)" || lower === "alcoholic beverages")
+
+  // ── Alcoholic Beverages ──────────────────────────────────────────────
+  if (lower === "alcoholic beverages" || lower === "alcoholic-beverages" || lower === "beverages/alcohol" || lower === "beverages (alcohol)")
     return "alcoholic-beverages";
-  if (lower === "finance" || lower === "finance & payments" || lower === "finance/payments")
+
+  // ── Consumer Electronics ─────────────────────────────────────────────
+  if (lower === "consumer electronics" || lower === "consumer-electronics")
+    return "consumer-electronics";
+
+  // ── Consumer Products ────────────────────────────────────────────────
+  if (lower === "consumer products" || lower === "consumer-products")
+    return "consumer-products";
+
+  // ── Computers & Hardware ─────────────────────────────────────────────
+  // "computers" was the OLD key in CATEGORY_META.ts
+  if (lower === "computers" || lower === "computers & hardware" || lower === "computers and hardware" || lower === "computers-hardware")
+    return "computers-hardware";
+
+  // ── Mobile & Wearables ───────────────────────────────────────────────
+  // "mobile-devices" and "wearables" were OLD keys in CATEGORY_META.ts
+  if (lower === "mobile-devices" || lower === "mobile devices" || lower === "mobile" || lower === "wearables" || lower === "mobile & wearables" || lower === "mobile and wearables" || lower === "mobile-wearables")
+    return "mobile-wearables";
+
+  // ── Software & Internet ──────────────────────────────────────────────
+  // "e-commerce" was an OLD key in CATEGORY_META.ts — mapping it here
+  if (lower === "software/internet" || lower === "software - internet" || lower === "software-internet" || lower === "software & internet" || lower === "e-commerce" || lower === "ecommerce")
+    return "software-internet";
+
+  // ── Video Games & Consoles ───────────────────────────────────────────
+  // "video-games" and "video-game-consoles" were OLD keys in CATEGORY_META.ts
+  if (lower === "video-games" || lower === "video games" || lower === "video-game-consoles" || lower === "video games & consoles" || lower === "video games and consoles" || lower === "video games consoles" || lower === "video-games-consoles")
+    return "video-games-consoles";
+
+  // ── Airlines & Aviation ──────────────────────────────────────────────
+  // "airline" (singular) was the OLD key in CATEGORY_META.ts
+  if (lower === "airline" || lower === "airlines" || lower === "aviation" || lower === "airline/aviation" || lower === "airline-aviation" || lower === "airlines-aviation" || lower === "airlines & aviation")
+    return "airlines-aviation";
+
+  // ── Automotive ───────────────────────────────────────────────────────
+  if (lower === "automotive" || lower === "auto")
+    return "automotive";
+
+  // ── Finance & Payments ───────────────────────────────────────────────
+  if (lower === "finance" || lower === "finance & payments" || lower === "finance/payments" || lower === "finance-payments")
     return "finance-payments";
-  if (lower === "healthcare" || lower === "healthcare & diagnostics" || lower === "healthcare/diagnostics")
+
+  // ── Healthcare & Diagnostics ─────────────────────────────────────────
+  if (lower === "healthcare" || lower === "healthcare & diagnostics" || lower === "healthcare/diagnostics" || lower === "healthcare-diagnostics")
     return "healthcare-diagnostics";
 
-  // Fallback: slugify whatever came in
+  // ── Toys & Games ─────────────────────────────────────────────────────
+  if (lower === "toys" || lower === "games" || lower === "toys & games" || lower === "toys and games" || lower === "toys/games" || lower === "toys-games")
+    return "toys-games";
+
+  // ── Fallback ─────────────────────────────────────────────────────────
+  // If nothing matched above, slugify whatever came in.
+  // If you see unexpected categories appearing on the index page,
+  // the raw string from that brand's JSON is hitting this fallback —
+  // add a new mapping above to catch it.
   return slugify(s);
 }
 
