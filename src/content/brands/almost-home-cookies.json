@@ -5,9 +5,14 @@
   "seo_category": "food-beverage",
   "country": "US",
   "active": { "start": "early 1980s", "end": "mid-1990s" },
-  "hook": "Nabisco’s soft, “homemade-style” cookie line remembered for bakery-like flavors.",
-  "fate": "Discontinued as Nabisco consolidated cookie lines in the 1990s; favorites migrated to or were replaced by other brands (e.g., Chips Ahoy! extensions).",
+  "hook": "Nabisco's Almost Home cookies helped ignite the Great Soft Cookie War of the 1980s, a patent battle so expensive it remains one of the largest settlements in food industry history.",
+  "fate": "Discontinued sometime in the 1990s after the soft cookie segment cooled and Nabisco paid $52.9 million to settle a patent infringement suit brought by Procter and Gamble. The exact year of discontinuation is not documented in available sources.",
   "summary": "Nabisco’s Almost Home was positioned as soft, bakery-style cookies—chocolate chip, oatmeal raisin, peanut butter and seasonal varieties—aimed at delivering a ‘fresh from the oven’ vibe without baking. The line built a steady following in the 1980s–1990s, then faded as the company trimmed slower-moving SKUs and focused on bigger umbrellas like Chips Ahoy! and SnackWell’s. Today it survives mostly in nostalgia posts, vintage ads, and collectors’ packaging photos.",
+  "seo": {
+    "meta_title": "What Happened to Almost Home Cookies? Nabisco's Soft Cookie and the Patent War (1983)",
+    "meta_description": "Almost Home cookies were discontinued after Nabisco paid $52.9 million to settle a patent lawsuit with Procter and Gamble. Here's the full story of the soft cookie wars of the 1980s.",
+    "keywords": ["almost home cookies discontinued", "nabisco almost home cookies", "almost home cookies 1980s", "soft cookie patent lawsuit", "nabisco discontinued cookies"]
+  },
   "topics": ["discontinued",
       "snacks",
       "90s-nostalgia"],
@@ -16,26 +21,54 @@
     "youtube_ad_search": "https://www.youtube.com/results?search_query=Nabisco+%22Almost+Home%22+cookies+commercial",
     "newspapers_ad_search": "https://www.google.com/search?q=%22Almost+Home%22+cookies+Nabisco+ad"
   },
-  "overview_md": "Nabisco’s Almost Home line brought the ‘soft batch’ trend to supermarket aisles in the 1980s, framing itself as a homemade-style cookie you didn’t have to bake. Packages commonly featured chocolate chip, oatmeal raisin, peanut butter, and other comfort flavors with a softer, chewier texture than classic crisp cookies.\n\nAlmost Home became an unwitting player in the Great Soft Cookie Wars of the 1980s, in which Procter and Gamble sued Nabisco and other major cookie producers for a larger share of the cookie market. Even as a judge ruled in Nabisco's favor after a four-year court battle, the combination of legal defense and decreased public appetite for soft cookies precipitated Almost Home's decline.\n\nAs the 1990s progressed, Nabisco pursued portfolio shake ups, including diet-leaning SnackWell's and new Chips Ahoy! variants. Almost Home gradually disappeared from major chains and then from Nabisco's displays entirely. While there was no splashy recall or single shutdown date, retail presence dwindled and the line was ultimately discontinued.\n\nThe brand lives on in vintage circulars and TV spots that surface online, plus packaging photos shared by collectors. For many Gen X shoppers, Almost Home evokes that specific soft-cookie-in-a-box texture that’s hard to find today.",
+   "overview_md": "Before the 1980s, every cookie on a supermarket shelf was hard and crunchy. That was simply the assumption of the industry. Soft cookies existed at home but not at scale, because the technology to keep a cookie soft and shelf-stable at the same time did not exist yet.\n\nProcter and Gamble changed that. Two of its researchers, William Brabbs and Charles Hong, developed a dual-texture cookie process that produced a cookie crispy on the outside and chewy on the inside, with a shelf life long enough for retail. P&G received a patent for the process in June 1984 and began test marketing the cookies in Kansas City in early 1983 under its Duncan Hines label.\n\nNabisco did not wait. The Los Angeles Times later reported that Nabisco introduced Almost Home in August 1983, before P&G had finished its national rollout. The line came in chocolate chip, oatmeal raisin, peanut butter, and sugar varieties. The packaging featured cross-stitch embroidery designs meant to suggest something your grandmother might have made. Frito-Lay launched Grandma's Rich and Chewy cookies around the same time. Keebler followed with Soft Batch. Almost Home was among the first mass-produced soft cookies Americans had ever seen in a store.\n\nThe soft cookie segment grew quickly. By mid-1985 soft cookies accounted for around 16 percent of the total cookie market, up from 8.6 percent the year before. Marketing surveys had predicted the segment would reach 35 percent. It never got close and growth flattened, but the competition was intense enough that it produced a lawsuit.\n\nOn the same day P&G received its patent in June 1984, it filed patent infringement suits against Nabisco, Keebler, and Frito-Lay, claiming all three had copied its proprietary cookie technology. The case became one of the most expensive and dramatic patent disputes in food industry history. P&G accused a Nabisco employee of entering one of its manufacturing plants to obtain trade secrets. It accused Keebler of flying a small plane over a P&G cookie factory under construction to photograph the facility. It accused a Frito-Lay representative of posing as a customer to attend a confidential P&G sales meeting. Lawyers spent two and a half years taking 120,000 pages of testimony from 200 witnesses. Arrangements were made to remove half the spectator seats from the courtroom to fit file cabinets holding 10,000 exhibits.\n\nThree weeks before trial was scheduled to begin, all three defendants settled. Nabisco paid $52.9 million. Keebler paid the same. Frito-Lay paid $19.1 million. The combined $125 million settlement was reported at the time as the largest patent settlement on record. All three companies were permanently enjoined from infringing on P&G's patent going forward.\n\nDespite the lawsuit and the cooling of the soft cookie segment, Almost Home continued to sell. Newspaper advertisements show the brand was still on retail shelves in 1992, 1993, and 1994. The precise year it was discontinued is not documented in available sources, but the brand disappeared from the market sometime in the 1990s as Nabisco shifted focus toward other lines.\n\nAlmost Home lasted at least a decade. It is remembered by Gen X shoppers who encountered it as children and by food historians who use the soft cookie wars as a case study in how quickly an entire product category can rise, attract litigation, and then quietly fade. The cross-stitch packaging turns up in vintage ad collections and nostalgia forums. The cookies themselves have never come back.",
   "timeline": [
-    { "date": "1983", "text": "Nabisco introduces Almost Home as a soft, homemade-style cookie line in classic flavors." },
-    { "date": "1984", "text": "Great Soft Cookie War begins with Procter and Gamble lawsuit against Nabisco, Keebler, and Frito-Lay" },
-    { "date": "1989", "text": "Nabisco wins in court, but legal costs and declining consumer interest cause Almost Home's decline. " },
-    { "date": "1990s", "text": "Portfolio shifts crowd shelf space and brand's slow fade begins." },
-    { "date": "mid-1990s", "text": "Brand effectively discontinued in the U.S." }
-  ],
-  "sources": [
-    { "label": "Nabisco company overview", "url": "https://en.wikipedia.org/wiki/Nabisco" },
-    { "label": "Vintage commercials (search results often surface period TV spots)", "url": "https://www.youtube.com/results?search_query=Nabisco+%22Almost+Home%22+cookies+commercial" },
-    { "label": "Los Angeles Times - Firms Tell How Soft-Cookie Sales Crumbled After a Heated Battl", "url": "https://archive.is/lV8fJ" },
-    { "label": "New York Times - New Entries in a Cookie Race", "url": "https://www.nytimes.com/1983/10/18/business/new-entries-in-a-cookie-race.html" },
-    { "label": "Justia - Procter & Gamble Co. v. Nabisco Brands, Inc. lawsuit", "url": "https://law.justia.com/cases/federal/district-courts/FSupp/604/1485/1402274/" },
-    { "label": "Justia - Procter & Gamble Co. v. Nabisco Brands, Inc. verdict", "url": "https://law.justia.com/cases/federal/district-courts/FSupp/711/759/1655127/" }
-  ],"explore_more": {
+  { "date": "1979", "text": "P&G researchers William Brabbs and Charles Hong apply for a patent on a dual-texture soft cookie process." },
+  { "date": "1983-08", "text": "Nabisco introduces Almost Home as a soft homemade-style cookie line in chocolate chip, oatmeal raisin, peanut butter, and sugar varieties." },
+  { "date": "1984", "text": "P&G receives its patent in June and files infringement suits the same day against Nabisco, Keebler, and Frito-Lay over soft cookie technology." },
+  { "date": "1985", "text": "Soft cookies reach 16 percent of the total cookie market. Growth peaks well below the 35 percent industry projections." },
+  { "date": "1987", "text": "P&G curtails Duncan Hines cookie production as the soft cookie segment underperforms." },
+  { "date": "1989-09", "text": "Nabisco, Keebler, and Frito-Lay settle with P&G three weeks before trial. Nabisco pays $52.9 million as part of a combined $125 million settlement, reported at the time as the largest patent settlement on record." },
+  { "date": "1992-1994", "text": "Almost Home is still being advertised at retail in U.S. newspapers." },
+  { "date": "1990s", "text": "Brand disappears from the market. Exact discontinuation date not documented in available sources." }
+],
+
+"sources": [
+  { "label": "Nabisco company overview", "url": "https://en.wikipedia.org/wiki/Nabisco" },
+  { "label": "New York Times: New Entries in a Cookie Race (October 1983)", "url": "https://www.nytimes.com/1983/10/18/business/new-entries-in-a-cookie-race.html" },
+  { "label": "Sun Sentinel: Cookies Eat Up Profits (June 1987)", "url": "https://www.sun-sentinel.com/1987/06/30/cookies-eat-up-profits-procter-bites-off-more-than-it-can-chew/" },
+  { "label": "Justia: Procter and Gamble v. Nabisco Brands 1985 ruling", "url": "https://law.justia.com/cases/federal/district-courts/FSupp/604/1485/1402274/" },
+  { "label": "Justia: Procter and Gamble v. Nabisco Brands 1989 ruling", "url": "https://law.justia.com/cases/federal/district-courts/FSupp/711/759/1655127/" },
+  { "label": "Fortune: How chewy cookies altered P&G's destiny (February 2013)", "url": "https://fortune.com/2013/02/13/how-chewy-cookies-altered-pgs-destiny/" }
+],"explore_more": {
     "category_label": "Looking for more cookies from the past?",
     "brands": [
       { "name": "Apple Newtons", "slug": "apple-newtons" },
       { "name": "Cookie Breaks", "slug": "cookie-break" }
     ]
-  }
+  },
+  "content": {
+  "faq": [
+    {
+      "question": "Why were Almost Home cookies discontinued?",
+      "answer": "Almost Home cookies disappeared from the market sometime in the 1990s, though the exact year is not documented in available sources. The brand survived a major patent infringement lawsuit in 1989, in which Nabisco paid $52.9 million to settle a suit brought by Procter and Gamble over soft cookie technology. The broader soft cookie segment had also cooled significantly by the late 1980s after never reaching the market share projections that drove the initial investment."
+    },
+    {
+      "question": "When were Almost Home cookies made?",
+      "answer": "Almost Home cookies were introduced by Nabisco in August 1983, making them one of the first mass-produced soft cookies available in American supermarkets. Newspaper advertisements confirm the brand was still being sold through at least 1994, and it disappeared sometime later in the 1990s."
+    },
+    {
+      "question": "What flavors did Almost Home cookies come in?",
+      "answer": "Almost Home cookies were available in chocolate chip, oatmeal raisin, peanut butter, and old-fashioned sugar varieties. The packaging featured a cross-stitch embroidery design meant to evoke homemade baking."
+    },
+    {
+      "question": "What was the soft cookie patent lawsuit?",
+      "answer": "Procter and Gamble filed patent infringement suits in June 1984 against Nabisco, Keebler, and Frito-Lay, claiming all three had copied its patented dual-texture cookie process used for Duncan Hines cookies. The five-year case involved 200 witnesses, 120,000 pages of testimony, and allegations of industrial espionage. The three companies settled in September 1989 for a combined $125 million, reported at the time as the largest patent settlement on record."
+    },
+    {
+      "question": "Can you still buy Almost Home cookies?",
+      "answer": "No. Almost Home cookies have not been in production since sometime in the 1990s and Nabisco has not revived the brand. Vintage packaging and television commercials from the 1983 to 1986 period surface occasionally in nostalgia collections online."
+    }
+  ]
+}
 }
