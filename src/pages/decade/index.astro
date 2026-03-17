@@ -45,14 +45,36 @@ for (const b of brands) {
 /* ---- Sorted available decades (e.g., "1990s", "2000s") ---- */
 const decades = [...counts.keys()].sort((a, b) => parseInt(a) - parseInt(b));
 
+/* ---- Optional editorial copy per decade ---- */
+const decadeDescriptions: Record<string, string> = {
+  "1950s": "Early postwar consumer brands, department stores, and regional names that later disappeared.",
+  "1960s": "Legacy consumer products and retail brands tied to mid-century shopping culture.",
+  "1970s": "Brands shaped by inflation, energy shocks, and shifting consumer habits.",
+  "1980s": "Department stores, regional chains, and household brands remembered from peak mall culture.",
+  "1990s": "Mall brands, media names, and early internet-era casualties that faded by the end of the decade.",
+  "2000s": "Dot-com fallout, retail shakeouts, and discontinued products from a fast-changing consumer era.",
+  "2010s": "Streaming disruption, e-commerce pressure, and major retail bankruptcies reshaped familiar brands.",
+  "2020s": "Recent closures, discontinued products, and post-pandemic brand exits still fresh in public memory.",
+};
+
+const totalBrands = Array.from(counts.values()).reduce((sum, n) => sum + n, 0);
+
 /* ---- SEO ---- */
-const PAGE_TITLE = "Browse by Decade • Defunct Brands";
+const PAGE_TITLE = "Defunct Brands by Decade | Browse Vanished Brands Over Time";
 const PAGE_DESC = decades.length
-  ? `Browse defunct brands by decade (${decades[0]}–${decades[decades.length - 1]}).`
-  : "Browse defunct brands by decade.";
+  ? `Explore defunct and discontinued brands by decade, from ${decades[0]} to ${decades[decades.length - 1]}, including retail, tech, food, and nostalgia brands.`
+  : "Explore defunct and discontinued brands by decade.";
 const CANONICAL = Astro.site ? new URL("/decade/", Astro.site).href : "/decade/";
 
-/* ---- JSON-LD ItemList for the decade list ---- */
+/* ---- JSON-LD ---- */
+const collectionPageLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESC,
+  url: CANONICAL,
+};
+
 const itemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -65,9 +87,39 @@ const itemListLd = {
     numberOfItems: counts.get(d) ?? 0,
   })),
 };
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How are brands grouped by decade?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Brands are grouped by the decade in which they disappeared, were discontinued, or otherwise became defunct, based primarily on the end year in the dataset.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Are these only brands founded in that decade?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Many brands were founded earlier and are grouped by the decade when they closed, vanished, or were discontinued.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What kinds of brands are included?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The decade pages include retail chains, food and drink products, consumer brands, technology products, media names, and other disappeared brands from different industries.",
+      },
+    },
+  ],
+};
 ---
 <Base title={PAGE_TITLE} description={PAGE_DESC}>
-  <!-- 🔎 SEO head -->
   <Fragment slot="head">
     <link rel="canonical" href={CANONICAL} />
     <meta name="description" content={PAGE_DESC} />
@@ -81,70 +133,206 @@ const itemListLd = {
     <meta name="twitter:title" content={PAGE_TITLE} />
     <meta name="twitter:description" content={PAGE_DESC} />
 
-    <!-- ✅ inject raw JSON, not literal {…} -->
+    <script type="application/ld+json" set:html={JSON.stringify(collectionPageLd)} />
     <script type="application/ld+json" set:html={JSON.stringify(itemListLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
 
-    <!-- ✅ inline styles to avoid scoping/parse issues in head slot -->
     <style is:inline>
-      /* Enhanced decade card with better hover states */
       .decade-card {
         position: relative;
-        transition: all 0.2s ease;
+        display: block;
+        height: 100%;
+        border-radius: 0.75rem;
+        border: 1px solid rgb(226 232 240);
+        background: white;
+        padding: 1rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      }
+      .dark .decade-card {
+        background: rgb(15 23 42);
+        border-color: rgb(51 65 85);
       }
       .decade-card:hover {
-        transform: scale(1.02);
-        filter: brightness(1.15);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+        border-color: rgb(59 130 246);
       }
-      /* Badge styling for counts */
       .count-badge {
-        display: inline-block;
-        background: rgba(15, 23, 42, 0.06);
-        padding: 0.125rem 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.25rem;
+        padding: 0.2rem 0.55rem;
         border-radius: 9999px;
         font-size: 0.875rem;
-        margin-left: 0.5rem;
+        font-weight: 600;
+        background: rgb(239 246 255);
+        color: rgb(30 64 175);
+      }
+      .dark .count-badge {
+        background: rgba(59, 130, 246, 0.15);
+        color: rgb(147 197 253);
+      }
+      .section-card {
+        border: 1px solid rgb(226 232 240);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        background: rgb(248 250 252);
+      }
+      .dark .section-card {
+        border-color: rgb(51 65 85);
+        background: rgb(15 23 42 / 0.65);
       }
     </style>
   </Fragment>
 
-  <!-- 🧭 Navigation -->
   <nav class="mb-3 flex flex-wrap gap-2 justify-start" aria-label="Breadcrumb">
     <a href="/" class="chip focus-ring">← Home</a>
     <a href="/az/" class="chip focus-ring">A–Z</a>
-    <a href="/category/" class="chip focus-ring">Categories</a>
     <a href="/data/" class="chip focus-ring">Data</a>
     <span class="chip opacity-70 cursor-default" aria-current="page">Decades</span>
   </nav>
 
-  <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Decade</h1>
-  <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
-    Total decades: {decades.length}
-  </p>
+  <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands by Decade</h1>
+
+  <div class="prose prose-sm dark:prose-invert max-w-none mb-6">
+    <p>
+      Explore vanished and discontinued brands by decade, from older consumer names to modern
+      retail chains, technology products, food brands, and internet-era casualties.
+    </p>
+    <p>
+      Each decade page groups brands by the period when they disappeared, were discontinued,
+      or otherwise became defunct. This makes it easier to spot larger patterns in nostalgia,
+      retail collapse, consumer culture, and changing technology over time.
+    </p>
+  </div>
+
+  <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+    <span class="chip opacity-90">Total decades: {decades.length}</span>
+    <span class="chip opacity-90">Total brands grouped: {totalBrands}</span>
+    {decades.length > 0 && (
+      <span class="chip opacity-90">
+        Coverage: {decades[0]}–{decades[decades.length - 1]}
+      </span>
+    )}
+  </div>
+
+  <section class="section-card mb-8" aria-labelledby="how-grouped">
+    <h2 id="how-grouped" class="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">
+      How brands are grouped by decade
+    </h2>
+    <div class="prose prose-sm dark:prose-invert max-w-none">
+      <p>
+        Brands are grouped primarily by the decade in which they ended, disappeared, or were
+        discontinued. Some were founded much earlier, but are listed under the decade when
+        they became defunct or exited the market.
+      </p>
+      <ul>
+        <li>Retail chains and department stores</li>
+        <li>Consumer electronics and internet services</li>
+        <li>Food, drink, and packaged goods</li>
+        <li>Regional, nostalgia, and cultural brands</li>
+      </ul>
+    </div>
+  </section>
 
   {decades.length === 0 ? (
     <p class="text-slate-600 dark:text-slate-400">No decades available yet.</p>
   ) : (
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      {decades.map((d) => {
-        const n = counts.get(d) ?? 0;
-        return (
-          <li>
-            <a
-              href={`/decade/${d}/`}
-              class="chip focus-ring block decade-card"
-              title={`${n} ${n === 1 ? "brand" : "brands"} in the ${d}`}
-              aria-label={`${d} (${n} ${n === 1 ? "brand" : "brands"})`}
-            >
-              <span class="font-medium">{d}</span>
-              <span class="count-badge text-gray-400">({n})</span>
-            </a>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <section aria-labelledby="browse-decades">
+        <h2 id="browse-decades" class="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
+          Browse decade archives
+        </h2>
+
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {decades.map((d) => {
+            const n = counts.get(d) ?? 0;
+            return (
+              <li>
+                <a
+                  href={`/decade/${d}/`}
+                  class="decade-card focus-ring"
+                  title={`${n} ${n === 1 ? "brand" : "brands"} in the ${d}`}
+                  aria-label={`${d} (${n} ${n === 1 ? "brand" : "brands"})`}
+                >
+                  <div class="flex items-start justify-between gap-3 mb-2">
+                    <span class="text-lg font-semibold text-slate-900 dark:text-slate-100">{d}</span>
+                    <span class="count-badge">{n}</span>
+                  </div>
+
+                  <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
+                    {decadeDescriptions[d] || `Browse vanished brands from the ${d}.`}
+                  </p>
+
+                  <span class="text-sm font-medium text-blue-600 dark:text-blue-400">
+                    Explore {d} →
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section class="mt-10" aria-labelledby="why-browse">
+        <h2 id="why-browse" class="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
+          Why browse brands by decade?
+        </h2>
+        <div class="prose prose-sm dark:prose-invert max-w-none">
+          <p>
+            Looking at disappeared brands by decade can reveal how consumer tastes, technology,
+            competition, and economic pressures changed over time. Some decades were shaped by
+            mall decline and retail bankruptcies, while others reflect media disruption, product
+            discontinuations, or the collapse of once-familiar regional chains.
+          </p>
+          <p>
+            If you are researching nostalgia, retail history, consumer culture, or defunct brand
+            trends, decade pages provide a broader view than a single brand profile alone.
+          </p>
+        </div>
+      </section>
+
+      <section class="mt-10" aria-labelledby="faq">
+        <h2 id="faq" class="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-4">
+          <div class="section-card">
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+              How are brands grouped by decade?
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">
+              Brands are grouped by the decade in which they disappeared, were discontinued,
+              or otherwise became defunct, based primarily on the end year in the dataset.
+            </p>
+          </div>
+
+          <div class="section-card">
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+              Are these only brands founded in that decade?
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">
+              No. Many brands were founded earlier and are grouped by the decade when they
+              vanished, closed, or were discontinued.
+            </p>
+          </div>
+
+          <div class="section-card">
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+              What kinds of brands are included?
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">
+              The archive includes retail brands, food and drink products, consumer goods,
+              technology products, media names, and other vanished brands across industries.
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
   )}
 
-  <!-- Back to top -->
   <div class="mt-8">
     <a href="#top" class="chip focus-ring">↑ Back to top</a>
   </div>

@@ -2,7 +2,6 @@
 // src/pages/category/index.astro
 import Base from "../../layouts/Base.astro";
 import { slugify } from "../../lib/slug.js";
-import { CATEGORY_META } from "./CATEGORY_META";
 
 /**
  * Canonical SEO categories + display labels/descriptions.
@@ -60,7 +59,7 @@ const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
       "Browsers, IM clients, P2P, and e-commerce pioneers—what they built, and why they ended.",
   },
   "video-games-consoles": {
-    label: "Video games & consoles",
+    label: "Video Games & Consoles",
     desc:
       "Hardware and online worlds that battled for the living room—launches, closures, and legacy.",
   },
@@ -88,83 +87,111 @@ const CATEGORY_META: Record<string, { label?: string; desc?: string }> = {
 
 /**
  * Normalize raw category/seo_category strings → canonical slugs.
- * Add/adjust mappings here if you see new variants in your data.
  */
 function normalizeCategory(raw: string): string {
   const s = String(raw || "").trim();
   if (!s) return "";
   const lower = s.toLowerCase();
 
-  // ── Retail ──────────────────────────────────────────────────────────
-  if (lower === "retail" || lower === "retaiil")
-    return "retail";
+  if (lower === "retail" || lower === "retaiil") return "retail";
 
-  // ── Retail & Entertainment ───────────────────────────────────────────
-  if (lower === "retail/entertainment" || lower === "retail-entertainment" || lower === "retail & entertainment")
-    return "retail-entertainment";
+  if (
+    lower === "retail/entertainment" ||
+    lower === "retail-entertainment" ||
+    lower === "retail & entertainment"
+  ) return "retail-entertainment";
 
-  // ── Food & Beverage ──────────────────────────────────────────────────
-  if (lower === "food & beverage" || lower === "food/beverage" || lower === "food and beverage" || lower === "food-beverage")
-    return "food-beverage";
+  if (
+    lower === "food & beverage" ||
+    lower === "food/beverage" ||
+    lower === "food and beverage" ||
+    lower === "food-beverage"
+  ) return "food-beverage";
 
-  // ── Alcoholic Beverages ──────────────────────────────────────────────
-  if (lower === "alcoholic beverages" || lower === "alcoholic-beverages" || lower === "beverages/alcohol" || lower === "beverages (alcohol)")
-    return "alcoholic-beverages";
+  if (
+    lower === "alcoholic beverages" ||
+    lower === "alcoholic-beverages" ||
+    lower === "beverages/alcohol" ||
+    lower === "beverages (alcohol)"
+  ) return "alcoholic-beverages";
 
-  // ── Consumer Electronics ─────────────────────────────────────────────
   if (lower === "consumer electronics" || lower === "consumer-electronics")
     return "consumer-electronics";
 
-  // ── Consumer Products ────────────────────────────────────────────────
   if (lower === "consumer products" || lower === "consumer-products")
     return "consumer-products";
 
-  // ── Computers & Hardware ─────────────────────────────────────────────
-  // "computers" was the OLD key in CATEGORY_META.ts
-  if (lower === "computers" || lower === "computers & hardware" || lower === "computers and hardware" || lower === "computers-hardware")
-    return "computers-hardware";
+  if (
+    lower === "computers" ||
+    lower === "computers & hardware" ||
+    lower === "computers and hardware" ||
+    lower === "computers-hardware"
+  ) return "computers-hardware";
 
-  // ── Mobile & Wearables ───────────────────────────────────────────────
-  // "mobile-devices" and "wearables" were OLD keys in CATEGORY_META.ts
-  if (lower === "mobile-devices" || lower === "mobile devices" || lower === "mobile" || lower === "wearables" || lower === "mobile & wearables" || lower === "mobile and wearables" || lower === "mobile-wearables")
-    return "mobile-wearables";
+  if (
+    lower === "mobile-devices" ||
+    lower === "mobile devices" ||
+    lower === "mobile" ||
+    lower === "wearables" ||
+    lower === "mobile & wearables" ||
+    lower === "mobile and wearables" ||
+    lower === "mobile-wearables"
+  ) return "mobile-wearables";
 
-  // ── Software & Internet ──────────────────────────────────────────────
-  // "e-commerce" was an OLD key in CATEGORY_META.ts — mapping it here
-  if (lower === "software/internet" || lower === "software - internet" || lower === "software-internet" || lower === "software & internet" || lower === "e-commerce" || lower === "ecommerce")
-    return "software-internet";
+  if (
+    lower === "software/internet" ||
+    lower === "software - internet" ||
+    lower === "software-internet" ||
+    lower === "software & internet" ||
+    lower === "e-commerce" ||
+    lower === "ecommerce"
+  ) return "software-internet";
 
-  // ── Video Games & Consoles ───────────────────────────────────────────
-  // "video-games" and "video-game-consoles" were OLD keys in CATEGORY_META.ts
-  if (lower === "video-games" || lower === "video games" || lower === "video-game-consoles" || lower === "video games & consoles" || lower === "video games and consoles" || lower === "video games consoles" || lower === "video-games-consoles")
-    return "video-games-consoles";
+  if (
+    lower === "video-games" ||
+    lower === "video games" ||
+    lower === "video-game-consoles" ||
+    lower === "video games & consoles" ||
+    lower === "video games and consoles" ||
+    lower === "video games consoles" ||
+    lower === "video-games-consoles"
+  ) return "video-games-consoles";
 
-  // ── Airlines & Aviation ──────────────────────────────────────────────
-  // "airline" (singular) was the OLD key in CATEGORY_META.ts
-  if (lower === "airline" || lower === "airlines" || lower === "aviation" || lower === "airline/aviation" || lower === "airline-aviation" || lower === "airlines-aviation" || lower === "airlines & aviation")
-    return "airlines-aviation";
+  if (
+    lower === "airline" ||
+    lower === "airlines" ||
+    lower === "aviation" ||
+    lower === "airline/aviation" ||
+    lower === "airline-aviation" ||
+    lower === "airlines-aviation" ||
+    lower === "airlines & aviation"
+  ) return "airlines-aviation";
 
-  // ── Automotive ───────────────────────────────────────────────────────
-  if (lower === "automotive" || lower === "auto")
-    return "automotive";
+  if (lower === "automotive" || lower === "auto") return "automotive";
 
-  // ── Finance & Payments ───────────────────────────────────────────────
-  if (lower === "finance" || lower === "finance & payments" || lower === "finance/payments" || lower === "finance-payments")
-    return "finance-payments";
+  if (
+    lower === "finance" ||
+    lower === "finance & payments" ||
+    lower === "finance/payments" ||
+    lower === "finance-payments"
+  ) return "finance-payments";
 
-  // ── Healthcare & Diagnostics ─────────────────────────────────────────
-  if (lower === "healthcare" || lower === "healthcare & diagnostics" || lower === "healthcare/diagnostics" || lower === "healthcare-diagnostics")
-    return "healthcare-diagnostics";
+  if (
+    lower === "healthcare" ||
+    lower === "healthcare & diagnostics" ||
+    lower === "healthcare/diagnostics" ||
+    lower === "healthcare-diagnostics"
+  ) return "healthcare-diagnostics";
 
-  // ── Toys & Games ─────────────────────────────────────────────────────
-  if (lower === "toys" || lower === "games" || lower === "toys & games" || lower === "toys and games" || lower === "toys/games" || lower === "toys-games")
-    return "toys-games";
+  if (
+    lower === "toys" ||
+    lower === "games" ||
+    lower === "toys & games" ||
+    lower === "toys and games" ||
+    lower === "toys/games" ||
+    lower === "toys-games"
+  ) return "toys-games";
 
-  // ── Fallback ─────────────────────────────────────────────────────────
-  // If nothing matched above, slugify whatever came in.
-  // If you see unexpected categories appearing on the index page,
-  // the raw string from that brand's JSON is hitting this fallback —
-  // add a new mapping above to catch it.
   return slugify(s);
 }
 
@@ -185,14 +212,12 @@ for (const raw of Object.values(modules)) {
     slugify(String(b.brand || ""));
   if (!key) continue;
 
-  // Prefer seo_category, fallback to category
   const rawCat = (b.seo_category ?? b.category ?? "").toString().trim();
   if (!rawCat) continue;
 
-  // Store normalized canonical category slug on the object for later use
   b.__seo_category = normalizeCategory(rawCat);
 
-  if (!bySlug.has(key)) bySlug.set(key, b); // first-wins
+  if (!bySlug.has(key)) bySlug.set(key, b);
 }
 const brands = Array.from(bySlug.values());
 
@@ -212,10 +237,6 @@ function labelFor(slug: string, fallbackRaw?: string): string {
   return base.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-/**
- * Sorted categories with meta applied.
- * No duplicates; labels/descriptions come from CATEGORY_META when available.
- */
 const categories = Array.from(counts.entries())
   .map(([slug, n]) => {
     const displayLabel = labelFor(slug);
@@ -226,20 +247,74 @@ const categories = Array.from(counts.entries())
   })
   .sort((a, b) => a.displayLabel.localeCompare(b.displayLabel));
 
+const totalBrands = categories.reduce((sum, c) => sum + c.n, 0);
+const featured = categories.slice(0, 6);
+
 /** SEO bits */
-const PAGE_TITLE = "Browse by Category • Defunct Brands";
+const PAGE_TITLE = "Defunct Brands by Category | Browse Vanished Brands by Industry";
 const PAGE_DESC =
-  "Browse discontinued and defunct brands by category. Clean, structured entries with timelines and outcomes.";
+  "Explore defunct and discontinued brands by category, including retail, food, technology, aviation, automotive, and more.";
 const CANONICAL = Astro.site
   ? new URL("/category/", Astro.site).href
   : "/category/";
 
-/** Feature first 8 (for JSON-LD only) */
-const FEATURED = categories.slice(0, 8);
+/** JSON-LD */
+const collectionPageLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESC,
+  url: CANONICAL,
+};
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Brand categories",
+  itemListElement: categories.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: c.displayLabel,
+    url: Astro.site
+      ? new URL(`/category/${c.slug}/`, Astro.site).href
+      : `/category/${c.slug}/`,
+    numberOfItems: c.n,
+  })),
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How are brands grouped by category?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Brands are grouped into normalized categories based on their primary category or SEO category, such as retail, food and beverage, consumer electronics, and automotive.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do categories include only one type of brand?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Some categories cover broad industries, while others group closely related brand types such as toys and games, software and internet, or airlines and aviation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What can I find on a category page?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Each category page groups vanished brands from a shared industry or theme, helping readers explore related brands, closures, and broader business trends.",
+      },
+    },
+  ],
+};
 ---
 
 <Base title={PAGE_TITLE} description={PAGE_DESC}>
-  <!-- 🔎 SEO head -->
   <Fragment slot="head">
     <link rel="canonical" href={CANONICAL} />
     <meta name="description" content={PAGE_DESC} />
@@ -253,55 +328,209 @@ const FEATURED = categories.slice(0, 8);
     <meta name="twitter:title" content={PAGE_TITLE} />
     <meta name="twitter:description" content={PAGE_DESC} />
 
-    {/* JSON-LD: ItemList of featured categories (optional) */}
-    {FEATURED.length > 0 && (
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "Categories",
-          itemListElement: FEATURED.map((c, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: c.displayLabel,
-            url: Astro.site
-              ? new URL(`/category/${c.slug}/`, Astro.site).href
-              : `/category/${c.slug}/`,
-          })),
-        })}
-      </script>
-    )}
+    <script type="application/ld+json" set:html={JSON.stringify(collectionPageLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(itemListLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+    <style is:inline>
+      .category-card {
+        position: relative;
+        display: block;
+        height: 100%;
+        border-radius: 0.75rem;
+        border: 1px solid rgb(226 232 240);
+        background: white;
+        padding: 1rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      }
+      .dark .category-card {
+        background: rgb(15 23 42);
+        border-color: rgb(51 65 85);
+      }
+      .category-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+        border-color: rgb(59 130 246);
+      }
+      .count-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.25rem;
+        padding: 0.2rem 0.55rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        background: rgb(239 246 255);
+        color: rgb(30 64 175);
+      }
+      .dark .count-badge {
+        background: rgba(59, 130, 246, 0.15);
+        color: rgb(147 197 253);
+      }
+      .section-card {
+        border: 1px solid rgb(226 232 240);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        background: rgb(248 250 252);
+      }
+      .dark .section-card {
+        border-color: rgb(51 65 85);
+        background: rgb(15 23 42 / 0.65);
+      }
+      .stat-chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        padding: 0.25rem 0.65rem;
+        font-size: 0.875rem;
+        background: rgb(239 246 255);
+        color: rgb(30 64 175);
+      }
+      .dark .stat-chip {
+        background: rgba(59, 130, 246, 0.15);
+        color: rgb(147 197 253);
+      }
+    </style>
   </Fragment>
 
-  <!-- 📦 Page container -->
-  <nav class="mb-4 flex flex-wrap gap-2">
+  <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
     <a href="/" class="chip focus-ring">← Home</a>
     <span class="chip opacity-70 cursor-default" aria-current="page">Categories</span>
   </nav>
 
-  <!-- Header -->
-  <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">Browse by Category</h1>
-  <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
-    Total categories: {categories.length}
-  </p>
+  <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands by Category</h1>
 
-  <!-- Chip grid -->
-  <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-    {categories.map((c) => (
-      <li>
-        <a
-          href={`/category/${c.slug}/`}
-          class="chip focus-ring block"
-          title={c.desc}
-          aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
-        >
-          {c.displayLabel} <span class="text-gray-500">({c.n})</span>
-        </a>
-      </li>
-    ))}
-  </ul>
+  <div class="prose prose-sm dark:prose-invert max-w-none mb-6">
+    <p>
+      Browse vanished and discontinued brands by category, from retail chains and food products
+      to consumer electronics, software, airlines, and automotive names.
+    </p>
+    <p>
+      Category pages help group related brands by industry so readers can explore patterns in
+      closures, discontinuations, changing consumer habits, and broader business trends.
+    </p>
+  </div>
 
-  <!-- Back to top -->
+  <div class="mb-6 flex flex-wrap gap-3 text-sm">
+    <span class="stat-chip">Total categories: {categories.length}</span>
+    <span class="stat-chip">Total brands grouped: {totalBrands}</span>
+  </div>
+
+  {featured.length > 0 && (
+    <section class="section-card mb-8" aria-labelledby="featured-categories">
+      <h2 id="featured-categories" class="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">
+        Featured categories
+      </h2>
+      <div class="prose prose-sm dark:prose-invert max-w-none">
+        <p>
+          Explore some of the largest and most recognizable groups of vanished brands, including
+          retail, food and beverage, technology, airlines, toys, and more.
+        </p>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {featured.map((c) => (
+          <a href={`/category/${c.slug}/`} class="chip focus-ring">
+            {c.displayLabel}
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="mb-8" aria-labelledby="browse-categories">
+    <h2 id="browse-categories" class="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
+      Browse all categories
+    </h2>
+
+    {categories.length === 0 ? (
+      <p class="text-slate-600 dark:text-slate-400">No categories available yet.</p>
+    ) : (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {categories.map((c) => (
+          <li>
+            <a
+              href={`/category/${c.slug}/`}
+              class="category-card focus-ring"
+              title={c.desc}
+              aria-label={`${c.displayLabel} (${c.n}). ${c.desc}`}
+            >
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <span class="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  {c.displayLabel}
+                </span>
+                <span class="count-badge">{c.n}</span>
+              </div>
+
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
+                {c.desc}
+              </p>
+
+              <span class="text-sm font-medium text-blue-600 dark:text-blue-400">
+                Explore {c.displayLabel} →
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+
+  <section class="mt-10" aria-labelledby="why-browse-categories">
+    <h2 id="why-browse-categories" class="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
+      Why browse by category?
+    </h2>
+    <div class="prose prose-sm dark:prose-invert max-w-none">
+      <p>
+        Browsing by category makes it easier to compare brands that faced similar market pressures.
+        Retail categories can reveal waves of bankruptcies and mall decline, while technology and
+        software categories often show platform shifts, digital disruption, and changing consumer behavior.
+      </p>
+      <p>
+        These category archives are designed to help readers move beyond a single brand story and
+        understand how entire industries changed over time.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="faq">
+    <h2 id="faq" class="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
+      Frequently Asked Questions
+    </h2>
+
+    <div class="space-y-4">
+      <div class="section-card">
+        <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+          How are brands grouped by category?
+        </h3>
+        <p class="text-sm text-slate-600 dark:text-slate-300">
+          Brands are grouped into normalized categories based on their primary category or SEO
+          category, such as retail, food and beverage, consumer electronics, and automotive.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+          Do categories include only one type of brand?
+        </h3>
+        <p class="text-sm text-slate-600 dark:text-slate-300">
+          No. Some categories cover broad industries, while others group closely related brand
+          types such as toys and games, software and internet, or airlines and aviation.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+          What can I find on a category page?
+        </h3>
+        <p class="text-sm text-slate-600 dark:text-slate-300">
+          Each category page groups vanished brands from a shared industry or theme, helping
+          readers explore related brands, closures, and broader business trends.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <div class="mt-8">
     <a href="#top" class="chip focus-ring">↑ Back to top</a>
   </div>

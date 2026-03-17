@@ -46,7 +46,7 @@ const slogan =
 function catToPath(cat?: string) {
   if (!cat) return null;
   const s = cat.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-  return `/category/${encodeURIComponent(s)}/`;
+  return `/topics/${encodeURIComponent(s)}/`;
 }
 
 function titleFromSlug(s: string) {
