@@ -74,11 +74,11 @@
     },
     {
       "question": "How much caffeine was in the original Four Loko?",
-      "answer": "Original Four Loko contained approximately 156mg of caffeine per 23.5 oz can — equivalent to 4-5 cups of coffee — combined with 12% alcohol by volume. It also contained taurine and guarana."
+      "answer": "Original Four Loko contained approximately 156mg of caffeine per 23.5 oz can — equivalent to about 4-5 cups of coffee — combined with 12% alcohol by volume. It also contained taurine and guarana."
     },
     {
       "question": "What states banned Four Loko?",
-      "answer": "Washington State was first to ban Four Loko in October 2010, followed by Michigan, Utah, and Oklahoma. The FDA's November 2010 warning effectively made the original formula untenable nationwide."
+      "answer": "Washington State was first to ban Four Loko in October 2010, followed by Michigan, Utah, and Oklahoma. The FDA's November 2010 warning effectively made the original caffeinated formula untenable nationwide."
     },
     {
       "question": "Is Four Loko still sold today?",
@@ -86,7 +86,27 @@
     },
     {
       "question": "Did people die from Four Loko?",
-      "answer": "Several deaths were linked to the original caffeinated formula, though direct causation was debated. The most prominent incident involved nine hospitalizations at Central Washington University in 2010, which accelerated the federal ban."
+      "answer": "Several deaths were linked to the original caffeinated formula, though direct causation was debated. The most prominent incident involved nine hospitalizations at Central Washington University in 2010, which accelerated the federal crackdown."
+    },
+    {
+      "question": "When did Four Loko remove caffeine?",
+      "answer": "Four Loko removed caffeine in late 2010 after the FDA warned that caffeine added to alcoholic beverages was unsafe. The company reformulated the drink in November 2010, removing caffeine, taurine, and guarana."
+    },
+    {
+      "question": "When did Four Loko change the recipe?",
+      "answer": "Four Loko changed its recipe in November 2010 after federal and state pressure over the risks of combining alcohol and stimulants. The reformulated version no longer included caffeine, taurine, or guarana."
+    },
+    {
+      "question": "Where was Four Loko banned?",
+      "answer": "Before the national reformulation, Four Loko was banned or restricted in several states, including Washington, Michigan, Utah, and Oklahoma. Some colleges and local jurisdictions also prohibited its sale or possession."
+    },
+    {
+      "question": "Is Four Loko illegal?",
+      "answer": "Four Loko is not illegal today in its current reformulated form. The original caffeinated version was effectively banned in 2010, but the modern non-caffeinated version remains legal in many places, subject to local alcohol laws."
+    },
+    {
+      "question": "Why was Four Loko so controversial?",
+      "answer": "Four Loko became controversial because it combined high alcohol content with caffeine and other stimulants, which could mask intoxication and encourage dangerous binge drinking. Its popularity among young drinkers and several high-profile hospitalizations drew national attention."
     }
   ]
 }
