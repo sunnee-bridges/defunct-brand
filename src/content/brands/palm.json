@@ -5,45 +5,117 @@
   "seo_category": "mobile-wearables",
   "country": "US",
   "active": { "start": 1992, "end": 2011 },
-  "hook": "Dominated handhelds, then smartphones beat webOS",
-  "fate": "Acquired by HP in 2010 for 1.2 billion dollars. webOS hardware was discontinued in 2011. The brand trademark was later sold to TCL Corporation in 2014 and the webOS platform was acquired by LG Electronics in 2013 for use in smart televisions.",
-  "summary": "Pioneer of handheld PDAs and early smartphones including the Pilot, Treo, and Pre. Acquired by HP in 2010 for 1.2 billion dollars. webOS devices were discontinued in 2011 after the HP TouchPad failed in the market.",
-  "notable_products": ["Pilot 1000 and PalmPilot", "Palm Treo 600", "Palm Pre"],
-  "topics": [ "acquired",
-      "mobile-devices",
-      "smartphones",
-      "2000s-nostalgia"],
-  "overview_md": "Palm Computing was founded in 1992 by Jeff Hawkins, Donna Dubinsky, and Ed Colligan with one goal in mind. They wanted to build a pocket-sized computer that people would actually use every day. Earlier attempts by Apple and others had resulted in devices that were too heavy, too slow, and too expensive. Palm took a different approach by stripping the concept down to what mattered most.\n\nThe result was the PalmPilot, launched in 1996 at a price of 299 dollars. It was a grayscale, stylus-driven organizer that weighed just 5.7 ounces and fit in a shirt pocket. The Graffiti handwriting system let users write letters in a simplified alphabet that the device could reliably recognize. HotSync connected the device to a desktop computer in seconds, keeping contacts, calendars, and notes perfectly aligned between both machines. Over one million PalmPilot units sold in the first 18 months. Palm captured more than 70 percent of the PDA market within a few years. For a while, the word PalmPilot functioned as a synonym for the entire category the way Xerox had for photocopying.\n\nPalm changed hands several times during its rise. U.S. Robotics acquired the company in 1995 for 44 million dollars. 3Com then acquired U.S. Robotics in 1997 and absorbed Palm along with it. The founders grew frustrated with 3Com's priorities and left in 1998 to start Handspring, a competing company that built Palm OS devices of its own including the Visor line. 3Com spun Palm off as an independent public company in March 2000. On its first day of trading during the dot-com bubble, Palm shares hit 95 dollars. A year later they had lost 90 percent of their value.\n\nIn 2003 Palm reacquired Handspring and inherited the Treo smartphone line. The Treo 600 was one of the first devices to put a full keyboard, a phone, and a capable mobile browser into a single pocketable form factor. Business users adopted it widely. It competed directly with the BlackBerry for the professional market and won converts who appreciated its touchscreen alongside the physical keyboard. For several years the Treo line kept Palm commercially relevant even as the broader PDA category began to shrink.\n\nThe arrival of the iPhone in 2007 reset every assumption about what a smartphone should be. Android followed in 2008. Palm's existing hardware and the aging Palm OS could not match the new standard being set. The company needed a complete reinvention.\n\nJon Rubinstein, who had previously led hardware engineering at Apple and was credited with designing the original iPod, joined Palm as executive chairman in 2007 and became CEO in 2009. He oversaw the development of webOS from the ground up. WebOS launched with the Palm Pre in June 2009 exclusively on Sprint. The operating system introduced card-based multitasking that let users flip between open applications and flick them away to close them. Synergy pulled together email, contacts, and calendars from multiple accounts including Gmail, Facebook, and Exchange into unified views without requiring manual setup. Notifications appeared at the bottom of the screen without interrupting whatever the user was doing. Many of these patterns were later adopted by iOS and Android in subsequent years.\n\nCritics responded warmly to the Pre and webOS. The hardware received some complaints about build quality and a sharp edge along the sliding mechanism. The deeper problem was scale. Sprint was a smaller carrier than AT&T or Verizon, limiting Palm's potential audience. The App Catalog launched with 18 apps and grew to around 1,000 by early 2010, far behind the tens of thousands available on iPhone and Android. Palm could not attract enough developers to close the gap quickly enough.\n\nBy early 2010 Palm was burning through cash. The company reported a quarterly loss of 22 million dollars in March 2010 and warned that revenue would fall well short of earlier guidance. Its stock, which had recovered to around 17 dollars on the launch of the Pre, fell back toward 3 dollars. Speculation about a sale became public.\n\nHP announced on April 28 2010 that it would acquire Palm for 1.2 billion dollars at 5.70 per share in an all-cash deal. The acquisition closed on July 1 2010. HP's stated plan was to put webOS on every device it made, including smartphones, tablets, printers, and computers. In February 2011 HP unveiled the Pre 3, the Veer, and the HP TouchPad tablet. None of them were branded as Palm products. The Palm name was quietly retired when HP renamed the division the webOS Global Business Unit in July 2011.\n\nThe TouchPad launched in July 2011 at 499 dollars, matching the iPad's entry price. Sales were disastrous. HP announced on August 18 2011 that it was immediately ending production of all webOS hardware. The remaining TouchPad inventory was cleared through a fire sale at 99 dollars, which ironically produced a massive spike in demand that HP could no longer supply. CEO Leo Apotheker's decision to kill webOS hardware was one of several moves that caused HP's share price to fall 45 percent. Apotheker was replaced by Meg Whitman later that year.\n\nThe pieces of Palm were eventually distributed across several companies. HP sold the webOS platform to LG Electronics in February 2013 for use in its smart television lineup, where it remains in use today. HP sold approximately 1,400 Palm patents to Qualcomm in 2014. The Palm trademark itself was sold in October 2014 to a shelf company controlled by a regional president of TCL Corporation, the Chinese electronics conglomerate that markets phones under the Alcatel brand. TCL announced in January 2015 that it planned to bring Palm back as an Android smartphone brand built around a Silicon Valley team. A small Palm-branded companion phone appeared in 2018 but found no meaningful audience.\n\nPalm's real legacy is not in any product that followed but in what its engineers figured out years before anyone else. The PalmPilot proved the market for a third category of computing device that sat between a phone and a laptop. The Treo proved that a smartphone with a physical keyboard and a touchscreen could replace a laptop for road workers. WebOS proved that a mobile operating system could be built around multitasking, cloud accounts, and frictionless notifications in a way that later became the industry standard. The company that invented those ideas did not survive long enough to profit from them, but the ideas are everywhere.",
+  "hook": "Palm defined the PDA and helped shape the modern smartphone, but it lost when hardware became an ecosystem business instead of a device business.",
+  "fate": "HP announced an agreement to acquire Palm on April 28, 2010 and completed the deal on July 1, 2010. HP later announced on August 18, 2011 that it would discontinue webOS device operations. The webOS software business was sold to LG in 2013, and parts of Palm's patent portfolio were sold to Qualcomm in 2014.",
+  "summary": "Palm was a pioneering handheld computing company known for the PalmPilot, Treo, and Palm Pre. Founded in 1992, it became one of the defining brands of the PDA era and later pushed into smartphones with Treo and webOS devices. HP acquired Palm in 2010 for about 1.2 billion dollars, then wound down webOS hardware in 2011 after weak commercial performance.",
+  "notable_products": [
+    "PalmPilot 1000",
+    "Palm Treo 600",
+    "Palm Pre"
+  ],
+  "topics": [
+    "acquired",
+    "mobile-devices",
+    "smartphones",
+    "2000s-nostalgia"
+  ],
+  "overview_md": "Palm mattered because it solved a problem that earlier handheld computers had not solved. Instead of trying to replace the desktop computer, Palm made a device that worked with it. That decision made the PalmPilot practical, fast, and easy to understand at a time when many handheld products still felt experimental.\n\nThe company helped define a style of mobile computing built around quick input, instant access to personal information, and reliable synchronization. In the PDA era, that was enough to make Palm one of the most influential names in consumer electronics. The brand became closely associated with pocket organizers, then expanded into smartphones through the Treo line.\n\nPalm's deeper importance is that it identified several durable ideas before the smartphone market fully matured. The PalmPilot showed that a small device could succeed if it reduced friction instead of adding features for their own sake. The Treo showed that a phone could become a serious work device. WebOS later showed that mobile software could feel fluid, account aware, and multitasking friendly in a way that seemed ahead of much of the market in 2009.\n\nThat also explains why Palm ultimately struggled. Its earlier success came from designing standout devices. The late smartphone market rewarded something broader. Winning required carrier reach, developer support, app availability, marketing scale, and enough capital to keep improving both hardware and software at the same time. Palm had strong ideas, but it no longer controlled the scale needed to turn those ideas into a durable platform.\n\nHP acquired Palm in 2010 largely for webOS, which it hoped to use across phones, tablets, and other products. That vision did not turn into sustained market momentum. In 2011 HP ended webOS hardware operations, which effectively closed the original Palm story. Palm's legacy survived less through the brand itself than through interaction patterns and product lessons that became common across the mobile industry.",
   "timeline": [
-    { "date": "1992-01", "text": "Jeff Hawkins, Donna Dubinsky, and Ed Colligan found Palm Computing to build a practical pocket organizer." },
-    { "date": "1995-06", "text": "U.S. Robotics acquires Palm for 44 million dollars." },
-    { "date": "1996-03", "text": "The PalmPilot 1000 launches at 299 dollars. Over one million units sell in the first 18 months." },
-    { "date": "1997-06", "text": "3Com acquires U.S. Robotics and Palm becomes a 3Com subsidiary." },
-    { "date": "1998-01", "text": "Founders Hawkins, Dubinsky, and Colligan leave to start Handspring after disagreements with 3Com." },
-    { "date": "2000-03", "text": "3Com spins Palm off as an independent public company. Shares hit 95 dollars on the first day of trading." },
-    { "date": "2003-10", "text": "Palm reacquires Handspring, bringing the Treo smartphone line in house." },
-    { "date": "2009-06", "text": "The Palm Pre launches on Sprint running webOS, introducing card multitasking and Synergy." },
-    { "date": "2010-07", "text": "HP completes its acquisition of Palm for 1.2 billion dollars at 5.70 per share." },
-    { "date": "2011-08", "text": "HP ends all webOS hardware production. The Palm brand is effectively retired." },
-    { "date": "2013-02", "text": "HP sells webOS to LG Electronics for use in smart televisions." },
-    { "date": "2014-10", "text": "HP sells the Palm trademark to a TCL-linked entity. Qualcomm separately acquires 1,400 Palm patents from HP." }
+    { "date": "1992-01", "text": "Palm Computing is founded by Jeff Hawkins, with Donna Dubinsky and Ed Colligan becoming central leaders in the company's growth." },
+    { "date": "1995-09", "text": "U.S. Robotics agrees to acquire Palm for about 44 million dollars." },
+    { "date": "1996-03", "text": "The PalmPilot launches and becomes one of the first widely successful handheld computers." },
+    { "date": "1997-06", "text": "3Com acquires U.S. Robotics, bringing Palm under 3Com ownership." },
+    { "date": "1998-06", "text": "Palm founders leave and go on to form Handspring, creating a future rival built around Palm OS devices." },
+    { "date": "2000-03", "text": "Palm is spun off by 3Com in a high profile public offering during the dot com era." },
+    { "date": "2003-10", "text": "Palm agrees to acquire Handspring, bringing the Treo smartphone line back under Palm control." },
+    { "date": "2009-06-06", "text": "Palm launches the Pre with webOS on Sprint, introducing card based multitasking and Synergy account integration." },
+    { "date": "2010-04-28", "text": "HP announces it will acquire Palm for 5.70 dollars per share in cash, or about 1.2 billion dollars." },
+    { "date": "2010-07-01", "text": "HP completes the Palm acquisition." },
+    { "date": "2011-08-18", "text": "HP announces it will discontinue webOS device operations, effectively ending Palm hardware as an active platform strategy." },
+    { "date": "2013-02-25", "text": "LG acquires webOS from HP for use in connected televisions." },
+    { "date": "2014-01-23", "text": "Qualcomm acquires a Palm related patent portfolio from HP." }
   ],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Palm,_Inc.",
-    "webos_wiki": "https://en.wikipedia.org/wiki/WebOS",
-    "hp_palm_acquisition": "https://investor.hp.com/news-events/news/news-details/2010/HP-to-Acquire-Palm-for-12-Billion/default.aspx",
-    "hp_palm_completion": "https://investor.hp.com/news-events/news/news-details/2010/HP-Completes-Palm-Acquisition/default.aspx",
-    "pilot_history": "https://en.wikipedia.org/wiki/PalmPilot",
-    "treo_history": "https://en.wikipedia.org/wiki/Treo",
-    "pcworld_history": "https://www.pcworld.com/article/512448/article-4141.html"
+    "hp_acquisition_announcement": "https://investor.hp.com/news-events/news/news-details/2010/HP-to-Acquire-Palm-for-12-Billion/default.aspx",
+    "hp_acquisition_completion": "https://investor.hp.com/news-events/news/news-details/2010/HP-Completes-Palm-Acquisition/default.aspx",
+    "lg_webos_acquisition": "https://www.lgnewsroom.com/2013/02/lg-to-acquire-webos-from-hp/",
+    "qualcomm_patent_acquisition": "https://www.qualcomm.com/news/releases/2014/01/qualcomm-acquires-palm-ipaq-and-bitfone-patent-portfolio-hp",
+    "computer_history_palm_pilot": "https://www.computerhistory.org/revolution/mobile-computing/18/321"
   },
   "sources": [
-    { "label": "Wikipedia – Palm, Inc.", "url": "https://en.wikipedia.org/wiki/Palm,_Inc." },
-    { "label": "Wikipedia – PalmPilot", "url": "https://en.wikipedia.org/wiki/PalmPilot" },
-    { "label": "Wikipedia – webOS", "url": "https://en.wikipedia.org/wiki/WebOS" },
-    { "label": "Wikipedia – Treo", "url": "https://en.wikipedia.org/wiki/Treo" },
-    { "label": "HP Investor Relations – HP to Acquire Palm for $1.2 Billion (April 2010)", "url": "https://investor.hp.com/news-events/news/news-details/2010/HP-to-Acquire-Palm-for-12-Billion/default.aspx" },
-    { "label": "HP Investor Relations – HP Completes Palm Acquisition (July 2010)", "url": "https://investor.hp.com/news-events/news/news-details/2010/HP-Completes-Palm-Acquisition/default.aspx" },
-    { "label": "PCWorld – A Brief History of Palm", "url": "https://www.pcworld.com/article/512448/article-4141.html" }
-  ]
+    {
+      "label": "HP investor relations announcement of Palm acquisition",
+      "url": "https://investor.hp.com/news-events/news/news-details/2010/HP-to-Acquire-Palm-for-12-Billion/default.aspx"
+    },
+    {
+      "label": "HP investor relations completion of Palm acquisition",
+      "url": "https://investor.hp.com/news-events/news/news-details/2010/HP-Completes-Palm-Acquisition/default.aspx"
+    },
+    {
+      "label": "HP financial filing discussing the August 18 2011 decision to wind down the webOS device business",
+      "url": "https://investor.hp.com/news-events/news/news-details/2011/HP-Reports-Fourth-Quarter-and-Full-Year-2011-Results/default.aspx"
+    },
+    {
+      "label": "LG Newsroom announcement of webOS acquisition from HP",
+      "url": "https://www.lgnewsroom.com/2013/02/lg-to-acquire-webos-from-hp/"
+    },
+    {
+      "label": "Qualcomm announcement of Palm related patent acquisition from HP",
+      "url": "https://www.qualcomm.com/news/releases/2014/01/qualcomm-acquires-palm-ipaq-and-bitfone-patent-portfolio-hp"
+    },
+    {
+      "label": "Computer History Museum background on the PalmPilot",
+      "url": "https://www.computerhistory.org/revolution/mobile-computing/18/321"
+    },
+    {
+      "label": "Computerworld timeline of Palm history",
+      "url": "https://www.computerworld.com/article/1522788/a-brief-history-of-palm.html"
+    }
+  ],
+  "seo": {
+    "meta_title": "What Happened to Palm? From PalmPilot Leader to HP Shutdown",
+    "meta_description": "Palm helped define the PDA era with PalmPilot, moved into smartphones with Treo and webOS, and was acquired by HP in 2010 before webOS hardware was ended in 2011.",
+    "keywords": [
+      "what happened to palm",
+      "palm discontinued",
+      "palm hp acquisition",
+      "palm webos",
+      "palm pre",
+      "palm pilot history",
+      "why did palm fail",
+      "palm treo"
+    ]
+  },
+  "content": {
+    "faq": [
+      {
+        "question": "What was Palm?",
+        "answer": "Palm was a major handheld computing company best known for the PalmPilot, Treo, and Palm Pre. It became one of the defining brands of the PDA era and later moved into smartphones."
+      },
+      {
+        "question": "When was Palm founded?",
+        "answer": "Palm was founded in 1992. Jeff Hawkins started the company, and Donna Dubinsky and Ed Colligan became key leaders in building it into a major handheld computing brand."
+      },
+      {
+        "question": "Why was Palm important?",
+        "answer": "Palm proved that a handheld device could succeed by being fast, simple, and tightly connected to a desktop computer. Later, its Treo line helped shape early smartphones, and webOS introduced interface ideas that influenced later mobile software."
+      },
+      {
+        "question": "What happened to Palm?",
+        "answer": "HP agreed to acquire Palm in April 2010 and completed the acquisition in July 2010 for about 1.2 billion dollars. HP later ended webOS device operations in August 2011, which effectively ended Palm as an active hardware platform."
+      },
+      {
+        "question": "Why did Palm fail?",
+        "answer": "Palm struggled in the modern smartphone era because strong hardware ideas were no longer enough on their own. The company faced major disadvantages in app selection, developer support, carrier distribution, marketing scale, and long term platform investment compared with Apple and leading Android vendors."
+      },
+      {
+        "question": "What was webOS?",
+        "answer": "webOS was Palm's mobile operating system introduced with the Palm Pre in 2009. It became known for card based multitasking, integrated account management, and a polished interface that many reviewers considered ahead of its time."
+      },
+      {
+        "question": "Is Palm still around today?",
+        "answer": "The original Palm company is not. HP acquired Palm in 2010, ended webOS hardware in 2011, sold webOS to LG in 2013, and later sold Palm related patents to Qualcomm. The original Palm era is over even though the brand name later reappeared on unrelated devices."
+      }
+    ]
+  }
 }
