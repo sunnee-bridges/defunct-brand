@@ -1,0 +1,95 @@
+---
+interface Props {
+  title?: string;
+  links: Array<{
+    title: string;
+    url: string;
+    description?: string;
+  }>;
+}
+
+const {
+  title = "Keep Exploring",
+  links = [],
+} = Astro.props;
+---
+
+{links.length > 0 && (
+  <section class="related-links not-prose">
+    <h2>{title}</h2>
+    <ul>
+      {links.map((link) => (
+        <li>
+          <a href={link.url}>{link.title}</a>
+          {link.description && <p>{link.description}</p>}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .related-links {
+    margin: 2rem 0;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgb(226 232 240);
+    border-bottom: 1px solid rgb(226 232 240);
+  }
+
+  :global(.dark) .related-links {
+    border-color: rgb(51 65 85);
+  }
+
+  .related-links h2 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    line-height: 1.35;
+    font-weight: 700;
+    color: rgb(15 23 42);
+  }
+
+  :global(.dark) .related-links h2 {
+    color: rgb(241 245 249);
+  }
+
+  .related-links ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .related-links li + li {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(226 232 240);
+  }
+
+  :global(.dark) .related-links li + li {
+    border-top-color: rgb(51 65 85);
+  }
+
+  .related-links a {
+    font-weight: 600;
+    color: rgb(37 99 235);
+    text-decoration: none;
+  }
+
+  .related-links a:hover {
+    text-decoration: underline;
+  }
+
+  :global(.dark) .related-links a {
+    color: rgb(96 165 250);
+  }
+
+  .related-links p {
+    margin: 0.35rem 0 0;
+    color: rgb(71 85 105);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  :global(.dark) .related-links p {
+    color: rgb(148 163 184);
+  }
+</style>
