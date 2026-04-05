@@ -3,6 +3,7 @@
 import Base from "../../layouts/Base.astro";
 import {
   normalizeBrands,
+  normalizeCategory,
   yearsOf,
   fateIconOf,
   fateTypeOf,
@@ -77,40 +78,111 @@ const itemListLd = {
     html { scroll-behavior: smooth; }
     .anchor-target { scroll-margin-top: 84px; }
 
-    .jump a { transition: background-color .15s ease, outline-color .15s ease, color .15s ease; }
+    .jump a {
+      transition: background-color .15s ease, outline-color .15s ease, color .15s ease;
+    }
+
     .jump a.active {
       outline: 2px solid rgb(99 102 241);
       outline-offset: 2px;
       background: rgba(99 102 241 / 0.10);
       color: rgb(55 48 163);
     }
-    .dark .jump a.active { outline-color: rgb(165 180 252); background: rgba(99 102 241 / 0.25); color: rgb(224 231 255); }
-    .dark .jump a { color: rgb(203 213 225); }
 
-    /* Card polish (match A–Z/home style) */
-    .fcard-sm { position: relative; border-radius: .875rem; border: 1px solid var(--card-border, rgb(226 232 240)); background: var(--card-bg, #fff); padding:.75rem .85rem; overflow:hidden; transition: transform .16s ease, box-shadow .16s ease; }
-    .fcard-sm:hover { transform: translateY(-1px); box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); }
-    .dark .fcard-sm { --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
-    .meta-row { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.35rem }
-    .chip-lite { display:inline-flex; align-items:center; gap:.35rem; padding:.2rem .5rem; border-radius:9999px; font-size:.7rem; font-weight:600; background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 14%, white); border: 1px solid color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 28%, white); color: oklch(0.28 0 0); }
-    .dark .chip-lite { background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 22%, rgb(2 6 23)); border-color: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 45%, rgb(2 6 23)); color: white; }
-    .hook { margin-top:.25rem; font-size:.85rem; line-height:1.2rem; color: rgb(71 85 105); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-    .dark .hook { color: rgb(203 213 225); }
+    .dark .jump a.active {
+      outline-color: rgb(165 180 252);
+      background: rgba(99 102 241 / 0.25);
+      color: rgb(224 231 255);
+    }
+
+    .dark .jump a {
+      color: rgb(203 213 225);
+    }
+
+    .product-card {
+      position: relative;
+      display: block;
+      height: 100%;
+      border-radius: 0.75rem;
+      border: 1px solid rgb(226 232 240);
+      background: white;
+      padding: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .dark .product-card {
+      background: rgb(15 23 42);
+      border-color: rgb(51 65 85);
+    }
+
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      border-color: rgb(59 130 246);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: .5rem;
+    }
+
+    .meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .2rem .5rem;
+      border-radius: 9999px;
+      font-size: .75rem;
+      font-weight: 600;
+      background: rgb(239 246 255);
+      color: rgb(30 64 175);
+    }
+
+    .dark .meta-badge {
+      background: rgba(59, 130, 246, 0.15);
+      color: rgb(147 197 253);
+    }
+
+    .hook {
+      margin-top: .35rem;
+      font-size: .875rem;
+      line-height: 1.3rem;
+      color: rgb(71 85 105);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .dark .hook {
+      color: rgb(203 213 225);
+    }
+
+ 
+ 
   </style>
 
   <div class="max-w-6xl mx-auto px-4">
-    <nav class="mb-3 flex flex-wrap gap-2" aria-label="Breadcrumb">
+    <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
       <a href="/" class="chip focus-ring">← Home</a>
       <span class="chip opacity-70 cursor-default" aria-current="page">Products</span>
     </nav>
 
-    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-1">{PAGE_TITLE}</h1>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
-      Discontinued products and cult favorites. <span id="countLine">Showing {total} of {total}</span>
+    <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">{PAGE_TITLE}</h1>
+
+    <div class="prose prose-sm dark:prose-invert max-w-none mb-5">
+      <p>
+        Browse discontinued products and cult favorites people still miss.
+      </p>
+    </div>
+
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+      <span id="countLine" data-total={total}>Showing {total} of {total}</span>
     </p>
 
-    <!-- Controls -->
-    <div class="mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+    <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-3">
       <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
       <input
         id="q"
@@ -121,7 +193,6 @@ const itemListLd = {
         aria-describedby="countLine"
       />
 
-      <!-- Jump bar -->
       <div class="jump mt-1 sm:mt-0 flex flex-wrap gap-2" role="navigation" aria-label="Jump to letter">
         {letters.map((L) => {
           const anchor = anchorIdFor(L);
@@ -134,13 +205,18 @@ const itemListLd = {
       <p class="text-slate-600 dark:text-slate-400">No products yet.</p>
     ) : (
       <>
-        {/* Letter groups */}
         <div id="groups" class="space-y-8">
           {letters.map((L) => {
             const anchor = anchorIdFor(L);
             const arr = groups[L];
             return (
-              <section id={anchor} role="region" aria-labelledby={`h-${anchor}`} data-group={anchor} class="anchor-target">
+              <section
+                id={anchor}
+                role="region"
+                aria-labelledby={`h-${anchor}`}
+                data-group={anchor}
+                class="anchor-target"
+              >
                 <div class="flex items-baseline gap-2 mb-3">
                   <h2 id={`h-${anchor}`} class="text-xl font-semibold">{L}</h2>
                   <span class="text-sm text-slate-500 dark:text-slate-400" data-group-count>
@@ -151,41 +227,54 @@ const itemListLd = {
                 <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {arr.map((b: any) => {
                     const yrs = yearsOf(b);
-                    const cat = b.__seo_category_label || b.category || "Brand";
-                    // stable tint from category
-                    let h = 0; const s = (cat || "brand") + "-vb"; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-                    const tint = `oklch(0.7 0.12 ${h % 360})`;
+                    const cat = b.__seo_category_label || b.category || "";
                     const icon = fateIconOf(b);
                     const fateType = fateTypeOf(b) || "other";
                     const text = truncateInline(primaryTextOf(b), 120);
 
                     return (
-                      <li data-name={String(b.brand).toLowerCase()}>
-                        <article class="fcard-sm group h-full" style={{ "--tint": tint }}>
-                          <a
-                            href={`/brand/${encodeURIComponent(b.slug)}/`}
-                            class="stretched-link focus-ring rounded"
-                            aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
-                          ></a>
+                     <li data-name={String(b.brand).toLowerCase()}>
+  <article
+    class="product-card h-full cursor-pointer"
+    data-card-href={`/brand/${encodeURIComponent(b.slug)}/`}
+    tabindex="0"
+    role="link"
+    aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+  >
+    <div class="group">
+      <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-1.5 text-slate-900 dark:text-slate-100">
+        {b.brand}
+      </h3>
 
-                          <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-1.5 text-slate-900 dark:text-slate-100 group-hover:underline underline-offset-2">
-                            {b.brand}
-                          </h3>
+      {text && (
+        <p class="hook">
+          <span aria-hidden="true">{icon}</span>
+          <span class="sr-only">Fate: {fateType}</span>
+          {" "}{text}
+        </p>
+      )}
 
-                          {text && (
-                            <p class="hook">
-                              <span aria-hidden="true">{icon}</span>
-                              <span class="sr-only">Fate: {fateType}</span>
-                              {" "}{text}
-                            </p>
-                          )}
-
-                          <div class="meta-row">
-                            {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
-                            {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
-                          </div>
-                        </article>
-                      </li>
+      <div class="meta-row">
+        {yrs && (
+          <span class="meta-badge" aria-label={`Years active ${yrs}`}>
+            {yrs}
+          </span>
+        )}
+        {cat && (
+          <a
+            href={`/category/${encodeURIComponent(normalizeCategory(cat))}/`}
+            class="meta-badge focus-ring"
+            title={`Category: ${cat}`}
+            aria-label={`Browse category ${cat}`}
+            data-no-card-nav
+          >
+            🏷️ {cat}
+          </a>
+        )}
+      </div>
+    </div>
+  </article>
+</li>
                     );
                   })}
                 </ul>
@@ -201,7 +290,6 @@ const itemListLd = {
     )}
   </div>
 
-  <!-- Client-side filtering, counts & stable active-letter highlight (scroll-based) -->
   <script is:inline>
     (function () {
       const q = document.getElementById('q');
@@ -222,7 +310,6 @@ const itemListLd = {
         });
       }
 
-      // Letter click behavior
       letterLinks.forEach((a, key) => {
         a.addEventListener('click', (e) => {
           const targetId = key;
@@ -235,7 +322,6 @@ const itemListLd = {
         });
       });
 
-      // Filtering
       function applyFilter() {
         const term = normalize(q.value);
         let visibleTotal = 0;
@@ -267,7 +353,7 @@ const itemListLd = {
         });
 
         if (countLine) {
-          const all = Number({total});
+          const all = Number(countLine?.dataset.total || 0);
           countLine.textContent = `Showing ${visibleTotal} of ${all}`;
         }
       }
@@ -275,9 +361,33 @@ const itemListLd = {
       q.addEventListener('input', applyFilter);
       applyFilter();
 
-      // Highlight from hash on load (if present)
       const hash = window.location.hash.slice(1);
       if (hash && letterLinks.has(hash)) setActiveLetter(hash);
+
+   document.addEventListener('click', (e) => {
+  const rawTarget = e.target;
+  const target =
+    rawTarget instanceof Element
+      ? rawTarget
+      : rawTarget && rawTarget.parentElement
+      ? rawTarget.parentElement
+      : null;
+
+  if (!target) return;
+
+  const tagLink = target.closest('[data-no-card-nav]');
+  if (tagLink) return;
+
+  const card = target.closest('[data-card-href]');
+  console.log('clicked target:', target, 'card:', card);
+
+  if (!card) return;
+
+  const href = card.getAttribute('data-card-href');
+  console.log('navigating to:', href);
+
+  if (href) window.location.href = href;
+});
     })();
   </script>
 </Base>

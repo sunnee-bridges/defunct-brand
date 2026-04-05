@@ -131,27 +131,37 @@ function truncateText(text: string, limit: number = 155): string {
 
 /** Check if brand has displayable quick facts */
 function hasQuickFacts(brand: any): boolean {
-  // Check quick_facts object
   if (brand?.quick_facts) {
     const facts = Object.values(brand.quick_facts).filter(
-      v => v !== null && v !== undefined && v !== ''
+      (v) => v !== null && v !== undefined && v !== ''
     );
     if (facts.length > 0) return true;
   }
-  
-  // Check stats object for displayable retail/business stats
+
+  if (
+    brand?.active?.status ||
+    brand?.active?.start ||
+    brand?.active?.end ||
+    brand?.country ||
+    brand?.category ||
+    brand?.schema?.manufacturer?.name ||
+    brand?.stats?.parent_company
+  ) {
+    return true;
+  }
+
   if (brand?.stats) {
     const displayableKeys = [
       'peak_stores', 'years_in_business', 'years_available',
       'employees_at_peak', 'peak_year', 'founding_year',
-      'closure_year', 'alcohol_content', 'category'
+      'closure_year', 'alcohol_content', 'category', 'parent_company'
     ];
-    return displayableKeys.some(key => {
+    return displayableKeys.some((key) => {
       const val = brand.stats[key];
       return val !== null && val !== undefined && val !== '';
     });
   }
-  
+
   return false;
 }
 
@@ -258,6 +268,7 @@ let ogImage = "";
 let ogImageAlt = "";
 let twitterCard = "summary_large_image";
 let keywords = "";
+let answerBox = "";
 
 type LinkItem = { href: string; label: string; external?: boolean; rel?: string };
 let internalLinks: LinkItem[] = [];
@@ -306,12 +317,23 @@ if (!notFound) {
   const descPref = (brand.hook || brand.fate || brand.summary || "").trim();
 
   // SEO-optimized title
-  pageTitle = brand?.seo?.meta_title || 
-    `What Happened to ${brand.brand}?${years ? ` (${years})` : ''} - Complete Story`;
+  pageTitle =
+  brand?.seo?.meta_title ||
+  `What Happened to ${brand.brand}? Why It Was Discontinued`;
 
-  // SEO-optimized description (max 155 characters)
-  pageDesc = brand?.seo?.meta_description || 
-    truncateText(`${brand.brand}${years ? ` (${years})` : ''}: ${descPref}`, 155);
+pageDesc =
+  brand?.seo?.meta_description ||
+  truncateText(
+    `${brand.brand}${brand?.active?.start ? ` launched in ${brand.active.start}` : ""}${brand?.active?.end ? ` and faded by ${brand.active.end}` : ""}. Learn what happened, why it disappeared, and whether it still exists.`,
+    155
+  );
+
+  // Answers
+  answerBox =
+  brand?.excerpt?.trim() ||
+  brand?.summary?.trim() ||
+  brand?.hook?.trim() ||
+  "";
 
   // Keywords
   keywords = brand?.seo?.keywords?.join(', ') || '';
@@ -356,6 +378,7 @@ if (!notFound) {
     headline: pageTitle,
     description: pageDesc,
     image: ogImage,
+    about: { "@id": canonical + "#brand" },
     datePublished: brand?.publishing?.published_date || 
       brand?.publishing?.datePublished ||
       (brand?.active?.start ? `${brand.active.start}-01-01` : undefined),
@@ -513,7 +536,7 @@ if (!notFound) {
   jsonLd={jsonLdBlocks}
 >
   <Fragment slot="head">
-    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
     {notFound && <meta name="robots" content="noindex,follow" />}
     {keywords && <meta name="keywords" content={keywords} />}
     
@@ -626,9 +649,17 @@ if (!notFound) {
         </div>
       )}
 
+      {answerBox && (
+        <section class="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
+          <p class="text-base text-slate-900 dark:text-slate-100">
+            {answerBox}
+          </p>
+        </section>
+      )}
+
       {/* Fate (prominent on brand page) */}
       {brand.fate && (
-        <p class="mt-2 mb-8 text-base text-slate-800 dark:text-slate-200">
+        <p class="mt-8 mb-8 text-base text-slate-800 dark:text-slate-200">
           <strong>{pickFateIcon(brand.fate, brand.topics)} Fate:</strong>{" "}
           <Fragment set:html={inlineMd(brand.fate)} />
         </p>
@@ -641,114 +672,179 @@ if (!notFound) {
         </p>
       )}
 
-      {/* Optional short summary for backwards compatibility */}
-      {brand.summary && (
-        <p class="mt-2 text-gray-700 dark:text-slate-300">{brand.summary}</p>
-      )}
+    
 
       {/* Quick Facts Card - Supports both quick_facts and stats */}
-      {hasQuickFacts(brand) && (
-        <aside class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-          <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-3">Quick Facts</h3>
-          <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-            {/* Prefer quick_facts if available */}
-            {brand?.quick_facts ? (
+{hasQuickFacts(brand) && (
+  <aside class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+    <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-3">Quick Facts</h3>
+    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+      {/* Prefer quick_facts if available */}
+      {brand?.quick_facts ? (
+        <>
+          {Object.entries(brand.quick_facts).map(([key, value]) => {
+            if (!value) return null;
+            return (
               <>
-                {Object.entries(brand.quick_facts).map(([key, value]) => {
-                  if (!value) return null;
-                  return (
-                    <>
-                      <dt class="text-slate-600 dark:text-slate-400">{formatFieldName(key)}:</dt>
-                      <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                        {typeof value === 'number' ? value.toLocaleString() : value}
-                      </dd>
-                    </>
-                  );
-                })}
+                <dt class="text-slate-600 dark:text-slate-400">{formatFieldName(key)}:</dt>
+                <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                  {typeof value === 'number' ? value.toLocaleString() : value}
+                </dd>
               </>
-            ) : (
-              <>
-                {/* Fallback to stats */}
-                {brand.stats.peak_stores && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Peak Stores:</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.peak_stores.toLocaleString()}
-                    </dd>
-                  </>
-                )}
-                {brand.stats.years_in_business && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Years Active:</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.years_in_business}
-                    </dd>
-                  </>
-                )}
-                {brand.stats.years_available && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Years Available:</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.years_available}
-                    </dd>
-                  </>
-                )}
-                {brand.stats.employees_at_peak && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Employees (Peak):</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.employees_at_peak.toLocaleString()}
-                    </dd>
-                  </>
-                )}
-                {brand.stats.peak_year && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Peak Year:</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.peak_year}
-                    </dd>
-                  </>
-                )}
-                {brand.stats.founding_year && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Founded:</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.founding_year}
-                    </dd>
-                  </>
-                )}
-                {brand.stats.closure_year && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Closed:</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.closure_year}
-                    </dd>
-                  </>
-                )}
-                {brand.stats.alcohol_content && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Alcohol Content:</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.alcohol_content}
-                    </dd>
-                  </>
-                )}
-                {brand.stats.category && (
-                  <>
-                    <dt class="text-slate-600 dark:text-slate-400">Category:</dt>
-                    <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                      {brand.stats.category}
-                    </dd>
-                  </>
-                )}
-              </>
-            )}
-          </dl>
-        </aside>
+            );
+          })}
+        </>
+      ) : (
+        <>
+          {/* ADD THIS NEW BLOCK HERE */}
+          {!brand?.quick_facts && (
+            <>
+              {brand?.active?.status && (
+                <>
+                  <dt class="text-slate-600 dark:text-slate-400">Status:</dt>
+                  <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                    {brand.active.status}
+                  </dd>
+                </>
+              )}
+
+              {brand?.active?.start && (
+                <>
+                  <dt class="text-slate-600 dark:text-slate-400">Launch Year:</dt>
+                  <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                    {brand.active.start}
+                  </dd>
+                </>
+              )}
+
+              {brand?.active?.end && (
+                <>
+                  <dt class="text-slate-600 dark:text-slate-400">Discontinued:</dt>
+                  <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                    {brand.active.end}
+                  </dd>
+                </>
+              )}
+
+              {brand?.country && (
+                <>
+                  <dt class="text-slate-600 dark:text-slate-400">Country:</dt>
+                  <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                    {countryLabel(brand.country)}
+                  </dd>
+                </>
+              )}
+
+              {brand?.category && (
+                <>
+                  <dt class="text-slate-600 dark:text-slate-400">Category:</dt>
+                  <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                    {brand.category}
+                  </dd>
+                </>
+              )}
+
+              {brand?.schema?.manufacturer?.name && (
+                <>
+                  <dt class="text-slate-600 dark:text-slate-400">Manufacturer:</dt>
+                  <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                    {brand.schema.manufacturer.name}
+                  </dd>
+                </>
+              )}
+
+              {brand?.stats?.parent_company && (
+                <>
+                  <dt class="text-slate-600 dark:text-slate-400">Parent Company:</dt>
+                  <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                    {brand?.stats?.parent_company}
+                  </dd>
+                </>
+              )}
+            </>
+          )}
+
+          {/* Existing stats fallback stays below it */}
+          {brand?.stats?.peak_stores && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Peak Stores:</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand?.stats?.peak_stores.toLocaleString()}
+              </dd>
+            </>
+          )}
+          {brand?.stats?.years_in_business && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Years Active:</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand.stats.years_in_business}
+              </dd>
+            </>
+          )}
+          {brand?.stats?.years_available && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Years Available:</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand.stats.years_available}
+              </dd>
+            </>
+          )}
+          {brand?.stats?.employees_at_peak && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Employees (Peak):</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand.stats.employees_at_peak.toLocaleString()}
+              </dd>
+            </>
+          )}
+          {brand?.stats?.peak_year && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Peak Year:</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand.stats.peak_year}
+              </dd>
+            </>
+          )}
+          {brand?.stats?.founding_year && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Founded:</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand.stats.founding_year}
+              </dd>
+            </>
+          )}
+          {brand?.stats?.closure_year && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Closed:</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand.stats.closure_year}
+              </dd>
+            </>
+          )}
+          {brand?.stats?.alcohol_content && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Alcohol Content:</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand.stats.alcohol_content}
+              </dd>
+            </>
+          )}
+          {brand?.stats?.category && (
+            <>
+              <dt class="text-slate-600 dark:text-slate-400">Category:</dt>
+              <dd class="font-semibold text-slate-900 dark:text-slate-100">
+                {brand.stats.category}
+              </dd>
+            </>
+          )}
+        </>
       )}
+    </dl>
+  </aside>
+)}
 
       {/* Table of Contents */}
-      {Array.isArray(brand?.content?.sections) && brand.content.sections.length > 3 && (
+      {Array.isArray(brand?.content?.sections) && brand.content.sections.length >= 2 && (
         <nav class="my-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700" aria-label="Table of contents">
           <h2 class="text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100">Contents</h2>
           <ol class="space-y-2 list-decimal list-inside text-sm">

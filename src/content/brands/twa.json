@@ -1,7 +1,7 @@
 {
   "brand": "TWA",
   "slug": "twa",
-  "category": "Airline",
+  "category": "Aviation",
   "seo_category": "airline-aviation",
   "country": "US",
   "active": {
@@ -13,7 +13,6 @@
   "summary": "Trans World Airlines acquired by American Airlines in 2001.",
   "topics": [
       "acquired",
-      "airline",
       "aviation",
       "90s-nostalgia"
     ],
