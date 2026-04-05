@@ -1,37 +1,137 @@
 {
-  "brand": "Peanut Butter Twix (Twix PB)",
+  "brand": "Peanut Butter Twix",
   "slug": "peanut-butter-twix",
   "category": "Food/Confectionery",
   "seo_category": "food-beverage",
   "country": "US",
-  "active": { "start": 1983, "end": null },
-  "hook": "Twix’s cult peanut-butter variant that disappeared, came back, and won a permanent spot in many candy aisles.",
-  "fate": "Ongoing in the U.S. with periodic reformulations and packaging updates; availability has varied by region and year.",
-  "summary": "First sold in the U.S. in the **1980s**, **Peanut Butter Twix** (often labeled **Twix PB**) swaps Twix’s caramel for a **peanut-butter layer** over a **chocolate cookie**, enrobed in milk chocolate. The SKU has cycled in and out of national distribution—**discontinued in the late 1990s**, revived in the **2000s**, and widely reintroduced around **2014**—but today remains a recognized, rotating core flavor alongside Caramel.",
-  "topics": [ "discontinued",
-      "candy",
-      "90s-nostalgia",
-      "cult-favorite"],
-  "taglines": [
-    { "text": "Left. Right. Peanut Butter.", "source": "Packaging/advertising copy (2010s)" }
-  ],
-  "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Twix",
-    "brand_owner": "https://www.mars.com/",
-    "product_finder_search": "https://www.google.com/search?q=Peanut+Butter+Twix+where+to+buy",
-    "ads_search_80s": "https://www.youtube.com/results?search_query=Peanut+Butter+Twix+commercial+1980s"
+  "active": { "start": "1980s", "end": "Present (intermittent)" },
+
+  "hook": "A peanut-butter version of Twix that disappeared more than once, then kept coming back because fans never really forgot it.",
+
+  "fate": "Still part of the broader Twix flavor lineup, but its shelf presence has varied over time. Mars has brought it back after previous gaps in distribution, including a confirmed return in 2017.",
+
+  "summary": "Peanut Butter Twix is a U.S. Twix variation that replaces the usual caramel layer with peanut butter. Over the years it has gone in and out of wide distribution, which is why many shoppers remember it as a candy bar that keeps disappearing and returning. Mars confirmed another return in 2017, and the flavor remains one of the best-known Twix variants outside the original caramel bar.",
+
+  "seo": {
+    "meta_title": "What Happened to Peanut Butter Twix? The Twix Flavor That Kept Coming Back",
+    "meta_description": "Peanut Butter Twix is the peanut-butter version of Twix that disappeared and returned multiple times. Learn what happened, when Mars brought it back, and why fans still look for it.",
+    "keywords": [
+      "what happened to Peanut Butter Twix",
+      "Peanut Butter Twix discontinued",
+      "Peanut Butter Twix comeback",
+      "Twix PB history",
+      "when did Peanut Butter Twix come back",
+      "Mars Peanut Butter Twix",
+      "where to buy Peanut Butter Twix",
+      "Peanut Butter Twix return"
+    ]
   },
-  "overview_md": "**Peanut Butter Twix** (aka **Twix PB**) is the long-running peanut-butter spin on Mars’ biscuit-bar classic. Instead of caramel over a shortbread finger, PB Twix uses a **peanut-butter layer** on a **chocolate cookie base**, then coats the bar in milk chocolate. U.S. shoppers first saw it in the **1980s**, it went **missing in the late 1990s**, returned in the **2000s** (with packaging shifting between “Twix PB” and “Peanut Butter Twix”), and by the **mid-2010s** it was back in broad distribution. Availability still varies by retailer and season, but as of 2025 it’s commonly found in standard and share sizes.",
-  "timeline": [
-    { "date": "1983", "text": "U.S. launch of Peanut Butter Twix (early national/regionals; exact month varies by source)." },
-    { "date": "1997", "text": "Variant disappears from many chains; effectively discontinued nationally by the late 1990s (regional stock lingers)." },
-    { "date": "2000-2007", "text": "Returns intermittently; packaging alternates between “Twix PB” and “Peanut Butter Twix.”" },
-    { "date": "2014", "text": "Wider reintroduction; PB becomes a regular flavor alongside Caramel in many U.S. sets." },
-    { "date": "2020-2025", "text": "Ongoing distribution with periodic packaging/assortment refreshes; regional availability may vary." }
+
+  "notable_products": [
+    "Peanut Butter Twix",
+    "Twix PB",
+    "Peanut Butter Right Twix"
   ],
+
+  "topics": [
+    "discontinued",
+    "candy",
+    "90s-nostalgia",
+    "cult-favorite",
+    "comeback-product"
+  ],
+
+  "verified_facts": [
+    "Peanut Butter Twix has existed as a U.S. Twix variation since at least the 1980s.",
+    "The flavor has gone in and out of distribution more than once.",
+    "Mars Chocolate North America announced in 2017 that TWIX Peanut Butter would return to stores in September.",
+    "Twix remains an active Mars candy brand in the U.S.",
+    "Peanut Butter Twix is one of the best-known Twix flavor extensions beyond the original caramel bar."
+  ],
+
+  "cultural_memory": [
+    "A lot of fans remember Peanut Butter Twix as the Twix flavor that never seemed to stay gone for long.",
+    "It built a strong following partly because it swapped out the standard caramel identity of Twix for a peanut-butter one without losing the basic cookie-bar format.",
+    "For many candy fans, Peanut Butter Twix sits in the same memory category as other discontinued or semi-returning favorites that people kept asking Mars to bring back.",
+    "Its reputation comes as much from its stop-and-start availability as from the flavor itself."
+  ],
+
+  "overview_md": "**Peanut Butter Twix** is one of the most remembered Twix variations in the United States. Instead of the usual caramel layer, it uses **peanut butter** while keeping the basic Twix idea of a cookie-based bar covered in milk chocolate. That simple change gave the brand a strong fan base and made it feel familiar but different enough to stand apart from the original.\n\nWhat makes Peanut Butter Twix especially notable is that its history is not one clean run. The flavor has **gone in and out of distribution** over the years, which is why so many people remember it as a candy bar that was always either returning, disappearing, or rumored to be coming back. That stop-and-start history is a big part of its identity.\n\nThe strongest easy-to-verify official milestone is **2017**, when **Mars Chocolate North America** announced that **TWIX Peanut Butter** would return to stores in **September**. That confirmed what many fans already knew: Mars saw the flavor as valuable enough to bring back even after earlier gaps in availability.\n\nThat kind of return pattern helps explain why Peanut Butter Twix has lasted in memory so well. It is not just a flavor variant. It is also a comeback candy. Fans tend to talk about it less like a permanent shelf staple and more like a bar they are always happy to rediscover.\n\nThe safest way to describe Peanut Butter Twix today is as a **recurring Twix variant with uneven visibility**. It belongs to the active Twix family, but depending on the year, retailer, and assortment, it can feel either easy to find or strangely absent. That uneven availability is one reason it still gets searched so often.",
+
+  "timeline": [
+    { "date": "1980s", "text": "Peanut Butter Twix appears in the U.S. as an early Twix flavor variation." },
+    { "date": "Late 1990s", "text": "The flavor becomes harder to find and is remembered by many shoppers as having dropped out of regular distribution." },
+    { "date": "2000s", "text": "Peanut Butter Twix and Twix PB appear again in changing forms and packaging, showing that Mars continued to revisit the concept." },
+    { "date": "2017-09", "text": "Mars Chocolate North America announces the return of TWIX Peanut Butter to stores in September." },
+    { "date": "Present", "text": "Peanut Butter Twix remains one of the best-known Twix variants, but availability can still vary by retailer and time period." }
+  ],
+
+  "stats": {
+    "category": "Peanut Butter Candy Bar Variant",
+    "introduced": "1980s",
+    "confirmed_return": "2017",
+    "owner": "Mars",
+    "core_identity": "Twix with peanut butter instead of standard caramel",
+    "modern_status_note": "Recurring variant with uneven shelf presence"
+  },
+
+  "content": {
+    "faq": [
+      {
+        "question": "Was Peanut Butter Twix discontinued?",
+        "answer": "At different times, yes, or at least it became hard to find in regular distribution. But it has also returned more than once, so it is better described as an on-and-off Twix variant than as a permanently dead product."
+      },
+      {
+        "question": "When did Peanut Butter Twix come back?",
+        "answer": "One of the clearest official return points is 2017, when Mars Chocolate North America said TWIX Peanut Butter would return to stores in September."
+      },
+      {
+        "question": "Is Peanut Butter Twix the same as Twix PB?",
+        "answer": "They are closely related and often treated as the same peanut-butter branch of the Twix family, even though packaging and naming have shifted over time."
+      },
+      {
+        "question": "Why do people remember Peanut Butter Twix so strongly?",
+        "answer": "Because it changed the core Twix flavor in a simple way that many people liked, and because it kept disappearing and returning, which made fans pay more attention to it."
+      },
+      {
+        "question": "Can you still buy Peanut Butter Twix?",
+        "answer": "Sometimes, yes, but availability can vary by store, region, and current Mars assortment."
+      }
+    ]
+  },
+
+  "links": {
+    "twix_home": "https://www.twix.com/",
+    "twix_products": "https://www.twix.com/twix-all-products",
+    "mars_press_release_2017": "https://www.prnewswire.com/news-releases/mars-chocolate-north-america-introduces-new-twix-dark-300488945.html"
+  },
+
   "sources": [
-    { "label": "Wikipedia — Twix (variant overview)", "url": "https://en.wikipedia.org/wiki/Twix" },
-    { "label": "Mars, Incorporated (brand owner)", "url": "https://www.mars.com/" },
-    { "label": "Historical ads & packaging (fan archives/videos)", "url": "https://www.youtube.com/results?search_query=Peanut+Butter+Twix+commercial" }
-  ]
+    {
+      "label": "Mars / PR Newswire — 2017 return of TWIX Peanut Butter",
+      "url": "https://www.prnewswire.com/news-releases/mars-chocolate-north-america-introduces-new-twix-dark-300488945.html"
+    },
+    {
+      "label": "TWIX official site",
+      "url": "https://www.twix.com/"
+    },
+    {
+      "label": "TWIX all products page",
+      "url": "https://www.twix.com/twix-all-products"
+    },
+    {
+      "label": "NACS Daily — Mars Chocolate North America introduces TWIX Dark and brings back TWIX Peanut Butter",
+      "url": "https://www.convenience.org/Archive/News/NACSDailyArticles/2017/ND0721176"
+    },
+    {
+      "label": "Vending Times — TWIX Peanut Butter makes comeback",
+      "url": "https://www.vendingtimes.com/news/twix-peanut-buttermakes-comeback/"
+    }
+  ],
+
+  "explore_more": {
+    "category_label": "Interested in more candy bars that disappeared and came back?",
+    "brands": [
+    ]
+  }
 }
