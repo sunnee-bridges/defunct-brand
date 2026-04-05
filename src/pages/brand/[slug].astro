@@ -43,10 +43,15 @@ const slogan =
   (Array.isArray(brand?.taglines) && brand.taglines.length ? brand.taglines[0].text : undefined);
 
 /* ---------------- Helpers ---------------- */
-function catToPath(cat?: string) {
-  if (!cat) return null;
-  const s = cat.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-  return `/topics/${encodeURIComponent(s)}/`;
+function catToPath(brand?: any) {
+  const seo = String(brand?.seo_category || "").trim();
+  if (seo) return `/category/${encodeURIComponent(seo)}/`;
+
+  const raw = String(brand?.category || "").trim();
+  if (!raw) return null;
+
+  const s = raw.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return `/category/${encodeURIComponent(s)}/`;
 }
 
 function titleFromSlug(s: string) {
@@ -257,6 +262,28 @@ function formatDate(date) {
 
   // Fallback: return as-is
   return s;
+}
+
+function seoCategoryLabel(seo?: string, fallback?: string) {
+  const map: Record<string, string> = {
+    "food-beverage": "Food & Beverage",
+    "alcoholic-beverages": "Alcoholic Beverages",
+    "retail": "Retail",
+    "retail-entertainment": "Retail & Entertainment",
+    "consumer-products": "Consumer Products",
+    "consumer-electronics": "Consumer Electronics",
+    "computers-hardware": "Computers & Hardware",
+    "mobile-wearables": "Mobile & Wearables",
+    "software-internet": "Software & Internet",
+    "video-games-consoles": "Video Games & Consoles",
+    "airlines-aviation": "Airlines & Aviation",
+    "automotive": "Automotive",
+    "finance-payments": "Finance & Payments",
+    "healthcare-diagnostics": "Healthcare & Diagnostics",
+    "toys-games": "Toys & Games"
+  };
+
+  return map[String(seo || "").trim()] || fallback || "";
 }
 
 /* ---------------- Derived blocks ---------------- */
@@ -479,8 +506,15 @@ pageDesc =
 
   // ---------- LearnMore links ----------
   internalLinks = [{ href: "/az/", label: "Browse A–Z" }];
-  const catPath = catToPath(brand?.category);
-  if (catPath) internalLinks.push({ href: catPath, label: `More in ${brand.category}` });
+const catPath = brand?.seo_category
+  ? `/category/${encodeURIComponent(brand.seo_category)}/`
+  : catToPath(brand);
+
+const catLabel = seoCategoryLabel(brand?.seo_category, brand?.category);
+
+if (catPath && catLabel) {
+  internalLinks.push({ href: catPath, label: `More in ${catLabel}` });
+}
 
   if (Array.isArray(brand?.topics) && brand.topics.length > 0) {
   // normalize category to a slug so "Retail" matches "retail"
@@ -590,11 +624,11 @@ pageDesc =
           <li>
             <a href="/az/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">A–Z</a>
           </li>
-          {brand.category && catToPath(brand.category) && (
+          {brand.category && catToPath(brand) && (
             <>
               <li aria-hidden="true">›</li>
               <li>
-                <a href={catToPath(brand.category)} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a href={catToPath(brand)} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                   {brand.category}
                 </a>
               </li>
@@ -634,7 +668,7 @@ pageDesc =
             </span>
           )}
           {brand.category && (
-            <a href={catToPath(brand.category) || "#"} class="chip focus-ring">
+            <a href={catToPath(brand) || "#"} class="chip focus-ring">
               {brand.category}
             </a>
           )}
