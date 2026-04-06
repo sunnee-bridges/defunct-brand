@@ -285,6 +285,13 @@ declare module 'astro:content' {
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
+"why-was-fruit-stripe-gum-discontinued.mdx": {
+	id: "why-was-fruit-stripe-gum-discontinued.mdx";
+  slug: "why-was-fruit-stripe-gum-discontinued";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
 };
 
 	};
@@ -598,11 +605,6 @@ declare module 'astro:content' {
 };
 "pizzarias-chips": {
 	id: "pizzarias-chips";
-  collection: "brands";
-  data: any
-};
-"rave-hairspray": {
-	id: "rave-hairspray";
   collection: "brands";
   data: any
 };
