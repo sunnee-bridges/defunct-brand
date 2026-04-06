@@ -16,6 +16,8 @@ image:
 import ArticleHero from '@components/ArticleHero.astro';
 import FeaturedAnswer from '@components/FeaturedAnswer.astro';
 import FAQSchema from '@components/FAQSchema.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+import SharePrompt from '@components/SharePrompt.astro';
 
 
 <ArticleHero
@@ -357,6 +359,7 @@ Gum's shelf life is typically 6-12 months. If it's older than that, don't eat it
 - Novelty/fun factor → Trident Layers
 - 90s nostalgia → Bubble Yum or Bubblicious
 
+<SharePrompt text="Freshen Up gum is gone, but people still miss that liquid-center burst. Here’s what happened." />
 ---
 
 <a id="why-we-miss" />
@@ -427,7 +430,30 @@ There are no announced plans to bring back Freshen Up as of 2025. Mondelēz Inte
 ### **Why do people miss Freshen Up gum?**
 People miss Freshen Up because it just felt more fun than regular gum. The soft outside and the liquid center gave you that little burst of flavor right away, and a lot of people remember that feeling. Part of it is the taste, but part of it is also the nostalgia. Nothing today is exactly the same, but gums like Ice Breakers Ice Cubes, Trident Layers, and Extra Polar Ice can come close in that burst-of-flavor way.
 
----
+
+
+<RelatedLinks
+  title="Keep the nostalgia going"
+  links={[
+    {
+      title: "Discontinued 80s Candy Brands We Miss",
+      url: "/blog/discontinued-80s-candy/",
+      description: "A roundup of classic candy brands that disappeared from shelves."
+    },
+    {
+      title: "Browse vanished candy brands",
+      url: "/topics/candy/",
+      description: "Explore more discontinued and nostalgic candy articles."
+    },
+    {
+      title: "Browse discontinued products",
+      url: "/topics/discontinued/",
+      description: "See more brands and products people still miss."
+    }
+  ]}
+/>
+
+
 <a id="summary" />
 ## Summary
 
@@ -449,7 +475,9 @@ Freshen Up pioneered liquid-center gum technology and was a cultural phenomenon 
 
 ---
 
-**Related Articles:**
+**Keep Exploring:**
 - [Discontinued 80s Candy Brands We Miss](/blog/discontinued-80s-candy/)
+- [Browse all candy articles](/topics/candy/)
+- [Browse discontinued brands](/topics/discontinued/)
 
 ---
