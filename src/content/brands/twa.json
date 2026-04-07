@@ -1,26 +1,181 @@
 {
   "brand": "TWA",
   "slug": "twa",
-  "category": "Aviation",
-  "seo_category": "airline-aviation",
+  "category": "Travel/Airlines",
+  "seo_category": "airlines-aviation",
   "country": "US",
   "active": {
     "start": 1930,
     "end": 2001
   },
-  "hook_alt": "Howard Hughes' airline, swallowed after 9/11 downturn",
-  "fate": "Acquired",
-  "summary": "Trans World Airlines acquired by American Airlines in 2001.",
+
+  "hook": "One of America’s most glamorous airlines, shaped by Howard Hughes, the Lockheed Constellation era, and the Jet Age before bankruptcy and an asset sale ended the airline in 2001.",
+
+  "hook_alt": "Howard Hughes' airline, later broken by debt, deregulation-era pressure, and bankruptcy before American acquired most of its assets in 2001.",
+
+  "fate": "Bankrupt and acquired in part. TWA entered bankruptcy and American Airlines announced in January 2001 that it would acquire most of TWA’s assets. The airline ceased operating as an independent carrier later that year.",
+
+  "summary": "Trans World Airlines, originally formed in 1930 as Transcontinental & Western Air, became one of the best-known U.S. airlines of the 20th century. It was especially associated with coast-to-coast service, Howard Hughes, the Lockheed Constellation, and later international Jet Age travel. After decades of route expansion, corporate changes, and financial strain, TWA entered bankruptcy. American Airlines announced an agreement to acquire most of its assets in 2001, ending TWA as an independent airline.",
+
+  "seo": {
+    "meta_title": "What Happened to TWA? The Glamorous Airline That Disappeared",
+    "meta_description": "TWA was one of America’s most famous airlines, linked to Howard Hughes, the Constellation era, and the Jet Age. Learn how bankruptcy and American’s 2001 asset purchase ended TWA as an independent carrier.",
+    "keywords": [
+      "what happened to TWA",
+      "TWA history",
+      "why did TWA fail",
+      "TWA acquired by American Airlines",
+      "Trans World Airlines bankruptcy",
+      "Howard Hughes TWA",
+      "TWA Hotel history",
+      "defunct airlines of the 20th century"
+    ]
+  },
+
   "topics": [
-      "acquired",
-      "aviation",
-      "90s-nostalgia"
-    ],
-  "notable_products": [
-    "Airline service",
-    "TWA Hotel legacy"
+    "bankruptcy",
+    "acquired",
+    "aviation",
+    "airlines",
+    "90s-nostalgia"
   ],
+
+  "notable_products": [
+    "Domestic and international airline service",
+    "Coast-to-coast passenger air travel",
+    "Transatlantic passenger service",
+    "Lockheed Constellation service",
+    "TWA Flight Center / TWA Hotel legacy"
+  ],
+
+  "verified_facts": [
+    "TWA was formed on July 16, 1930 through the amalgamation of divisions of Western Air Express and Transcontinental Air Transport.",
+    "The airline originally operated as Transcontinental & Western Air before later becoming known as Trans World Airlines.",
+    "TWA is strongly associated with Howard Hughes, who played a major role in its mid-20th-century history.",
+    "The Lockheed Constellation became one of the airline’s most iconic aircraft and part of its public identity.",
+    "American Airlines announced plans in January 2001 to acquire most of TWA’s assets.",
+    "TWA ceased to exist as an independent airline in 2001."
+  ],
+
+  "cultural_memory": [
+    "TWA is remembered as one of the most glamorous airlines of the Jet Age.",
+    "For many travelers, the name brings up images of stylish cabin crews, international travel, and mid-century airport design.",
+    "The TWA Flight Center at JFK remains one of the strongest visual symbols of the airline’s legacy.",
+    "The airline is also remembered for its long association with Howard Hughes and the romance of early long-distance air travel."
+  ],
+
+  "overview_md": "**TWA**, short for **Trans World Airlines**, began in **1930** as **Transcontinental & Western Air**. It grew into one of the best-known American airlines of the 20th century and became especially associated with long-distance travel, stylish branding, and the glamour of the Jet Age.\n\nA big part of TWA’s identity came from **Howard Hughes**, who helped shape the airline’s public image and its ambitions during the mid-20th century. TWA is also closely tied to the **Lockheed Constellation**, one of the most famous passenger aircraft of its era. Later, the airline became part of the visual history of New York air travel through the **TWA Flight Center** at JFK, which survives today as the **TWA Hotel**.\n\nTWA’s end was not caused by one single event. Like several legacy airlines, it struggled with debt, intense competition, industry change, and a weaker financial position over time. By 2001, the company was in bankruptcy. In **January 2001**, **American Airlines** announced plans to acquire most of TWA’s assets, and that deal ended TWA as an independent airline later that year.\n\nOne thing many shorter writeups miss is that **TWA’s cultural legacy outlived the airline itself**. The brand is still remembered not just because it disappeared, but because it once stood for a more glamorous, design-conscious version of air travel that people still romanticize today.",
+
+  "timeline": [
+    {
+      "date": "1930",
+      "text": "Transcontinental & Western Air is formed through the merger of divisions of Western Air Express and Transcontinental Air Transport."
+    },
+    {
+      "date": "1930s-1940s",
+      "text": "The airline becomes a major coast-to-coast carrier and builds a strong public identity."
+    },
+    {
+      "date": "1939-1946",
+      "text": "The Lockheed Constellation era helps define TWA’s image, especially through its association with Howard Hughes and record-setting long-distance travel."
+    },
+    {
+      "date": "1950s-1960s",
+      "text": "TWA becomes one of the signature U.S. airlines of the international Jet Age."
+    },
+    {
+      "date": "1962",
+      "text": "The TWA Flight Center opens at JFK, becoming one of the airline’s most enduring architectural symbols."
+    },
+    {
+      "date": "1990s",
+      "text": "TWA struggles with financial pressure and remains a legacy airline with a shrinking place in a consolidating U.S. airline market."
+    },
+    {
+      "date": "2001-01",
+      "text": "American Airlines announces plans to acquire most of TWA’s assets."
+    },
+    {
+      "date": "2001",
+      "text": "TWA ceases to exist as an independent airline after the American Airlines transaction."
+    },
+    {
+      "date": "2019",
+      "text": "The TWA Flight Center site reopens in a new form as the TWA Hotel, reinforcing the airline’s cultural legacy."
+    }
+  ],
+
+  "stats": {
+    "category": "Airline / Aviation Brand",
+    "founded_as": "Transcontinental & Western Air",
+    "founding_year": "1930",
+    "american_airlines_asset_purchase_announced": "2001-01",
+    "independent_operations_end": "2001",
+    "legacy_marker": "TWA Flight Center / TWA Hotel"
+  },
+
+  "content": {
+    "faq": [
+      {
+        "question": "What did TWA stand for?",
+        "answer": "TWA stood for Trans World Airlines. It began in 1930 as Transcontinental & Western Air and later adopted the better-known TWA name."
+      },
+      {
+        "question": "When did TWA end?",
+        "answer": "TWA ceased to exist as an independent airline in 2001 after American Airlines agreed to acquire most of its assets."
+      },
+      {
+        "question": "Why did TWA fail?",
+        "answer": "TWA struggled with financial pressure, industry change, debt, and a weaker long-term competitive position. Its end came through bankruptcy and American’s 2001 purchase of most of its assets."
+      },
+      {
+        "question": "Was Howard Hughes involved with TWA?",
+        "answer": "Yes. Howard Hughes was deeply associated with TWA and helped shape one of the most famous periods in the airline’s history."
+      },
+      {
+        "question": "What is the TWA Hotel?",
+        "answer": "The TWA Hotel is a hotel built around the former TWA Flight Center at JFK Airport, preserving one of the airline’s most famous physical landmarks."
+      }
+    ]
+  },
+
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Trans_World_Airlines"
+    "britannica_twa": "https://www.britannica.com/money/Trans-World-Airlines-Inc",
+    "american_airlines_history": "https://news.aa.com/centennial/our-stories/history-of-american-airlines/",
+    "twa_hotel": "https://www.twahotel.com/",
+    "twa_hotel_history": "https://www.twahotel.com/hotel",
+    "twa_hotel_connie_history": "https://www.twahotel.com/connie-airplane/connies-history"
+  },
+
+  "sources": [
+    {
+      "label": "Encyclopaedia Britannica — Trans World Airlines, Inc.",
+      "url": "https://www.britannica.com/money/Trans-World-Airlines-Inc"
+    },
+    {
+      "label": "American Airlines history timeline",
+      "url": "https://news.aa.com/centennial/our-stories/history-of-american-airlines/"
+    },
+    {
+      "label": "Encyclopaedia Britannica — American Airlines",
+      "url": "https://www.britannica.com/money/American-Airlines"
+    },
+    {
+      "label": "TWA Hotel overview",
+      "url": "https://www.twahotel.com/hotel"
+    },
+    {
+      "label": "TWA Hotel — Connie history",
+      "url": "https://www.twahotel.com/connie-airplane/connies-history"
+    }
+  ],
+
+  "explore_more": {
+    "category_label": "Interested in more vanished airline brands?",
+    "brands": [
+      "pan-am",
+      "eastern-air-lines",
+      "braniff-international-airways"
+    ]
   }
 }

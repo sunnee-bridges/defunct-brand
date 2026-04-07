@@ -33,10 +33,10 @@ const toYear = (v: unknown): number | undefined => {
 const decadeStart = (y: number) => Math.floor(y / 10) * 10;
 const labelOf = (start: number) => `${start}s`;
 
-/* ---- Build: decade label -> count (prefer end year, fallback start) ---- */
+/* ---- Build: decade label -> count (prefer start year, fallback end) ---- */
 const counts = new Map<string, number>();
 for (const b of brands) {
-  const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
+  const y = toYear(b?.active?.start) ?? toYear(b?.active?.end);
   if (y == null) continue;
   const label = labelOf(decadeStart(y));
   counts.set(label, (counts.get(label) ?? 0) + 1);
@@ -97,15 +97,15 @@ const faqLd = {
       name: "How are brands grouped by decade?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Brands are grouped by the decade in which they disappeared, were discontinued, or otherwise became defunct, based primarily on the end year in the dataset.",
+         text: "Brands are grouped by the decade in which they were founded, based primarily on the start year in the dataset. If a start year is missing, the end year is used as a fallback.",
       },
     },
     {
       "@type": "Question",
-      name: "Are these only brands founded in that decade?",
+      name: "Are these grouped by founding decade?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. Many brands were founded earlier and are grouped by the decade when they closed, vanished, or were discontinued.",
+        text: "Yes. Brands are grouped mainly by the decade they were founded. If that start year is missing, the dataset falls back to the end year.",
       },
     },
     {
@@ -196,15 +196,15 @@ const faqLd = {
   <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands by Decade</h1>
 
   <div class="prose prose-sm dark:prose-invert max-w-none mb-6">
-    <p>
-      Explore vanished and discontinued brands by decade, from older consumer names to modern
-      retail chains, technology products, food brands, and internet-era casualties.
-    </p>
-    <p>
-      Each decade page groups brands by the period when they disappeared, were discontinued,
-      or otherwise became defunct. This makes it easier to spot larger patterns in nostalgia,
-      retail collapse, consumer culture, and changing technology over time.
-    </p>
+     <p>
+    Explore vanished and discontinued brands by the decade they were founded, from older consumer
+    names to modern retail chains, technology products, food brands, and internet-era casualties.
+  </p>
+  <p>
+    Each decade page groups brands by the period when they began. This makes it easier to spot
+    how different eras produced different kinds of brands across retail, technology, food,
+    media, and consumer culture.
+  </p>
   </div>
 
   <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
@@ -222,11 +222,10 @@ const faqLd = {
       How brands are grouped by decade
     </h2>
     <div class="prose prose-sm dark:prose-invert max-w-none">
-      <p>
-        Brands are grouped primarily by the decade in which they ended, disappeared, or were
-        discontinued. Some were founded much earlier, but are listed under the decade when
-        they became defunct or exited the market.
-      </p>
+        <p>
+          Brands are grouped primarily by the decade in which they were founded. If a founding year
+          is missing, the code falls back to the end year so the brand can still appear in the archive.
+        </p>
       <ul>
         <li>Retail chains and department stores</li>
         <li>Consumer electronics and internet services</li>
@@ -303,19 +302,19 @@ const faqLd = {
             <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
               How are brands grouped by decade?
             </h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300">
-              Brands are grouped by the decade in which they disappeared, were discontinued,
-              or otherwise became defunct, based primarily on the end year in the dataset.
-            </p>
+              <p class="text-sm text-slate-600 dark:text-slate-300">
+                Brands are grouped by the decade in which they were founded, based primarily on the
+                start year in the dataset. If a start year is missing, the end year is used as a fallback.
+              </p>
           </div>
 
           <div class="section-card">
-            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
-              Are these only brands founded in that decade?
+             <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+              Are these grouped by founding decade?
             </h3>
             <p class="text-sm text-slate-600 dark:text-slate-300">
-              No. Many brands were founded earlier and are grouped by the decade when they
-              vanished, closed, or were discontinued.
+              Yes. Brands are grouped mainly by the decade they were founded. If a start year is
+              missing, the archive falls back to the end year so the brand can still be included.
             </p>
           </div>
 

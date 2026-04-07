@@ -292,6 +292,20 @@ declare module 'astro:content' {
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
+"why-was-super-bubble-gum-discontinued.mdx": {
+	id: "why-was-super-bubble-gum-discontinued.mdx";
+  slug: "why-was-super-bubble-gum-discontinued";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
+"why-were-life-savers-holes-discontinued.mdx": {
+	id: "why-were-life-savers-holes-discontinued.mdx";
+  slug: "why-were-life-savers-holes-discontinued";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
 };
 
 	};
@@ -368,6 +382,11 @@ declare module 'astro:content' {
   collection: "brands";
   data: any
 };
+"braniff-international-airways": {
+	id: "braniff-international-airways";
+  collection: "brands";
+  data: any
+};
 "buick-gnx": {
 	id: "buick-gnx";
   collection: "brands";
@@ -415,6 +434,11 @@ declare module 'astro:content' {
 };
 "desoto": {
 	id: "desoto";
+  collection: "brands";
+  data: any
+};
+"eastern-air-lines": {
+	id: "eastern-air-lines";
   collection: "brands";
   data: any
 };
