@@ -173,9 +173,9 @@
   "explore_more": {
     "category_label": "Interested in more vanished airline brands?",
     "brands": [
-      "pan-am",
-      "eastern-air-lines",
-      "braniff-international-airways"
+      { "slug":"pan-am", "name":"Pan American" },
+      { "slug":"eastern-air-lines", "name":"Eastern Airlines" },
+      { "slug":"braniff-international-airways", "name":"Braniff International Airways" }
     ]
   }
 }
