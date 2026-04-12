@@ -18,10 +18,16 @@ image:
 import ArticleHero from "@components/ArticleHero.astro";
 
 <ArticleHero
-  title={frontmatter.title}
-  description={frontmatter.description}
-  date={frontmatter.updated ?? frontmatter.date}
-  image={frontmatter.image}
+  title="10 Discontinued Drinks from the 90s We Still Miss (And Where They Went)"
+  description="Surge. Crystal Pepsi. Orbitz. The 90s had the most experimental beverage culture in American history, then it all vanished. Here is what actually happened to 10 cult favorites."
+  date="2026-04-07"
+  image={{
+    src: "/images/articles/hero/supermarket-drinks.webp",
+    alt: "90s era supermarket drink aisle with colorful beverages",
+    credit: "Maksym Kozlenko",
+    source: "https://commons.wikimedia.org/wiki/File:Supermarket_in_Sigatoka,_Fiji_11.jpg",
+    license: "CC BY-SA 4.0"
+  }}
 />
 
 The 1990s were full of drink ideas that felt bold, strange, and sometimes completely unnecessary. That was part of the fun.
