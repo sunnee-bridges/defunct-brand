@@ -35,6 +35,10 @@ const modKey = `/src/content/brands/${slug}.json`;
 const brand = (brandModules[modKey] as any) ?? null;
 const notFound = !brand;
 
+if (notFound) {
+  return Astro.redirect("/404/", 404);
+}
+
 const hasExplicitExploreMore =
   Array.isArray(brand?.explore_more?.brands) &&
   brand.explore_more.brands.length > 0;
@@ -600,11 +604,9 @@ if (catPath && catLabel) {
 >
   <Fragment slot="head">
 
-    {notFound && <meta name="robots" content="noindex,follow" />}
     {keywords && <meta name="keywords" content={keywords} />}
     
-    {!notFound && (
-      <>
+   
         {/* Open Graph */}
         <meta property="og:type" content={brand?.og?.type || "website"} />
         <meta property="og:site_name" content="Vanished Brands" />
@@ -628,21 +630,9 @@ if (catPath && catLabel) {
         {/* Additional SEO */}
         <link rel="alternate" hreflang="en" href={canonical} />
         <link rel="alternate" hreflang="x-default" href={canonical} />
-      </>
-    )}
   </Fragment>
 
-  {notFound ? (
-    <>
-      <nav class="flex flex-wrap items-center gap-2 my-3">
-        <a href="/" class="chip focus-ring">← Home</a>
-        <a href="/az/" class="chip focus-ring">Browse A–Z</a>
-      </nav>
-      <h1 class="text-2xl md:text-3xl font-bold mb-2">Page not found</h1>
-      <p class="text-slate-600 dark:text-slate-300">Try another page or browse the full list.</p>
-    </>
-  ) : (
-    <>
+  
       {/* Breadcrumb Navigation */}
       <nav aria-label="Breadcrumb" class="mb-4">
         <ol class="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
@@ -1097,6 +1087,4 @@ if (catPath && catLabel) {
       )}
 
       {/* <AffiliateDisclosure /> */}
-    </>
-  )}
 </Base>

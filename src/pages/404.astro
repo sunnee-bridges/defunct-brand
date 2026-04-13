@@ -1,16 +1,190 @@
 ---
 import Base from "../layouts/Base.astro";
+import { normalizeBrands } from "../lib/brandUtils";
+
+const raw = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
+const brands = normalizeBrands(raw);
+
+const searchIndex = brands
+  .filter((b) => b?.brand && b?.slug)
+  .map((b) => ({
+    name: String(b.brand),
+    url: `/brand/${encodeURIComponent(b.slug)}/`,
+    category: String(b.__seo_category_label || b.category || "Brand"),
+  }));
+
+const pageTitle = "Page Not Found | Vanished Brands";
+const pageDesc = "The page you're looking for doesn't exist. Browse our archive of defunct and discontinued brands.";
 ---
-<Base title="Not found • Defunct Brands" description="Page not found.">
+
+<Base title={pageTitle} description={pageDesc}>
   <Fragment slot="head">
-    <meta name="robots" content="noindex,follow" />
+    <meta name="robots" content="noindex, follow" />
   </Fragment>
 
-  <nav class="mb-4">
-    <a href="/" class="chip focus-ring">← Home</a>
-    <a href="#" data-random class="btn-primary focus-ring">Random</a>
-  </nav>
+  <style is:inline>
+    .search-404 {
+      position: relative;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .search-404 input {
+      flex: 1;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      border: 1px solid rgb(226 232 240);
+      background: white;
+      color: rgb(15 23 42);
+      font-size: 14px;
+      outline: none;
+    }
+    .search-404 input:focus {
+      ring: 2px solid rgb(99 102 241);
+      border-color: rgb(99 102 241);
+    }
+    .dark .search-404 input {
+      background: rgb(15 23 42);
+      border-color: rgb(51 65 85);
+      color: rgb(241 245 249);
+    }
+    .search-404-suggestions {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      max-height: 260px;
+      overflow-y: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: white;
+      box-shadow: 0 8px 22px -14px rgba(0, 0, 0, 0.25);
+      z-index: 30;
+      text-align: left;
+    }
+    .dark .search-404-suggestions {
+      background: rgb(15 23 42);
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+    .search-404-suggestions a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: rgb(30 41 59);
+      text-decoration: none;
+    }
+    .dark .search-404-suggestions a { color: rgb(226 232 240); }
+    .search-404-suggestions a:hover { background: rgb(239 246 255); }
+    .dark .search-404-suggestions a:hover { background: rgb(30 64 175 / 0.35); }
+    .search-404-suggestions .subtext {
+      display: block;
+      font-size: 11px;
+      color: rgb(100 116 139);
+    }
+    .dark .search-404-suggestions .subtext { color: rgb(148 163 184); }
+  </style>
 
-  <h1 class="text-2xl md:text-3xl font-bold mb-2">Page not found</h1>
-  <p class="text-gray-700">Try another page or jump to a random brand.</p>
+  <div class="min-h-[50vh] flex flex-col items-center justify-center text-center py-16">
+    <p class="text-6xl mb-4">🕰️</p>
+
+    <h1 class="text-2xl md:text-3xl font-bold mb-3 text-slate-900 dark:text-slate-100">
+      This brand has vanished too
+    </h1>
+
+    <p class="text-slate-600 dark:text-slate-300 mb-8 max-w-md">
+      The page you're looking for doesn't exist — it may have been removed, renamed, or never existed in the first place.
+    </p>
+
+    <div class="flex flex-wrap gap-3 justify-center">
+      <a href="/" class="chip focus-ring">← Home</a>
+      <a href="/az/" class="chip focus-ring">Browse A–Z</a>
+      <a href="/category/" class="chip focus-ring">Categories</a>
+      <a href="/decade/" class="chip focus-ring">Decades</a>
+      <a href="/blog/" class="chip focus-ring">Blog</a>
+    </div>
+
+    <div class="mt-10 text-sm text-slate-500 dark:text-slate-400 w-full max-w-sm">
+      <p>Looking for a specific brand? Try searching:</p>
+      <form action="/az/" method="GET" class="mt-3">
+        <div class="search-404">
+          <input
+            type="search"
+            name="q"
+            id="search404Input"
+            placeholder="Search brands..."
+            aria-label="Search brands"
+            autocomplete="off"
+          />
+          <button
+            type="submit"
+            class="px-4 py-2 rounded-full bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap"
+          >
+            Search
+          </button>
+          <div
+            id="search404Suggestions"
+            class="search-404-suggestions hidden"
+            role="listbox"
+          ></div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Brand index for live suggestions -->
+  <script
+    id="brand-index-404"
+    type="application/json"
+    is:inline
+    set:html={JSON.stringify(searchIndex)}
+  />
+
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+      const input = document.getElementById("search404Input");
+      const dropdown = document.getElementById("search404Suggestions");
+      const indexScript = document.getElementById("brand-index-404");
+      if (!input || !dropdown || !indexScript) return;
+
+      let index = [];
+      try {
+        index = JSON.parse(indexScript.textContent || "[]");
+      } catch {}
+
+      function clearSuggestions() {
+        dropdown.innerHTML = "";
+        dropdown.classList.add("hidden");
+      }
+
+      function renderSuggestions(items) {
+        if (!items.length) { clearSuggestions(); return; }
+        dropdown.innerHTML = items.map((item) => `
+          <a href="${item.url}" role="option">
+            <span>${item.name}</span>
+            ${item.category ? `<span class="subtext">${item.category}</span>` : ""}
+          </a>
+        `).join("");
+        dropdown.classList.remove("hidden");
+      }
+
+      input.addEventListener("input", (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        if (!q) { clearSuggestions(); return; }
+        const matches = index
+          .filter((i) => 
+            i.name.toLowerCase().includes(q) || 
+            (i.category || "").toLowerCase().includes(q)
+          )
+          .slice(0, 8);
+        renderSuggestions(matches);
+      });
+
+      input.addEventListener("blur", () => setTimeout(clearSuggestions, 150));
+      dropdown.addEventListener("mousedown", (e) => e.preventDefault());
+    });
+  </script>
 </Base>
