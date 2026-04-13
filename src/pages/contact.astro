@@ -10,20 +10,12 @@ const CANONICAL = Astro.site
   : "/contact/";
 ---
 
-<Base title={PAGE_TITLE} description={PAGE_DESC}>
+<Base title={PAGE_TITLE} description={PAGE_DESC} canonical={CANONICAL}>
   <!-- 🔎 SEO head -->
   <Fragment slot="head">
-    <link rel="canonical" href={CANONICAL} />
-    <meta name="description" content={PAGE_DESC} />
+
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={CANONICAL} />
-    <meta property="og:title" content={PAGE_TITLE} />
-    <meta property="og:description" content={PAGE_DESC} />
-
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={PAGE_TITLE} />
-    <meta name="twitter:description" content={PAGE_DESC} />
   </Fragment>
 
   <!-- Breadcrumbs -->

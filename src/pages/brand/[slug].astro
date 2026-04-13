@@ -6,6 +6,7 @@ import ExploreMore from "../../components/ExploreMore.astro";
 import AffiliateDisclosure from "../../components/AffiliateDisclosure.astro";
 import LearnMore from "../../components/LearnMore.astro";
 import ExploreMoreCallout from "../../components/ExploreMoreCallout.astro";
+import SharePrompt from "../../components/SharePrompt.astro";
 
 /** Generate paths for each brand file */
 export function getStaticPaths() {
@@ -998,6 +999,20 @@ if (catPath && catLabel) {
           </div>
         </section>
       )}
+
+    {/* Share Prompt */}
+    <SharePrompt
+      title={pageTitle}
+      text={
+        brand?.seo?.share_text ||
+        (brand?.hook && brand.hook.trim().length >= 40
+          ? `${brand.brand}: ${brand.hook.trim()}`
+          : brand?.fate && brand.fate.trim().length >= 40
+          ? `${brand.brand} (${startY ?? "?"}–${endY ?? "?"}): ${brand.fate.trim()}`
+          : `What happened to ${brand.brand}? The full story of why it disappeared.`)
+      }
+      url={canonical}
+    />
 
       {/* Related Brands */}
       {Array.isArray(brand?.related_brands) && brand.related_brands.length > 0 && (
