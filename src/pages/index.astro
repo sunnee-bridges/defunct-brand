@@ -105,6 +105,27 @@ const pick = (arr:any[], pred:(b:any)=>boolean, n=8) =>
 const C90s  = pick(brands, in1990s, 8);
 const CFood = pick(brands, isSnacky, 8);
 const CFail = pick(brands, isBigFailure, 8);
+/* ---------- Featured this month (opt-in via JSON flag) ---------- */
+const featuredPicks = brands
+  .filter((b) => b?.featured === true && b?.slug && b?.brand)
+  .sort((a, b) => (a.featured_order ?? 99) - (b.featured_order ?? 99))
+  .slice(0, 3);
+
+  /* ---------- Featured blog posts (static list of slugs to highlight) ---------- */
+const featuredPosts = [
+  {
+    href: "/blog/why-was-freshen-up-gum-discontinued/",
+    label: "Consumer Products",
+    title: "Why Was Freshen Up Gum Discontinued?",
+    desc: "The gum that goes SQUIRT disappeared mid-2010s with no official announcement from Mondelez.",
+  },
+  {
+    href: "/blog/is-mama-rosas-pizza-discontinued/",
+    label: "Food & Beverage",
+    title: "Is Mama Rosa's Pizza Discontinued?",
+    desc: "Quietly vanished after Schwan's acquired the brand in 2017. Here's what actually happened.",
+  },
+];
 
 /* ---------- SEO ---------- */
 const pageTitle = "Vanished Brands: What Happened to Blockbuster, Circuit City & More";
@@ -408,6 +429,16 @@ const currentPath = Astro.url.pathname;
       font-weight: 500;
     }
 
+    /* Stretched link fix */
+.fcard-sm { position: relative; }
+.stretched-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
     @media (max-width: 640px) {
       .hero-actions {
         flex-direction: row;
@@ -586,31 +617,6 @@ const currentPath = Astro.url.pathname;
     </div>
   </section>
 
-  <!-- Minimal “why this matters” tucked away -->
-  <section class="mt-6 space-y-6" aria-label="About this archive">
-  <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
-    <h2 class="text-base font-semibold mb-2 text-slate-900 dark:text-slate-100">
-      Why Brands Disappear
-    </h2>
-    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-      When smartphones absorbed MP3 players, when e-commerce reshaped malls, when streaming remade media —
-      vanished brands were the first visible signals of change. Each page summarizes the basics (founded,
-      defunct, fate) with sources and related reading.
-    </p>
-  </article>
-
-  <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
-    <h2 class="text-base font-semibold mb-3 text-slate-900 dark:text-slate-100">
-      How to Use This Archive
-    </h2>
-    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-      <li><strong class="text-slate-900 dark:text-slate-100">🔍 Search:</strong> Use the box above to find brands by name with live suggestions</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">📅 By Decade:</strong> Browse brands from the {availableDecadeLabels.slice(0, 2).join(" or ")}, or explore our full timeline</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">🏷️ By Category:</strong> Filter by {catCount} categories: Tech, Retail, Food, Media, Finance, and more</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">📊 Download:</strong> Get all {totalAll} brands with dates and fates as a research-ready CSV</li>
-    </ul>
-  </article>
-</section>
 
   <p class="sr-only">
     Explore defunct and discontinued brands by category, decade, and A–Z index.
@@ -622,6 +628,63 @@ const currentPath = Astro.url.pathname;
   <section class="featured-collections" aria-label="Featured Collections">
     <h2>Featured Collections</h2>
 
+   {(featuredPicks.length > 0 || featuredPosts.length > 0) && (
+  <div class="collection">
+    <div class="collection-header">
+      <h3>⭐ Popular Right Now</h3>
+      <a href="/az/" class="see-all">See all stories →</a>
+    </div>
+    <div class="brand-grid">
+
+      {featuredPicks.map((b) => {
+        const yrs = yearsOf(b);
+        const cat = b.__seo_category_label || b.category || "Brand";
+        const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
+        const icon = fateIconOf(b);
+        const text = truncateInline(primaryTextOf(b), 120);
+        return (
+          <article class="fcard-sm" style={{ "--tint": tint }}>
+              <a
+              href={`/brand/${encodeURIComponent(b.slug)}/`}
+              class="stretched-link focus-ring rounded"
+              aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+            ></a>
+            <h4 class="text-base font-semibold leading-snug mb-1">{b.brand}</h4>
+            {text && (
+              <p class="hook">
+                <span aria-hidden="true">{icon}</span>{" "}{text}
+              </p>
+            )}
+            <div class="meta-row">
+              {yrs && <span class="chip-lite">{yrs}</span>}
+              {cat && <span class="chip-lite">🏷️ {cat}</span>}
+               <span class="chip-lite">🔍 Brand page</span>
+            </div>
+          </article>
+        );
+      })}
+
+      {featuredPosts.map((post) => (
+        <article class="fcard-sm" style={{ "--tint": "oklch(0.7 0.12 140)" }}>
+          <a
+            href={post.href}
+            class="stretched-link focus-ring rounded"
+            aria-label={post.title}
+          ></a>
+          <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">
+            {post.label}
+          </p>
+          <h4 class="text-base font-semibold leading-snug mb-1">{post.title}</h4>
+          <p class="hook">{post.desc}</p>
+          <div class="meta-row">
+            <span class="chip-lite">📖 Article</span>
+          </div>
+        </article>
+      ))}
+
+    </div>
+  </div>
+)}
   
 
     {CFood.length > 0 && (
@@ -721,10 +784,32 @@ const currentPath = Astro.url.pathname;
     </nav>
   </section>
 
-  <!-- Recently Defunct (featured) -->
-  <section class="mt-6 lg:mt-8" role="region" aria-label="Recently defunct brands">
-  
-  </section>
+
+<!-- SEO content — below the fold intentionally -->
+<section class="mt-12 space-y-6" aria-label="About this archive">
+  <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
+    <h2 class="text-base font-semibold mb-2 text-slate-900 dark:text-slate-100">
+      Why Brands Disappear
+    </h2>
+    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      When smartphones absorbed MP3 players, when e-commerce reshaped malls, when streaming remade media —
+      vanished brands were the first visible signals of change. Each page summarizes the basics (founded,
+      defunct, fate) with sources and related reading.
+    </p>
+  </article>
+
+  <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
+    <h2 class="text-base font-semibold mb-3 text-slate-900 dark:text-slate-100">
+      How to Use This Archive
+    </h2>
+    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+      <li><strong class="text-slate-900 dark:text-slate-100">🔍 Search:</strong> Use the box above to find brands by name with live suggestions</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">📅 By Decade:</strong> Browse brands from the {availableDecadeLabels.slice(0, 2).join(" or ")}, or explore our full timeline</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">🏷️ By Category:</strong> Filter by {catCount} categories: Tech, Retail, Food, Media, Finance, and more</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">📊 Download:</strong> Get all {totalAll} brands with dates and fates as a research-ready CSV</li>
+    </ul>
+  </article>
+</section>
 
   <!-- Live search behavior -->
   <script is:inline>

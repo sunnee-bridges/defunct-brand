@@ -180,6 +180,8 @@
   "notable_products": [
     "SKYY Blue ready to drink line"
   ],
+  "featured": true,
+"featured_order": 1,
 
   "timeline": [
     {

@@ -5,22 +5,31 @@
   "seo_category": "food-beverage",
   "country": "US",
   "active": { "start": 1985, "end": 2010 },
-  "hook": "Energy drink before energy drinks existed",
-  "fate": "Original company filed Chapter 11 in 2009; U.S. distribution of the classic cola ended around 2010. The brand later saw a limited relaunch before fading again.",
-  "summary": "High-caffeine cola famous for the slogan “All the sugar and twice the caffeine.” Cult ’80s/’90s brand that went bankrupt in 2009, briefly relaunched years later.",
+    "featured": true,
+"featured_order": 2,
+
+  "hook": "The original energy drink, three deaths, and a 2025 resurrection",
+  "fate": "Killed in 2009 when a self-authorized deal for 90 million custom cans left the company unable to pay its supplier. Founder C.J. Rapp spent eight years in court fighting the investor takeover that preceded the bankruptcy. Relaunched at Dollar General in 2017, gone again by 2019, then reborn in 2025 by Redcon1 as a zero-sugar energy drink with four times the caffeine of a Coke.",
+ "summary": "High-caffeine cola launched in 1985 with \"All the sugar and twice the caffeine\" — the drink that invented the energy drink category before Red Bull existed. Went bankrupt in 2009 over a ruinous canning contract, briefly revived at Dollar General, and relaunched in 2025 by Redcon1 as a zero-sugar energy drink competing with Monster and Celsius.",
   "topics": ["vanished-product",  "bankruptcy",
       "beverages",
       "cult-favorite",
       "90s-nostalgia"],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Jolt_Cola"
-  },
+  },"seo": {
+  "meta_title": "What Happened to Jolt Cola? Three Deaths and a 2025 Return",
+  "meta_description": "Jolt Cola invented the energy drink category in 1985, went bankrupt over a ruinous canning contract in 2009, briefly returned at Dollar General, and relaunched in 2025 by Redcon1 as a zero-sugar energy drink.",
+  "share_text": "Jolt Cola died in 2009 over a secret deal for 90 million cans nobody approved — and it just came back in 2025 with more caffeine than ever. Here's the full story."
+},
 
   "overview_md": "**Jolt Cola** was the caffeinated outlier of the cola aisle. Launched in 1985 with the winkingly honest slogan **“All the sugar and twice the caffeine,”** it became a cult favorite among students, coders, gamers, and night-shift workers who treated it as both beverage and badge. Jolt leaned into that identity with loud packaging, tongue-in-cheek ads, and shelf placements near campus bookstores, computer shops, and convenience stores.\n\nThe brand expanded into flavors and line extensions through the late 1980s and 1990s as energy needs—and energy marketing—grew. But distribution was uneven, competition intensified from mainstream colas and the rising **energy drink** category, and small-brand economics in grocery became tougher. The company behind Jolt ultimately **filed for Chapter 11 in 2009**, and U.S. distribution of the classic cola wound down around 2010.\n\nYears later, Jolt returned in a limited **relaunch**—a nostalgia play with tall cans and throwback graphics—earning a brief second life online and in select discount chains before fading again. Today, Jolt survives mostly in memory and memorabilia: a shorthand for the pre-energy-drink era when a loud can and extra caffeine could turn a soda into a subculture staple.",
 
   "timeline": [
     { "date": "1985", "text": "Brand launches with “All the sugar and twice the caffeine” positioning" },
     { "date": "1990s", "text": "Cult following grows among students, coders, and gamers; flavor extensions roll out" },
+    { "date": "2005", "text": "Rapp commits to purchasing ninety million resealable battery-shaped cans from manufacturer Rexam without informing the board" },
+    { "date": "2008", "text": "Rapp sells controlling stake to Emigrant Capital, loses CEO position. Recession and energy drink competition gut sales" },
     { "date": "2009", "text": "Company files for Chapter 11 bankruptcy" },
     { "date": "2010", "text": "U.S. distribution of the classic cola effectively ends" },
     { "date": "2017", "text": "Limited relaunch with nostalgia packaging; later fades from shelves again" }
