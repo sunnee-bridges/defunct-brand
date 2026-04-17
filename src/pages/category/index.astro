@@ -154,7 +154,10 @@ function normalizeCategory(raw: string): string {
     lower === "video games & consoles" ||
     lower === "video games and consoles" ||
     lower === "video games consoles" ||
-    lower === "video-games-consoles"
+    lower === "video-games-consoles" ||
+    lower === "video game" ||          
+    lower === "gaming" ||              
+    lower === "games" 
   ) return "video-games-consoles";
 
   if (
@@ -164,7 +167,10 @@ function normalizeCategory(raw: string): string {
     lower === "airline/aviation" ||
     lower === "airline-aviation" ||
     lower === "airlines-aviation" ||
-    lower === "airlines & aviation"
+    lower === "airlines & aviation" ||
+    lower === "airline & aviation" ||  
+    lower === "air travel" ||          
+    lower === "aerospace"              
   ) return "airlines-aviation";
 
   if (lower === "automotive" || lower === "auto") return "automotive";

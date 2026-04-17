@@ -58,6 +58,10 @@ export default defineConfig({
   trailingSlash: 'always',
   prefetch: true,
 
+  redirects: {
+    '/tag/store-closures/': '/topics/store-closures/',
+  },
+
   vite: {
     resolve: {
       alias: {
