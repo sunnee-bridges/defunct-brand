@@ -59,7 +59,31 @@ export default defineConfig({
   prefetch: true,
 
   redirects: {
-    '/tag/store-closures/': '/topics/store-closures/',
+     '/brand/game-crazy/': '/az/',
+  '/brand/photo-finishing-industry/': '/az/',
+  '/brand/movie-gallery/': '/az/',
+  '/brand/borders-books/': '/brand/borders/',  // if borders.json exists, else /az/
+  '/brand/crystal-pepsi/': '/az/',
+  '/brand/family-video/': '/az/',
+  '/brand/wolf-camera/': '/az/',
+  '/brand/radioshack/': '/az/',  // change to /brand/radio-shack/ if that slug exists
+  '/brand/woolworth/': '/az/',   // change to /brand/fw-woolworth/ if that slug exists
+  '/brand/netflix/': '/az/',
+  '/brand/toys-r-us-us/': '/az/',
+  '/brand/whipper-snapple/': '/az/',
+
+  // Blog posts that don't exist — point to related category or blog index
+  '/blog/extreme-beverages-history/': '/blog/',
+  '/blog/fda-banned-foods/': '/blog/',
+  '/blog/video-rental-stores-history/': '/blog/',
+  '/blog/discontinued-energy-drinks/': '/blog/',
+  '/blog/what-happened-to-game-crazy/': '/blog/',
+  '/blog/blockbuster-vs-hollywood-video/': '/blog/',
+  '/blog/best-frozen-pizza/': '/blog/',
+  '/blog/buy-discontinued-food/': '/blog/',
+  '/blog/discontinued-2000s-snacks/': '/blog/',
+
+  '/tag/store-closures/': '/topics/store-closures/',
   },
 
   vite: {
