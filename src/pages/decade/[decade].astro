@@ -140,6 +140,60 @@ if (notFound) Astro.response.status = 404;
 const totalBrands = items?.length ?? 0;
 
 const decadeIntroMap: Record<string, { intro: string; trends: string[] }> = {
+   "1870s": {
+    intro:
+      "The 1870s predates most modern consumer brand culture. Products were largely regional, unbranded, or sold through general stores and traveling salesmen. The brands listed here are among the earliest documented named consumer products or retail operations from this era.",
+    trends: [
+      "Fixed-price retail was a revolutionary concept — most goods were still negotiated",
+      "Mail-order catalogs were beginning to democratize access to goods for rural Americans",
+      "Department stores were emerging in major cities as a new format for urban shopping",
+    ],
+  },
+  "1880s": {
+    intro:
+      "The 1880s saw the first national consumer brands take shape, driven by railroads enabling distribution, mass production lowering costs, and new advertising in newspapers and magazines.",
+    trends: [
+      "First national retail chains and department stores expanding beyond single cities",
+      "Brand names appearing on packaged goods for the first time at scale",
+      "Mail-order catalogs reaching rural households previously cut off from urban retail",
+    ],
+  },
+  "1890s": {
+    intro:
+      "The 1890s were a formative decade for American consumer culture. The Sears catalog launched, department stores spread nationally, and the first true consumer brands emerged from a newly industrialized economy.",
+    trends: [
+      "Sears Roebuck catalog launched in 1893, creating the original mail-order everything store",
+      "Department stores pioneering fixed prices, satisfaction guarantees, and browsing culture",
+      "First national packaged goods brands reaching consumers across the country",
+    ],
+  },
+  "1910s": {
+    intro:
+      "The 1910s were defined by industrialization, World War I economic disruption, and rapid urbanization. Many brands from this era were regional businesses that never survived long enough to become nationally recognized.",
+    trends: [
+      "Regional retail chains expanding before national competitors arrived",
+      "Early automobile industry producing dozens of short-lived manufacturers",
+      "Consumer goods expanding as mass production made products more affordable",
+    ],
+  },
+  "1930s": {
+    intro:
+      "The Great Depression defined the 1930s for American business. Many brands that launched or peaked in this decade were casualties of economic collapse, consolidation, or simply the long struggle to survive a decade of severe consumer contraction.",
+    trends: [
+      "Depression-era retail consolidation wiping out weaker regional players",
+      "Consumer spending collapse forcing brand discontinuations and business closures",
+      "Surviving brands becoming stronger through attrition as weaker competitors disappeared",
+    ],
+  },
+  "1940s": {
+    intro:
+      "The 1940s were shaped entirely by World War II and its aftermath. Consumer brands were secondary to the war economy, and many businesses that launched or operated in this decade were later absorbed, discontinued, or overtaken as postwar prosperity reshaped American consumption.",
+    trends: [
+      "Wartime production priorities displacing consumer goods",
+      "Postwar economic boom creating new consumer expectations that some older brands couldn't meet",
+      "Regional businesses absorbed by national chains as highway infrastructure expanded",
+    ],
+  },
   "1950s": {
     intro:
       "The 1950s still shaped many household names, but later decades saw a number of once-familiar consumer brands, stores, and products fade from everyday life.",

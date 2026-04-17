@@ -36,7 +36,7 @@ const labelOf = (start: number) => `${start}s`;
 /* ---- Build: decade label -> count (prefer start year, fallback end) ---- */
 const counts = new Map<string, number>();
 for (const b of brands) {
-  const y = toYear(b?.active?.start) ?? toYear(b?.active?.end);
+  const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
   if (y == null) continue;
   const label = labelOf(decadeStart(y));
   counts.set(label, (counts.get(label) ?? 0) + 1);
