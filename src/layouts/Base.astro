@@ -35,7 +35,7 @@ const trim = (s:string, n:number) => (s && s.length > n ? s.slice(0, n - 1).trim
 const TITLE = trim(title, 60);
 const DESC  = trim(description, 160);
 
-// Safely stringify JSON for inline <script> (avoid breaking on </script>, <, U+2028/U+2029)
+// Safe JSON for inline LD+JSON
 const toSafeJson = (obj: any) =>
   JSON.stringify(obj ?? {})
     .replace(/<\/script/gi, '<\\/script')

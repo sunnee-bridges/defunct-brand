@@ -148,12 +148,14 @@ function hasQuickFacts(brand: any): boolean {
     if (facts.length > 0) return true;
   }
 
+  const category = brand?.category ?? brand?.stats?.category;
+
   if (
     brand?.active?.status ||
     brand?.active?.start ||
     brand?.active?.end ||
     brand?.country ||
-    brand?.category ||
+    category ||
     brand?.schema?.manufacturer?.name ||
     brand?.stats?.parent_company
   ) {
@@ -162,10 +164,18 @@ function hasQuickFacts(brand: any): boolean {
 
   if (brand?.stats) {
     const displayableKeys = [
-      'peak_stores', 'years_in_business', 'years_available',
-      'employees_at_peak', 'peak_year', 'founding_year',
-      'closure_year', 'alcohol_content', 'category', 'parent_company'
+      'peak_stores',
+      'years_in_business',
+      'years_available',
+      'employees_at_peak',
+      'peak_year',
+      'founding_year',
+      'closure_year',
+      'alcohol_content',
+      'parent_company'
+      // removed 'category'
     ];
+
     return displayableKeys.some((key) => {
       const val = brand.stats[key];
       return val !== null && val !== undefined && val !== '';
@@ -879,14 +889,6 @@ if (catPath && catLabel) {
               <dt class="text-slate-600 dark:text-slate-400">Alcohol Content:</dt>
               <dd class="font-semibold text-slate-900 dark:text-slate-100">
                 {brand.stats.alcohol_content}
-              </dd>
-            </>
-          )}
-          {brand?.stats?.category && (
-            <>
-              <dt class="text-slate-600 dark:text-slate-400">Category:</dt>
-              <dd class="font-semibold text-slate-900 dark:text-slate-100">
-                {brand.stats.category}
               </dd>
             </>
           )}
