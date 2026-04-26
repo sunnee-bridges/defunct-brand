@@ -301,8 +301,114 @@ function seoCategoryLabel(seo?: string, fallback?: string) {
   return map[String(seo || "").trim()] || fallback || "";
 }
 
+
+/** SEO/search-intent helpers. These are deliberately defensive so pages keep rendering
+ * even when older brand JSON files do not include newer SEO fields. */
+function cleanText(value: unknown): string {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function firstNonEmpty(...values: unknown[]): string {
+  for (const value of values) {
+    const cleaned = cleanText(value);
+    if (cleaned) return cleaned;
+  }
+  return "";
+}
+
+function getBrandName(brand: any): string {
+  return firstNonEmpty(brand?.brand, brand?.name, brand?.title) || "This brand";
+}
+
+function getStatusText(brand: any): string {
+  return firstNonEmpty(
+    brand?.quick_facts?.status,
+    brand?.active?.status,
+    brand?.status,
+    brand?.availability,
+    brand?.discontinued_status
+  );
+}
+
+function statusLooksUnclear(status: string): boolean {
+  return /unclear|unknown|unconfirmed|limited|inconsistent|hard to find|appears|not clear/i.test(status);
+}
+
+function statusLooksActive(status: string): boolean {
+  return /\b(still exists|available|sold|current|active)\b/i.test(status);
+}
+
+function statusLooksDiscontinued(status: string): boolean {
+  return /discontinued|defunct|closed|ended|gone|no longer|inactive|shutdown|shut down/i.test(status);
+}
+
+function makeIntentTitle(brand: any): string {
+  if (brand?.seo?.meta_title) return brand.seo.meta_title;
+
+  const name = getBrandName(brand);
+  const category = cleanText(brand?.seo_category || brand?.category).toLowerCase();
+  const status = getStatusText(brand);
+
+  if (statusLooksActive(status) || statusLooksUnclear(status)) {
+    return `Is ${name} Discontinued? Current Status and What Happened`;
+  }
+
+  if (category.includes("food") || category.includes("beverage") || category.includes("candy")) {
+    return `Is ${name} Discontinued? What Happened and Can You Still Buy It?`;
+  }
+
+  return `Is ${name} Discontinued? What Happened to ${name}?`;
+}
+
+function makeIntentH1(brand: any): string {
+  return firstNonEmpty(
+    brand?.seo?.h1,
+    brand?.h1,
+    `Is ${getBrandName(brand)} Discontinued? What Happened?`
+  );
+}
+
+function makeQuickAnswer(brand: any): string {
+  const name = getBrandName(brand);
+  const status = getStatusText(brand);
+  const start = brand?.active?.start;
+  const end = brand?.active?.end;
+  const fate = cleanText(brand?.fate);
+  const summary = firstNonEmpty(brand?.excerpt, brand?.summary, brand?.hook);
+
+  if (brand?.quick_answer) return cleanText(brand.quick_answer);
+
+  if (status) {
+    let answer = `${name} status: ${status}.`;
+
+    if (end) {
+      answer += ` It is associated with an end/discontinuation date of ${end}.`;
+    }
+
+    if (fate) {
+      answer += ` ${fate}`;
+    } else if (summary) {
+      answer += ` ${summary}`;
+    }
+
+    return answer;
+  }
+
+  if (fate) {
+    return `${name} is covered in the Vanished Brands archive because of its disappearance, decline, or major change. ${fate}`;
+  }
+
+  if (summary) {
+    return summary;
+  }
+
+  const yearPart = start && end ? ` It was active from ${start} to ${end}.` : "";
+  return `${name} is listed in the Vanished Brands archive.${yearPart} Public information may be limited, so current availability should be confirmed through official or retail sources.`;
+}
+
 /* ---------------- Derived blocks ---------------- */
 let pageTitle = "Page not found";
+let pageH1 = "Page not found";
 let pageDesc  = "Try another page or browse the full list.";
 let canonical = Astro.site ? new URL("/az/", Astro.site).href : "/az/";
 let jsonLdBlocks: any[] = [];
@@ -358,10 +464,9 @@ if (!notFound) {
   const activeStr = `${brand.active?.start ?? "?"}\u2013${brand.active?.end ?? "?"}`;
   const descPref = (brand.hook || brand.fate || brand.summary || "").trim();
 
-  // SEO-optimized title
-  pageTitle =
-  brand?.seo?.meta_title ||
-  `What Happened to ${brand.brand}? Why It Was Discontinued`;
+  // SEO-optimized title and H1. Manual per-brand overrides still win.
+  pageTitle = makeIntentTitle(brand);
+  pageH1 = makeIntentH1(brand);
 
 pageDesc =
   brand?.seo?.meta_description ||
@@ -399,11 +504,7 @@ pageDesc =
   })();
 
   // Answers
-  answerBox =
-  brand?.excerpt?.trim() ||
-  brand?.summary?.trim() ||
-  brand?.hook?.trim() ||
-  "";
+  answerBox = makeQuickAnswer(brand);
 
   // Keywords
   keywords = brand?.seo?.keywords?.join(', ') || '';
@@ -676,7 +777,7 @@ if (catPath && catLabel) {
       </nav>
 
       <h1 id="brand-title" class="text-2xl md:text-3xl font-bold mb-1">
-        What Happened to {brand.brand}?
+        {pageH1}
         {Array.isArray(brand?.topics) && brand.topics.includes("scandal") && (
           <span
             class="ml-2 inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 text-[12px] font-medium text-rose-700
@@ -714,6 +815,9 @@ if (catPath && catLabel) {
 
       {answerBox && (
         <section class="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
+          <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+            Quick answer
+          </p>
           <p class="text-base text-slate-900 dark:text-slate-100">
             {answerBox}
           </p>

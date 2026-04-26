@@ -32,7 +32,7 @@ const canonical  = canonicalProp || new URL(pathname, siteOrigin).toString();
 
 // Safe limits for SERP
 const trim = (s:string, n:number) => (s && s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s);
-const TITLE = trim(title, 60);
+const TITLE = trim(title, 65);
 const DESC  = trim(description, 160);
 
 // Safe JSON for inline LD+JSON
@@ -239,7 +239,7 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
 
     <!-- Main grows to push footer down; tabindex enables skip-link focus -->
     <!-- NOTE: containerClass provides the single, consistent page container -->
-    <main id="main" class="flex-1" aria-labelledby="brand-title" tabindex="-1">
+    <main id="main" class="flex-1" tabindex="-1">
       <div class={containerClass}>
         <slot />
       </div>
