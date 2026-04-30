@@ -6,15 +6,44 @@
   "country": "US",
   "active": { "start": 1950, "end": 1988 },
   "hook": "Metal-tipped lawn darts banned after 6,100 injuries",
-  "fate": "Banned by CPSC in 1988; metal-tipped versions illegal to sell in U.S. Modern soft-tipped versions are legal but fundamentally different products.",
-  "summary": "Original lawn darts (Jarts) featured weighted metal tips that became deadly projectiles. After 6,100+ injuries and 3 child deaths, the CPSC banned all lawn darts with rigid, weighted tips in 1988.",
+  "fate": "Metal tipped versions illegal in the U.S. after U.S. Consumer Product Safety Commission (CPSC) ban in 1988. Modern soft-tipped versions are legal, but fundamentally different than the original.",
+  "summary": "Original lawn darts (Jarts) featured weighted metal tips that became deadly projectiles. After more than 6,100 injuries and 3 child deaths, the CPSC banned all lawn darts with rigid, weighted tips in 1988.",
   "topics": [  "banned",
       "safety-recall",
       "toys",
       "80s-nostalgia"],
   "notable_products": ["Jarts (original metal-tipped)", "Lawn darts with weighted tips"],
   "links": {
-    "wikipedia": "https://en.wikipedia.org/wiki/Lawn_darts"
+    "Lawn Darts - Wikipedia": "https://en.wikipedia.org/wiki/Lawn_darts"
   },
-  "overview_md": "**Lawn Darts (Jarts)** were a popular backyard game consisting of large dart-like projectiles with weighted metal tips that players would throw at ground targets...\n\n**The Ban:** In 1988, the CPSC issued a federal ban on lawn darts with elongated tips. The specific prohibition covers any lawn dart with a rigid, weighted tip—whether metal or other hard materials. Modern 'lawn darts' with soft, rounded plastic tips are technically legal but are fundamentally different products that don't carry the same risk profile.\n\n**Legal Status Today:** It remains illegal to sell, manufacture, or import the original-style weighted lawn darts in the United States. Penalties can reach $15,000 for violations."
+  "seo": {
+  "meta_title": "What Happened to Lawn Darts? Why Jarts Were Banned",
+  "meta_description": "Lawn Darts, also called Jarts, were once a popular backyard game with weighted metal tips. Learn why original lawn darts were banned in 1988, how many injuries they caused, and whether modern versions are legal.",
+  "keywords": [
+    "what happened to Lawn Darts",
+    "why were Lawn Darts banned",
+    "Jarts banned",
+    "Lawn Darts injuries",
+    "Lawn Darts CPSC ban",
+    "metal tipped lawn darts",
+    "original Lawn Darts",
+    "Lawn Darts 1988 ban",
+    "are Lawn Darts illegal",
+    "Jarts toy banned",
+    "dangerous 80s toys",
+    "banned backyard games",
+    "soft tipped lawn darts",
+    "Lawn Darts safety recall",
+    "80s nostalgia toys"
+  ]
+},
+  "timeline": [
+    { "date": "1970", "text": "U.S. Food and Drug Administration (FDA) classified sharp-pointed lawn darts as a \"mechanical hazard.\"" },
+    { "date": "1987", "text": "David Snow campaigns against lawn darts when his 7-year-old daughter, Michelle, dies after a dart pierces her skull" },
+    { "date": "1988", "text": "CPSC officially bans lawn darts from being sol" },
+    { "date": "1989", "text": "Canada bans lawn darts after reporting 55 serious injuries" },
+    { "date": "1997", "text": "Parent company exits general-merchandise Woolworth stores." },
+    { "date": "1997", "text": "CPSC reissues ban notice after a 7-year-old boy is injured by the toy" }
+  ],
+  "overview_md": "**Lawn Darts (Jarts)** were a popular backyard game consisting of large dart-like projectiles with weighted metal tips that players would throw at ground targets.\n\nIn 1987, father David Snow began a campaign against the dangerous toy when his daughter, 7-year-old Michelle, was hit in the head while kids were tossing them around. Estimates note that the jart hit Michelle with 23,000 pounds of pressure per square inch as it went through her skull. She died several days later.\n\nThe Ban: Spurred in part by Snow's campaign, the CPSC issued a federal ban on lawn darts with elongated tips in 1988. The specific prohibition covers any lawn dart with a rigid, weighted tip—whether metal or other hard materials. Modern lawn darts with soft, rounded plastic tips are technically legal but are fundamentally different products that don't carry the same risk profile.\n\nIn 1987, father David Snow began a campaign against the dangerous toy when his daughter, 7-year-old Michelle, was hit in the head while kids were tossing them around. Estimates note that the jart hit Michelle with 23,000 pounds of pressure per square inch as it went through her skull. She died several days later.\n\nThe danger of lawn darts didn't stop at America's borders. Canada also banned the product after reporting 55 serious injuries by 1989. \n\nIt remains illegal to sell, manufacture, or import the original-style weighted lawn darts in the United States. Penalties can reach $15,000 for violations.But even with these bans, lawn darts still caused their fair share of harm. In 1997, the CPSC had to reissue its notice that lawn darts were banned after a 7-year-old boy suffered a brain injury after a lawn dart pierced his skull. The CPSC acknowledged that the toy may still be hanging out in garages or thrift stores. "
 }

@@ -23,21 +23,20 @@
   "share_text": "Jolt Cola died in 2009 over a secret deal for 90 million cans nobody approved — and it just came back in 2025 with more caffeine than ever. Here's the full story."
 },
 
-  "overview_md": "**Jolt Cola** was the caffeinated outlier of the cola aisle. Launched in 1985 with the winkingly honest slogan **“All the sugar and twice the caffeine,”** it became a cult favorite among students, coders, gamers, and night-shift workers who treated it as both beverage and badge. Jolt leaned into that identity with loud packaging, tongue-in-cheek ads, and shelf placements near campus bookstores, computer shops, and convenience stores.\n\nThe brand expanded into flavors and line extensions through the late 1980s and 1990s as energy needs—and energy marketing—grew. But distribution was uneven, competition intensified from mainstream colas and the rising **energy drink** category, and small-brand economics in grocery became tougher. The company behind Jolt ultimately **filed for Chapter 11 in 2009**, and U.S. distribution of the classic cola wound down around 2010.\n\nYears later, Jolt returned in a limited **relaunch**—a nostalgia play with tall cans and throwback graphics—earning a brief second life online and in select discount chains before fading again. Today, Jolt survives mostly in memory and memorabilia: a shorthand for the pre-energy-drink era when a loud can and extra caffeine could turn a soda into a subculture staple.",
+  "overview_md": "**Jolt Cola** was the caffeinated outlier of the cola aisle. Launched in 1985 with the winkingly honest slogan “All the sugar and twice the caffeine,” it became a cult favorite among students, coders, gamers, and night-shift workers who treated it as both beverage and badge. Jolt leaned into that identity with loud packaging, tongue-in-cheek ads, and shelf placements near campus bookstores, computer shops, and convenience stores.\n\nThe brand expanded into flavors and line extensions through the late 1980s and 1990s as energy needs and energy marketing grew. But distribution was uneven, competition intensified from mainstream colas and the rising energy drink category, and small-brand economics in grocery became tougher. The company behind Jolt ultimately filed for Chapter 11 in 2009, and U.S. distribution of the classic cola wound down around 2010.\n\nYears later, Jolt returned in a limited relaunch—a nostalgia play with tall cans and throwback graphics, earning a brief second life online and in select discount chains before fading again. Today, Jolt survives mostly in memory and memorabilia, a shorthand for the pre-energy-drink era when a loud can and extra caffeine could turn a soda into a subculture staple.",
 
   "timeline": [
     { "date": "1985", "text": "Brand launches with “All the sugar and twice the caffeine” positioning" },
-    { "date": "1990s", "text": "Cult following grows among students, coders, and gamers; flavor extensions roll out" },
+    { "date": "1990s", "text": "Cult following grows among students, coders, and gamers with flavor extensions roll out" },
     { "date": "2005", "text": "Rapp commits to purchasing ninety million resealable battery-shaped cans from manufacturer Rexam without informing the board" },
     { "date": "2008", "text": "Rapp sells controlling stake to Emigrant Capital, loses CEO position. Recession and energy drink competition gut sales" },
     { "date": "2009", "text": "Company files for Chapter 11 bankruptcy" },
-    { "date": "2010", "text": "U.S. distribution of the classic cola effectively ends" },
-    { "date": "2017", "text": "Limited relaunch with nostalgia packaging; later fades from shelves again" }
+    { "date": "2010", "text": "U.S. distribution of the classic cola ends" },
+    { "date": "2017", "text": "Limited relaunch with nostalgia packaging, then later fades from shelves again" }
   ],
 
   "sources": [
     { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Jolt_Cola" },
-    { "label": "Wayback snapshot (joltcola.com)", "url": "https://web.archive.org/web/*/joltcola.com" },
-    { "label": "Press / nostalgia coverage of relaunch", "url": "https://www.theverge.com/" }
+    { "label": "Wayback website", "url": "https://web.archive.org/web/20110526103400/http://joltenergy.com/index.html" }
   ]
 }
