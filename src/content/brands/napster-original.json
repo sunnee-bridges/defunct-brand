@@ -13,13 +13,11 @@
       "internet-history",
       "2000s-nostalgia",
       "cult-favorite"],
-  "overview_md": "**Napster (original)** was the catalyst of the MP3 era. Launched in **1999** by Shawn Fanning and Sean Parker, it paired a simple Windows client with a **central index of user libraries**, making it effortless to search and swap songs across millions of PCs. College campuses and broadband households adopted it at viral speed; for many, Napster was the first experience of instant, on-demand access to nearly any track.\n\nThat popularity collided with music-industry rights. Major labels and artists (famously **Metallica** and **Dr. Dre**) sued, arguing Napster enabled widespread infringement. Because the directory and authentication were centralized, courts found Napster had knowledge and control sufficient to impose liability and injunctions. A district court ordered the service to block infringing files; the **Ninth Circuit** largely affirmed, and Napster went offline in **July 2001** to comply. The company subsequently entered **Chapter 11** in **2002**, with assets changing hands and the **Napster** name later reappearing on fully licensed services.\n\nNapster’s legacy is twofold: it normalized digital, track-based listening for a generation, and it pushed labels and tech toward licensed downloads and streaming. It also remains a case study in how architecture (centralized vs. decentralized) shapes both user experience and legal exposure.",
+  "overview_md": "Napster, launched in 1999 by Shawn Fanning and Sean Parker, was the spark that set off the MP3 revolution. It combined a simple Windows program with a central directory that listed the music files stored on users’ computers. That setup made it incredibly easy to search for a song and download it directly from someone else’s PC. For many people — especially college students with fast campus internet — Napster was their first experience of instant, on‑demand access to almost any track they could imagine.\n\nIts popularity exploded. Within months, millions of users were sharing music, discovering new artists, and building huge digital libraries. But the same features that made Napster groundbreaking also put it in direct conflict with the music industry. Major record labels and well‑known artists, including Metallica and Dr. Dre, sued the company, arguing that Napster enabled massive copyright infringement.\n\nBecause Napster used a centralized system — one login, one directory, one set of servers — courts ruled that the company had enough control and awareness of what users were sharing to be held responsible. A federal judge ordered Napster to block copyrighted songs, and the Ninth Circuit Court of Appeals largely agreed.\n\nUnable to comply at scale, Napster shut down its original service in July 2001. The company filed for Chapter 11 bankruptcy in 2002, and its assets were eventually sold. The Napster name later resurfaced on fully licensed, legal music services, but the original peer‑to‑peer network never returned.\n\nNapster’s influence is still felt today. It permanently changed how people thought about music — shifting listening habits from albums to individual tracks and normalizing the idea that music could be accessed instantly and digitally. It also pushed record labels and tech companies toward legal digital models, paving the way for services like iTunes, Rhapsody, and eventually Spotify and Apple Music.",
   "timeline": [
-    { "date": "1999-06", "text": "Original Napster beta launches; rapid campus and broadband adoption follows." },
+    { "date": "1999-06", "text": "Original Napster beta launches with rapid broadband and campus adoption" },
     { "date": "1999-12-07", "text": "RIAA/labels file suit against Napster alleging contributory and vicarious infringement." },
-    { "date": "2000-07-26", "text": "District court issues preliminary injunction ordering Napster to prevent infringing transfers (later stayed pending appeal)." },
-    { "date": "2001-02-12", "text": "Ninth Circuit largely upholds the injunction; case remanded for tailored controls." },
-    { "date": "2001-07-11", "text": "Napster goes offline to comply with court orders, effectively ending the original service." }
+    { "date": "2001-02-12", "text": "Ninth Circuit Court largely upholds in injunction, forcing Napster to go offline and effectively ending the original service" }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Napster",
@@ -29,6 +27,8 @@
   "sources": [
     { "label": "Wikipedia – Napster", "url": "https://en.wikipedia.org/wiki/Napster" },
     { "label": "Wikipedia – A&M Records, Inc. v. Napster, Inc.", "url": "https://en.wikipedia.org/wiki/A%26M_Records,_Inc._v._Napster,_Inc." },
-    { "label": "Wikipedia – Metallica v. Napster, Inc.", "url": "https://en.wikipedia.org/wiki/Metallica_v._Napster,_Inc." }
+    { "label": "Wikipedia – Metallica v. Napster, Inc.", "url": "https://en.wikipedia.org/wiki/Metallica_v._Napster,_Inc." },
+    { "label": "CNET - Napster Reaches Settlement with Publishers", "url": "https://www.cnet.com/tech/services-and-software/napster-reaches-settlement-with-publishers/" },
+    { "label": "Wired - The Day Napster Died", "url": "https://archive.is/GKwCi" }
   ]
 }

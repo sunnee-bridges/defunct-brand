@@ -28,10 +28,9 @@
     "turtlepedia": "https://turtlepedia.fandom.com/wiki/Teenage_Mutant_Ninja_Turtles_food_tie-ins"
   },
   "sources": [
-    { "label": "The Daily Meal – Discontinued TMNT Pies (Jul 5, 2023)", "url": "https://www.thedailymeal.com/1329644/discontinued-teenage-mutant-ninja-turtles-pies-90s-snack/" },
-    { "label": "Food52 – TMNT Pudding Pies context & nutrition (Oct 13, 2016)", "url": "https://food52.com/story/18135-in-the-90s-the-ninja-turtles-were-everywhere-even-pudding-pies" },
-    { "label": "1991 TV Commercial (Hostess)", "url": "https://www.youtube.com/watch?v=vEZt29pzdus" },
-    { "label": "Turtlepedia – Food tie-ins (wrappers/stickers/cards)", "url": "https://turtlepedia.fandom.com/wiki/Teenage_Mutant_Ninja_Turtles_food_tie-ins" },
-    { "label": "Wikipedia – Hostess (brand background)", "url": "https://en.wikipedia.org/wiki/Hostess_%28snack_cakes%29" }
+    { "label": "The Daily Meal – Discontinued TMNT Pies", "url": "https://www.thedailymeal.com/1329644/discontinued-teenage-mutant-ninja-turtles-pies-90s-snack/" },
+    { "label": "Food52 – TMNT Pudding Pies context & nutrition", "url": "https://food52.com/story/18135-in-the-90s-the-ninja-turtles-were-everywhere-even-pudding-pies" },
+    { "label": "Turtlepedia – Food tie-ins", "url": "https://turtlepedia.fandom.com/wiki/Teenage_Mutant_Ninja_Turtles_food_tie-ins" },
+    { "label": "Wikipedia – Hostess", "url": "https://en.wikipedia.org/wiki/Hostess_%28snack_cakes%29" }
   ]
 }
