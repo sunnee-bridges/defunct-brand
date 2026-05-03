@@ -4,7 +4,10 @@
   "category": "Retail",
   "seo_category": "retail",
   "country": "US",
-  "active": { "start": 1985, "end": 2021 },
+  "active": {
+    "start": 1985,
+    "end": 2021
+  },
   "hook": "Silicon Valley's paradise for nerds, killed by Amazon",
   "fate": "Operations ceased in February 2021 after years of decline and a shift to a consignment inventory model.",
   "summary": "Beloved Silicon Valley–born big-box electronics chain known for themed stores, vast component aisles, and late-night parts runs abruptly closed in 2021.",
@@ -15,17 +18,34 @@
     "Appliances",
     "Media & magazines"
   ],
-  "topics": ["discontinued",
-      "big-box",
-      "retail",
-      "2000s-nostalgia"],
+  "topics": [
+    "discontinued",
+    "big-box",
+    "retail",
+    "2000s-nostalgia"
+  ],
   "overview_md": "**Fry’s Electronics** was the tech world’s quirky big-box bazaar. It was founded in 1985 in Silicon Valley and eventually spread across the West and South. Part warehouse, part theme park, Fry’s mixed aisles of motherboards, GPUs, cables, and kits with snacks, magazines, and impulse gadgets. Stores were famous for elaborate themes—from Mayan temples to space stations—and for being open late, making it a pilgrimage spot for builders, IT crews, and weekend tinkerers. If you needed a null-modem cable at 9:45 p.m., Fry’s probably had them.\n\nAs e-commerce matured, competition from Amazon, tightening vendor terms, and supply-chain challenges squeezed the model. Fry’s experimented with a consignment inventory approach around the late 2010s, but that often left shelves conspicuously empty, turning the stores themselves into memes. Service inconsistencies and slower product cycles further eroded traffic while rivals shifted to smaller-footprint or online-first strategies. In February 2021, Fry’s announced it would cease operations and close all remaining locations, ending a distinctly West-coast brand of nerd culture—midnight GPU hunts, bargain bins, and checkout lines stocked with tech trickets.\n\nToday, Fry’s lives on in build logs and forum nostalgia, a snapshot of when in-person parts hunting was part of the fun of building a PC.",
   "timeline": [
-    { "date": "1985-05", "text": "First Fry’s Electronics store opens in Sunnyvale, California." },
-    { "date": "1990-01", "text": "The brand rapidly expands across California and other states, debuting signature themed stores along the way." },
-    { "date": "2008-10", "text": "Fry's struggles as financial crisis pressures discretionary electronics and competition from e-commerce intensifies." },
-    { "date": "2019-01", "text": "A shift to consignment-style inventory contributes to widely reported empty shelves in Fry's stores" },
-    { "date": "2021-02-24", "text": "Company announces permanent closure of all stores." }
+    {
+      "date": "1985-05",
+      "text": "First Fry’s Electronics store opens in Sunnyvale, California."
+    },
+    {
+      "date": "1990-01",
+      "text": "The brand rapidly expands across California and other states, debuting signature themed stores along the way."
+    },
+    {
+      "date": "2008-10",
+      "text": "Fry's struggles as financial crisis pressures discretionary electronics and competition from e-commerce intensifies."
+    },
+    {
+      "date": "2019-01",
+      "text": "A shift to consignment-style inventory contributes to widely reported empty shelves in Fry's stores"
+    },
+    {
+      "date": "2021-02-24",
+      "text": "Company announces permanent closure of all stores."
+    }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Fry%27s_Electronics",
@@ -33,16 +53,41 @@
     "wayback_homepage": "https://web.archive.org/web/20210101000000*/http://www.frys.com/"
   },
   "sources": [
-    { "label": "Wikipedia – Fry’s Electronics", "url": "https://en.wikipedia.org/wiki/Fry%27s_Electronics" },
-    { "label": "Goodbye Fry's Electronics - PC World:", "url": "https://www.pcworld.com/article/394128/goodbye-frys-electronics-all-stores-closed.html" },
-    { "label": "Fry's Electronics Shuts Down Permanently - CNET", "url": "https://www.cnet.com/culture/frys-electronics-shuts-down-permanently/" },
-    { "label": "Fry’s Electronics going out of business, shutting down all stores - Ars Technica", "url": "https://arstechnica.com/information-technology/2021/02/frys-electronics-is-no-more-and-all-30-stores-will-soon-close/" }
-  ],"explore_more": {
+    {
+      "label": "Wikipedia – Fry’s Electronics",
+      "url": "https://en.wikipedia.org/wiki/Fry%27s_Electronics"
+    },
+    {
+      "label": "Goodbye Fry's Electronics - PC World:",
+      "url": "https://www.pcworld.com/article/394128/goodbye-frys-electronics-all-stores-closed.html"
+    },
+    {
+      "label": "Fry's Electronics Shuts Down Permanently - CNET",
+      "url": "https://www.cnet.com/culture/frys-electronics-shuts-down-permanently/"
+    },
+    {
+      "label": "Fry’s Electronics going out of business, shutting down all stores - Ars Technica",
+      "url": "https://arstechnica.com/information-technology/2021/02/frys-electronics-is-no-more-and-all-30-stores-will-soon-close/"
+    }
+  ],
+  "explore_more": {
     "category_label": "Want to learn about more retail relics?",
     "brands": [
-      { "name": "Blockbuster Video", "slug": "blockbuster" },
-      { "name": "Borders", "slug": "borders" },
-      { "name": "Circuit City", "slug": "circuit-city" }
+      {
+        "name": "Blockbuster Video",
+        "slug": "blockbuster"
+      },
+      {
+        "name": "Borders",
+        "slug": "borders"
+      },
+      {
+        "name": "Circuit City",
+        "slug": "circuit-city"
+      }
     ]
+  },
+  "seo": {
+    "meta_description": "Fry's Electronics was Silicon Valley's go-to big-box retailer from 1985 to 2021, beloved for themed stores, vast component aisles, and late-night tech parts runs."
   }
 }

@@ -72,7 +72,21 @@ const items = Object.values(modules)
 /* ---------- SEO / JSON-LD ---------- */
 const hubPath = `/articles/defunct-by-decade/${encodeURIComponent(requested)}/`;
 const title = `Defunct Brands in the ${requested}`;
-const desc = `Explore ${items.length} discontinued or defunct brands whose key events fall in the ${requested}.`;
+
+const DECADE_DESC: Record<string, string> = {
+  "1920s": "Browse brands that launched or peaked in the 1920s—from early radio pioneers and Prohibition-era products to retailers and car marques that shaped American consumer culture.",
+  "1930s": "Explore brands rooted in the 1930s—Depression-era survivors, New Deal–era companies, and early mass-market products that defined a generation of American consumers.",
+  "1940s": "Discover brands from the 1940s, shaped by World War II and postwar prosperity—from wartime product pivots to the consumer boom that followed victory.",
+  "1950s": "Explore discontinued brands from the 1950s—postwar prosperity built car culture, TV audiences, and the first modern supermarkets. See which brands defined the decade and which faded.",
+  "1960s": "Browse defunct brands from the 1960s—a decade of cultural upheaval, space-race technology, and new consumer products that reflected a generation's changing values and ambitions.",
+  "1970s": "Explore brands that peaked or closed in the 1970s—from inflation-era casualties and energy-crisis pivots to disco-era novelties and the rise of fast food culture.",
+  "1980s": "Discover discontinued brands from the 1980s—a decade of mall culture, leveraged buyouts, video games, and bold advertising that launched some of the era's most memorable products.",
+  "1990s": "Browse discontinued brands from the 1990s—from dot-com startups and tech pioneers to beloved snacks, toys, and retail chains. Discover what happened to these 90s icons.",
+  "2000s": "Discover defunct brands from the 2000s—from big-box retailers and early social networks to food products and consumer electronics that shaped the decade before disappearing.",
+  "2010s": "Explore brands that vanished in the 2010s—disrupted by smartphones, streaming, and e-commerce, covering retail shutdowns, app closures, and product discontinuations.",
+  "2020s": "Browse brands that disappeared in the 2020s—pandemic closures, streaming-era casualties, and retail chains that couldn't adapt to changing consumer habits and economic pressures.",
+};
+const desc = DECADE_DESC[requested] ?? `Browse ${items.length} discontinued brands from the ${requested}—timelines, fates, and the stories behind each one.`;
 const canonical = Astro.site ? new URL(hubPath, Astro.site).href : hubPath;
 
 const ldItems = items.map((b, i) => ({

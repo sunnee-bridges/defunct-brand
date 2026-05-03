@@ -4,15 +4,24 @@
   "category": "Beverages/Alcohol",
   "seo_category": "alcoholic-beverages",
   "country": "US",
-  "active": { "start": 1993, "end": 2008 },
+  "active": {
+    "start": 1993,
+    "end": 2008
+  },
   "hook": "Coors' citrus experiment—a massive 1990s hit that David Letterman mocked into oblivion",
   "fate": "U.S. discontinuation in 2008 after declining sales; brief limited revivals in 2017 and 2018. Zima returned in Japan in 2023 after a hiatus.",
   "summary": "A clear, citrus-leaning malt beverage introduced by Coors in 1993 with the slogan \"Zomething Different.\" Zima became a massive pop-culture phenomenon in 1994, peaking at 1.2 million barrels sold. However, David Letterman's relentless on-air ridicule between 1993–1994 severely damaged its brand image, and mounting competition from copycat brands led to sharp sales decline. Zima was discontinued in the U.S. in October 2008. The brand made brief nostalgic returns in 2017 and 2018, confirming its cult status.",
-  "notable_products": ["Zima Clearmalt", "Zima Citrus (assorted flavors)"],
-  "topics": ["vanished-product",  "discontinued",
-      "beverages",
-      "cult-favorite",
-      "90s-nostalgia"],
+  "notable_products": [
+    "Zima Clearmalt",
+    "Zima Citrus (assorted flavors)"
+  ],
+  "topics": [
+    "vanished-product",
+    "discontinued",
+    "beverages",
+    "cult-favorite",
+    "90s-nostalgia"
+  ],
   "overview_md": "**Zima** was Coors' clear, lightly citrus-flavored malt beverage that arrived in 1993 with \"it's zomething different\" positioning and frosty, translucent bottles. Riding the 1990s trend for clear, 'lighter' products, it sold briskly out of the gate and became a pop-culture shorthand for alternative beer.\n\nHowever, the turning point came unexpectedly. Between 1993 and 1994, late-night host David Letterman relentlessly mocked Zima on-air, comparing it to \"liquid polymer\" and ridiculing its ambiguous identity (\"not beer, not wine\"). The ridicule devastated brand perception, causing a dramatic sales decline even at the peak of its initial popularity. Compounding this cultural headwind, copycat competitors crowded shelves—notably Smirnoff Ice (1999), which succeeded where Zima stumbled by successfully marketing to male consumers. By 2008, distribution wound down in the U.S.\n\nNostalgia kept the name alive. After years of jokes and retro callbacks, Zima returned as a **limited release** in summer 2017 and again in 2018, targeting curiosity, tailgates, and backyard parties. The liquid stayed true to the original concept—crisp, sweet-leaning, and highly carbonated—while packaging leaned into 1990s vibes. The brief revivals confirmed its cult status: **a classic vanished product** that still sparks curiosity when it appears in vintage ads or party stories.\n\nOutside the U.S., Zima had a notably longer life in Japan, where it launched in 1996 and remained available for over two decades. Unlike its reputation as a \"feminine\" drink in America, Japanese consumers embraced it across genders and age groups. Supply chain disruptions caused by COVID-19 led to its discontinuation in Japan by December 2021, but it returned in 2023 through a partnership with Hakutsuru Sake Brewing Co., maintaining a foothold in a market where it never lost appeal.",
   "timeline": [
     {
@@ -94,5 +103,8 @@
       "label": "Mashed – The Untold Truth of Zima (cultural impact)",
       "url": "https://www.mashed.com/197573/the-untold-truth-of-zima/"
     }
-  ]
+  ],
+  "seo": {
+    "meta_description": "Zima was Coors' clear citrus malt beverage and a 1990s pop-culture phenomenon. Discontinued in the U.S. in 2008, it briefly returned for limited runs in 2017 and 2018."
+  }
 }

@@ -14,7 +14,7 @@ export const CATEGORY_META: Record<string, CatMeta> = {
   "food-beverage": {
     label: "Food & Beverage",
     desc:
-      "Cereal, snacks, and soft drinks—limited runs, cult favorites, and why they vanished.",
+      "Explore discontinued food and beverage brands—from beloved snack foods and cult sodas to discontinued cereals and drinks. Discover what happened and why these products vanished from shelves.",
   },
   "alcoholic-beverages": {
     label: "Alcoholic Beverages",

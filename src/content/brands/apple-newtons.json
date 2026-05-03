@@ -4,16 +4,26 @@
   "category": "Food/CPG",
   "seo_category": "food-beverage",
   "country": "US",
-  "active": { "start": "late 1980s", "end": "2010s (discontinued)" },
+  "active": {
+    "start": "late 1980s",
+    "end": "2010s (discontinued)"
+  },
   "hook": "The fruit-filled Newton cookie—spun off from Fig Newtons—with an apple-cinnamon filling.",
   "fate": "Discontinued as the Newtons lineup was pared back, the classic apple flavor quietly vanished by the 2010s.",
   "summary": "A Nabisco/Newtons line extension that swapped fig for apple-cinnamon filling inside the familiar soft cake cookie. Apple Newtons had devoted fans through the 1990s–2000s but were eventually retired as the brand simplified its flavors and shifted focus.",
-  "topics": [ "discontinued",
-      "snacks",
-      "90s-nostalgia"],
-  "notable_products": ["Apple Newtons (soft fruit-filled cookies)"],
+  "topics": [
+    "discontinued",
+    "snacks",
+    "90s-nostalgia"
+  ],
+  "notable_products": [
+    "Apple Newtons (soft fruit-filled cookies)"
+  ],
   "taglines": [
-    { "text": "A more fruit, less cookie kind of cookie.", "source": "Newtons brand slogan (period advertising/packaging)" }
+    {
+      "text": "A more fruit, less cookie kind of cookie.",
+      "source": "Newtons brand slogan (period advertising/packaging)"
+    }
   ],
   "links": {
     "wikipedia_newtons": "https://en.wikipedia.org/wiki/Newtons_(cookie)",
@@ -22,20 +32,51 @@
   },
   "overview_md": "Apple Newtons were a fruit-filled spin on the classic Fig Newtons cookie: the same soft cake exterior, but with a spiced apple-cinnamon filling. Sold under the Newtons umbrella, Apple joined other varieties that proliferated in the 1990s–2000s as the brand leaned into “more fruit, less cookie” positioning.\n\nAs cookie aisles consolidated, the lineup was trimmed and fringe flavors disappeared. By the 2010s, Apple Newtons had effectively vanished from mainstream U.S. retail while core offerings continued. Today, Apple Newtons live on as one of several beloved Newton flavors that didn’t survive.",
   "timeline": [
-    { "date": "1980s", "text": "Apple Newtons appear as a flavor extension of Fig Newtons." },
-    { "date": "1990s", "text": "National distribution alongside other fruit varieties." },
-    { "date": "2000s", "text": "Flavor assortment changes by retailer and region, along with packaging updates." },
-    { "date": "2010s", "text": "Apple flavor phased out as Newtons reduces SKUs and focuses on core offerings." }
+    {
+      "date": "1980s",
+      "text": "Apple Newtons appear as a flavor extension of Fig Newtons."
+    },
+    {
+      "date": "1990s",
+      "text": "National distribution alongside other fruit varieties."
+    },
+    {
+      "date": "2000s",
+      "text": "Flavor assortment changes by retailer and region, along with packaging updates."
+    },
+    {
+      "date": "2010s",
+      "text": "Apple flavor phased out as Newtons reduces SKUs and focuses on core offerings."
+    }
   ],
   "sources": [
-    { "label": "Wikipedia — Newtons", "url": "https://en.wikipedia.org/wiki/Newtons_(cookie)" },
-    { "label": "Dailymail - 15 Discontinued Cookies We'll Never See Again", "url": "https://www.thedailymeal.com/1297892/discontinued-cookies-never-getting-back/" },
-    { "label": "Packaging/ads reference", "url": "https://www.google.com/search?q=Apple+Newtons+box+Nabisco" }
-  ],"explore_more": {
+    {
+      "label": "Wikipedia — Newtons",
+      "url": "https://en.wikipedia.org/wiki/Newtons_(cookie)"
+    },
+    {
+      "label": "Dailymail - 15 Discontinued Cookies We'll Never See Again",
+      "url": "https://www.thedailymeal.com/1297892/discontinued-cookies-never-getting-back/"
+    },
+    {
+      "label": "Packaging/ads reference",
+      "url": "https://www.google.com/search?q=Apple+Newtons+box+Nabisco"
+    }
+  ],
+  "explore_more": {
     "category_label": "Looking for more cookies from the past?",
     "brands": [
-      { "name": "Almost Home", "slug": "almost-home-cookies" },
-      { "name": "Cookie Breaks", "slug": "cookie-break" }
+      {
+        "name": "Almost Home",
+        "slug": "almost-home-cookies"
+      },
+      {
+        "name": "Cookie Breaks",
+        "slug": "cookie-break"
+      }
     ]
+  },
+  "seo": {
+    "meta_description": "Apple Newtons were Nabisco's apple-cinnamon take on Fig Newtons—a soft, fruit-filled cookie popular through the 1990s and 2000s, quietly discontinued by the mid-2010s."
   }
 }

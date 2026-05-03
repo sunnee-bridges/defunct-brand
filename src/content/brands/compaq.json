@@ -4,22 +4,50 @@
   "category": "Computers",
   "seo_category": "computers-hardware",
   "country": "US",
-  "active": { "start": 1982, "end": 2002 },
+  "active": {
+    "start": 1982,
+    "end": 2002
+  },
   "hook": "Invented portable PC, merged into irrelevance",
   "fate": "Merged with Hewlett-Packard; HP–Compaq on May 3, 2002. The brand was later retired in many markets.",
   "summary": "PC pioneer known for IBM-compatible portables and aggressive pricing was acquired by Hewlett-Packard after a decade of scale and major acquisitions.",
-  "notable_products": ["Presario", "Armada", "iPAQ (handhelds)", "Compaq Portable"],
-  "topics": [ "acquired",
-      "internet-history",
-      "2000s-nostalgia"],
+  "notable_products": [
+    "Presario",
+    "Armada",
+    "iPAQ (handhelds)",
+    "Compaq Portable"
+  ],
+  "topics": [
+    "acquired",
+    "internet-history",
+    "2000s-nostalgia"
+  ],
   "overview_md": "**Compaq** helped define the IBM-compatible PC era. Founded in 1982 by Rod Canion, Jim Harris, and Bill Murto, the company’s early hit—the Compaq Portable—delivered near-perfect compatibility with IBM PC software while offering mobility for sales and engineering teams. Through the 1980s and early 1990s, Compaq pushed performance with Deskpro systems, competed fiercely on price, and built a global channel that made PC clones mainstream for business.\n\nBy the mid-1990s Compaq was a Fortune-scale manufacturer spanning desktops, notebooks (Armada), and consumer lines (Presario). It moved up-market with enterprise servers and, in 1998, acquired Digital Equipment Corporation (DEC), gaining Alpha servers, services, and a deeper sales footprint, along with complexity and integration challenges. Consumer handhelds under the iPAQ brand (Pocket PC) briefly gave Compaq a lead in PDAs just as smartphones began to loom.\n\nSeeking scale and cost synergies as PC margins thinned, Compaq agreed to merge with Hewlett-Packard. Announced in late 2001 and closed in May 2002, the deal created one of the world’s largest PC and server vendors but also sparked debate about strategy and culture. Over time, HP de-emphasized the Compaq name outside value segments.",
   "timeline": [
-    { "date": "1982-02-16", "text": "Compaq Computer Corporation founded in Houston, Texas." },
-    { "date": "1982-11-01", "text": "Compaq Portable, an IBM-compatible 'luggable' device, targets business travelers." },
-    { "date": "1990s-11-01", "text": "Continued growth through desktop, notebook, and consumer line manufacturing." },
-    { "date": "1998-06-11", "text": "Acquires Digital Equipment Corporation (DEC), expanding into enterprise systems and services." },
-    { "date": "2001-09-03", "text": "HP announces plan to acquire Compaq in an all-stock merger." },
-    { "date": "2002-05-03", "text": "HP-Compaq merger closes, and Compaq brand shifts to value PCs before being phased out in many regions." }
+    {
+      "date": "1982-02-16",
+      "text": "Compaq Computer Corporation founded in Houston, Texas."
+    },
+    {
+      "date": "1982-11-01",
+      "text": "Compaq Portable, an IBM-compatible 'luggable' device, targets business travelers."
+    },
+    {
+      "date": "1990s-11-01",
+      "text": "Continued growth through desktop, notebook, and consumer line manufacturing."
+    },
+    {
+      "date": "1998-06-11",
+      "text": "Acquires Digital Equipment Corporation (DEC), expanding into enterprise systems and services."
+    },
+    {
+      "date": "2001-09-03",
+      "text": "HP announces plan to acquire Compaq in an all-stock merger."
+    },
+    {
+      "date": "2002-05-03",
+      "text": "HP-Compaq merger closes, and Compaq brand shifts to value PCs before being phased out in many regions."
+    }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Compaq",
@@ -29,14 +57,33 @@
     "ipaq": "https://en.wikipedia.org/wiki/IPaq"
   },
   "sources": [
-    { "label": "Wikipedia – Compaq", "url": "https://en.wikipedia.org/wiki/Compaq" },
-    { "label": "A Pact with Compaq - HP", "url": "https://www.hewlettpackardhistory.com/item/a-pact-with-compaq/" },
-    { "label": "HP Compaq' branding to end next year, Compaq name will live on for 'basic computing at entry-level pricing - The Verge", "url": "https://archive.is/pyE9f" },
-    { "label": "Compaq: From place mat sketch to PC giant - USA Today", "url": "https://archive.is/5cexe" }
-  ],"explore_more": {
+    {
+      "label": "Wikipedia – Compaq",
+      "url": "https://en.wikipedia.org/wiki/Compaq"
+    },
+    {
+      "label": "A Pact with Compaq - HP",
+      "url": "https://www.hewlettpackardhistory.com/item/a-pact-with-compaq/"
+    },
+    {
+      "label": "HP Compaq' branding to end next year, Compaq name will live on for 'basic computing at entry-level pricing - The Verge",
+      "url": "https://archive.is/pyE9f"
+    },
+    {
+      "label": "Compaq: From place mat sketch to PC giant - USA Today",
+      "url": "https://archive.is/5cexe"
+    }
+  ],
+  "explore_more": {
     "category_label": "Interested in more upstart tech from the past?",
     "brands": [
-      { "name": "Blackberry Phones", "slug": "blackberry-os-phones" }
+      {
+        "name": "Blackberry Phones",
+        "slug": "blackberry-os-phones"
+      }
     ]
+  },
+  "seo": {
+    "meta_description": "Compaq pioneered the IBM-compatible portable PC in 1982 and became a global brand before HP acquired it in 2002 and gradually phased out the Compaq name worldwide."
   }
 }

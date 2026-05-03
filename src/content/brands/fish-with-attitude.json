@@ -4,7 +4,10 @@
   "category": "Games/Mobile Apps",
   "seo_category": "toys-games",
   "country": "US",
-  "active": { "start": 2012, "end": 2014 },
+  "active": {
+    "start": 2012,
+    "end": 2014
+  },
   "hook": "Mood-based virtual aquarium game shut down after just 2 years",
   "fate": "Crowdstar servers shut down in 2014, making game unplayable due to required online connection",
   "summary": "Free-to-play mobile aquarium game by Crowdstar where players collected fish with different moods and personalities. Fish with Attitude was released for both iOS and Android, and gained millions of downloads before servers shut down in 2014.",
@@ -13,29 +16,47 @@
     "Fish with Attitude Android app",
     "In-app purchases (fish, decorations, coins)"
   ],
-  "topics": ["discontinued",
-      "video-games",
-      "2000s-nostalgia"],
+  "topics": [
+    "discontinued",
+    "video-games",
+    "2000s-nostalgia"
+  ],
   "links": {},
   "overview_md": "**Fish with Attitude** was a free-to-play mobile aquarium game developed by Crowdstar and released in 2012 for iOS and Android devices. Players collected virtual fish with different moods and personalities, decorated aquariums, and bred new fish species.\n\nLaunched during the peak of casual mobile gaming in 2012, Fish with Attitude capitalized on the virtual pet and aquarium game trend. The game followed successful formulas established by titles like FarmVille and DragonVale, but added distinct moods and attitudes for each fish.\n\nFish came with personalities like Grumpy, Happy, Silly, Zen, Romantic, and dozens of others. Each mood was represented by distinctive colors, expressions, and animations. Players bred fish together to create rare hybrid combinations, discovering new mood types through experimentation.\n\nPlayers decorated tanks with rocks, plants, treasure chests, and themed accessories. As tanks filled with fish, they generated coins to buy food, decorations, and expand to additional aquariums. The game featured multiple tank themes including tropical, ocean, and fantasy environments.\n\nSocial features were central to the experience. Players connected through Facebook to visit friends' aquariums, send gifts, and compare collections. Social integration helped the game spread virally. Seeing friends' elaborate tanks spawned competition and creativity, and drove not only player retention, but in-app purchases.\n\nCrowdstar monetized through in-app purchases. While the base game was free, players could buy premium currency called pearls to speed up breeding, purchase exclusive fish, and unlock rare decorations. Some of the most desirable fish were only available through real money purchases, creating a \"pay to collect them all\" dynamic common in freemium games.\n\nThe game was initially successful, reaching millions of downloads across iOS and Android. App Store rankings placed it in top grossing categories during 2012-2013. The combination of collectible gameplay, cute graphics, and social features resonated with casual mobile gamers.\n\nHowever, Fish with Attitude was built as an always-online game requiring constant server connection. All game data was stored on Crowdstar's servers, not locally on devices. This design prevented piracy and enabled social features but created a critical vulnerability; if servers shut down, the game would become completely unplayable.\n\nBy 2014, Crowdstar's priorities shifted. The company, owned by Glu Mobile, restructured its game portfolio and focusing on fewer titles with stronger revenue. Fish with Attitude no longer made enough money to justify ongoing server costs and development. The decision was made to shut down the game.\n\nCrowdstar announced the shutdownjust weeks before pulling the plug. Players were devastated. Many had spent years building collections and had invested in-app purchases. The announcement sparked outrage in player communities as people realized their progress and purchases would simply vanish.\n\nWhen servers shut down in 2014, Fish with Attitude became instantly unplayable. Opening the app led to connection errors. All fish, aquariums, and progress disappeared. Players who spent hundreds of dollars on in-app purchases lost everything with no refunds offered. The game was removed from app stores, erasing it from official channels.\n\nUnlike traditional games you could play offline indefinitely, Fish with Attitude was essentially rented, not owned. When Crowdstar decided it wasn't profitable enough to maintain, players had no recourse. Their collections existed only on servers that no longer existed.\n\nFormer players expressed frustration and sadness on forums and social media. Many described feeling betrayed after investing time and money into something that could be taken away without warning. The emotional attachment to virtual fish collections was real. These weren't just pixels, but digital pets players named, bred, and cared for over time.\n\nThe Fish with Attitude shutdown became a cautionary tale discussed in gaming communities about the risks of always-online games and in-app purchases. Gaming journalists cited it when discussing player rights and digital ownership. The incident raised questions about whether companies owed refunds or compensation when shutting down games people had paid into.\n\nToday, **Fish with Attitude**  lives on with screenshots and YouTube videos as the only remaining evidence of its existence. Screenshots and YouTube videos are the only remaining evidence of the game's existence. Former players occasionally post nostalgic comments on these videos, reminiscing about favorite fish and aquarium designs.\n\nThe game lives on in mobile gaming history as an example of the 2012-2014 era when simple collection games dominated app stores before more complex titles took over.\n\nThe joy of discovering new fish combinations, decorating tanks, and sharing creations with friends was real. The abrupt shutdown reminded players that in the modern gaming landscape, nothing digital is truly permanent.",
   "timeline": [
-    { "date": "2012", "text": "Fish with Attitude iOS and Android, reaching millions of downloads and appearining in top-grossing app charts" },
-    { "date": "2013", "text": "Player base remains active; regular updates add new fish and features" },
-    { "date": "2014", "text": "Crowdstar/Glu Mobile restructures game portfolio and marks Fish with Attitude for shutdown within weeks of warning, causing massive player outcry" }
+    {
+      "date": "2012",
+      "text": "Fish with Attitude iOS and Android, reaching millions of downloads and appearining in top-grossing app charts"
+    },
+    {
+      "date": "2013",
+      "text": "Player base remains active; regular updates add new fish and features"
+    },
+    {
+      "date": "2014",
+      "text": "Crowdstar/Glu Mobile restructures game portfolio and marks Fish with Attitude for shutdown within weeks of warning, causing massive player outcry"
+    }
   ],
   "sources": [
-    { 
-      "label": "Crowdstar Wikipedia page", 
-      "url": "https://en.wikipedia.org/wiki/CrowdStar" 
+    {
+      "label": "Crowdstar Wikipedia page",
+      "url": "https://en.wikipedia.org/wiki/CrowdStar"
     },
-    { 
-      "label": "Fish with Attitude game page - Crowdstar", 
-      "url": "https://web.archive.org/web/20140213090722/http://www.crowdstar.com/games/fishwithattitude" 
+    {
+      "label": "Fish with Attitude game page - Crowdstar",
+      "url": "https://web.archive.org/web/20140213090722/http://www.crowdstar.com/games/fishwithattitude"
     }
-  ],"explore_more": {
+  ],
+  "explore_more": {
     "category_label": "Interested in more gaming from days gone by?",
     "brands": [
-      { "name": "LEGO Universe", "slug": "lego-universe" }
+      {
+        "name": "LEGO Universe",
+        "slug": "lego-universe"
+      }
     ]
+  },
+  "seo": {
+    "meta_description": "Fish with Attitude let players collect mood-based fish in a virtual aquarium. Crowdstar's mobile game gained millions of players before servers shut down in 2014."
   }
 }

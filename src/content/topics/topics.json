@@ -1,7 +1,7 @@
 {
   "music-players": {
     "label": "Music Players",
-    "desc": "Explore discontinued music players and services: timelines, outcomes, and related brands.",
+    "desc": "Explore discontinued music players and services—from portable CD players and MiniDisc to early streaming. Timelines, outcomes, and the brands that shaped how we listened.",
     "descLong": "From early MP3 devices to smartphone-era transitions...",
     "heroImage": "/og/hubs/music-players.png",
     "faq": [
@@ -10,13 +10,58 @@
   },
   "portable-audio": {
     "label": "Portable Audio",
-    "desc": "Portable audio devices that came and went...",
+    "desc": "Portable audio devices that came and went—spanning cassette, CD, MiniDisc, and early digital eras. Browse the brands that defined how we listened on the go.",
     "descLong": "Spanning cassette, CD, MiniDisc, and digital eras..."
   },
-   "scandal": {
+  "scandal": {
     "label": "Scandal-Ended Brands",
-    "desc": "Companies and brands that collapsed primarily due to fraud, misconduct, or major ethical scandals.",
+    "desc": "Companies and brands that collapsed due to fraud, misconduct, or major ethical scandals—from Enron and Theranos to FTX. Timelines, fates, and what went wrong.",
     "descLong": "From Enron and WorldCom to Theranos and FTX, these cases show how governance failures and misconduct can erase even famous names. This hub collects timelines, fates, and sources.",
     "heroImage": "/images/topics/scandal-hero.jpg"
+  },
+  "revived-brand": {
+    "label": "Revived Brands",
+    "desc": "Brands that disappeared and came back—sometimes stronger, sometimes changed beyond recognition. Browse the discontinued labels that got a second chance and what happened next.",
+    "descLong": "Not every defunct brand stays gone. Some return as nostalgia plays, some through new ownership, and some as shadows of their former selves. This topic collects the revivals."
+  },
+  "food-service": {
+    "label": "Food Service",
+    "desc": "Discontinued restaurant chains, cafeteria concepts, and food-service brands that fed generations before closing. Browse timelines, fates, and what led each one to disappear.",
+    "descLong": "From regional diners to national chains, food-service brands often become deeply tied to community memory before they vanish."
+  },
+  "energy-drink-era": {
+    "label": "Energy Drink Era",
+    "desc": "The early energy drink market was wild—caffeinated alcohol, extreme formulas, and bold branding that regulators eventually reined in. Browse the brands that defined and ended the era.",
+    "descLong": "Before strict regulations, brands like Sparks and Tilt blended caffeine with alcohol. The FDA crackdown in 2008-2010 reshaped the entire category."
+  },
+  "movie-theater": {
+    "label": "Movie Theater",
+    "desc": "Snack brands, concession staples, and products closely tied to the movie theater experience—some discontinued, some just faded. Browse what we used to eat at the movies.",
+    "descLong": "Movie theater candy and snacks often outlast the films themselves—until they don't. This topic covers concession-aisle staples and brands tied to the cinema experience."
+  },
+  "1920s-brand": {
+    "label": "1920s Brands",
+    "desc": "Brands founded or defined in the 1920s—from Prohibition-era products and early aviation pioneers to the retailers and car marques that shaped American consumer culture.",
+    "descLong": "The 1920s were a decade of dramatic economic growth, new consumer technologies, and cultural transformation. Many brands born in this era outlasted the Depression before eventually disappearing."
+  },
+  "regulatory-crackdown": {
+    "label": "Regulatory Crackdown",
+    "desc": "Brands that were discontinued or drastically changed due to government bans, safety recalls, or regulatory enforcement—including banned food additives, alcohol-caffeine mixes, and unsafe toys.",
+    "descLong": "Some products don't fade—they're stopped. Regulatory crackdowns on safety, ingredients, or labeling have ended multiple well-known brands and product categories."
+  },
+  "bankruptcy": {
+    "label": "Bankruptcy",
+    "desc": "Brands that ended or were reshaped by bankruptcy—including retail chains, airlines, tech companies, and consumer brands that filed Chapter 11 or liquidated. Browse what happened to each.",
+    "descLong": "Bankruptcy doesn't always mean the end—some brands restructure and return, while others liquidate entirely. This topic covers the full spectrum of what happens when companies run out of options."
+  },
+  "vanished-product": {
+    "label": "Vanished Products",
+    "desc": "Specific products—not full brands—that were quietly or abruptly discontinued. From beloved snacks and beverages to toys and gadgets, browse what disappeared and what the brand said about it.",
+    "descLong": "Sometimes the brand survives but the product doesn't. Vanished Products covers the individual SKUs, flavors, and models that were cut from lineups, often without much fanfare."
+  },
+  "deregulation-era": {
+    "label": "Deregulation Era",
+    "desc": "Brands shaped or undone by industry deregulation—especially in aviation and finance. Browse the companies that thrived briefly after deregulation, then collapsed under new competitive pressures.",
+    "descLong": "Deregulation opened markets but also created volatility. In aviation especially, the post-1978 deregulation era saw rapid expansion followed by consolidation and bankruptcy."
   }
 }

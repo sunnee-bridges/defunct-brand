@@ -4,30 +4,78 @@
   "category": "Software/Internet",
   "seo_category": "software-internet",
   "country": "US",
-  "active": { "start": 1994, "end": 2008 },
+  "active": {
+    "start": 1994,
+    "end": 2008
+  },
   "hook": "Netscape lost the browser war but its code became the internet you use today",
   "fate": "AOL acquired Netscape in 1999 in a deal worth 10 billion dollars. The Netscape brand lingered through the 2000s as a minor portal and browser label before AOL ended all support for Netscape-branded browsers on March 1 2008. The Mozilla codebase Netscape open-sourced in 1998 went on to power Firefox, and technologies Netscape engineers invented including JavaScript, SSL encryption, and HTTP cookies remain foundational to the modern web.",
   "summary": "Netscape Navigator defined the early consumer web and its 1995 IPO sparked the dot-com era. Microsoft buried the brand through bundling Internet Explorer with Windows. But before Netscape died it open-sourced its code, giving the world Mozilla and eventually Firefox.",
-  "notable_products": ["Netscape Navigator", "Netscape Communicator", "Netscape 6 and 7"],
-  "topics": ["acquired",
-      "internet-history",
-      "90s-nostalgia",
-      "cult-favorite"],
+  "notable_products": [
+    "Netscape Navigator",
+    "Netscape Communicator",
+    "Netscape 6 and 7"
+  ],
+  "topics": [
+    "acquired",
+    "internet-history",
+    "90s-nostalgia",
+    "cult-favorite"
+  ],
   "overview_md": "Netscape invented very little of the underlying internet. What it did was make the internet feel like somewhere worth going. That distinction is easy to underestimate and almost impossible to overstate.\n\nThe company was founded on April 4 1994 as Mosaic Communications Corporation by Jim Clark, who had previously built Silicon Graphics into a major workstation company, and Marc Andreessen, who was 22 years old and had just left the University of Illinois where he helped create the NCSA Mosaic browser. Clark had approached Andreessen about building an internet product together. Their first idea was a gaming network for the Nintendo 64. Nintendo passed. So they built a browser instead.\n\nThe company renamed itself Netscape Communications in November 1994 after the University of Illinois objected to the Mosaic name. By then the first version of the browser, originally called Mosaic Netscape 0.9, had already captured three quarters of the browser market within four months of release. The final product was renamed Netscape Navigator. It was faster and more reliable than anything else available. It rendered images inline on the page rather than in separate windows. It worked on Windows, Mac, and Unix. Users could follow links, read pages, and feel something clicking into place that had not clicked before.\n\nNavigator peaked at roughly 80 percent browser market share in 1996. At that point Netscape was not just a company. It was the word people used when they talked about the web. Its engineers were celebrities. Marc Andreessen appeared on the cover of Time magazine in February 1996, barefoot, seated on a throne, styled by the magazine as a king of the new digital economy.\n\nThe IPO that preceded all of this was the financial event that defined an era. On August 9 1995 Netscape put five million shares on sale through NASDAQ at 28 dollars per share. The company had never turned a profit. Trading was delayed nearly two hours because demand was so overwhelming the exchange could not process the order flow. When shares finally opened they traded at 71 dollars. They peaked at 74.75 dollars that day before closing at 58.25 dollars, giving Netscape a market value of roughly 2.9 billion dollars. Jim Clark's stake was worth 566 million dollars at close. Andreessen, 24 years old, held stock worth 58 million dollars. The Wall Street Journal noted that it had taken General Dynamics 43 years to become a corporation worth 2.7 billion dollars. It had taken Netscape approximately one minute.\n\nThe IPO coined a phrase that is still used today. A high-visibility offering that signals the arrival of a new industry is called a Netscape moment. The dot-com boom that followed, the billions poured into internet companies that often had no revenue and no plan, the venture capital goldrush that reshaped Sand Hill Road — all of it traces back to that August morning when trading could not open because too many people wanted in.\n\nMicrosoft noticed. In June 1995 a group of Microsoft executives arrived at Netscape's offices with what Andreessen later described as a proposal to divide the browser market. Netscape would keep browsers on operating systems other than Windows and Microsoft would own the Windows browser market. Netscape refused. Microsoft then shipped Internet Explorer 1.0 in August 1995, a hastily licensed version of the Spyglass Mosaic browser. Early versions were clearly inferior to Navigator. By Internet Explorer 3.0 and 4.0, the gap had closed. Microsoft bundled Internet Explorer with every copy of Windows 95 and Windows 98 at no charge. Netscape charged users for Navigator until January 1998. The bundling strategy made it nearly impossible for any competing browser to gain distribution through retail channels. Netscape's market share, which had been 80 percent in 1996, fell below 50 percent by the time AOL acquired the company.\n\nThe antitrust case that followed, United States v. Microsoft, found that Microsoft had illegally maintained its operating system monopoly through the browser bundling strategy. The remedy, a proposed breakup of Microsoft, was eventually overturned on appeal and replaced with a consent decree. By then Netscape was already gone as an independent company.\n\nIn November 1998 AOL agreed to acquire Netscape in a deal ultimately valued at 10 billion dollars. The acquisition closed in 1999. AOL wanted Netscape's portal traffic and e-commerce infrastructure. The browser was secondary. Netscape's revenue had grown from 85 million dollars in 1995 to 534 million dollars in 1997 and then stalled as browser market share collapsed. By 2002 the Netscape browser held less than 10 percent of the market. AOL kept the brand alive as a portal and relaunched browser versions built on the Mozilla codebase through the mid-2000s. On March 1 2008 AOL announced that all support for Netscape-branded browsers was ending and advised remaining users to switch to Firefox.\n\nWhat survived Netscape was more consequential than Netscape itself. In February 1998, before the AOL acquisition closed, Netscape made a decision that turned out to reshape the entire software industry. Facing inevitable defeat in the browser market, the company open-sourced Navigator's code under the name Mozilla. The Mozilla project rewrote the browser from scratch using the Gecko rendering engine. When AOL wound down its involvement with Mozilla in the early 2000s, the project established the independent Mozilla Foundation in 2003 with seed funding from AOL. The Mozilla Foundation shipped Firefox 1.0 in November 2004. Within a year it had captured ten percent of the browser market and restarted competitive pressure on Internet Explorer that had gone dormant since Netscape's collapse.\n\nBeyond Mozilla, the technologies Netscape engineers built remain embedded in every website and every browser in use today. Brendan Eich, a Netscape engineer, created JavaScript in ten days in 1995. It is now the most widely used programming language on the web. Netscape developed SSL, the encryption protocol that made online transactions safe enough for e-commerce to exist. The padlock icon in a browser address bar exists because of what Netscape built. Netscape engineers also introduced HTTP cookies as a way for websites to remember user sessions. Every website that keeps you logged in, remembers your shopping cart, or personalizes content is using a mechanism Netscape invented.\n\nThe company lost the browser war. Its name is gone. But the web that replaced it was built almost entirely from the tools and standards Netscape left behind.",
   "timeline": [
-    { "date": "1994-04", "text": "Jim Clark and Marc Andreessen found Mosaic Communications Corporation in Mountain View, California." },
-    { "date": "1994-10", "text": "Mosaic Netscape 0.9 releases and captures 75 percent of the browser market within four months." },
-    { "date": "1994-11", "text": "Company renames itself Netscape Communications after the University of Illinois objects to the Mosaic name." },
-    { "date": "1995-08", "text": "Netscape IPO opens at 71 dollars per share after nearly two hours of delayed trading due to overwhelming demand. Shares close at 58.25 dollars, valuing the 16-month-old company at 2.9 billion dollars." },
-    { "date": "1995-08", "text": "Microsoft ships Internet Explorer 1.0 the same month as the Netscape IPO, beginning the browser war." },
-    { "date": "1995-12", "text": "Netscape shares hit a peak of 174 dollars. Brendan Eich had shipped JavaScript to Navigator earlier that year." },
-    { "date": "1996", "text": "Netscape Navigator reaches its peak market share of roughly 80 percent. Netscape Communicator bundles email, a newsreader, and web authoring tools alongside the browser." },
-    { "date": "1998-01", "text": "Netscape makes Navigator free to all users, a move that came too late to counter Microsoft's bundling strategy." },
-    { "date": "1998-02", "text": "Netscape open-sources Navigator's code under the name Mozilla, launching what will become the Mozilla project." },
-    { "date": "1998-11", "text": "AOL agrees to acquire Netscape in a deal ultimately worth 10 billion dollars." },
-    { "date": "2003-07", "text": "The Mozilla Foundation is established as an independent nonprofit with AOL seed funding after AOL scales back its Mozilla involvement." },
-    { "date": "2004-11", "text": "Firefox 1.0 ships, built on Mozilla, and begins reversing Internet Explorer's monopoly." },
-    { "date": "2008-03", "text": "AOL ends all support for Netscape-branded browsers and advises remaining users to switch to Firefox." }
+    {
+      "date": "1994-04",
+      "text": "Jim Clark and Marc Andreessen found Mosaic Communications Corporation in Mountain View, California."
+    },
+    {
+      "date": "1994-10",
+      "text": "Mosaic Netscape 0.9 releases and captures 75 percent of the browser market within four months."
+    },
+    {
+      "date": "1994-11",
+      "text": "Company renames itself Netscape Communications after the University of Illinois objects to the Mosaic name."
+    },
+    {
+      "date": "1995-08",
+      "text": "Netscape IPO opens at 71 dollars per share after nearly two hours of delayed trading due to overwhelming demand. Shares close at 58.25 dollars, valuing the 16-month-old company at 2.9 billion dollars."
+    },
+    {
+      "date": "1995-08",
+      "text": "Microsoft ships Internet Explorer 1.0 the same month as the Netscape IPO, beginning the browser war."
+    },
+    {
+      "date": "1995-12",
+      "text": "Netscape shares hit a peak of 174 dollars. Brendan Eich had shipped JavaScript to Navigator earlier that year."
+    },
+    {
+      "date": "1996",
+      "text": "Netscape Navigator reaches its peak market share of roughly 80 percent. Netscape Communicator bundles email, a newsreader, and web authoring tools alongside the browser."
+    },
+    {
+      "date": "1998-01",
+      "text": "Netscape makes Navigator free to all users, a move that came too late to counter Microsoft's bundling strategy."
+    },
+    {
+      "date": "1998-02",
+      "text": "Netscape open-sources Navigator's code under the name Mozilla, launching what will become the Mozilla project."
+    },
+    {
+      "date": "1998-11",
+      "text": "AOL agrees to acquire Netscape in a deal ultimately worth 10 billion dollars."
+    },
+    {
+      "date": "2003-07",
+      "text": "The Mozilla Foundation is established as an independent nonprofit with AOL seed funding after AOL scales back its Mozilla involvement."
+    },
+    {
+      "date": "2004-11",
+      "text": "Firefox 1.0 ships, built on Mozilla, and begins reversing Internet Explorer's monopoly."
+    },
+    {
+      "date": "2008-03",
+      "text": "AOL ends all support for Netscape-branded browsers and advises remaining users to switch to Firefox."
+    }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Netscape",
@@ -40,13 +88,40 @@
     "fortune_oral_history": "https://fortune.com/2015/08/09/remembering-netscape/"
   },
   "sources": [
-    { "label": "Wikipedia – Netscape", "url": "https://en.wikipedia.org/wiki/Netscape" },
-    { "label": "Wikipedia – Netscape Navigator", "url": "https://en.wikipedia.org/wiki/Netscape_Navigator" },
-    { "label": "Wikipedia – Marc Andreessen", "url": "https://en.wikipedia.org/wiki/Marc_Andreessen" },
-    { "label": "Wikipedia – JavaScript", "url": "https://en.wikipedia.org/wiki/JavaScript" },
-    { "label": "Fortune – Netscape IPO oral history 2005 republished 2015", "url": "https://fortune.com/2015/08/09/remembering-netscape/" },
-    { "label": "Internet History Podcast – Why Netscape's IPO was the Big Bang of the internet era", "url": "https://www.internethistorypodcast.com/2015/08/20-years-on-why-netscapes-ipo-was-the-big-bang-of-the-internet-era/" },
-    { "label": "The Hill – Netscape: Remembering the internet's Big Bang 30 years later (2025)", "url": "https://thehill.com/opinion/technology/5442017-netscape-remembering-the-internets-big-bang-30-years-later/" },
-    { "label": "Motley Fool – The IPO that inflated the dot-com bubble", "url": "https://www.fool.com/investing/general/2013/08/09/the-ipo-that-inflated-the-dot-com-bubble.aspx" }
-  ]
+    {
+      "label": "Wikipedia – Netscape",
+      "url": "https://en.wikipedia.org/wiki/Netscape"
+    },
+    {
+      "label": "Wikipedia – Netscape Navigator",
+      "url": "https://en.wikipedia.org/wiki/Netscape_Navigator"
+    },
+    {
+      "label": "Wikipedia – Marc Andreessen",
+      "url": "https://en.wikipedia.org/wiki/Marc_Andreessen"
+    },
+    {
+      "label": "Wikipedia – JavaScript",
+      "url": "https://en.wikipedia.org/wiki/JavaScript"
+    },
+    {
+      "label": "Fortune – Netscape IPO oral history 2005 republished 2015",
+      "url": "https://fortune.com/2015/08/09/remembering-netscape/"
+    },
+    {
+      "label": "Internet History Podcast – Why Netscape's IPO was the Big Bang of the internet era",
+      "url": "https://www.internethistorypodcast.com/2015/08/20-years-on-why-netscapes-ipo-was-the-big-bang-of-the-internet-era/"
+    },
+    {
+      "label": "The Hill – Netscape: Remembering the internet's Big Bang 30 years later (2025)",
+      "url": "https://thehill.com/opinion/technology/5442017-netscape-remembering-the-internets-big-bang-30-years-later/"
+    },
+    {
+      "label": "Motley Fool – The IPO that inflated the dot-com bubble",
+      "url": "https://www.fool.com/investing/general/2013/08/09/the-ipo-that-inflated-the-dot-com-bubble.aspx"
+    }
+  ],
+  "seo": {
+    "meta_description": "Netscape defined the early web and its 1995 IPO sparked the dot-com era. Microsoft buried it by bundling IE with Windows; AOL shut down the Netscape brand in 2008."
+  }
 }

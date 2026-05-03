@@ -4,19 +4,27 @@
   "category": "Food/CPG",
   "seo_category": "food-beverage",
   "country": "US",
-  "active": { "start": 1973, "end": 1981 },
+  "active": {
+    "start": 1973,
+    "end": 1981
+  },
   "hook": "8-inch braided caramel bar with a ruler on the wrapper—\"Lasts a good long time.\"",
   "fate": "National production ended when the product was discontinued in the U.S. by the early 1980s.",
   "summary": "Mars U.S. **Marathon bar** was a braided caramel rope covered in milk chocolate, famously sold in an extra-long 8-inch format with a printed ruler on the wrapper and the tagline \"Lasts a good long time.\" It built a small cult following but was dropped as Mars restructures its lineup. The name **Marathon** later cause confusion with the U.K., where Snickers was called Marathon until 1990.",
   "notable_products": [
     "Marathon braided caramel bar (8-inch ruler wrapper)"
   ],
-  "topics": [ "discontinued",
-      "candy",
-      "80s-nostalgia",
-      "cult-favorite"],
+  "topics": [
+    "discontinued",
+    "candy",
+    "80s-nostalgia",
+    "cult-favorite"
+  ],
   "taglines": [
-    { "text": "Lasts a good long time.", "source": "Advertising slogan (1970s)" }
+    {
+      "text": "Lasts a good long time.",
+      "source": "Advertising slogan (1970s)"
+    }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Marathon_(chocolate_bar)",
@@ -24,22 +32,47 @@
   },
   "overview_md": "Mars The U.S. **Marathon bar** was Mars extra-long, braided caramel candy bar coated in milk chocolate, launched in 1973. Its signature gimmick was the 8-inch ruler printed on the wrapper to emphasize length and chew time, supported by the tagline \"Lasts a good long time.\" Despite memorable marketing and a small cult following, the product was discontinued by 1981 as Mars trimmed slower sellers.\n\nSome may recall remember Marathon bars in the United Kingdom, but its only similarity to the American bar was in name only. Until 1990, the U.K's version of Marathon was the equivalent of an American Snickers bar. This added confusion from across the pond. Unfortunately for the devoted fan base, the braided Marathon bar remains discontinued in the United States.",
   "timeline": [
-    { "date": "1973-08", "text": "Marathon bar launches in the U.S. as a braided caramel and chocolate bar with an 8-inch wrapper ruler" },
-    { "date": "late-1970s", "text": "TV spots and print ads push the \"Lasts a good long time\" tagline." },
-    { "date": "1981", "text": "Product discontinued in the U.S. as Mars restructures its portfolio." },
-    { "date": "1990", "text": "U.K. \"Marathon\" brand name officially changes to Snickers." }
+    {
+      "date": "1973-08",
+      "text": "Marathon bar launches in the U.S. as a braided caramel and chocolate bar with an 8-inch wrapper ruler"
+    },
+    {
+      "date": "late-1970s",
+      "text": "TV spots and print ads push the \"Lasts a good long time\" tagline."
+    },
+    {
+      "date": "1981",
+      "text": "Product discontinued in the U.S. as Mars restructures its portfolio."
+    },
+    {
+      "date": "1990",
+      "text": "U.K. \"Marathon\" brand name officially changes to Snickers."
+    }
   ],
- "sources": [
-  { "label": "Wikipedia — Marathon (chocolate bar) overview", "url": "https://en.wikipedia.org/wiki/Marathon_(chocolate_bar)" },
-  { "label": "YouTube — 1975 Marathon TV commercials", "url": "https://www.youtube.com/watch?v=Evp187KImq4" }
-],
-  
-   "explore_more": {
+  "sources": [
+    {
+      "label": "Wikipedia — Marathon (chocolate bar) overview",
+      "url": "https://en.wikipedia.org/wiki/Marathon_(chocolate_bar)"
+    },
+    {
+      "label": "YouTube — 1975 Marathon TV commercials",
+      "url": "https://www.youtube.com/watch?v=Evp187KImq4"
+    }
+  ],
+  "explore_more": {
     "category_label": "Need more confections to satisfy your sweet tooth?",
     "brands": [
-      { "name": "Almost Home Cookies", "slug": "almost-home-cookies" },
-      { "name": "Brach's Maple Nut Goodies", "slug": "brachs-maple-nut-goodies" }
+      {
+        "name": "Almost Home Cookies",
+        "slug": "almost-home-cookies"
+      },
+      {
+        "name": "Brach's Maple Nut Goodies",
+        "slug": "brachs-maple-nut-goodies"
+      }
     ]
+  },
+  "seo": {
+    "meta_description": "The Marathon Bar was Mars's 8-inch braided caramel rope dipped in chocolate, sold 1973–1981 with a ruler on the wrapper and the tagline 'Lasts a good long time.'"
   }
-
 }

@@ -4,22 +4,46 @@
   "category": "Automotive",
   "seo_category": "automotive",
   "country": "US",
-  "active": { "start": 1987, "end": 1987 },
+  "active": {
+    "start": 1987,
+    "end": 1987
+  },
   "hook": "Ultimate Grand National, limited run became legend",
   "fate": "One-year limited run of 547 units built with ASC/McLaren that discontinued at the end of the Regal-based Grand National program",
   "summary": "Ultra-limited 1987 Buick GNX — the ultimate Grand National — is now a cult icon revived in pop culture via Kendrick Lamar’s 2024 album title and imagery.",
-  "notable_products": ["GNX (Grand National Experimental)", "Grand National (base platform)"],
-  "topics": ["vanished-product", "discontinued",
-      "automotive",
-      "80s-nostalgia",
-      "cult-favorite"],
+  "notable_products": [
+    "GNX (Grand National Experimental)",
+    "Grand National (base platform)"
+  ],
+  "topics": [
+    "vanished-product",
+    "discontinued",
+    "automotive",
+    "80s-nostalgia",
+    "cult-favorite"
+  ],
   "overview_md": "**Buick GNX** was the ultimate evolution of the turbocharged Grand National—a one-year, 1987 collaboration with ASC/McLaren that capped Buick’s dark, stealthy muscle-car era. Officially rated at 276 hp and 360 lb-ft, contemporary testing and lore suggest actual output over 300 hp, backed by suspension, transmission, and cooling upgrades that made the GNX a street legend. Only 547 examples were produced, all in black, and many were pre-sold to collectors; the run ended as the Regal platform transitioned, closing the book on Buick’s factory turbo coupe.\n\nIn the 21st century the GNX’s profile has surged again, helped by nostalgia for analog performance and by Kendrick Lamar’s 2024 album, \"GNX\", which put the name and car on a global stage. Auction headlines, feature retrospectives, and social spikes followed, as a new audience discovered why the GNX routinely beat bigger-displacement rivals in period tests. Today the car stands at the intersection of ’80s performance history, limited-edition scarcity, and modern pop culture. For enthusiasts, it’s both a technical milestone—a turbo V6 hero when V8s dominated—and a symbol of how a single-year halo model can outgrow its era to become a true cultural artifact.",
   "timeline": [
-    { "date": "1987-01", "text": "GNX program with ASC/McLaren finalized for a limited 1987 model-year run." },
-    { "date": "1987-03", "text": "Production begins; GNX receives upgraded turbo, intercooler, suspension, and unique body/cluster." },
-    { "date": "1987-09", "text": "Most of the 547 cars are allocated or pre-sold as demand outpaces the initial plan." },
-    { "date": "1987-12", "text": "Final GNX units completed; Grand National/GNX line ends with Regal platform change." },
-    { "date": "2024-11", "text": "Kendrick Lamar releases album \"GNX\", boosting mainstream awareness and search interest for the car." }
+    {
+      "date": "1987-01",
+      "text": "GNX program with ASC/McLaren finalized for a limited 1987 model-year run."
+    },
+    {
+      "date": "1987-03",
+      "text": "Production begins; GNX receives upgraded turbo, intercooler, suspension, and unique body/cluster."
+    },
+    {
+      "date": "1987-09",
+      "text": "Most of the 547 cars are allocated or pre-sold as demand outpaces the initial plan."
+    },
+    {
+      "date": "1987-12",
+      "text": "Final GNX units completed; Grand National/GNX line ends with Regal platform change."
+    },
+    {
+      "date": "2024-11",
+      "text": "Kendrick Lamar releases album \"GNX\", boosting mainstream awareness and search interest for the car."
+    }
   ],
   "links": {
     "wikipedia_regal": "https://en.wikipedia.org/wiki/Buick_Regal",
@@ -29,15 +53,37 @@
     "ap_gnx_album": "https://apnews.com/article/243dcef7e1efd6d82903bd51d4ab242c"
   },
   "sources": [
-    { "label": "Wikipedia – Buick Regal (GNX section; 547 built; pop-culture note)", "url": "https://en.wikipedia.org/wiki/Buick_Regal" },
-    { "label": "MotorTrend - Feature Buick Regal GNX", "url": "https://www.motortrend.com/features/buick-regal-gnx" },
-    { "label": "Car and Driver – GN & GNX history told by creators", "url": "https://www.caranddriver.com/features/a23739443/buick-regal-grand-national-gnx-history" },
-    { "label": "RM Sotheby’s – GNX auction write-up (production 547; tech highlights)", "url": "https://rmsothebys.com/auctions/hf25/lots/r0146-1987-buick-gnx/" },
-    { "label": "GMA Authority - Many People Shopping for a Buick GNX", "url": "https://gmauthority.com/blog/2025/02/many-people-shopping-for-a-buick-gnx-research-data-finds/" }
-  ],"explore_more": {
+    {
+      "label": "Wikipedia – Buick Regal (GNX section; 547 built; pop-culture note)",
+      "url": "https://en.wikipedia.org/wiki/Buick_Regal"
+    },
+    {
+      "label": "MotorTrend - Feature Buick Regal GNX",
+      "url": "https://www.motortrend.com/features/buick-regal-gnx"
+    },
+    {
+      "label": "Car and Driver – GN & GNX history told by creators",
+      "url": "https://www.caranddriver.com/features/a23739443/buick-regal-grand-national-gnx-history"
+    },
+    {
+      "label": "RM Sotheby’s – GNX auction write-up (production 547; tech highlights)",
+      "url": "https://rmsothebys.com/auctions/hf25/lots/r0146-1987-buick-gnx/"
+    },
+    {
+      "label": "GMA Authority - Many People Shopping for a Buick GNX",
+      "url": "https://gmauthority.com/blog/2025/02/many-people-shopping-for-a-buick-gnx-research-data-finds/"
+    }
+  ],
+  "explore_more": {
     "category_label": "Need even more retro speed?",
     "brands": [
-      { "name": "Desoto", "slug": "desoto" }
+      {
+        "name": "Desoto",
+        "slug": "desoto"
+      }
     ]
+  },
+  "seo": {
+    "meta_description": "The 1987 Buick GNX was an ultra-limited Grand National with just 547 units built. Its performance legend grew over decades, boosted by Kendrick Lamar's 2024 album imagery."
   }
 }

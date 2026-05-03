@@ -48,6 +48,12 @@
   force = true
 
 [[redirects]]
+  from = "/brand/moon-shoes/"
+  to = "/brand/nickelodeon-moon-shoes/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/brand/*.public/*"
   to = "/brand/:splat"
   status = 301
