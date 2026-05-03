@@ -53,6 +53,172 @@
   status = 301
   force = true
 
+# ---------- Category slug redirects (normalizeCategory renamed these) ----------
+[[redirects]]
+  from = "/category/airline-aviation/"
+  to = "/category/airlines-aviation/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/category/video-games/"
+  to = "/category/video-games-consoles/"
+  status = 301
+  force = true
+
+# ---------- Brand slug redirects (renamed / consolidated) ----------
+[[redirects]]
+  from = "/brand/woolworth/"
+  to = "/brand/woolworth-us/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/borders-books/"
+  to = "/brand/borders/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/whipper-snapple/"
+  to = "/brand/snapple-whipper-snapple/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/toys-r-us-us/"
+  to = "/brand/toys-r-us/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/radioshack/"
+  to = "/blog/radioshake-death-spiral/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/movie-gallery/"
+  to = "/category/retail-entertainment/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/family-video/"
+  to = "/category/retail-entertainment/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/wolf-camera/"
+  to = "/category/retail/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/game-crazy/"
+  to = "/category/retail/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/photo-finishing-industry/"
+  to = "/category/retail/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/crystal-pepsi/"
+  to = "/category/food-beverage/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand/netflix/"
+  to = "/"
+  status = 301
+  force = true
+
+# ---------- Blog slug redirects (renamed / thematic) ----------
+[[redirects]]
+  from = "/blog/buy-discontinued-food/"
+  to = "/blog/bring-back-discontinued-foods/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/blockbuster-vs-hollywood-video"
+  to = "/blog/blockbuster-50m-mistake/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/blockbuster-vs-hollywood-video/"
+  to = "/blog/blockbuster-50m-mistake/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/extreme-beverages-history/"
+  to = "/blog/what-happened-to-four-loko/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/discontinued-energy-drinks/"
+  to = "/blog/what-happened-to-four-loko/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/what-happened-to-game-crazy"
+  to = "/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/what-happened-to-game-crazy/"
+  to = "/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/video-rental-stores-history"
+  to = "/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/video-rental-stores-history/"
+  to = "/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/fda-banned-foods/"
+  to = "/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/discontinued-2000s-snacks/"
+  to = "/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/best-frozen-pizza/"
+  to = "/blog/"
+  status = 301
+  force = true
+
+# ---------- Tag page redirects ----------
+[[redirects]]
+  from = "/tag/store-closures/"
+  to = "/blog/when-did-brands-close/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/brand/*.public/*"
   to = "/brand/:splat"
