@@ -14,8 +14,15 @@
 [functions]
   node_bundler = "esbuild"
   directory = "netlify/functions"
+  included_files = ["netlify/functions/_data/**"]
 
 # ---------- Redirects ----------
+[[redirects]]
+  from = "/data/download"
+  to = "/.netlify/functions/csv-download"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/api/brands"
   to = "/.netlify/functions/brands-get"

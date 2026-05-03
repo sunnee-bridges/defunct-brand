@@ -2,18 +2,8 @@
 // src/pages/data.astro
 import Base from "../layouts/Base.astro";
 
-// Visible price label on buttons
-const PRICE_LABEL = import.meta.env.PUBLIC_PRICE_LABEL || "$9";
-
-// Where checkout actually happens
-const BUY_PATH = "/buy";
-
 // Free sample
 const sampleCsvHref = "/data/brands-sample.csv";
-
-// (Optional) show an old “latest” preview (OFF by default)
-const SHOW_LATEST = (import.meta.env.PUBLIC_SHOW_LATEST || "0") === "1";
-const latestCsvHref = "/data/brands-latest.csv";
 
 // Schema rows
 const schema: Array<[string, string, string]> = [
@@ -25,10 +15,7 @@ const schema: Array<[string, string, string]> = [
   ["active_end","int|null","Year ended (if known)"],
   ["fate","string|null","Outcome (e.g., Bankrupt, Acquired)"],
   ["summary","string|null","One–two sentence summary"],
-  ["notable_products","string","Semicolon-separated list"],
-  ["wikipedia_url","string|null","Source link if available"],
-  ["last_updated","date","ISO date of export (YYYY-MM-DD)"],
-  ["dataset_version","string","Version tag (YYYYMMDD)"],
+  ["wikipedia_url","string|null","Wikipedia article URL (where available)"],
 ];
 
 // --- SEO helpers ---
@@ -42,7 +29,7 @@ const datasetLd = {
   "@context": "https://schema.org",
   "@type": "Dataset",
   "name": "Defunct Brands Dataset (CSV)",
-  "description": "Structured dataset of discontinued/defunct brands with category, country, active years, fate, and summary. Free sample available; full dataset offered commercially.",
+  "description": "Structured dataset of discontinued/defunct brands with category, country, active years, fate, and summary. Free sample available; full dataset free for personal and research use.",
   "url": canonical,
   "creator": {
     "@type": "Organization",
@@ -60,10 +47,9 @@ const datasetLd = {
     },
     {
       "@type": "DataDownload",
-      "name": "Full CSV (commercial license)",
+      "name": "Full CSV (request access)",
       "encodingFormat": "text/csv",
-      "contentUrl": `https://vanishedbrands.com${BUY_PATH}`,
-      "requiresSubscription": true
+      "contentUrl": "https://vanishedbrands.com/contact/"
     }
   ]
 };
@@ -92,7 +78,7 @@ const datasetLdJson = JSON.stringify(datasetLd);
   <div class="grid gap-4 md:grid-cols-2 md:gap-4 lg:gap-6">
     <!-- Free sample -->
     <section class="rounded-xl border p-4 bg-white/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-700">
-      <h2 class="text-lg font-semibold mb-2">Free sample (7 rows)</h2>
+      <h2 class="text-lg font-semibold mb-2">Free sample (10 brands)</h2>
       <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
         A tiny slice for evaluation and non-commercial use.
       </p>
@@ -100,8 +86,8 @@ const datasetLdJson = JSON.stringify(datasetLd);
         class="btn-primary focus-ring"
         href={sampleCsvHref}
         download
-        aria-label="Download sample CSV (7 rows)"
-        title="Download sample CSV (7 rows)"
+        aria-label="Download sample CSV (10 brands)"
+        title="Download sample CSV (10 brands)"
       >
         Download sample CSV
       </a>
@@ -111,38 +97,34 @@ const datasetLdJson = JSON.stringify(datasetLd);
     <section class="rounded-xl border p-4 bg-white/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-700">
       <h2 class="text-lg font-semibold mb-2">Full dataset (CSV)</h2>
       <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
-        One-time purchase; includes commercial license. Checkout securely with PayPal.
+        Free for personal and research use. Enter your email and we’ll send a download link.
       </p>
-
-      <a
-        href={BUY_PATH}
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium no-underline focus-ring transition-colors"
-        aria-label={`Buy full CSV for ${PRICE_LABEL} with PayPal`}
-        title={`Buy full CSV — ${PRICE_LABEL} (PayPal)`}
-      >
-        <svg class="h-5 w-auto shrink-0" viewBox="0 0 48 32" fill="none" aria-hidden="true" role="img">
-          <rect width="48" height="32" rx="4" fill="white" opacity="0.95"/>
-          <path d="M14 8h6.5c3.8 0 6.2 2 5.6 5.5-.6 3.4-3.4 5.5-7.3 5.5h-2.1l-.9 4.5h-3.2L14 8z" fill="#003087"/>
-          <path d="M20.8 10c2.4 0 3.6 1.2 3.3 3-.3 2-2.2 3-4.5 3h-2.2l.9-6h2.5z" fill="#009CDE"/>
-          <path d="M26.5 8h6.5c3.8 0 6.2 2 5.6 5.5-.6 3.4-3.4 5.5-7.3 5.5h-2.1l-.9 4.5h-3.2L26.5 8z" fill="#003087"/>
-          <path d="M33.3 10c2.4 0 3.6 1.2 3.3 3-.3 2-2.2 3-4.5 3h-2.2l.9-6h2.5z" fill="#009CDE"/>
-        </svg>
-        <span>Pay with PayPal — {PRICE_LABEL}</span>
-      </a>
-
-      {SHOW_LATEST && (
-        <a
-          href={latestCsvHref}
-          class="chip focus-ring text-xs ml-2"
-          rel="nofollow"
-          title="Preview the latest dataset structure"
-        >
-          View latest
-        </a>
-      )}
-
+      <form id="csv-request-form" novalidate>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input
+            id="csv-email"
+            type="email"
+            name="email"
+            required
+            placeholder="you@example.com"
+            autocomplete="email"
+            class="flex-1 rounded-md border border-slate-300 dark:border-slate-600
+                   bg-white dark:bg-slate-800 px-3 py-2 text-sm
+                   text-slate-900 dark:text-slate-100
+                   focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <button
+            type="submit"
+            id="csv-submit"
+            class="btn-primary focus-ring shrink-0"
+          >
+            Send download link
+          </button>
+        </div>
+        <p id="csv-msg" class="mt-2 text-sm" aria-live="polite"></p>
+      </form>
       <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">
-        You’ll complete payment on the <code>/buy</code> page and receive a secure one-time download link immediately after purchase.
+        For commercial use, <a href="/contact/" class="underline">contact us</a> to arrange a license.
       </p>
     </section>
   </div>
@@ -182,7 +164,7 @@ const datasetLdJson = JSON.stringify(datasetLd);
     </details>
     <details>
       <summary class="cursor-pointer font-medium">Commercial usage?</summary>
-      <div class="mt-1">Yes for the full CSV (no raw redistribution). The sample is non-commercial.</div>
+      <div class="mt-1">Personal and research use is free — email us to request. Commercial use (apps, products, redistribution) requires a license; <a href="/contact/" class="underline">contact us</a> to arrange.</div>
     </details>
   </section>
 
@@ -203,6 +185,55 @@ const datasetLdJson = JSON.stringify(datasetLd);
   </p>
 
   <p class="mt-6 text-xs text-slate-600 dark:text-slate-400">
-    <strong>License:</strong> Free sample under CC BY-NC 4.0. Full CSV under commercial license (no raw redistribution).
+    <strong>License:</strong> Free sample under CC BY-NC 4.0. Full CSV free for personal/research use; commercial license available on request.
   </p>
+
+  <script is:inline>
+    (function () {
+      const form   = document.getElementById('csv-request-form');
+      const input  = document.getElementById('csv-email');
+      const btn    = document.getElementById('csv-submit');
+      const msg    = document.getElementById('csv-msg');
+      if (!form) return;
+
+      function setMsg(text, ok) {
+        msg.textContent = text;
+        msg.className = 'mt-2 text-sm ' + (ok
+          ? 'text-green-700 dark:text-green-400'
+          : 'text-red-600 dark:text-red-400');
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const email = input.value.trim();
+        if (!email) return;
+
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        msg.textContent = '';
+        msg.className = 'mt-2 text-sm';
+
+        try {
+          const res  = await fetch('/.netlify/functions/request-csv', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+          const data = await res.json().catch(() => ({}));
+
+          if (res.ok && data.ok) {
+            setMsg('Check your inbox — we sent a download link to ' + email + '.', true);
+            form.reset();
+          } else {
+            setMsg(data.error || 'Something went wrong. Please try again.', false);
+          }
+        } catch {
+          setMsg('Network error. Please try again.', false);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Send download link';
+        }
+      });
+    })();
+  </script>
 </Base>

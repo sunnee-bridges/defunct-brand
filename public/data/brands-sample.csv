@@ -1,4 +1,4 @@
-brand,slug,category,country,active_start,active_end,fate,summary,wikipedia
+brand,slug,category,country,active_start,active_end,fate,summary,wikipedia_url
 American Apparel (original company),american-apparel-original,Retail,US,1989,2017,Bankruptcy/brand sold,Original company went bankrupt; brand acquired and continues online.,https://en.wikipedia.org/wiki/American_Apparel
 AOL Instant Messenger,aim,Software/Internet,US,1997,2017,Discontinued,AIM instant messaging service shut down in 2017.,https://en.wikipedia.org/wiki/AOL_Instant_Messenger
 BlackBerry phones (legacy OS),blackberry-os-phones,Mobile devices,CA,1999,2016,Discontinued,Legacy BlackBerry OS devices ended; brand licensed later on Android.,https://en.wikipedia.org/wiki/BlackBerry
@@ -6,3 +6,6 @@ Blockbuster,blockbuster,Retail/Entertainment,US,1985,2014,Bankruptcy/closures,Vi
 Borders,borders,Retail,US,1971,2011,Liquidation,Bookseller that filed for bankruptcy and closed in 2011.,https://en.wikipedia.org/wiki/Borders_Group
 Casual Corner,casual-corner,Retail,US,1950,2005,Liquidation,Women's apparel retail chain closed in 2005.,https://en.wikipedia.org/wiki/Casual_Corner
 Circuit City,circuit-city,Retail,US,1949,2009,Liquidation,Electronics retailer that liquidated in 2009.,https://en.wikipedia.org/wiki/Circuit_City
+Fruit Stripe,fruit-stripe-gum,Food/Snacks,US,1969,2024,Discontinued,Cult-favorite striped chewing gum with mascot Yipes the Zebra; discontinued by Ferrara in 2024 after more than 50 years.,https://en.wikipedia.org/wiki/Fruit_Stripe
+Lawn Darts (Jarts),lawn-darts,Toys/Games,US,1950,1988,Banned,Metal-tipped backyard game banned by the CPSC in 1988 after more than 6100 injuries and three child deaths.,https://en.wikipedia.org/wiki/Lawn_darts
+LEGO Universe,lego-universe,Video Games,DK,2010,2012,Shut down,Family-friendly LEGO MMO that ran from 2010 to 2012; attracted nearly 2 million players but could not convert enough to paid subscribers.,https://en.wikipedia.org/wiki/Lego_Universe
