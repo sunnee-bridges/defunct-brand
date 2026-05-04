@@ -9,8 +9,8 @@
     "end": 2006
   },
   "hook": "Chart walls and CD singles at every mall, gone by 2006",
-  "fate": "U.S. chain largely shuttered after The Musicland Group’s 2006 bankruptcy; many stores closed or converted to FYE under new ownership",
-  "summary": "Mall-era music retailer known for deep CD/cassette selection, singles, and chart walls; most stores disappeared after Musicland’s 2006 bankruptcy and subsequent conversions.",
+  "fate": "Most U.S. stores closed or were converted to FYE after The Musicland Group filed for Chapter 11 in 2006.",
+  "summary": "Mall music retailer known for its wide CD and cassette selection, chart walls, and listening stations. Most stores disappeared after Musicland's 2006 bankruptcy.",
   "topics": [
     "bankruptcy",
     "music-retail",
@@ -21,7 +21,7 @@
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Sam_Goody"
   },
-  "overview_md": "**Sam Goody** was a U.S. music retail chain that turned browsing into a weekend ritual for generations of listeners. Founded in 1951 in New York City, the brand helped define mall-era music shopping with chart walls, listening posts, racks of singles, and deep selections of CDs, cassettes, and later DVDs. Knowledgeable staff, weekly ads, and in-store promotions made the stores a reliable place to discover new releases and pick up back-catalog staples.\n\nSam Goody became part of **The Musicland Group**, whose banners included Musicland and Suncoast Motion Picture Company. Through the 1980s and 1990s the chain expanded nationally, leaning into high-visibility mall locations where foot traffic stayed strong. But the model—prime rents and large physical-media inventory—was squeezed by big-box price competition and the digital shift (file sharing, paid downloads, and ultimately streaming). Margins tightened, traffic fell, and carrying a broad catalog became harder to justify.\n\nIn **2006**, after ownership changes and mounting losses, Musicland filed for Chapter 11; many **Sam Goody** stores were liquidated, while others were acquired and **converted to FYE** under Trans World Entertainment. The brand’s decline marked a wider transition away from physical media retail. For many, the Sam Goody name still evokes flipping through shrink-wrapped jewel cases, scanning staff picks, and comparing Tuesday new-release stickers with friends at the mall.",
+  "overview_md": "**Sam Goody** was a music store chain that became a go-to spot for music fans at malls across the country. It was founded in New York City in 1951 and grew into one of the most familiar names in music retail. The stores were known for their chart walls, listening stations, and a wide selection of CDs, cassettes, and singles.\n\nThrough the 1980s and 1990s, **Sam Goody** expanded to hundreds of mall locations. Staff knew their music, new releases got their own section each Tuesday, and the selection went well beyond the hits into back-catalog albums and imports.\n\nThings got harder in the early 2000s. Big-box retailers like Walmart and Target started selling CDs at lower prices. Then came file sharing and paid downloads, which cut into music sales industry-wide. Filling large stores with physical inventory became expensive, and profits dropped.\n\n**Sam Goody** was owned by The Musicland Group, which could not hold up under these pressures. After years of store closures and losses, Musicland filed for Chapter 11 bankruptcy in 2006. Many **Sam Goody** locations shut down, while others were taken over by Trans World Entertainment and rebranded as FYE. The name was gone from most malls within a few years.\n\nFor a lot of people who grew up in the 1980s and 1990s, **Sam Goody** brings back the memory of flipping through CDs, grabbing a single on the way out, or discovering a new band on a Tuesday afternoon.",
   "timeline": [
     {
       "date": "1951",
@@ -29,37 +29,29 @@
     },
     {
       "date": "1978",
-      "text": "Becomes part of The Musicland Group"
+      "text": "Sam Goody becomes part of The Musicland Group"
     },
     {
       "date": "2001-12",
-      "text": "Best Buy acquires The Musicland Group (parent of Sam Goody)"
+      "text": "Best Buy acquires The Musicland Group"
     },
     {
       "date": "2003-06",
-      "text": "Ownership shifts as Musicland is sold; ongoing store rationalization"
+      "text": "Best Buy sells Musicland back as a standalone company"
     },
     {
       "date": "2006-01",
-      "text": "Musicland files Chapter 11; many Sam Goody stores close or are converted to FYE"
+      "text": "Musicland files for Chapter 11 bankruptcy; most Sam Goody stores close or convert to FYE"
     }
   ],
   "sources": [
     {
-      "label": "Wikipedia (Sam Goody)",
+      "label": "Wikipedia — Sam Goody",
       "url": "https://en.wikipedia.org/wiki/Sam_Goody"
     },
     {
-      "label": "Wikipedia (The Musicland Group)",
+      "label": "Wikipedia — The Musicland Group",
       "url": "https://en.wikipedia.org/wiki/The_Musicland_Group"
-    },
-    {
-      "label": "Wayback snapshot (samgoody.com)",
-      "url": "https://web.archive.org/web/*/samgoody.com"
-    },
-    {
-      "label": "Press/coverage on 2006 bankruptcy & conversions",
-      "url": "https://www.billboard.com/"
     }
   ],
   "seo": {

@@ -417,6 +417,7 @@ let ogImageAlt = "";
 let twitterCard = "summary_large_image";
 let keywords = "";
 let answerBox = "";
+let faqItems: Array<{ question: string; answer: string }> = [];
 
 type LinkItem = { href: string; label: string; external?: boolean; rel?: string };
 let internalLinks: LinkItem[] = [];
@@ -672,6 +673,44 @@ pageDesc =
   // Keywords
   keywords = brand?.seo?.keywords?.join(', ') || '';
 
+  // Auto-generate FAQ from brand data when no explicit FAQ is provided
+  const hasFaq = Array.isArray(brand?.content?.faq) && brand.content.faq.length > 0;
+  const autoFaq: Array<{ question: string; answer: string }> = [];
+  if (!hasFaq) {
+    const bName = brand.brand;
+    const bFate = (brand?.fate || "").trim();
+    const bHook = (brand?.hook || "").trim();
+    const bSummary = (brand?.summary || "").trim();
+    const bEnd = brand?.active?.end;
+
+    const q1Answer = bFate || bHook || bSummary;
+    if (q1Answer.length >= 30) {
+      autoFaq.push({ question: `What happened to ${bName}?`, answer: q1Answer });
+    }
+
+    if (bEnd) {
+      const yearAnswer = bFate
+        ? `${bName} closed in ${bEnd}. ${bFate}`
+        : `${bName} was discontinued in ${bEnd}.`;
+      autoFaq.push({ question: `When did ${bName} close?`, answer: yearAnswer.trim() });
+    }
+
+    if (bFate.length >= 30) {
+      const fateLow = bFate.toLowerCase();
+      let stillAnswer = "";
+      if (fateLow.includes("bankrupt") || fateLow.includes("liquidat") || fateLow.includes("discontinued") || fateLow.includes("closed")) {
+        stillAnswer = `No. ${bName} is no longer in business. ${bFate}`;
+      } else if (fateLow.includes("acqui") || fateLow.includes("merged")) {
+        stillAnswer = `${bName} no longer operates as an independent brand. ${bFate}`;
+      } else {
+        stillAnswer = `${bName} has been discontinued or significantly changed. ${bFate}`;
+      }
+      if (stillAnswer.length >= 40) {
+        autoFaq.push({ question: `Is ${bName} still in business?`, answer: stillAnswer });
+      }
+    }
+  }
+
   const brandPath = brand?.url || `/brand/${encodeURIComponent(brand.slug || slug)}/`;
   canonical = brand?.canonical || (Astro.site ? new URL(brandPath, Astro.site).href : brandPath);
 
@@ -744,6 +783,11 @@ pageDesc =
     keywords: keywords || undefined
   };
 
+  const speakableSelectors = ["#brand-title"];
+  if (brand?.fate) speakableSelectors.push("#brand-fate");
+  if (brand?.overview_md || brand?.content?.introduction) speakableSelectors.push("#brand-overview");
+  if (hasFaq || autoFaq.length > 0) speakableSelectors.push("#brand-faq");
+
   const webPageLd = {
     ["@context"]: "https://schema.org",
     ["@type"]: "WebPage",
@@ -752,7 +796,11 @@ pageDesc =
     description: pageDesc,
     mainEntity: { ["@id"]: canonical + "#brand" },
     primaryImageOfPage: { ["@type"]: "ImageObject", url: ogImage },
-    breadcrumb: { ["@id"]: canonical + "#breadcrumb" }
+    breadcrumb: { ["@id"]: canonical + "#breadcrumb" },
+    speakable: {
+      ["@type"]: "SpeakableSpecification",
+      cssSelector: speakableSelectors,
+    },
   };
 
   const breadcrumbsLd = {
@@ -768,12 +816,13 @@ pageDesc =
 
   jsonLdBlocks = [brandLd, articleLd, webPageLd, breadcrumbsLd];
 
-  // FAQ Schema
-  if (Array.isArray(brand?.content?.faq) && brand.content.faq.length > 0) {
+  // FAQ Schema — explicit wins; fall back to auto-generated
+  faqItems = hasFaq ? brand.content.faq : autoFaq;
+  if (faqItems.length > 0) {
     const faqLd = {
       ["@context"]: "https://schema.org",
       ["@type"]: "FAQPage",
-      mainEntity: brand.content.faq.map((item: any) => ({
+      mainEntity: faqItems.map((item: any) => ({
         ["@type"]: "Question",
         name: item.question,
         acceptedAnswer: {
@@ -979,7 +1028,7 @@ if (catPath && catLabel) {
 
       {/* Fate (prominent on brand page) */}
       {brand.fate && (
-        <p class="mt-8 mb-8 text-base text-slate-800 dark:text-slate-200">
+        <p id="brand-fate" class="mt-8 mb-8 text-base text-slate-800 dark:text-slate-200">
           <strong>{pickFateIcon(brand.fate, brand.topics)} Fate:</strong>{" "}
           <Fragment set:html={inlineMd(brand.fate)} />
         </p>
@@ -1176,7 +1225,7 @@ if (catPath && catLabel) {
 
       {/* Overview body (Markdown) */}
       {(brand.overview_md || overviewHtml || brand?.content?.introduction) && (
-        <section aria-label="Overview" class="prose prose-sm dark:prose-invert max-w-none mt-6">
+        <section id="brand-overview" aria-label="Overview" class="prose prose-sm dark:prose-invert max-w-none mt-6">
           <Fragment set:html={overviewHtml || mdToHtml(String(brand.overview_md || brand?.content?.introduction || ""))} />
         </section>
       )}
@@ -1238,14 +1287,14 @@ if (catPath && catLabel) {
         </section>
       )}
 
-      {/* FAQ Section */}
-      {Array.isArray(brand?.content?.faq) && brand.content.faq.length > 0 && (
-        <section aria-label="Frequently Asked Questions" class="mt-10">
+      {/* FAQ Section — explicit or auto-generated */}
+      {faqItems.length > 0 && (
+        <section id="brand-faq" aria-label="Frequently Asked Questions" class="mt-10">
           <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-slate-100">
             Frequently Asked Questions
           </h2>
           <div class="space-y-6">
-            {brand.content.faq.map((item: any) => (
+            {faqItems.map((item: any) => (
               <div class="border-l-4 border-blue-500 pl-4 py-2">
                 <h3 class="text-lg font-semibold mb-2 text-slate-800 dark:text-slate-200">
                   {item.question}
