@@ -68,6 +68,13 @@
 
 # ---------- Brand slug redirects (renamed / consolidated) ----------
 [[redirects]]
+  from = "/brand/rave-hairspray/"
+  to = "/404.html"
+  status = 410
+  force = true
+
+
+[[redirects]]
   from = "/brand/woolworth/"
   to = "/brand/woolworth-us/"
   status = 301
