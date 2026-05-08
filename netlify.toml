@@ -100,7 +100,13 @@
 
 [[redirects]]
   from = "/brand/radioshack/"
-  to = "/blog/radioshake-death-spiral/"
+  to = "/category/retail/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/radioshake-death-spiral/"
+  to = "/category/retail/"
   status = 301
   force = true
 
