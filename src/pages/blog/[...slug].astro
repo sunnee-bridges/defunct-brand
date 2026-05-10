@@ -1,7 +1,6 @@
 ---
 // src/pages/blog/[...slug].astro
 import Base from "../../layouts/Base.astro";
-import TableOfContents from "@components/TableOfContents.astro";
 import ArticleHero from "@components/ArticleHero.astro";
 import { getCollection, getEntryBySlug } from "astro:content";
 
@@ -102,16 +101,9 @@ const articleLd = {
     </>
   )}
 
-  {/* Layout: content + TOC */}
-  <section class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8 items-start">
-    <article class="prose dark:prose-invert max-w-none relative z-0">
-      <Content />
-    </article>
-
-    <aside class="relative z-10 hidden lg:block">
-      <TableOfContents />
-    </aside>
-  </section>
+  <article class="prose dark:prose-invert max-w-none">
+    <Content />
+  </article>
 
   <div class="mt-6 flex flex-wrap gap-2">
     <a href="/az/" class="chip focus-ring">Browse A–Z</a>
