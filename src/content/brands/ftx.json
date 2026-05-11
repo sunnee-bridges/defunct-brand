@@ -4,37 +4,60 @@
   "category": "Finance/Cryptocurrency",
   "seo_category": "finance-payments",
   "country": "BS",
-  "active": { "start": 2019, "end": 2022 },
+  "active": {
+    "start": 2019,
+    "end": 2022
+  },
   "hook": "Crypto exchange lost $8 billion, founder now convicted",
   "fate": "Chapter 11 bankruptcy after fraud revelations",
   "headquarters": "Nassau, Bahamas",
   "served": "retail and institutional traders",
-  "products": ["Spot trading", "Derivatives", "FTT token"],
-  "topics": [ "bankruptcy",
-      "scandal",
-      "cryptocurrency"],
-
+  "products": [
+    "Spot trading",
+    "Derivatives",
+    "FTT token"
+  ],
+  "topics": [
+    "bankruptcy",
+    "scandal",
+    "cryptocurrency"
+  ],
   "overview": {
     "what": "FTX was a cryptocurrency exchange operating from 2019–2022.",
     "who": "Headquartered in the Bahamas, it served retail and institutional traders with spot and derivatives products, including its native FTT token.",
     "how_end": "In November 2022, FTX and related entities filed for Chapter 11 bankruptcy and the platform ceased operations amid liquidity issues and allegations of misuse of customer funds.",
     "now": "Most former FTX users migrated to alternative exchanges or self-custody solutions."
   },
-
   "timeline": [
-    { "date": "2019", "text": "Launch of FTT token introduces a highly visible digital asset brand" },
-    { "date": "2021–2022", "text": "Growth peaks at 1 million users as FTX becomes the third largetst crypto exchange" },
-    { "date": "2022-11", "text": "Liquidity crisis and discrepancies in customer funding results in FTX bankruptcy filing" }
+    {
+      "date": "2019",
+      "text": "Launch of FTT token introduces a highly visible digital asset brand"
+    },
+    {
+      "date": "2021–2022",
+      "text": "Growth peaks at 1 million users as FTX becomes the third largetst crypto exchange"
+    },
+    {
+      "date": "2022-11",
+      "text": "Liquidity crisis and discrepancies in customer funding results in FTX bankruptcy filing"
+    }
   ],
-
   "sources": [
-    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/FTX" },
-    { "label": "What Went Wrong with FTX - Investopedia", "url": "https://www.investopedia.com/what-went-wrong-with-ftx-6828447" },
-    { "label": "Samuel Bankman sentenced to 25 Years - U.S. Department of Justice", "url": "https://www.justice.gov/usao-sdny/pr/samuel-bankman-fried-sentenced-25-years-prison" }
-  ]
-
- 
-  ,"overview_md": "**FTX** was a cryptocurrency exchange that operated from 2019 to 2022. Backed by venture funding and aggressive marketing, it promoted spot and derivatives trading and its native **FTT** token, quickly becoming one of the most visible brands in digital assets.\n\nHeadquartered in the Bahamas, FTX served retail and institutional traders with leverage products and perpetual futures, plus staking and tokenized exposures. FTX's growth continued in 2021, peaking at 1 million users in the crypto market. By January 2022, private-market reports placed FTX’s peak valuation around $32 billion.\n\nOn November 11, 2022, FTX and related entities filed for Chapter 11 bankruptcy, following a severe liquidity crisis and allegations concerning customer funds. Withdrawals were halted and operations wound down under court supervision as new management began restructuring and recovery efforts.\n\nAfter the collapse, many users moved to alternative exchanges or to self-custody. The event intensified discussion of risk controls, transparency, and consumer protection in crypto, and it remains a touchpoint in debates over exchange governance and regulation."
-
-
+    {
+      "label": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/FTX"
+    },
+    {
+      "label": "What Went Wrong with FTX - Investopedia",
+      "url": "https://www.investopedia.com/what-went-wrong-with-ftx-6828447"
+    },
+    {
+      "label": "Samuel Bankman sentenced to 25 Years - U.S. Department of Justice",
+      "url": "https://www.justice.gov/usao-sdny/pr/samuel-bankman-fried-sentenced-25-years-prison"
+    }
+  ],
+  "overview_md": "**FTX** was a cryptocurrency exchange that operated from 2019 to 2022. Backed by venture funding and aggressive marketing, it promoted spot and derivatives trading and its native **FTT** token, quickly becoming one of the most visible brands in digital assets.\n\nHeadquartered in the Bahamas, FTX served retail and institutional traders with leverage products and perpetual futures, plus staking and tokenized exposures. FTX's growth continued in 2021, peaking at 1 million users in the crypto market. By January 2022, private-market reports placed FTX’s peak valuation around $32 billion.\n\nOn November 11, 2022, FTX and related entities filed for Chapter 11 bankruptcy, following a severe liquidity crisis and allegations concerning customer funds. Withdrawals were halted and operations wound down under court supervision as new management began restructuring and recovery efforts.\n\nAfter the collapse, many users moved to alternative exchanges or to self-custody. The event intensified discussion of risk controls, transparency, and consumer protection in crypto, and it remains a touchpoint in debates over exchange governance and regulation.",
+  "image": "/images/brands/ftx.svg",
+  "image_alt": "FTX — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

@@ -89,5 +89,8 @@
   },
   "seo": {
     "meta_description": "Fry's Electronics was Silicon Valley's go-to big-box retailer from 1985 to 2021, beloved for themed stores, vast component aisles, and late-night tech parts runs."
-  }
+  },
+  "image": "/images/brands/frys-electronics.webp",
+  "image_alt": "Fry's Electronics store",
+  "image_caption": "Source: Wikimedia Commons — File:Former_Frys_Electronics_Store_Fountain_Valley_California_2022.JPG"
 }

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs>
+    <pattern id="s" width="60" height="60" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="30" height="60" fill="rgba(255,255,255,0.07)"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="800" fill="#7B5C0A"/>
+  <rect width="800" height="800" fill="url(#s)"/>
+  <rect y="0" width="800" height="200" fill="#B8860B"/>
+  <rect y="600" width="800" height="200" fill="#B8860B"/>
+  <path d="M0,196 C200,216 400,180 600,200 C700,210 760,196 800,200 L800,206 C760,202 700,216 600,206 C400,186 200,222 0,202Z" fill="#7B5C0A"/>
+  <path d="M0,596 C200,616 400,580 600,600 C700,610 760,596 800,600 L800,606 C760,602 700,616 600,606 C400,586 200,622 0,602Z" fill="#7B5C0A"/>
+  <text x="400" y="100" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="26" fill="rgba(255,215,0,0.85)" letter-spacing="6">CANDY · 1950s+</text>
+  <text x="400" y="360" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="56" font-weight="900" fill="#FFD700">BRACH'S MAPLE</text>
+  <text x="400" y="430" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="56" font-weight="900" fill="#FFD700">NUT GOODIES</text>
+  <text x="400" y="535" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(255,215,0,0.6)" letter-spacing="4">Brach's Candy</text>
+  <text x="400" y="697" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-size="22" font-style="italic" fill="rgba(255,215,0,0.4)">Vanished Brands</text>
+</svg>

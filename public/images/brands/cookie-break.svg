@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs>
+    <pattern id="s" width="60" height="60" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="30" height="60" fill="rgba(255,255,255,0.07)"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="800" fill="#5E3012"/>
+  <rect width="800" height="800" fill="url(#s)"/>
+  <rect y="0" width="800" height="200" fill="#8B4A1E"/>
+  <rect y="600" width="800" height="200" fill="#8B4A1E"/>
+  <path d="M0,196 C200,216 400,180 600,200 C700,210 760,196 800,200 L800,206 C760,202 700,216 600,206 C400,186 200,222 0,202Z" fill="#5E3012"/>
+  <path d="M0,596 C200,616 400,580 600,600 C700,610 760,596 800,600 L800,606 C760,602 700,616 600,606 C400,586 200,622 0,602Z" fill="#5E3012"/>
+  <text x="400" y="100" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="26" fill="rgba(245,220,180,0.8)" letter-spacing="8">COOKIES · 1980s</text>
+  <text x="400" y="390" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="74" font-weight="900" fill="#F5DEB3">COOKIE</text>
+  <text x="400" y="466" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="74" font-weight="900" fill="#F5DEB3">BREAK</text>
+  <text x="400" y="540" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(245,222,179,0.6)" letter-spacing="4">Sunshine Biscuits</text>
+  <text x="400" y="697" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-size="22" font-style="italic" fill="rgba(245,222,179,0.4)">Vanished Brands</text>
+</svg>

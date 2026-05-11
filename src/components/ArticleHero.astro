@@ -40,7 +40,7 @@ const I = imgObj(image);
 const fitClass = (I?.fit === "contain") ? "hero-contain" : "hero-cover";
 ---
 <style is:inline>
-  .hero-media { overflow:hidden; border-radius: .75rem; }
+  .hero-media { overflow:hidden; border-radius: .75rem; max-width: 60%; margin-left: auto; margin-right: auto; }
   .hero-media img { width:100%; height:auto; display:block; }
   /* if you ever want fixed aspect on hero: 
   .hero-media .frame { aspect-ratio: 16/9; } */

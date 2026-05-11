@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#C62828"/>
+  <rect x="20" y="20" width="760" height="760" fill="none" stroke="#FDD835" stroke-width="16" rx="12"/>
+  <rect y="610" width="800" height="190" fill="#FDD835"/>
+  <rect x="60" y="60" width="680" height="500" fill="none" stroke="rgba(253,216,53,0.3)" stroke-width="4" rx="6"/>
+  <text x="400" y="270" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="110" font-weight="900" fill="white" letter-spacing="-2">LEGO</text>
+  <text x="400" y="400" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="56" font-weight="700" fill="#FDD835" letter-spacing="4">UNIVERSE</text>
+  <text x="400" y="510" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(253,216,53,0.7)" letter-spacing="4">MMO Game · 2010–2012</text>
+  <text x="400" y="700" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="24" fill="#C62828" letter-spacing="4">THE LEGO GROUP</text>
+  <text x="400" y="748" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-style="italic" fill="rgba(198,40,40,0.5)">Vanished Brands</text>
+</svg>

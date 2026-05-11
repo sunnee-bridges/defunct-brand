@@ -4,14 +4,21 @@
   "category": "Food/CPG",
   "seo_category": "food-beverage",
   "country": "US",
-  "active": { "start": 1940, "end": 2022 },
+  "active": {
+    "start": 1940,
+    "end": 2022
+  },
   "hook": "Maple toffee–peanut clusters that quietly disappeared in the early 2020s",
   "fate": "Discontinued by parent company Ferrara Candy Company around 2022 after declining distribution, and recipe and manufacturing changes",
   "summary": "Classic Brach’s candy: roasted peanuts wrapped in chewy maple-flavored toffee with a thin candy shell. After a controversial late-2010s process change that made pieces much harder, retail availability dwindled and Ferrara Candy Company discontinued the item around 2022.",
-  "notable_products": ["Maple Nut Goodies"],
-  "topics": ["discontinued",
-      "candy",
-      "90s-nostalgia"],
+  "notable_products": [
+    "Maple Nut Goodies"
+  ],
+  "topics": [
+    "discontinued",
+    "candy",
+    "90s-nostalgia"
+  ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Brach%27s",
     "wayback": "https://web.archive.org/web/*/https://www.brachs.com/",
@@ -19,30 +26,51 @@
   },
   "overview_md": "**Brach’s Maple Nut Goodies** were a long-running staple of the brand - roasted peanuts in a chewy maple toffee with a thin candy shell. Fans remember the maple aroma and soft, chewy center. In the late 2010s a manufacturing change reportedly made pieces noticeably harder, drawing complaints. Distribution shrank through the early 2020s, and by and around 2022, Ferrara Candy Company had discontinued the product, with no formal relaunch announced as of 2025.\n\nCollectors still trade vintage bags and look for substitutes, such as maple-coated peanuts, but the particular chewy-maple profile of Maple Nut Goodies hasn’t been replicated by major brands.",
   "timeline": [
-    { "date": "1940", "text": "Maple Nut Goodies enter Brach’s assortments." },
-    { "date": "2018", "text": "Manufacturing change leads to consumer reports of much harder pieces." },
-    { "date": "2020-2022", "text": "Widespread out-of-stock at retailers." },
-    { "date": "2022", "text": "Ferrera Candy Company customer service confirms candy discontinuation." }
+    {
+      "date": "1940",
+      "text": "Maple Nut Goodies enter Brach’s assortments."
+    },
+    {
+      "date": "2018",
+      "text": "Manufacturing change leads to consumer reports of much harder pieces."
+    },
+    {
+      "date": "2020-2022",
+      "text": "Widespread out-of-stock at retailers."
+    },
+    {
+      "date": "2022",
+      "text": "Ferrera Candy Company customer service confirms candy discontinuation."
+    }
   ],
- "sources": [
-  {
-    "label": "Wikipedia: Brachs Candy",
-    "url": "https://en.wikipedia.org/wiki/Brach's"
-  },
-  {
-    "label": "Brach’s — Facebook comment confirming discontinuation (archived)",
-    "url": "http://archive.today/qY4Mf"
-  },
-  {
-    "label": "Tasting Table - What Happened to Maple Nut Goodies:",
-    "url": "https://www.tastingtable.com/1989645/whatever-happened-maple-nut-goodies/"
-  }
-],"explore_more": {
+  "sources": [
+    {
+      "label": "Wikipedia: Brachs Candy",
+      "url": "https://en.wikipedia.org/wiki/Brach's"
+    },
+    {
+      "label": "Brach’s — Facebook comment confirming discontinuation (archived)",
+      "url": "http://archive.today/qY4Mf"
+    },
+    {
+      "label": "Tasting Table - What Happened to Maple Nut Goodies:",
+      "url": "https://www.tastingtable.com/1989645/whatever-happened-maple-nut-goodies/"
+    }
+  ],
+  "explore_more": {
     "category_label": "Need more confections to satisfy your sweet tooth?",
     "brands": [
-      { "name": "Almost Home Cookies", "slug": "almost-home-cookies" },
-      { "name": "Fruit Stripe", "slug": "fruit-stripe-gum" }
+      {
+        "name": "Almost Home Cookies",
+        "slug": "almost-home-cookies"
+      },
+      {
+        "name": "Fruit Stripe",
+        "slug": "fruit-stripe-gum"
+      }
     ]
-  }
-
+  },
+  "image": "/images/brands/brachs-maple-nut-goodies.svg",
+  "image_alt": "Brach’s Maple Nut Goodies — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#B8D4E8"/>
+  <ellipse cx="400" cy="400" rx="260" ry="360" fill="rgba(255,255,255,0.25)"/>
+  <line x1="0" y1="0" x2="180" y2="0" stroke="#4682B4" stroke-width="8"/>
+  <line x1="0" y1="0" x2="0" y2="180" stroke="#4682B4" stroke-width="8"/>
+  <line x1="800" y1="0" x2="620" y2="0" stroke="#4682B4" stroke-width="8"/>
+  <line x1="800" y1="0" x2="800" y2="180" stroke="#4682B4" stroke-width="8"/>
+  <line x1="0" y1="800" x2="180" y2="800" stroke="#4682B4" stroke-width="8"/>
+  <line x1="0" y1="800" x2="0" y2="620" stroke="#4682B4" stroke-width="8"/>
+  <line x1="800" y1="800" x2="620" y2="800" stroke="#4682B4" stroke-width="8"/>
+  <line x1="800" y1="800" x2="800" y2="620" stroke="#4682B4" stroke-width="8"/>
+  <text x="400" y="340" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="140" font-weight="900" fill="#2A5A8A">ZIMA</text>
+  <text x="400" y="460" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" fill="#4682B4" letter-spacing="4">CLEAR MALT BEVERAGE</text>
+  <text x="400" y="555" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(42,90,138,0.6)" letter-spacing="5">COORS · 1993</text>
+  <text x="400" y="720" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-style="italic" fill="rgba(42,90,138,0.4)">Vanished Brands</text>
+</svg>

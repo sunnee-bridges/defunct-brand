@@ -4,7 +4,10 @@
   "category": "Toys/Games",
   "seo_category": "toys-games",
   "country": "US",
-  "active": { "start": 1984, "end": "1990s (feature retired)" },
+  "active": {
+    "start": 1984,
+    "end": "1990s (feature retired)"
+  },
   "hook": "Cobra's master of disguise whose skin turned bluish in sunlight—an innovation kids could demo instantly on any playground.",
   "fate": "The original 1980s figure's groundbreaking UV color-change gimmick was phased out by the 1990s due to material durability tradeoffs. The character endures in modern G.I. Joe lines without the photochromic effect, but the 1984 version remains a nostalgia icon for its transformative playground appeal.",
   "summary": "Hasbro's **Zartan** debuted in **1984** for *G.I. Joe: A Real American Hero* with a groundbreaking innovation: his exposed 'skin' plastic shifted to a **bluish** tone in **sunlight (UV exposure)**. This wasn't just visual—kids could test it on the playground in real-time, making Zartan one of the most memorable figures of the era. He shipped as a deluxe package with the **Chameleon Swamp Skier**, removable mask, and chest armor, reinforcing his infiltrator identity. By the **1990s**, the UV color-change feature was phased out as safety and durability standards evolved, but Zartan remained in Hasbro's lineup through the **2000s and beyond**. Modern versions emphasize sculpt and articulation, yet the original 1984 release remains iconic—a reminder of 80s toy innovation when such features were as important as the figure itself.",
@@ -13,10 +16,12 @@
     "Zarana & Zandar (related characters with color-change gimmicks in select releases)",
     "Subsequent Zartan figures (various reissues from 1990s–present, typically without UV feature)"
   ],
-  "topics": [  "discontinued",
-      "action-figures",
-      "80s-nostalgia",
-      "cult-favorite"],
+  "topics": [
+    "discontinued",
+    "action-figures",
+    "80s-nostalgia",
+    "cult-favorite"
+  ],
   "links": {
     "wikipedia_zartan": "https://en.wikipedia.org/wiki/Zartan",
     "yojoe_zartan_v1": "https://www.yojoe.com/action/84/zartan.shtml",
@@ -24,13 +29,34 @@
   },
   "overview_md": "**Zartan** entered the 3.75-inch *G.I. Joe* line in **1984** as Cobra's chameleon-like infiltrator, featuring one of the era's most innovative toy features: UV-reactive plastic. In **sunlight**, his exposed 'skin' **shifted to a striking bluish color**—a feature that kids could demo instantly on any playground, making Zartan unforgettable. He shipped as a deluxe figure with the **Chameleon Swamp Skier**, hood, chest armor, and a removable **mask** that sold the disguise theme.\n\nThroughout the **late 1980s and early 1990s**, Hasbro expanded the character with related figures like Zarana and Zandar, sometimes experimenting with their own color-change plastics or temperature-reactive decals. However, by the **1990s**, the **UV color-change feature was phased out** as manufacturing standards evolved and durability concerns emerged. The photochromic plastic that once made Zartan special couldn't withstand the rigors of play and storage.\n\nToday, modern Zartan figures (from the **2000s onward**) focus on improved sculpt, articulation, and accessories rather than color-change effects. Yet the **1984 original remains iconic**—a time capsule of 80s toy innovation when a feature could define a figure's legacy. Collectors prize the vintage version precisely because that UV effect is what made it revolutionary and, ultimately, what made it rare.",
   "timeline": [
-    { "date": "1984", "text": "Zartan v1 debuts: UV-reactive 'skin' shifts to bluish in sunlight; includes Chameleon Swamp Skier, mask, and chest armor. Kids can test the color-change on the playground instantly—a standout innovation." },
-    { "date": "late 1980s", "text": "Additional Zartan variants and related characters (Zarana, Zandar) released; some feature their own color-change plastics or temperature-reactive decals." },
-    { "date": "1990s", "text": "UV and temperature color-change features phased out across the line due to durability concerns and evolving safety/manufacturing standards. Character continues but without photochromic plastics." },
-    { "date": "2000s–present", "text": "Zartan reissued and reimagined in modern scales and articulation systems (3.75-inch, 6-inch, collectibles). Color-change gimmick retired; focus shifts to sculpt, poseability, and accessories. Original 1984 version grows in collector value." }
+    {
+      "date": "1984",
+      "text": "Zartan v1 debuts: UV-reactive 'skin' shifts to bluish in sunlight; includes Chameleon Swamp Skier, mask, and chest armor. Kids can test the color-change on the playground instantly—a standout innovation."
+    },
+    {
+      "date": "late 1980s",
+      "text": "Additional Zartan variants and related characters (Zarana, Zandar) released; some feature their own color-change plastics or temperature-reactive decals."
+    },
+    {
+      "date": "1990s",
+      "text": "UV and temperature color-change features phased out across the line due to durability concerns and evolving safety/manufacturing standards. Character continues but without photochromic plastics."
+    },
+    {
+      "date": "2000s–present",
+      "text": "Zartan reissued and reimagined in modern scales and articulation systems (3.75-inch, 6-inch, collectibles). Color-change gimmick retired; focus shifts to sculpt, poseability, and accessories. Original 1984 version grows in collector value."
+    }
   ],
   "sources": [
-    { "label": "Wikipedia — Zartan (character & toy background)", "url": "https://en.wikipedia.org/wiki/Zartan" },
-    { "label": "YoJoe.com — Zartan (v1, 1984) archive with parts & notes", "url": "https://www.yojoe.com/action/84/zartan.shtml" }
-  ]
+    {
+      "label": "Wikipedia — Zartan (character & toy background)",
+      "url": "https://en.wikipedia.org/wiki/Zartan"
+    },
+    {
+      "label": "YoJoe.com — Zartan (v1, 1984) archive with parts & notes",
+      "url": "https://www.yojoe.com/action/84/zartan.shtml"
+    }
+  ],
+  "image": "/images/brands/zartan-gi-joe.svg",
+  "image_alt": "Zartan (G.I. Joe action figure) — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

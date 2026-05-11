@@ -4,41 +4,32 @@
   "category": "Toys/Games",
   "seo_category": "toys-games",
   "country": "US",
-
   "active": {
     "start": 1984,
     "end": null
   },
-
   "hook": "The Transformers villain whose toy form shifted from realistic handgun to tank as safety rules and retailer risk changed.",
-
   "fate": "Realistic handgun alt-mode largely retired from U.S. mass retail; modern Megatron toys default to tanks or sci-fi cannons, with handgun versions mostly limited to adult collectors.",
-
   "summary": "Early 1984 Megatron figures in the U.S. transformed into a realistic Walther P38–style handgun, imported from Takara’s Micro Change \"Gun Robo\" toy. As U.S. toy gun laws, blaze-orange marking rules, and retailer policies tightened from the late 1980s onward, Hasbro and Takara shifted Megatron’s alternate mode toward tanks and futuristic cannons that read as fantasy hardware instead of a real firearm. Today, mainstream U.S. Megatron toys avoid realistic handgun forms; pistol-mode releases survive mainly as adult-collector imports or special editions with bright safety markings and restricted distribution.",
-
   "notable_products": [
     "G1 Megatron (1984) — realistic Walther P38–style pistol alt-mode",
     "Pre-Transformers Micro Change MC-13 Gun Robo Walther P-38 (Japanese source mold)",
     "1990s–present mainline Megatron figures — tank or sci-fi cannon alt-modes",
     "Masterpiece/collector Megatron releases — handgun alt-mode with required orange tip and compliance markings in many markets"
   ],
-
   "topics": [
-   "banned",
-      "reformulated",
-      "action-figures",
-      "80s-nostalgia"
+    "banned",
+    "reformulated",
+    "action-figures",
+    "80s-nostalgia"
   ],
-
   "links": {
     "wikipedia_megatron": "https://en.wikipedia.org/wiki/Megatron",
     "wikipedia_transformers_toys": "https://en.wikipedia.org/wiki/Transformers:_Generation_1",
     "ecfr_blaze_orange": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-II/subchapter-H/part-272",
     "uscode_imitation_firearms": "https://www.govinfo.gov/content/pkg/USCODE-2011-title15/html/USCODE-2011-title15-chap76.htm"
   },
-
   "overview_md": "When Transformers hit U.S. shelves in 1984, Megatron was more than a cartoon villain — he was a chrome, working handgun toy.\n\nThe original G1 Megatron toy started in Japan, where it was part of a line called Micro Change. That version transformed from a realistic-looking pistol into a robot. Hasbro brought the same toy to the US as Megatron, keeping all the realistic gun details — the long barrel, scope, and stock. Marketing photos even showed kids holding it, and it looked very much like a real Walther P-38 gun.\n\nThis wasn't unusual at the time. Cap guns, water pistols, and sci-fi blasters often leaned on realistic firearm silhouettes. But by the late 1980s, U.S. imitation firearm rules and public concern had shifted. Federal law began requiring distinctive markings on toy guns that could be confused for real weapons. Some states and cities went further, restricting realistic colors or gun-like shapes altogether. Retailers, wary of bad press and legal complexity, started to treat ultra-realistic toy guns as more trouble than they were worth.\n\nFor Megatron, that created a brand problem. His classic alt-mode was essentially a replica firearm. To keep the character alive in mass-market toy lines, Hasbro and Takara gradually pivoted away from his pistol alternate mode and toward two new options:\n\n- Tanks — still aggressive and militarized, but clearly vehicles rather than handguns.\n- Sci-fi cannons or fusion cannons — oversized fantasy weapons that read as space hardware instead of something a police officer might mistake for a real sidearm.\n\nThe Megatron gun mode never vanished completely, even as it was unavailable on toy shelves by the early 2000s. Instead, it moved into narrower lanes:\n\n- Adult-collector releases, such as Masterpiece-style Metatron toys, sold primarily to hobbyists rather than kids.\n- Imports and specialty runs where packaging, safety plugs, and bright markings satisfied local law or where the handgun form was less controversial.\n\nEven in those collector runs, the toy is usually required to have permanent orange tips or other conspicuous markings, and big-box retailers may still refuse to stock anything that looks too much like a real firearm. That’s why discussions among fans often center on \"Why can’t we get a proper G1 gun Megatron at retail?\" — the answer is a mix of law, liability, and optics, not just engineering.\n\nFrom a brand-history perspective, Megatron is a neat case study in how regulation and public sentiment reshape toys. The character’s core traits stay intact, but the physical metaphor changes: from a handgun a child might point, to armored vehicles and sci-fi artillery that feel safer. For most modern fans, Megatron is a tank or cannon, and the old pistol form has become a strangely controversial relic of 1980s toy culture.",
-
   "timeline": [
     {
       "date": "1983-01",
@@ -64,7 +55,8 @@
       "date": "2010s–present",
       "text": "For most fans, the standard Megatron toy is a tank or sci-fi cannon. Gun-mode Megatrons survive mainly in adult-collector lines and nostalgia pieces rather than in children’s aisles."
     }
-  ],"seo_title": "Megatron’s Gun-to-Tank Shift: Why Transformers Changed His Toy Form",
+  ],
+  "seo_title": "Megatron’s Gun-to-Tank Shift: Why Transformers Changed His Toy Form",
   "seo_description": "Megatron began as a realistic handgun Transformers toy in 1984, but U.S. toy gun rules, safety concerns, and retailer policies pushed later figures toward tanks and sci-fi cannons.",
   "seo_keywords": [
     "Megatron action figure",
@@ -88,7 +80,6 @@
     "collector Megatron figure",
     "why Megatron is a tank"
   ],
-
   "sources": [
     {
       "label": "Megatron (character & toy history) — Wikipedia",
@@ -106,5 +97,8 @@
       "label": "Fan & industry discussion of gun-mode Megatron, safety, and retailer policy",
       "url": "https://tfwiki.net/wiki/For_safety_reasons"
     }
-  ]
+  ],
+  "image": "/images/brands/megatron-gun-to-tank.svg",
+  "image_alt": "Megatron (Transformers action figure) — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

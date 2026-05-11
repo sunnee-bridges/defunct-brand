@@ -85,5 +85,8 @@
   },
   "seo": {
     "meta_description": "Compaq pioneered the IBM-compatible portable PC in 1982 and became a global brand before HP acquired it in 2002 and gradually phased out the Compaq name worldwide."
-  }
+  },
+  "image": "/images/brands/compaq.webp",
+  "image_alt": "Compaq logo",
+  "image_caption": "Source: Wikimedia Commons — File:Compaq_logo_1993.svg"
 }

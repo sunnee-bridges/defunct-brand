@@ -4,7 +4,10 @@
   "category": "Toys/Games",
   "seo_category": "toys-games",
   "country": "US",
-  "active": { "start": 1978, "end": 1978 },
+  "active": {
+    "start": 1978,
+    "end": 1978
+  },
   "hook": "",
   "fate": "Recalled in 1978 after child's death from choking on detached missile; led to mandatory warning labels on all projectile toys",
   "summary": "Licensed toy spaceship from the Battlestar Galactica TV series featuring spring-loaded missiles. A 4-year-old boy choked to death on a red plastic missile in 1978, leading to immediate recall and landmark changes to toy safety regulations requiring warnings on all toys with small projectiles.",
@@ -13,42 +16,66 @@
     "Spring-loaded red missiles",
     "Battlestar Galactica toy line"
   ],
-  "topics": ["safety-recall",
-      "toys",
-      "80s-nostalgia"],
+  "topics": [
+    "safety-recall",
+    "toys",
+    "80s-nostalgia"
+  ],
   "links": {
     "wikipedia_bsg": "https://en.wikipedia.org/wiki/Battlestar_Galactica_(1978_TV_series)",
     "cpsc_projectile_toys": "https://www.cpsc.gov/"
   },
   "overview_md": "The Battlestar Galactica Colonial Viper was a die-cast toy spaceship released in 1978 by Mattel as part of the licensed merchandise for the hit science fiction television series of the same name. The show, which premiered in September 1978, was ABC's answer to \"Star Wars\" and became an instant pop culture phenomenon, driving strong demand for related toys.\n\nThe Colonial Viper toy was a detailed replica of the starfighter spacecraft piloted by the show's heroes. Like many action toys of the era, it featured spring-loaded projectiles—small red plastic missiles that could be loaded into the ship and launched by pressing a button. This firing action was a popular feature in 1970s.\n\nIn December 1978, tragedy struck when a 4-year-old boy in California choked to death on Viper's red plastic missiles. The child put the small projectile in his mouth, and it became lodged in his throat. Despite emergency efforts, the boy died from asphyxiation.\n\nThe incident sent shockwaves through the toy industry and regulatory agencies. Mattel immediately recalled the Colonial Viper and similar toys with small projectiles. The Consumer Product Safety Commission (CPSC) mandated that all toys with projectiles or small detachable parts must carry prominent warning labels about choking hazards for children under 3 years old.\n\nManufacturers were also required to design projectiles with minimum size standards and use softer materials. The \"WARNING: CHOKING HAZARD\" labels that appear on most of today's toy packaging trace their origin to this incident. \n\nMattel never relaunched the Colonial Viper. When Battlestar Galactica toys returned to the market in later decades, projectiles were either eliminated or redesigned with larger, softer foam darts that couldn't fit in a child's mouth.\n\nThe Colonial Viper incident became a defining moment in toy safety history, cited in regulatory discussions for decades and demonstrating that even toys from reputable manufacturers could pose lethal hazards without proper evaluation. It remains one of the most notorious recalled toys in American history, and a dark collectible in toy history circles.",
   "timeline": [
-    { "date": "1978-09", "text": "Mattel releases a toy line to promote Battlestar Galactica's premiere on ABC" },
-    { "date": "1978-12", "text": "4-year-old boy in California chokes on Colonial Viper missle, resulting in a voluntary recall of Mattel projectile toys" },
-    { "date": "1979", "text": "CPSC mandates warning labels on all toys with small projectiles or detachable parts" },
-    { "date": "1979", "text": "Toy industry adopts new standards for projectile size and materials" }
+    {
+      "date": "1978-09",
+      "text": "Mattel releases a toy line to promote Battlestar Galactica's premiere on ABC"
+    },
+    {
+      "date": "1978-12",
+      "text": "4-year-old boy in California chokes on Colonial Viper missle, resulting in a voluntary recall of Mattel projectile toys"
+    },
+    {
+      "date": "1979",
+      "text": "CPSC mandates warning labels on all toys with small projectiles or detachable parts"
+    },
+    {
+      "date": "1979",
+      "text": "Toy industry adopts new standards for projectile size and materials"
+    }
   ],
   "sources": [
-    { 
-      "label": "Wikipedia - Battlestar Galactica legal troubles", 
-      "url": "https://en.wikipedia.org/wiki/Battlestar_Galactica_(1978_TV_series)#Legal_troubles" 
+    {
+      "label": "Wikipedia - Battlestar Galactica legal troubles",
+      "url": "https://en.wikipedia.org/wiki/Battlestar_Galactica_(1978_TV_series)#Legal_troubles"
     },
-    { 
-      "label": "Consumer Product Safety Commission recall notice", 
-      "url": "https://www.cpsc.gov/Recalls/1979/Mattel-Announces-Toy-Replacement-Program" 
+    {
+      "label": "Consumer Product Safety Commission recall notice",
+      "url": "https://www.cpsc.gov/Recalls/1979/Mattel-Announces-Toy-Replacement-Program"
     },
-    { 
-      "label": "Vintage Toy Emporium - The Tiny Red Missile that Shook Up the Toy Industry", 
-      "url": "https://www.vintagetoyemporium.com/post/the-tiny-red-missile-that-shook-up-the-toy-industry-in-1979" 
+    {
+      "label": "Vintage Toy Emporium - The Tiny Red Missile that Shook Up the Toy Industry",
+      "url": "https://www.vintagetoyemporium.com/post/the-tiny-red-missile-that-shook-up-the-toy-industry-in-1979"
     },
-    { 
-      "label": "Star Wars Collectors' Archive collection of Colonial Viper stories", 
-      "url": "http://theswca.com/textf/toydeath.old.html" 
+    {
+      "label": "Star Wars Collectors' Archive collection of Colonial Viper stories",
+      "url": "http://theswca.com/textf/toydeath.old.html"
     }
-  ],"explore_more": {
+  ],
+  "explore_more": {
     "category_label": "Want more dangerously defunct toys from yesteryear?",
     "brands": [
-      { "name": "Austin Magic Pistol", "slug": "austin-magic-pistol" },
-      { "name": "CSI Fingerprint Examination Kit", "slug": "csi-fingerprint-kit" }
+      {
+        "name": "Austin Magic Pistol",
+        "slug": "austin-magic-pistol"
+      },
+      {
+        "name": "CSI Fingerprint Examination Kit",
+        "slug": "csi-fingerprint-kit"
+      }
     ]
-  }
+  },
+  "image": "/images/brands/battlestar-galactica-viper.webp",
+  "image_alt": "Battlestar Galactica Viper",
+  "image_caption": "Source: Wikimedia Commons"
 }

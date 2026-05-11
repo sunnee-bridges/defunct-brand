@@ -109,5 +109,8 @@
   },
   "seo": {
     "meta_description": "Circuit City was a major U.S. electronics retailer with over 700 stores before filing for Chapter 11 in 2008 and liquidating all remaining locations by early 2009."
-  }
+  },
+  "image": "/images/brands/circuit-city.webp",
+  "image_alt": "Circuit City electronics store",
+  "image_caption": "Source: Wikimedia Commons — File:Circuit_City_Superstore_Original.JPG"
 }

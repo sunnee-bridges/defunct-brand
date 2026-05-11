@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#1A237E"/>
+  <rect x="20" y="20" width="760" height="760" fill="none" stroke="#90CAF9" stroke-width="12" rx="12"/>
+  <rect y="610" width="800" height="190" fill="#283593"/>
+  <circle cx="400" cy="310" r="130" fill="none" stroke="rgba(144,202,249,0.2)" stroke-width="20"/>
+  <circle cx="400" cy="310" r="90" fill="none" stroke="rgba(144,202,249,0.15)" stroke-width="14"/>
+  <circle cx="400" cy="310" r="50" fill="none" stroke="rgba(144,202,249,0.12)" stroke-width="8"/>
+  <text x="400" y="270" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="100" font-weight="900" fill="white" letter-spacing="8">CSI</text>
+  <text x="400" y="380" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700" fill="#90CAF9" letter-spacing="3">FINGERPRINT KIT</text>
+  <text x="400" y="510" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(144,202,249,0.65)" letter-spacing="4">Toy · 2000s</text>
+  <text x="400" y="700" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="24" fill="white" letter-spacing="4">JAKKS PACIFIC</text>
+  <text x="400" y="748" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-style="italic" fill="rgba(255,255,255,0.4)">Vanished Brands</text>
+</svg>

@@ -78,5 +78,8 @@
   ],
   "seo": {
     "meta_description": "Pebble was the crowdfunding-era smartwatch pioneer, known for long battery life and an e-paper display. Fitbit acquired it in 2016 and discontinued all Pebble hardware."
-  }
+  },
+  "image": "/images/brands/pebble.webp",
+  "image_alt": "Pebble smartwatch",
+  "image_caption": "Source: Wikimedia Commons"
 }

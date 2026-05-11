@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#4A0E1A"/>
+  <ellipse cx="400" cy="400" rx="260" ry="360" fill="rgba(255,255,255,0.05)"/>
+  <line x1="0" y1="0" x2="180" y2="0" stroke="#D4AF37" stroke-width="8"/>
+  <line x1="0" y1="0" x2="0" y2="180" stroke="#D4AF37" stroke-width="8"/>
+  <line x1="800" y1="0" x2="620" y2="0" stroke="#D4AF37" stroke-width="8"/>
+  <line x1="800" y1="0" x2="800" y2="180" stroke="#D4AF37" stroke-width="8"/>
+  <line x1="0" y1="800" x2="180" y2="800" stroke="#D4AF37" stroke-width="8"/>
+  <line x1="0" y1="800" x2="0" y2="620" stroke="#D4AF37" stroke-width="8"/>
+  <line x1="800" y1="800" x2="620" y2="800" stroke="#D4AF37" stroke-width="8"/>
+  <line x1="800" y1="800" x2="800" y2="620" stroke="#D4AF37" stroke-width="8"/>
+  <text x="400" y="340" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="130" font-weight="900" fill="white">CISCO</text>
+  <text x="400" y="460" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700" fill="#D4AF37" letter-spacing="3">FORTIFIED WINE</text>
+  <text x="400" y="560" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(255,255,255,0.45)" letter-spacing="5">CANANDAIGUA · 1980s</text>
+  <text x="400" y="720" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-style="italic" fill="rgba(212,175,55,0.35)">Vanished Brands</text>
+</svg>

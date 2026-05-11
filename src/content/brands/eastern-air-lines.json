@@ -4,14 +4,13 @@
   "category": "Aviation",
   "seo_category": "airlines-aviation",
   "country": "US",
-  "active": { "start": 1926, "end": 1991 },
-
+  "active": {
+    "start": 1926,
+    "end": 1991
+  },
   "hook": "One of America’s original Big Four airlines, remembered for East Coast dominance, Florida routes, and a collapse that became one of the most famous airline failures of the deregulation era.",
-
   "fate": "Ceased original operations after years of financial strain, labor conflict, deregulation-era pressure, and the fallout from Texas Air ownership. The Eastern name has since been revived by later, separate operators.",
-
   "summary": "",
-
   "seo": {
     "meta_title": "What Happened to Eastern Air Lines? The Big Four Airline That Collapsed",
     "meta_description": "Eastern Air Lines was one of America’s Big Four airlines before financial strain, labor conflict, and deregulation-era. Here is what happened.",
@@ -26,21 +25,18 @@
       "defunct airlines founded in 1926"
     ]
   },
-
   "notable_products": [
     "Domestic passenger airline service",
     "Northeast-to-Florida route network",
     "Caribbean and Latin America service",
     "Eastern Shuttle / northeastern shuttle operations"
   ],
-
   "topics": [
-     "aviation",
+    "aviation",
     "bankruptcy",
     "travel-nostalgia",
     "deregulation-era"
   ],
-
   "verified_facts": [
     "Eastern traces its origins to 1926 and began as Pitcairn Aviation.",
     "Eastern became one of the 'Big Four' domestic airlines in the United States.",
@@ -49,28 +45,51 @@
     "Britannica says Eastern was forced into liquidation in 1991.",
     "Eastern’s current corporate history page says the original airline ceased operations in 1991."
   ],
-
   "cultural_memory": [
     "Eastern is remembered as one of the defining airlines of the East Coast, especially for routes linking New York, Florida, and the Caribbean.",
     "For many travelers, Eastern was a familiar airline of the pre-megacarrier era, when regional strength and route identity mattered more than giant national branding.",
     "The airline’s collapse is often remembered as one of the most dramatic examples of how deregulation and labor conflict reshaped U.S. aviation.",
     "Many aviation fans still associate Eastern with the old 'Big Four' era and with a version of American air travel that disappeared in the late 20th century."
   ],
-
   "overview_md": "**Eastern Air Lines** began in 1926 as Pitcairn Aviation and eventually became one of the most important airlines in the United States. It was especially strong along the East Coast and became closely identified with routes linking the Northeast to Florida, the Caribbean, and parts of Latin America.\n\nWhat made Eastern historically important was not just its size, but its role in the structure of U.S. aviation. It became one of the country's 'Big Four' domestic airlines, which meant it was part of the group that dominated major American air travel for decades.\n\nBy the mid-1980s, the airline was under pressure. Deregulation made competition harsher, and financial strain made the company less flexible. In 1986, Texas Air Corporation took over Eastern. Texas Air Corporation took over Eastern, which made the situation worse. Labor unrest, a lockout, sympathy strikes, bankruptcy, and falling revenue all played major roles in the airline’s collapse.\n\nEastern went into bankruptcy in 1989 and was liquidated in 1991.\n\nStill, the brand name survived even though the original airline did not. The companies currently using the Eastern name are separate chapters, not a continuation of the original Eastern Air Lines. In other words, the historic airline is gone, but the brand name has been revived by later operators.",
-
   "timeline": [
-    { "date": "1926", "text": "Eastern begins as Pitcairn Aviation." },
-    { "date": "1930", "text": "Eastern becomes part of the group of major domestic airlines later known as the 'Big Four'." },
-    { "date": "1938", "text": "Eastern Air Lines is incorporated as an independent company under its later well-known name." },
-    { "date": "Mid-20th century", "text": "Eastern grows into a major airline with strong East Coast, Florida, Caribbean, and Latin America service." },
-    { "date": "1986", "text": "Texas Air Corporation takes over Eastern." },
-    { "date": "1989", "text": "Eastern enters bankruptcy amid labor conflict and severe financial strain." },
-    { "date": "1990", "text": "A federal bankruptcy court removes Texas Air control and appoints a trustee to run the airline." },
-    { "date": "1991", "text": "Eastern is forced into liquidation and the original airline ceases operations." },
-    { "date": "2010s-present", "text": "The Eastern name later revived by, separate aviation companies, but the original airline remains defunct." }
+    {
+      "date": "1926",
+      "text": "Eastern begins as Pitcairn Aviation."
+    },
+    {
+      "date": "1930",
+      "text": "Eastern becomes part of the group of major domestic airlines later known as the 'Big Four'."
+    },
+    {
+      "date": "1938",
+      "text": "Eastern Air Lines is incorporated as an independent company under its later well-known name."
+    },
+    {
+      "date": "Mid-20th century",
+      "text": "Eastern grows into a major airline with strong East Coast, Florida, Caribbean, and Latin America service."
+    },
+    {
+      "date": "1986",
+      "text": "Texas Air Corporation takes over Eastern."
+    },
+    {
+      "date": "1989",
+      "text": "Eastern enters bankruptcy amid labor conflict and severe financial strain."
+    },
+    {
+      "date": "1990",
+      "text": "A federal bankruptcy court removes Texas Air control and appoints a trustee to run the airline."
+    },
+    {
+      "date": "1991",
+      "text": "Eastern is forced into liquidation and the original airline ceases operations."
+    },
+    {
+      "date": "2010s-present",
+      "text": "The Eastern name later revived by, separate aviation companies, but the original airline remains defunct."
+    }
   ],
-
   "stats": {
     "category": "Airline / Aviation Brand",
     "u_s_founding_year": "1926",
@@ -79,7 +98,6 @@
     "liquidation_year": "1991",
     "modern_status_note": "Original airline gone; brand name later revived by separate operators"
   },
-
   "content": {
     "faq": [
       {
@@ -104,12 +122,10 @@
       }
     ]
   },
-
   "links": {
     "current_brand_history": "https://goeasternair.com/about-us/",
     "britannica_history": "https://www.britannica.com/money/Eastern-Air-Lines-Inc"
   },
-
   "sources": [
     {
       "label": "Eastern Airlines current history page",
@@ -128,7 +144,6 @@
       "url": "https://www.todayingeorgiahistory.org/tih-georgia-day/eastern-airlines/"
     }
   ],
-
   "explore_more": {
     "category_label": "Interested in more vanished airline brands?",
     "brands": [
@@ -136,5 +151,8 @@
       "pan-am",
       "twa"
     ]
-  }
+  },
+  "image": "/images/brands/eastern-air-lines.webp",
+  "image_alt": "Eastern Air Lines aircraft",
+  "image_caption": "Source: Wikimedia Commons — File:Eastern_Air_Lines_Lockheed_L-1011_Tristar_1_Proctor-1.jpg"
 }

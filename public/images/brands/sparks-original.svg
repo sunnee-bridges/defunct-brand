@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#E65100"/>
+  <rect x="20" y="20" width="760" height="760" fill="none" stroke="#FFE0B2" stroke-width="12" rx="12"/>
+  <rect y="610" width="800" height="190" fill="#F57C00"/>
+  <line x1="100" y1="120" x2="150" y2="200" stroke="rgba(255,224,178,0.4)" stroke-width="3"/>
+  <line x1="650" y1="120" x2="600" y2="200" stroke="rgba(255,224,178,0.4)" stroke-width="3"/>
+  <line x1="80" y1="420" x2="140" y2="360" stroke="rgba(255,224,178,0.3)" stroke-width="2"/>
+  <line x1="720" y1="420" x2="660" y2="360" stroke="rgba(255,224,178,0.3)" stroke-width="2"/>
+  <text x="400" y="290" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="120" font-weight="900" fill="white" font-style="italic">Sparks</text>
+  <text x="400" y="400" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" fill="#FFE0B2" letter-spacing="3">Caffeinated Malt Beverage</text>
+  <text x="400" y="510" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(255,224,178,0.6)" letter-spacing="4">Banned 2008</text>
+  <text x="400" y="700" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="24" fill="white" letter-spacing="4">MILLER BREWING</text>
+  <text x="400" y="748" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-style="italic" fill="rgba(255,255,255,0.4)">Vanished Brands</text>
+</svg>

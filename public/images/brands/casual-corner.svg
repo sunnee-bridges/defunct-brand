@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#1C3A5C"/>
+  <rect x="20" y="20" width="760" height="760" fill="none" stroke="#C4A882" stroke-width="12" rx="12"/>
+  <rect y="610" width="800" height="190" fill="#C4A882"/>
+  <text x="400" y="290" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="700" fill="white" font-style="italic">Casual</text>
+  <text x="400" y="390" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="700" fill="#C4A882" font-style="italic">Corner</text>
+  <text x="400" y="510" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" fill="rgba(196,168,130,0.65)" letter-spacing="4">Women's Fashion</text>
+  <text x="400" y="700" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="24" fill="#1C3A5C" letter-spacing="4">EST. 1950s</text>
+  <text x="400" y="748" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-style="italic" fill="rgba(28,58,92,0.5)">Vanished Brands</text>
+</svg>

@@ -4,15 +4,23 @@
   "category": "Food/Breakfast cereal",
   "seo_category": "food-beverage",
   "country": "US",
-  "active": { "start": 1984, "end": 1985 },
+  "active": {
+    "start": 1984,
+    "end": 1985
+  },
   "fate": "Discontinued",
   "hook": "Kellogg's tie-in that vanished faster than the Millennium Falcon",
   "summary": "Kellogg’s Star Wars–branded cereal sold during 1984–1985.",
-  "topics": ["vanished-product", "discontinued",
-      "snacks",
-      "80s-nostalgia",
-      "cult-favorite"],
-  "notable_products": ["C-3PO’s cereal (double-figure-8 pieces)"],
+  "topics": [
+    "vanished-product",
+    "discontinued",
+    "snacks",
+    "80s-nostalgia",
+    "cult-favorite"
+  ],
+  "notable_products": [
+    "C-3PO’s cereal (double-figure-8 pieces)"
+  ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/C-3PO%27s",
     "wayback": "https://web.archive.org/web/*/http://www.kelloggs.com",
@@ -20,19 +28,47 @@
   },
   "overview_md": "**C-3PO’s Cereal** was a limited-run, Star Wars–licensed breakfast cereal from Kellogg’s sold in 1984–1985. Marketed alongside the original trilogy’s lingering cultural moment, the box featured C-3PO and often R2-D2, while the cereal itself used distinctive figure-eight shaped pieces. Positioned as a lightly sweetened corn-and-oat cereal for kids, it relied on TV spots, in-box premiums, and mail-in offers instead of a long shelf-life plan.\n\nFans remember it for three reasons: timing, design, and scarcity. It arrived as Star Wars merchandising still dominated toy aisles. The unique shapes stood out next to rings and puffs, and the product vanished after roughly one year—turning empty boxes and unopened packs into collector targets. In a pre-prequel era, the branding also kept the saga visible to younger shoppers between theatrical releases and TV airings.\n\nToday, C-3PO’s lives on in ’80s cereal retrospectives, commercial compilations, and nostalgia lists. While the recipe never returned under the same name, the cereal’s brief run is a neat snapshot of how movie licenses powered breakfast aisles—and how fast those tie-ins could disappear once campaigns ended.",
   "timeline": [
-    { "date": "1984-06", "text": "U.S. rollout begins with TV commercials and kid-magazine ads introducing the new cereal." },
-    { "date": "1984-09", "text": "C3PO's rolled out nationally across major grocers, with incentives like in-box premiums and mail-in offers." },
-    { "date": "1985-03", "text": "Promotional push slows as seasonal displays rotate out, with limited restocks in select regions." },
-    { "date": "1985-12", "text": "Product discontinued, with leftover inventory becoming collectors items after clearing grocery shelves." }
+    {
+      "date": "1984-06",
+      "text": "U.S. rollout begins with TV commercials and kid-magazine ads introducing the new cereal."
+    },
+    {
+      "date": "1984-09",
+      "text": "C3PO's rolled out nationally across major grocers, with incentives like in-box premiums and mail-in offers."
+    },
+    {
+      "date": "1985-03",
+      "text": "Promotional push slows as seasonal displays rotate out, with limited restocks in select regions."
+    },
+    {
+      "date": "1985-12",
+      "text": "Product discontinued, with leftover inventory becoming collectors items after clearing grocery shelves."
+    }
   ],
   "sources": [
-    { "label": "Wikipedia: C-3PO’s cereal", "url": "https://en.wikipedia.org/wiki/C-3PO%27s" },
-    { "label": "C-3PO's vintage TV commercial", "url": "https://www.youtube.com/watch?v=fp_EOum3FdI" },
-    { "label": "Mr Breakfast - C3PO's cereal profile", "url": "https://www.mrbreakfast.com/cereal_detail.asp?id=50" }
-  ],"explore_more": {
+    {
+      "label": "Wikipedia: C-3PO’s cereal",
+      "url": "https://en.wikipedia.org/wiki/C-3PO%27s"
+    },
+    {
+      "label": "C-3PO's vintage TV commercial",
+      "url": "https://www.youtube.com/watch?v=fp_EOum3FdI"
+    },
+    {
+      "label": "Mr Breakfast - C3PO's cereal profile",
+      "url": "https://www.mrbreakfast.com/cereal_detail.asp?id=50"
+    }
+  ],
+  "explore_more": {
     "category_label": "Looking to jump start your day with more nostalgia?",
     "brands": [
-      { "name": "Carnation Breakfast Bars", "slug": "carnation-breakfast-bars" }
+      {
+        "name": "Carnation Breakfast Bars",
+        "slug": "carnation-breakfast-bars"
+      }
     ]
-  }
+  },
+  "image": "/images/brands/c-3pos-cereal.svg",
+  "image_alt": "C-3PO's Cereal — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

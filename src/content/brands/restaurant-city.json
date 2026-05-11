@@ -4,7 +4,10 @@
   "category": "Video games and consoles",
   "seo_category": "video-games",
   "country": "UK (Playfish), US (EA)",
-  "active": { "start": 2009, "end": 2012 },
+  "active": {
+    "start": 2009,
+    "end": 2012
+  },
   "hook": "Popular Facebook restaurant game by Playfish that launched in 2009 and was retired in 2012 after a strong social gaming run.",
   "fate": "Restaurant City was a cheerful Facebook game that let players build dream restaurants before EA shut it down in 2012.",
   "summary": "Restaurant City was a social restaurant simulation game created by Playfish for Facebook. It entered public beta on April 28, 2009 and let players design restaurants, hire staff, collect ingredients, and visit friends. Electronic Arts acquired Playfish in November 2009 and the game was retired on June 29, 2012.",
@@ -25,9 +28,18 @@
   },
   "overview_md": "**Restaurant City** was a popular Facebook game created by Playfish. It launched in April 2009 and quickly became a hit. Players built and decorated restaurants, hired friends as staff, and served dishes to earn coins.\n\nThe game felt simple, social, and fun. It also fit perfectly into the early era of Facebook gaming, when titles like FarmVille and Pet Society were everywhere.\n\nRestaurant City grew fast. Millions of people logged in daily to collect ingredients, unlock recipes, and show off their restaurant designs. It became one of Playfish’s standout successes.\n\nBut things changed after Electronic Arts acquired Playfish in 2009. Over time, Playfish games began shutting down, and Restaurant City was no exception. It was retired on June 29, 2012. EA announced the closure on Facebook a month earlier. When the servers went offline, the game became completely unplayable, leaving fans disappointed.\n\nEven after its shutdown, players continued searching for ways to preserve the game. Fans dug through old files, archived assets, and even found partial early versions. A fan-made clone called Restaurant Streets appeared, but it was not the original game. The community still works to preserve Restaurant City’s legacy today.",
   "timeline": [
-    { "date": "2009", "text": "Restaurant City launches on Facebook on April 28. It becomes one of Playfish’s biggest hits, reaching millions of players. Electronic Arts acquires Playfish later that year, bringing the game under EA’s control." },
-    { "date": "2011", "text": "EA begins retiring several Playfish titles, signaling a shift away from early Facebook games and hinting at future closures." },
-    { "date": "2012", "text": "In early 2012, EA announces on May 1 that Restaurant City will shut down. On June 29, the game officially closes on Facebook and iOS. After shutdown, fans try to preserve the game, uncovering partial builds and creating early clones like Restaurant Streets." }
+    {
+      "date": "2009",
+      "text": "Restaurant City launches on Facebook on April 28. It becomes one of Playfish’s biggest hits, reaching millions of players. Electronic Arts acquires Playfish later that year, bringing the game under EA’s control."
+    },
+    {
+      "date": "2011",
+      "text": "EA begins retiring several Playfish titles, signaling a shift away from early Facebook games and hinting at future closures."
+    },
+    {
+      "date": "2012",
+      "text": "In early 2012, EA announces on May 1 that Restaurant City will shut down. On June 29, the game officially closes on Facebook and iOS. After shutdown, fans try to preserve the game, uncovering partial builds and creating early clones like Restaurant Streets."
+    }
   ],
   "sources": [
     {
@@ -46,47 +58,50 @@
       "label": "Fandom.com - Restaurant City wiki entry",
       "url": "https://restaurantcity.fandom.com/wiki/Restaurant_City"
     }
-  ],"seo": {
-  "meta_title": "What Happened to Restaurant City? Why the Facebook Game Shut Down in 2012",
-  "meta_description": "Restaurant City was a popular Facebook restaurant game by Playfish that launched in 2009 and shut down on June 29, 2012. Here is why it ended and what happened to the original game.",
-  "keywords": [
-    "restaurant city",
-    "restaurant city shutdown",
-    "what happened to restaurant city",
-    "restaurant city facebook game",
-    "restaurant city playfish",
-    "restaurant city discontinued",
-    "why did restaurant city shut down",
-    "restaurant city closed"
-  ]
-},
-"content": {
-  "faq": [
-
-    {
-      "question": "Who made Restaurant City?",
-      "answer": "Restaurant City was created by Playfish, a London‑based social‑game studio later acquired by Electronic Arts."
-    },
-    {
-      "question": "What kind of game is it?",
-      "answer": "It was a restaurant‑management game where players built cafés, hired staff, collected ingredients, and visited friends."
-    },
-    {
-      "question": "When did the game launch and shut down?",
-      "answer": "It launched on April 28, 2009, and shut down on June 29, 2012."
-    },
-    {
-      "question": "Where was the game developed?",
-      "answer": "It was developed in the United Kingdom, where Playfish was headquartered."
-    },
-    {
-      "question": "Why was Restaurant City discontinued?",
-      "answer": "EA retired several older Playfish games, including Restaurant City, as part of a shift in focus toward newer titles."
-    },
-    {
-      "question": "How did fans respond after shutdown?",
-      "answer": "Fans tried to preserve the game by archiving assets and recreating early versions, though none fully restored the original."
-    }
-  ]
-}
+  ],
+  "seo": {
+    "meta_title": "What Happened to Restaurant City? Why the Facebook Game Shut Down in 2012",
+    "meta_description": "Restaurant City was a popular Facebook restaurant game by Playfish that launched in 2009 and shut down on June 29, 2012. Here is why it ended and what happened to the original game.",
+    "keywords": [
+      "restaurant city",
+      "restaurant city shutdown",
+      "what happened to restaurant city",
+      "restaurant city facebook game",
+      "restaurant city playfish",
+      "restaurant city discontinued",
+      "why did restaurant city shut down",
+      "restaurant city closed"
+    ]
+  },
+  "content": {
+    "faq": [
+      {
+        "question": "Who made Restaurant City?",
+        "answer": "Restaurant City was created by Playfish, a London‑based social‑game studio later acquired by Electronic Arts."
+      },
+      {
+        "question": "What kind of game is it?",
+        "answer": "It was a restaurant‑management game where players built cafés, hired staff, collected ingredients, and visited friends."
+      },
+      {
+        "question": "When did the game launch and shut down?",
+        "answer": "It launched on April 28, 2009, and shut down on June 29, 2012."
+      },
+      {
+        "question": "Where was the game developed?",
+        "answer": "It was developed in the United Kingdom, where Playfish was headquartered."
+      },
+      {
+        "question": "Why was Restaurant City discontinued?",
+        "answer": "EA retired several older Playfish games, including Restaurant City, as part of a shift in focus toward newer titles."
+      },
+      {
+        "question": "How did fans respond after shutdown?",
+        "answer": "Fans tried to preserve the game by archiving assets and recreating early versions, though none fully restored the original."
+      }
+    ]
+  },
+  "image": "/images/brands/restaurant-city.svg",
+  "image_alt": "Restaurant City — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

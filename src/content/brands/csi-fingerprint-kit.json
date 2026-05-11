@@ -4,7 +4,10 @@
   "category": "Toys/Games",
   "seo_category": "toys-games",
   "country": "US",
-  "active": { "start": 2007, "end": 2007 },
+  "active": {
+    "start": 2007,
+    "end": 2007
+  },
   "hook": "Crime scene toy recalled after fingerprint powder tested positive for asbestos",
   "fate": "Recalled in 2007 after powder found to contain up to 5% asbestos and permanently discontinued with no relaunch",
   "summary": "Licensed CSI crime scene investigation toy kit for children that included fingerprint powder containing up to 5% asbestos. Recalled immediately upon discovery by CBS Consumer Products and Planet Toys in 2007. The carcinogenic contamination led to permanent discontinuation.",
@@ -13,44 +16,71 @@
     "Fingerprint powder (contaminated)",
     "Brush and evidence collection materials"
   ],
-  "topics": [ "safety-recall",
-      "banned",
-      "toys",
-      "2000s-nostalgia"],
+  "topics": [
+    "safety-recall",
+    "banned",
+    "toys",
+    "2000s-nostalgia"
+  ],
   "links": {
     "cpsc_recall": "https://www.cpsc.gov/Recalls",
     "epa_asbestos": "https://www.epa.gov/asbestos"
   },
   "overview_md": "**The CSI Fingerprint Examination Kit** was a short-lived children's toy that became infamous for one of the most alarming product contaminations in modern toy history. Released in 2007 as licensed, tie-in merchanidse for the \"CSI: Crime Scene Investigation\" TV franchise, the kit let children dust and collect fingerprints.\n\nThe kit included standard forensic props: fingerprint powder, a brush for dusting, evidence collection cards, and investigation tools. Marketed to children interested in science and detective work, this educational toy capitalized on the forensic science boom.\n\nIn 2007, routine testing revealed a shocking discovery: the fingerprint powder contained up to 5% asbestos, a known carcinogen linked to lung cancer, mesothelioma, and other serious respiratory diseases.\n\nThe presence of asbestos in this toy was particularly alarming because the fingerprint powder was designed to be poured, brushed, and blown—activities that would release asbestos fibers into the air where children could easily inhale them. \n\nCBS Consumer Products and manufacturer Planet Toys immediately announced a recall in coordination with the Consumer Product Safety Commission. The company offered full refunds and urged consumers to stop using the product immediately and return it in a sealed plastic bag to avoid further exposure.\n\nThe contamination likely resulted from the powder's manufacturing process overseas, where asbestos regulations are less stringent than in the United States. The incident highlighted ongoing concerns about toy safety and the challenges of monitoring supply chains for products manufactured internationally.\n\nFollowing the recall, CBS pulled all CSI-licensed toy products and never relaunched the fingerprint kit or similar forensic toys under the CSI brand. The incident became a case study in product testing failures and the importance of materials screening, particularly for children's products.",
   "timeline": [
-    { "date": "2007-01", "text": "Early June - CSI Fingerprint Examination Kit released by CBS Consumer Products and Planet Toys" },
-    { "date": "2007-06", "text": "June - Routine testing discovers fingerprint powder contains up to 5% asbestos" },
-    { "date": "2007-06", "text": "November - Asbestos Disease Awareness Organization files lawsuit to stop product sales ahead of the holiday season" },
-    { "date": "2007-06", "text": "December - Connecticut Department of Consumer Protection comissions independent testing and requests a recall and embargo of the toy" },
-    { "date": "2009-03", "text": "March - Planet Toys files for Chapter 7 bankruptcy protection after asbestos suits" }
+    {
+      "date": "2007-01",
+      "text": "Early June - CSI Fingerprint Examination Kit released by CBS Consumer Products and Planet Toys"
+    },
+    {
+      "date": "2007-06",
+      "text": "June - Routine testing discovers fingerprint powder contains up to 5% asbestos"
+    },
+    {
+      "date": "2007-06",
+      "text": "November - Asbestos Disease Awareness Organization files lawsuit to stop product sales ahead of the holiday season"
+    },
+    {
+      "date": "2007-06",
+      "text": "December - Connecticut Department of Consumer Protection comissions independent testing and requests a recall and embargo of the toy"
+    },
+    {
+      "date": "2009-03",
+      "text": "March - Planet Toys files for Chapter 7 bankruptcy protection after asbestos suits"
+    }
   ],
   "sources": [
-    { 
-      "label": "CSI Toy Contains Asbestos - Lawyers and Settlements", 
-      "url": "https://www.lawyersandsettlements.com/features/asbestos_mesothelioma/csi-toy-contains-asbestos.html" 
+    {
+      "label": "CSI Toy Contains Asbestos - Lawyers and Settlements",
+      "url": "https://www.lawyersandsettlements.com/features/asbestos_mesothelioma/csi-toy-contains-asbestos.html"
     },
-    { 
-      "label": "Lawsuit Claims CSI Toy Kits Contain Asbestos - ADAO", 
-      "url": "https://www.asbestosdiseaseawareness.org/newsroom/blogs/lawsuit-claims-csi-toy-kits-contain-asbestos/" 
+    {
+      "label": "Lawsuit Claims CSI Toy Kits Contain Asbestos - ADAO",
+      "url": "https://www.asbestosdiseaseawareness.org/newsroom/blogs/lawsuit-claims-csi-toy-kits-contain-asbestos/"
     },
-    { 
-      "label": "Planet Toys Files Bankruptcy After Asbestos Suits - ADAO", 
-      "url": "https://www.asbestosdiseaseawareness.org/newsroom/blogs/planet-toys-files-bankruptcy-after-asbestos-suits/" 
+    {
+      "label": "Planet Toys Files Bankruptcy After Asbestos Suits - ADAO",
+      "url": "https://www.asbestosdiseaseawareness.org/newsroom/blogs/planet-toys-files-bankruptcy-after-asbestos-suits/"
     },
-    { 
-      "label": "Consumer Product Safety Commission - Toy Safety", 
-      "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/toy-safety" 
+    {
+      "label": "Consumer Product Safety Commission - Toy Safety",
+      "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/toy-safety"
     }
-  ],"explore_more": {
+  ],
+  "explore_more": {
     "category_label": "Want more dangerously defunct toys from yesteryear?",
     "brands": [
-      { "name": "Austin Magic Pistol", "slug": "austin-magic-pistol" },
-      { "name": "Battlestar Galactica Colonial Viper", "slug": "battlestar-galactica-viper" }
+      {
+        "name": "Austin Magic Pistol",
+        "slug": "austin-magic-pistol"
+      },
+      {
+        "name": "Battlestar Galactica Colonial Viper",
+        "slug": "battlestar-galactica-viper"
+      }
     ]
-  }
+  },
+  "image": "/images/brands/csi-fingerprint-kit.svg",
+  "image_alt": "The CSI Fingerprint Examination Kit — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

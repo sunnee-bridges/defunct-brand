@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#8B0014"/>
+  <ellipse cx="400" cy="400" rx="260" ry="360" fill="rgba(255,255,255,0.05)"/>
+  <line x1="0" y1="0" x2="180" y2="0" stroke="#E8E8E8" stroke-width="8"/>
+  <line x1="0" y1="0" x2="0" y2="180" stroke="#E8E8E8" stroke-width="8"/>
+  <line x1="800" y1="0" x2="620" y2="0" stroke="#E8E8E8" stroke-width="8"/>
+  <line x1="800" y1="0" x2="800" y2="180" stroke="#E8E8E8" stroke-width="8"/>
+  <line x1="0" y1="800" x2="180" y2="800" stroke="#E8E8E8" stroke-width="8"/>
+  <line x1="0" y1="800" x2="0" y2="620" stroke="#E8E8E8" stroke-width="8"/>
+  <line x1="800" y1="800" x2="620" y2="800" stroke="#E8E8E8" stroke-width="8"/>
+  <line x1="800" y1="800" x2="800" y2="620" stroke="#E8E8E8" stroke-width="8"/>
+  <text x="400" y="270" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black,Impact,sans-serif" font-size="72" font-weight="900" fill="white">RED BULL</text>
+  <text x="400" y="370" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black,Impact,sans-serif" font-size="52" font-weight="900" fill="#E8E8E8">RED EDITION</text>
+  <text x="400" y="460" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="34" fill="rgba(255,180,190,0.85)" letter-spacing="2">Cranberry</text>
+  <text x="400" y="555" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(255,255,255,0.45)" letter-spacing="5">ENERGY DRINK · 2013</text>
+  <text x="400" y="720" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-style="italic" fill="rgba(232,232,232,0.35)">Vanished Brands</text>
+</svg>

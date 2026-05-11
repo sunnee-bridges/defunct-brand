@@ -4,21 +4,45 @@
   "category": "Aviation",
   "seo_category": "airlines-aviation",
   "country": "US",
-  "active": { "start": 1927, "end": 1991 },
+  "active": {
+    "start": 1927,
+    "end": 1991
+  },
   "hook": "Iconic globe-trotting airline, filed bankruptcy in 1991",
   "fate": "Filed Chapter 11 in 1991 and ceased operations on Dec 4, 1991 amid losses, asset sales, and a failed reorganization.",
   "summary": "",
-  "notable_products": ["Clipper service", "Pan Am globe logo", "Boeing 707 transatlantic jet service"],
-  "topics": [ "bankruptcy",
-      "aviation",
-      "80s-nostalgia"],
+  "notable_products": [
+    "Clipper service",
+    "Pan Am globe logo",
+    "Boeing 707 transatlantic jet service"
+  ],
+  "topics": [
+    "bankruptcy",
+    "aviation",
+    "80s-nostalgia"
+  ],
   "overview_md": "**Pan Am** (Pan American World Airways) was synonymous with the jet age. Founded in 1927, the airline grew from Caribbean mail routes into a global network that introduced generations of travelers to international air travel. With its signature Clipper branding and globe logo, bespoke uniforms, and anchoring prestige terminals.\n\nPan Am helped usher in long-haul jet travel, launching Boeing 707 transatlantic service in 1958 and later flying 747s on high-profile routes. Yet deregulation, fuel shocks, currency swings, and intensifying competition pressed margins. The costly National Airlines acquisition in 1980 added debt without delivering sufficient network synergies. Tragedy struck in 1988 with the bombing of Flight 103 over Lockerbie, Scotland, further damaging finances and brand confidence.\n\nBy 1991, asset sales—including prized Heathrow routes—couldn’t stabilize the company. Pan Am sought Chapter 11 protection and attempted a slimmed-down network with a Miami hub, but funding collapsed. Operations ended that December. The brand endures as an aviation icon—remembered for pioneering global service, ushering in the jet age, and defining the romance of international flight—even as its collapse marks a cautionary tale about leverage, shocks, and industry upheaval.",
   "timeline": [
-    { "date": "1927-10-28", "text": "Pan American Airways founded as a Caribbean airmail/passenger service." },
-    { "date": "1958-10-26", "text": "The company launches Boeing 707 transatlantic jet services from New York to Paris, heralding the U.S. jet age." },
-    { "date": "1980-01-07", "text": "Pan Am acquires National Airlines, expanding domestic network but increasing debt." },
-    { "date": "1988-12-21", "text": "Pan Am Flight 103 Lockerbie bombing creates major financial and reputational impact." },
-    { "date": "1991-12-04", "text": "Pan Am ceases operations after failed reorganization under Chapter 11." }
+    {
+      "date": "1927-10-28",
+      "text": "Pan American Airways founded as a Caribbean airmail/passenger service."
+    },
+    {
+      "date": "1958-10-26",
+      "text": "The company launches Boeing 707 transatlantic jet services from New York to Paris, heralding the U.S. jet age."
+    },
+    {
+      "date": "1980-01-07",
+      "text": "Pan Am acquires National Airlines, expanding domestic network but increasing debt."
+    },
+    {
+      "date": "1988-12-21",
+      "text": "Pan Am Flight 103 Lockerbie bombing creates major financial and reputational impact."
+    },
+    {
+      "date": "1991-12-04",
+      "text": "Pan Am ceases operations after failed reorganization under Chapter 11."
+    }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Pan_American_World_Airways",
@@ -28,9 +52,24 @@
     "nyt_shutdown": "https://www.nytimes.com/1991/12/05/business/pan-am-shuts-down-after-64-years-in-air.html"
   },
   "sources": [
-    { "label": "Wikipedia – Pan American World Airways", "url": "https://en.wikipedia.org/wiki/Pan_American_World_Airways" },
-    { "label": "Wikipedia – Boeing 707", "url": "https://en.wikipedia.org/wiki/Boeing_707#Commercial_service" },
-    { "label": "Encyclopedia Brittanica - Pan Am Flight 103:", "url": "https://www.britannica.com/event/Pan-Am-flight-103" },
-    { "label": "Grunge - The Real Reason Pan AM Airlines Went Out of Business", "url": "https://www.grunge.com/669680/the-real-reason-pan-am-airlines-went-out-of-business/" }
-  ]
+    {
+      "label": "Wikipedia – Pan American World Airways",
+      "url": "https://en.wikipedia.org/wiki/Pan_American_World_Airways"
+    },
+    {
+      "label": "Wikipedia – Boeing 707",
+      "url": "https://en.wikipedia.org/wiki/Boeing_707#Commercial_service"
+    },
+    {
+      "label": "Encyclopedia Brittanica - Pan Am Flight 103:",
+      "url": "https://www.britannica.com/event/Pan-Am-flight-103"
+    },
+    {
+      "label": "Grunge - The Real Reason Pan AM Airlines Went Out of Business",
+      "url": "https://www.grunge.com/669680/the-real-reason-pan-am-airlines-went-out-of-business/"
+    }
+  ],
+  "image": "/images/brands/pan-am.webp",
+  "image_alt": "Pan Am logo",
+  "image_caption": "Source: Wikimedia Commons — File:Pan_Am_Logo.svg"
 }

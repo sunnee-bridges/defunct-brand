@@ -123,5 +123,8 @@
   ],
   "seo": {
     "meta_description": "Netscape defined the early web and its 1995 IPO sparked the dot-com era. Microsoft buried it by bundling IE with Windows; AOL shut down the Netscape brand in 2008."
-  }
+  },
+  "image": "/images/brands/netscape.webp",
+  "image_alt": "Netscape browser logo",
+  "image_caption": "Source: Wikimedia Commons — File:Netscape_logo.svg"
 }

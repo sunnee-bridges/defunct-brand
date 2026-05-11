@@ -78,5 +78,8 @@
   },
   "seo": {
     "meta_description": "DeSoto ran as Chrysler's mid-priced car brand from 1928 to 1961, famous for the 1934 Airflow and 1950s Forward Look styling, before Chrysler consolidated its lineup."
-  }
+  },
+  "image": "/images/brands/desoto.webp",
+  "image_alt": "DeSoto automobile",
+  "image_caption": "Source: Wikimedia Commons"
 }

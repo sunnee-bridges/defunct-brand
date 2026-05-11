@@ -8,15 +8,10 @@
     "start": 1930,
     "end": 2001
   },
-
   "hook": "One of America’s most glamorous airlines, shaped by Howard Hughes, the Lockheed Constellation era, and the Jet Age before bankruptcy and an asset sale ended the airline in 2001.",
-
   "hook_alt": "Howard Hughes' airline, later broken by debt, deregulation-era pressure, and bankruptcy before American acquired most of its assets in 2001.",
-
   "fate": "Bankrupt and acquired in part. TWA entered bankruptcy and American Airlines announced in January 2001 that it would acquire most of TWA’s assets. The airline ceased operating as an independent carrier later that year.",
-
   "summary": "Trans World Airlines, originally formed in 1930 as Transcontinental & Western Air, became one of the best-known U.S. airlines of the 20th century. It was especially associated with coast-to-coast service, Howard Hughes, the Lockheed Constellation, and later international Jet Age travel. After decades of route expansion, corporate changes, and financial strain, TWA entered bankruptcy. American Airlines announced an agreement to acquire most of its assets in 2001, ending TWA as an independent airline.",
-
   "seo": {
     "meta_title": "What Happened to TWA? The Glamorous Airline That Disappeared",
     "meta_description": "TWA was one of America’s most famous airlines, linked to Howard Hughes, the Constellation era, and the Jet Age. Learn how bankruptcy and American’s 2001 asset purchase ended TWA as an independent carrier.",
@@ -31,7 +26,6 @@
       "defunct airlines of the 20th century"
     ]
   },
-
   "topics": [
     "bankruptcy",
     "acquired",
@@ -39,7 +33,6 @@
     "airlines",
     "90s-nostalgia"
   ],
-
   "notable_products": [
     "Domestic and international airline service",
     "Coast-to-coast passenger air travel",
@@ -47,7 +40,6 @@
     "Lockheed Constellation service",
     "TWA Flight Center / TWA Hotel legacy"
   ],
-
   "verified_facts": [
     "TWA was formed on July 16, 1930 through the amalgamation of divisions of Western Air Express and Transcontinental Air Transport.",
     "The airline originally operated as Transcontinental & Western Air before later becoming known as Trans World Airlines.",
@@ -56,16 +48,13 @@
     "American Airlines announced plans in January 2001 to acquire most of TWA’s assets.",
     "TWA ceased to exist as an independent airline in 2001."
   ],
-
   "cultural_memory": [
     "TWA is remembered as one of the most glamorous airlines of the Jet Age.",
     "For many travelers, the name brings up images of stylish cabin crews, international travel, and mid-century airport design.",
     "The TWA Flight Center at JFK remains one of the strongest visual symbols of the airline’s legacy.",
     "The airline is also remembered for its long association with Howard Hughes and the romance of early long-distance air travel."
   ],
-
   "overview_md": "**TWA**, short for **Trans World Airlines**, began in **1930** as **Transcontinental & Western Air**. It grew into one of the best-known American airlines of the 20th century and became especially associated with long-distance travel, stylish branding, and the glamour of the Jet Age.\n\nA big part of TWA’s identity came from **Howard Hughes**, who helped shape the airline’s public image and its ambitions during the mid-20th century. TWA is also closely tied to the **Lockheed Constellation**, one of the most famous passenger aircraft of its era. Later, the airline became part of the visual history of New York air travel through the **TWA Flight Center** at JFK, which survives today as the **TWA Hotel**.\n\nTWA’s end was not caused by one single event. Like several legacy airlines, it struggled with debt, intense competition, industry change, and a weaker financial position over time. By 2001, the company was in bankruptcy. In **January 2001**, **American Airlines** announced plans to acquire most of TWA’s assets, and that deal ended TWA as an independent airline later that year.\n\nOne thing many shorter writeups miss is that **TWA’s cultural legacy outlived the airline itself**. The brand is still remembered not just because it disappeared, but because it once stood for a more glamorous, design-conscious version of air travel that people still romanticize today.",
-
   "timeline": [
     {
       "date": "1930",
@@ -104,7 +93,6 @@
       "text": "The TWA Flight Center site reopens in a new form as the TWA Hotel, reinforcing the airline’s cultural legacy."
     }
   ],
-
   "stats": {
     "category": "Airline / Aviation Brand",
     "founded_as": "Transcontinental & Western Air",
@@ -113,7 +101,6 @@
     "independent_operations_end": "2001",
     "legacy_marker": "TWA Flight Center / TWA Hotel"
   },
-
   "content": {
     "faq": [
       {
@@ -138,7 +125,6 @@
       }
     ]
   },
-
   "links": {
     "britannica_twa": "https://www.britannica.com/money/Trans-World-Airlines-Inc",
     "american_airlines_history": "https://news.aa.com/centennial/our-stories/history-of-american-airlines/",
@@ -146,7 +132,6 @@
     "twa_hotel_history": "https://www.twahotel.com/hotel",
     "twa_hotel_connie_history": "https://www.twahotel.com/connie-airplane/connies-history"
   },
-
   "sources": [
     {
       "label": "Encyclopaedia Britannica — Trans World Airlines, Inc.",
@@ -169,13 +154,24 @@
       "url": "https://www.twahotel.com/connie-airplane/connies-history"
     }
   ],
-
   "explore_more": {
     "category_label": "Interested in more vanished airline brands?",
     "brands": [
-      { "slug":"pan-am", "name":"Pan American" },
-      { "slug":"eastern-air-lines", "name":"Eastern Airlines" },
-      { "slug":"braniff-international-airways", "name":"Braniff International Airways" }
+      {
+        "slug": "pan-am",
+        "name": "Pan American"
+      },
+      {
+        "slug": "eastern-air-lines",
+        "name": "Eastern Airlines"
+      },
+      {
+        "slug": "braniff-international-airways",
+        "name": "Braniff International Airways"
+      }
     ]
-  }
+  },
+  "image": "/images/brands/twa.webp",
+  "image_alt": "Trans World Airlines logo",
+  "image_caption": "Source: Wikimedia Commons — File:Trans_World_Airlines_Logo.svg"
 }

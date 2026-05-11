@@ -11,10 +11,10 @@
   "hook": "Invented digital cameras, then killed by them",
   "fate": "Bankruptcy/restructuring",
   "topics": [
-      "bankruptcy",
-      "discontinued",
-      "2000s-nostalgia"
-    ],
+    "bankruptcy",
+    "discontinued",
+    "2000s-nostalgia"
+  ],
   "summary": "Kodak filed for bankruptcy in 2012; many consumer lines discontinued; company restructured.",
   "notable_products": [
     "Point-and-shoot cameras",
@@ -22,5 +22,8 @@
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Eastman_Kodak"
-  }
+  },
+  "image": "/images/brands/kodak-consumer-cameras.webp",
+  "image_alt": "Kodak film camera",
+  "image_caption": "Source: Wikimedia Commons"
 }

@@ -64,5 +64,8 @@
   ],
   "seo": {
     "meta_description": "The original Napster made peer-to-peer MP3 sharing mainstream from 1999 to 2001. Music-industry lawsuits forced it offline; the Napster brand later survived through streaming successors."
-  }
+  },
+  "image": "/images/brands/napster-original.webp",
+  "image_alt": "Napster logo",
+  "image_caption": "Source: Wikimedia Commons — File:Napster_logo.svg"
 }

@@ -78,5 +78,8 @@
   ],
   "seo": {
     "meta_description": "The Talkboy was a cassette recorder made famous in Home Alone 2 (1992). Tiger Electronics turned it into a real toy that let kids record, play back, and change speed."
-  }
+  },
+  "image": "/images/brands/talkboy.webp",
+  "image_alt": "Talkboy cassette recorder toy",
+  "image_caption": "Source: Wikimedia Commons — File:Talkboy_recorder.JPG"
 }

@@ -11,10 +11,12 @@
   "fate": "Liquidation",
   "hook": "Outlasted catalog era, couldn't survive e-commerce",
   "summary": "Canadian department store chain liquidated in 2018.",
-  "topics": [ "bankruptcy",
-      "retail",
-      "big-box",
-      "2000s-nostalgia"],
+  "topics": [
+    "bankruptcy",
+    "retail",
+    "big-box",
+    "2000s-nostalgia"
+  ],
   "notable_products": [
     "Department stores",
     "Kenmore (licensed)"
@@ -45,5 +47,8 @@
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Sears_Canada",
     "wayback": "https://web.archive.org/web/*/http://www.sears.ca"
-  }
+  },
+  "image": "/images/brands/sears-canada.webp",
+  "image_alt": "Sears Canada store",
+  "image_caption": "Source: Wikimedia Commons — File:Sears_Canada_logo.svg"
 }

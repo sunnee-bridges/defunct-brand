@@ -8,13 +8,9 @@
     "start": 1971,
     "end": "Unclear / original version discontinued, later revival appears absent from mainstream retail"
   },
-
   "hook": "A retro grape theater-box candy with a long, confusing history: original Ferrara-era product, later discontinued, later revived, and now hard to find again.",
-
   "fate": "Alexander the Grape was introduced by Ferrara in 1971, discontinued in its original form in the 1980s, and later brought back under 1908 Candy. Today it appears difficult to find in mainstream retail, with sold-out retailer pages and no strong official product page controlling the query.",
-
   "summary": "Alexander the Grape is a grape-flavored retro candy that began under Ferrara in 1971. Candy-history sources say the original version was discontinued in the 1980s, then later reintroduced under 1908 Candy. That makes the brand more complicated than a simple one-time discontinuation story. The best current description is that Alexander the Grape is a revived legacy candy with weak modern retail visibility and fragmented information online.",
-
   "seo": {
     "meta_title": "What Happened to Alexander the Grape? The Discontinued Grape Candy",
     "meta_description": "Alexander the Grape started as a Ferrara candy in 1971, disappeared in its original form, and later returned under 1908 Candy. Here is what happened and why it is still hard to find.",
@@ -29,14 +25,12 @@
       "retro grape candy"
     ]
   },
-
   "notable_products": [
     "Alexander the Grape theater box candy",
     "Alexander the Grape chewy grape candy",
     "Alexander the Grape stand-up bag",
     "1908 Candy Alexander the Grape revival"
   ],
-
   "topics": [
     "discontinued",
     "candy",
@@ -46,7 +40,6 @@
     "fragmented-serp",
     "revived-brand"
   ],
-
   "verified_facts": [
     "Candy Favorites says Ferrara introduced Alexander the Grape in 1971.",
     "Candy Favorites says Alexander the Grape, Cherry Clan, and Johnny Apple Treats were discontinued in the 1980s.",
@@ -55,16 +48,13 @@
     "Candy Favorites has sold-out or discontinued Alexander the Grape product pages.",
     "The brand's status is more complicated than a simple one-time discontinuation because later sources also describe a revival."
   ],
-
   "cultural_memory": [
     "Alexander the Grape belongs to the same older theater-box candy world as Johnny Apple Treats and other Ferrara fruit candies.",
     "It is remembered more as a nostalgic candy-counter favorite than as a major modern candy brand.",
     "Its lower modern visibility makes the nostalgia feel more personal and the search results more scattered.",
     "Part of the confusion comes from the fact that people remember the original Ferrara-era candy, while current sources point to a later revival under a different company."
   ],
-
   "overview_md": "**Alexander the Grape** is one of those candy brands that looks simple at first but gets more complicated the more you dig into it.\n\nThe clearest candy-history sources say **Ferrara introduced Alexander the Grape in 1971**. They also say the original version was **discontinued in the 1980s**. If that were the whole story, this would be a straightforward discontinued-candy brand.\n\nBut that is not the full picture. Later retailer and candy-history pages say the brand was **brought back under 1908 Candy**. At the same time, current retail signals are weak. **Sweeties** shows it as a **discontinued item** and sold out, while **Candy Favorites** also has sold-out or discontinued listings.\n\nThat is why the safest current description is not simply 'active' or 'gone forever.' A better summary is that **the original candy was discontinued, the brand later had a revival, and current mainstream availability still appears weak**.\n\nThat in-between status is what makes Alexander the Grape a useful content target. The search results are fragmented: sold-out retailer pages, candy-history references, and nostalgia posts, but no strong official page that clearly explains the full story.\n\nThe most useful content angle is not just 'Is Alexander the Grape discontinued?' It is the fuller question: **what happened to the original candy, what came back later, and can you still buy it today?**",
-
   "timeline": [
     {
       "date": "1971",
@@ -83,7 +73,6 @@
       "text": "Retailer pages show Alexander the Grape sold out or marked as discontinued, suggesting weak current mainstream availability."
     }
   ],
-
   "stats": {
     "category": "Theater-Box / Retro Fruit Candy",
     "founding_year": "1971",
@@ -91,7 +80,6 @@
     "reintroduction_year": "2020",
     "modern_status_note": "Original product discontinued; later revived, but current mainstream availability appears weak"
   },
-
   "content": {
     "faq": [
       {
@@ -116,7 +104,6 @@
       }
     ]
   },
-
   "links": {
     "sweeties_product": "https://shop.sweetiescandy.com/products/alexander-the-grape-5oz-theater-box-or-12-count-box",
     "sweeties_discontinued_collection": "https://shop.sweetiescandy.com/collections/discontinued-1",
@@ -126,7 +113,6 @@
     "candyfavorites_ferrara_history": "https://www.candyfavorites.com/pages/history-of-ferarra-candy",
     "candyfavorites_1908_history": "https://www.candyfavorites.com/pages/history-of-1908-candy-company"
   },
-
   "sources": [
     {
       "label": "Sweeties Candy — Alexander the Grape discontinued listing",
@@ -157,12 +143,20 @@
       "url": "https://www.candyfavorites.com/pages/history-of-1908-candy-company"
     }
   ],
-
   "explore_more": {
     "category_label": "Interested in more fragmented discontinued theater-box candy brands?",
     "brands": [
-      { "slug": "johnny-apple-treats", "name": "Johnny Apple Treats" },
-      { "slug": "jujubes", "name": "Jujubes" }
+      {
+        "slug": "johnny-apple-treats",
+        "name": "Johnny Apple Treats"
+      },
+      {
+        "slug": "jujubes",
+        "name": "Jujubes"
+      }
     ]
-  }
+  },
+  "image": "/images/brands/alexander-the-grape.svg",
+  "image_alt": "Alexander the Grape — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

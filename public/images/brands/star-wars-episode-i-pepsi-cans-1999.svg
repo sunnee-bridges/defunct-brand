@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs>
+    <pattern id="s" width="60" height="60" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="30" height="60" fill="rgba(255,255,255,0.05)"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="800" fill="#001A66"/>
+  <rect width="800" height="800" fill="url(#s)"/>
+  <rect y="0" width="800" height="200" fill="#003399"/>
+  <rect y="600" width="800" height="200" fill="#CC0000"/>
+  <path d="M0,196 C200,216 400,180 600,200 C700,210 760,196 800,200 L800,206 C760,202 700,216 600,206 C400,186 200,222 0,202Z" fill="#001A66"/>
+  <path d="M0,596 C200,616 400,580 600,600 C700,610 760,596 800,600 L800,606 C760,602 700,616 600,606 C400,586 200,622 0,602Z" fill="#001A66"/>
+  <text x="400" y="100" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="24" fill="rgba(255,255,255,0.75)" letter-spacing="5">COLLECTIBLE CANS · 1999</text>
+  <text x="400" y="350" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="52" font-weight="900" fill="white">STAR WARS</text>
+  <text x="400" y="420" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="36" font-weight="700" fill="#FFD700">EPISODE I</text>
+  <text x="400" y="490" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="52" font-weight="900" fill="#CC0000">PEPSI CANS</text>
+  <text x="400" y="695" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-size="22" font-style="italic" fill="rgba(255,255,255,0.4)">Vanished Brands</text>
+</svg>

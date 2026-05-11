@@ -4,26 +4,64 @@
   "category": "Video games",
   "seo_category": "video-games-consoles",
   "country": "DK",
-  "active": { "start": 2010, "end": 2012 },
+  "active": {
+    "start": 2010,
+    "end": 2012
+  },
   "hook": "The LEGO massively mutliplayer online game (MMOG) that cost 50 million dollars and was defeated by content moderation",
   "fate": "Servers shut down permanently in 2012 after only 15 months of operation. LEGO cited an inability to convert free players to paying subscribers. The total cost to LEGO was estimated at 50 million dollars.",
   "summary": "LEGO Universe was a family-friendly MMO developed by NetDevil and published by LEGO that ran from October 2010 to January 2012. It attracted nearly 2 million registered players but could not convert enough of them to paid subscribers to survive. Moderation costs from manually reviewing player-built content were the single largest operational expense and ultimately made the business model unworkable.",
-  "notable_products": ["LEGO Universe MMO", "Darkflame Universe fan revival"],
-  "topics": ["discontinued",
-      "video-games",
-      "2000s-nostalgia"],
+  "notable_products": [
+    "LEGO Universe MMO",
+    "Darkflame Universe fan revival"
+  ],
+  "topics": [
+    "discontinued",
+    "video-games",
+    "2000s-nostalgia"
+  ],
   "overview_md": "Family-friendly LEGO massively mutliplayer online game (MMOG) that let players build, quest, and battle. The Maelstrom; went free-to-play in 2011 before closing in early 2012.\n\nLEGO Universe was a family-friendly massively multiplayer online game set in a new LEGO lore about the Maelstrom, a chaotic force threatening imaginative worlds. Released in October 2010 for PC and Mac, it combined questing, mini-games, and combat with an unusually ambitious building system. Players could unlock LEGO models, script behaviors, and design spaces in moderated zones. The tone was playful and cooperative, with guilds, safe chat options, and curated creativity as core pillars.\n\nDespite an engaged community, the game struggled with the economics of a subscription MMO aimed at kids and families. Moderation and curation costs were high, and early content cadence couldn’t keep pace with player expectations. In August 2011 the game shifted to a free-to-play model, hoping to widen the funnel. Conversions weren’t enough to make the service sustainable. In November 2011, the publisher announced the decision to wind down operations\n\nServers were turned off in January 2012. Fans still celebrate its world-building spirit and soundtrack, while private preservation projects keep the memory—and some tools—alive. LEGO Universe remains a snapshot of the challenge of combining open creativity with a safe, scalable MMO for younger audiences.",
   "timeline": [
-    { "date": "2006-05", "text": "LEGO contracts Denver-based NetDevil to develop LEGO Universe after conceiving the concept in 2003." },
-    { "date": "2010-10-08", "text": "Early access opens for Founders who pre-ordered the game." },
-    { "date": "2010-10-26", "text": "Official launch on PC and Mac. Players begin exploring Nexus and battling the Maelstrom across faction-divided worlds." },
-    { "date": "2011-02", "text": "NetDevil files for bankruptcy. LEGO absorbs the development team into a new internal studio called Play Well Studios in Louisville, Colorado." },
-    { "date": "2011-06", "text": "Ninjago Monastery world launches, the last major content update the game would receive." },
-    { "date": "2011-08-29", "text": "Game transitions to free-to-play with limited starter zones. Subscriptions remain required for full content access." },
-    { "date": "2011-11-04", "text": "LEGO announces closure, citing inability to convert a satisfactory number of free players to paying subscribers. Nearly 2 million players are registered at the time of announcement." },
-    { "date": "2012-01-31", "text": "Servers shut down permanently. Players gather in Nimbus Plaza for a final session. Total cost to LEGO estimated at 50 million dollars." },
-    { "date": "2015-06", "text": "Former senior programmer Megan Fox publicly describes the moderation challenge, confirming human content review was the single largest operational cost." },
-    { "date": "2021-10-03", "text": "Fan revival project Darkflame Universe goes open source after failing to reach a licensing agreement with LEGO." }
+    {
+      "date": "2006-05",
+      "text": "LEGO contracts Denver-based NetDevil to develop LEGO Universe after conceiving the concept in 2003."
+    },
+    {
+      "date": "2010-10-08",
+      "text": "Early access opens for Founders who pre-ordered the game."
+    },
+    {
+      "date": "2010-10-26",
+      "text": "Official launch on PC and Mac. Players begin exploring Nexus and battling the Maelstrom across faction-divided worlds."
+    },
+    {
+      "date": "2011-02",
+      "text": "NetDevil files for bankruptcy. LEGO absorbs the development team into a new internal studio called Play Well Studios in Louisville, Colorado."
+    },
+    {
+      "date": "2011-06",
+      "text": "Ninjago Monastery world launches, the last major content update the game would receive."
+    },
+    {
+      "date": "2011-08-29",
+      "text": "Game transitions to free-to-play with limited starter zones. Subscriptions remain required for full content access."
+    },
+    {
+      "date": "2011-11-04",
+      "text": "LEGO announces closure, citing inability to convert a satisfactory number of free players to paying subscribers. Nearly 2 million players are registered at the time of announcement."
+    },
+    {
+      "date": "2012-01-31",
+      "text": "Servers shut down permanently. Players gather in Nimbus Plaza for a final session. Total cost to LEGO estimated at 50 million dollars."
+    },
+    {
+      "date": "2015-06",
+      "text": "Former senior programmer Megan Fox publicly describes the moderation challenge, confirming human content review was the single largest operational cost."
+    },
+    {
+      "date": "2021-10-03",
+      "text": "Fan revival project Darkflame Universe goes open source after failing to reach a licensing agreement with LEGO."
+    }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Lego_Universe",
@@ -32,37 +70,52 @@
     "darkflame_revival": "https://en.wikipedia.org/wiki/Lego_Universe#Legacy"
   },
   "sources": [
-    { "label": "Wikipedia — LEGO Universe", "url": "https://en.wikipedia.org/wiki/Lego_Universe" },
-    { "label": "LEGO Universe FAQs - LEGO", "url": "https://web.archive.org/web/20111113105038/http://universe.lego.com/en-gb/help/faq.aspx?id=359578" },
-    { "label": "LEGO Universe 10th Anniversary Soundtrack - LEGO", "url": "https://www.lego.com/en-us/aboutus/news/2021/february/lego-universe" }
+    {
+      "label": "Wikipedia — LEGO Universe",
+      "url": "https://en.wikipedia.org/wiki/Lego_Universe"
+    },
+    {
+      "label": "LEGO Universe FAQs - LEGO",
+      "url": "https://web.archive.org/web/20111113105038/http://universe.lego.com/en-gb/help/faq.aspx?id=359578"
+    },
+    {
+      "label": "LEGO Universe 10th Anniversary Soundtrack - LEGO",
+      "url": "https://www.lego.com/en-us/aboutus/news/2021/february/lego-universe"
+    }
   ],
   "seo": {
-  "meta_title": "What Happened to LEGO Universe? The LEGO MMO That Shut Down",
-  "meta_description": "LEGO Universe was a family-friendly MMO that launched in 2010 and shut down in 2012. Learn why the LEGO online game closed, how free-to-play failed, and why moderation costs made it hard to sustain.",
-  "keywords": [
-    "what happened to LEGO Universe",
-    "LEGO Universe shutdown",
-    "why did LEGO Universe close",
-    "LEGO Universe MMO",
-    "LEGO Universe MMOG",
-    "LEGO Universe discontinued",
-    "LEGO Universe servers shut down",
-    "LEGO Universe free to play",
-    "LEGO Universe NetDevil",
-    "LEGO Universe Play Well Studios",
-    "LEGO Universe moderation costs",
-    "LEGO Universe Maelstrom",
-    "LEGO Universe 2012 closure",
-    "Darkflame Universe",
-    "LEGO Universe fan revival",
-    "discontinued LEGO video games",
-    "2000s nostalgia video games"
-  ]
-},
-   "explore_more": {
+    "meta_title": "What Happened to LEGO Universe? The LEGO MMO That Shut Down",
+    "meta_description": "LEGO Universe was a family-friendly MMO that launched in 2010 and shut down in 2012. Learn why the LEGO online game closed, how free-to-play failed, and why moderation costs made it hard to sustain.",
+    "keywords": [
+      "what happened to LEGO Universe",
+      "LEGO Universe shutdown",
+      "why did LEGO Universe close",
+      "LEGO Universe MMO",
+      "LEGO Universe MMOG",
+      "LEGO Universe discontinued",
+      "LEGO Universe servers shut down",
+      "LEGO Universe free to play",
+      "LEGO Universe NetDevil",
+      "LEGO Universe Play Well Studios",
+      "LEGO Universe moderation costs",
+      "LEGO Universe Maelstrom",
+      "LEGO Universe 2012 closure",
+      "Darkflame Universe",
+      "LEGO Universe fan revival",
+      "discontinued LEGO video games",
+      "2000s nostalgia video games"
+    ]
+  },
+  "explore_more": {
     "category_label": "Interested in more gaming from days gone by?",
     "brands": [
-      { "name": "Fish With Attitude", "slug": "fish-with-attitude" }
+      {
+        "name": "Fish With Attitude",
+        "slug": "fish-with-attitude"
+      }
     ]
-  }
+  },
+  "image": "/images/brands/lego-universe.svg",
+  "image_alt": "LEGO Universe — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#1B5E20"/>
+  <rect x="20" y="20" width="760" height="760" fill="none" stroke="#A5D6A7" stroke-width="12" rx="12"/>
+  <rect y="610" width="800" height="190" fill="#2E7D32"/>
+  <rect x="60" y="80" width="120" height="480" fill="rgba(165,214,167,0.08)" rx="4"/>
+  <rect x="620" y="80" width="120" height="480" fill="rgba(165,214,167,0.08)" rx="4"/>
+  <text x="400" y="240" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="36" font-weight="700" fill="rgba(165,214,167,0.7)" letter-spacing="6">G.I. JOE</text>
+  <text x="400" y="350" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="100" font-weight="900" fill="white">ZANDAR</text>
+  <text x="400" y="460" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="26" fill="#A5D6A7" letter-spacing="3">Dreadnok · Zartan's Brother</text>
+  <text x="400" y="510" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(165,214,167,0.55)" letter-spacing="4">Action Figure · 1986</text>
+  <text x="400" y="700" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="24" fill="white" letter-spacing="4">HASBRO</text>
+  <text x="400" y="748" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-style="italic" fill="rgba(255,255,255,0.4)">Vanished Brands</text>
+</svg>

@@ -92,5 +92,8 @@
   },
   "seo": {
     "meta_description": "AOL Instant Messenger (AIM) pioneered online chat from 1997 to 2017, bringing Buddy Lists and away messages to millions before mobile apps made desktop IM obsolete."
-  }
+  },
+  "image": "/images/brands/aim.webp",
+  "image_alt": "AOL Instant Messenger logo",
+  "image_caption": "Source: Wikimedia Commons — File:AIM_logo.svg"
 }

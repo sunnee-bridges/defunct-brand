@@ -8,13 +8,9 @@
     "start": 1999,
     "end": "Unclear; original line appears to have faded out in the early-to-mid 2000s"
   },
-
   "hook": "Snapple's elemental drink line, remembered for unusual flavors and collectible wide-mouth glass bottles.",
-
   "fate": "Discontinued. Snapple Elements launched in 1999 and later disappeared from regular U.S. availability in the early-to-mid 2000s. The line still has a strong nostalgia following, but a full original-style relaunch has never happened.",
-
   "summary": "Snapple Elements was a late-1990s Snapple line built around elemental branding, unusual fruit-forward flavors, and distinctive wide-mouth glass bottles. It stood apart from standard Snapple teas and juices and became one of the brand's most remembered side lines. Public sources consistently place the launch in 1999, but the exact end date is less clear. The safest way to describe it is that Snapple Elements faded from the market in the early-to-mid 2000s and survives mainly through nostalgia, collector interest, and fan requests for a return.",
-
   "seo": {
     "meta_title": "What Happened to Snapple Elements? The Wide-Mouth Bottles People Still Miss",
     "meta_description": "Snapple Elements launched in 1999 with unusual flavors and distinctive wide-mouth bottles. Here is what happened to Rain, Sun, Fire, and the rest of the line.",
@@ -29,7 +25,6 @@
       "discontinued 2000s drinks"
     ]
   },
-
   "notable_products": [
     "Rain",
     "Sun",
@@ -37,14 +32,12 @@
     "Earth",
     "Later Elements extensions such as additional fruit drinks and tea variants"
   ],
-
   "topics": [
     "discontinued",
     "beverages",
     "cult-favorite",
     "2000s-nostalgia"
   ],
-
   "verified_facts": [
     "Snapple Elements launched in 1999.",
     "The original line is widely remembered for elemental flavor names such as Rain, Sun, Fire, and Earth.",
@@ -52,16 +45,13 @@
     "Snapple's own FAQ says some flavors are discontinued or sold only as limited-time offers.",
     "Snapple Elements is no longer part of the core modern Snapple lineup."
   ],
-
   "cultural_memory": [
     "The wide-mouth glass bottles are almost as memorable as the drinks themselves.",
     "Many people kept the bottles and reused them long after the drinks were gone.",
     "Rain is often the most requested flavor in nostalgia discussions, with Fire and Sun close behind.",
     "For many late-1990s and early-2000s fans, Snapple Elements represents a more experimental era of beverage branding."
   ],
-
   "overview_md": "**Snapple Elements** was one of Snapple's most distinctive side lines. It launched in **1999** and quickly stood out because it looked and felt different from ordinary Snapple. The elemental flavor names, the unusual bottle shape, and the more design-forward presentation gave it a cult following that lasted long after the drinks disappeared.\n\nThe part most people remember first is the **wide-mouth glass bottle**. It made the line feel collectible and different from standard bottled tea or juice. That matters because Snapple Elements is one of those products where the **packaging became part of the memory**, not just the liquid inside.\n\nThe safest way to describe the timeline is that the line **began in 1999** and later faded out in the **early-to-mid 2000s**. Some nostalgia coverage gives a hard end date, but public sources are not fully consistent, and trade coverage from **2000** shows the line was still active and expanding at that point.\n\nOne thing many weaker writeups overstate is the exact reason the line disappeared. The most careful explanation is not one single cause, but a mix of factors: Snapple ownership changes, the difficulty of supporting a more unusual side line, packaging complexity, and the normal reality that beverage companies regularly cut niche products that fall outside the core lineup.\n\nThat cautious version fits what Snapple itself says more broadly: some flavors are **discontinued** or only sold for limited periods. Today, Snapple Elements survives mostly as a **nostalgia product in memory**, not as a regular shelf item. The bottles, the names, and the feeling of that era are what people miss most.",
-
   "timeline": [
     {
       "date": "1999",
@@ -84,14 +74,12 @@
       "text": "Snapple Elements remains one of the brand's most requested discontinued lines in nostalgia discussions."
     }
   ],
-
   "stats": {
     "category": "Flavored Juice / Alternative Beverage Line",
     "launch_year": "1999",
     "confirmed_trade_coverage_of_line_expansion": "2000",
     "modern_status_note": "Original line discontinued; exact final end year is unclear in public sources"
   },
-
   "content": {
     "faq": [
       {
@@ -116,13 +104,11 @@
       }
     ]
   },
-
   "links": {
     "snapple": "https://www.snapple.com/",
     "snapple_faq": "https://www.snapple.com/faq",
     "keurig_dr_pepper": "https://www.keurigdrpepper.com/"
   },
-
   "sources": [
     {
       "label": "Snapple FAQ",
@@ -145,12 +131,20 @@
       "url": "https://www.thedailymeal.com/1795638/rise-fall-resurgance-snapple-elements/"
     }
   ],
-
   "explore_more": {
     "category_label": "Interested in more discontinued 1990s and 2000s drinks?",
     "brands": [
-      { "slug":"whipper-snapple", "name":"Whipper Snapple" },
-      {"slug": "crystal-pepsi", "name": "Crystal Pepsi"}
+      {
+        "slug": "whipper-snapple",
+        "name": "Whipper Snapple"
+      },
+      {
+        "slug": "crystal-pepsi",
+        "name": "Crystal Pepsi"
+      }
     ]
-  }
+  },
+  "image": "/images/brands/snapple-elements.svg",
+  "image_alt": "Snapple Elements — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

@@ -4,14 +4,13 @@
   "category": "Alcoholic Beverages",
   "seo_category": "alcoholic-beverages",
   "country": "US",
-  "active": { "start": 2002, "end": 2008 },
-
+  "active": {
+    "start": 2002,
+    "end": 2008
+  },
   "hook": "An early alcoholic energy drink that mixed alcohol with caffeine and other stimulants before regulators forced a formula change.",
-
   "fate": "Reformulated in late 2008 after MillerCoors reached a settlement with state regulators. The original formula lost its caffeine, taurine, guarana, and ginseng, which ended the version most people remember.",
-
   "summary": "Sparks was a caffeinated alcoholic malt drink launched in 2002 by McKenzie River Corporation. It was known for its bright orange can, energy-drink-style branding, and mix of alcohol with caffeine and other stimulant ingredients. In 2008, under regulatory pressure, MillerCoors agreed to remove those ingredients, ending the original formula.",
-
   "seo": {
     "meta_title": "What Happened to Sparks? The Original Caffeinated Alcohol Drink",
     "meta_description": "Sparks was one of the first major caffeinated alcoholic drinks in the U.S. Here's why the original formula was changed in 2008 and why the orange-can version disappeared.",
@@ -26,13 +25,11 @@
       "pre Four Loko caffeinated alcohol"
     ]
   },
-
   "notable_products": [
     "Sparks Original (orange can, 6% ABV)",
     "Sparks Plus",
     "Sparks Light"
   ],
-
   "topics": [
     "reformulated",
     "regulatory-crackdown",
@@ -41,7 +38,6 @@
     "alcohol",
     "energy-drink-era"
   ],
-
   "verified_facts": [
     "Sparks launched in 2002 under McKenzie River Corporation.",
     "Miller agreed to buy Sparks and Steel Reserve from McKenzie River in 2006.",
@@ -49,25 +45,39 @@
     "In December 2008, MillerCoors agreed with 13 states and San Francisco to remove those stimulant ingredients.",
     "The settlement also required changes to packaging and marketing that suggested energy or stimulation."
   ],
-
   "cultural_memory": [
     "Sparks is remembered as one of the first drinks that made caffeinated alcohol feel mainstream.",
     "Its orange, battery-style can made it look more like an energy drink than a malt beverage.",
     "Many people remember it as an early version of the trend that later made Four Loko famous.",
     "Part of its reputation came from the feeling that it was selling two things at once: alcohol and energy."
   ],
-
   "overview_md": "Sparks was one of the first caffeinated alcoholic drinks to get real attention in the U.S. It launched in 2002 and stood out right away because it mixed alcohol with ingredients you would normally find in an energy drink — caffeine, taurine, guarana, and ginseng. The tall orange can with its bold, battery-style design made it look like nothing else on the shelf.\n\nThe drink was aimed at a nightlife crowd. The core version had about 6% ABV, which was higher than most people expected from something that looked so flashy and fun. That combination of alcohol and stimulants was a big part of the appeal — and later, a big part of the controversy.\n\nIn 2006, Miller agreed to buy Sparks and Steel Reserve from McKenzie River as part of a larger deal. By then, Sparks was one of the best-known names in caffeinated alcohol.\n\nBut the attention was not all good. Health advocates and state regulators argued that mixing alcohol with stimulant ingredients could make drinkers feel more alert than they really were. That, they said, made it easier to drink more and make worse decisions. Critics also took issue with the packaging, which they felt was designed to appeal to younger drinkers.\n\nIn December 2008, MillerCoors reached a settlement with 13 states and San Francisco. The company agreed to remove the caffeine, taurine, guarana, and ginseng from Sparks and to change the branding and marketing.\n\nThat was the end of the original formula. The brand kept going in a changed form, but the caffeinated version in the orange can — the one people actually remember — was gone by the end of 2008.\n\nSparks came before the Four Loko headlines, but it set the stage for what followed. Its rise and forced reformulation helped show regulators exactly where the caffeinated alcohol category was heading.",
-
   "timeline": [
-    { "date": "2002", "text": "Sparks launches in the U.S. as a caffeinated alcoholic malt beverage" },
-    { "date": "2004", "text": "The drink gains wider attention through its bold can design and high-energy branding" },
-    { "date": "2006", "text": "Miller agrees to buy Sparks and Steel Reserve from McKenzie River" },
-    { "date": "2008-09", "text": "Consumer advocates file suit over the risks of caffeinated alcohol products" },
-    { "date": "2008-12", "text": "MillerCoors settles with 13 states and San Francisco; agrees to remove caffeine, taurine, guarana, and ginseng from Sparks" },
-    { "date": "2009", "text": "The original caffeinated formula is gone; the brand continues only in reformulated form" }
+    {
+      "date": "2002",
+      "text": "Sparks launches in the U.S. as a caffeinated alcoholic malt beverage"
+    },
+    {
+      "date": "2004",
+      "text": "The drink gains wider attention through its bold can design and high-energy branding"
+    },
+    {
+      "date": "2006",
+      "text": "Miller agrees to buy Sparks and Steel Reserve from McKenzie River"
+    },
+    {
+      "date": "2008-09",
+      "text": "Consumer advocates file suit over the risks of caffeinated alcohol products"
+    },
+    {
+      "date": "2008-12",
+      "text": "MillerCoors settles with 13 states and San Francisco; agrees to remove caffeine, taurine, guarana, and ginseng from Sparks"
+    },
+    {
+      "date": "2009",
+      "text": "The original caffeinated formula is gone; the brand continues only in reformulated form"
+    }
   ],
-
   "stats": {
     "category": "Caffeinated Alcoholic Malt Beverage",
     "introduced": "2002",
@@ -76,7 +86,6 @@
     "higher_abv_variant": "Sparks Plus",
     "original_formula_end": "2008"
   },
-
   "content": {
     "faq": [
       {
@@ -101,11 +110,9 @@
       }
     ]
   },
-
   "links": {
     "california_ag_settlement": "https://oag.ca.gov/news/press-releases/attorney-general-brown-reaches-agreement-millercoors-ban-sale-alcoholic-energy"
   },
-
   "sources": [
     {
       "label": "California Attorney General — MillerCoors Sparks settlement press release",
@@ -116,12 +123,20 @@
       "url": "https://www.fda.gov/food/food-additives-petitions/caffeinated-alcoholic-beverages"
     }
   ],
-
   "explore_more": {
     "category_label": "Interested in more controversial 2000s drinks?",
     "brands": [
-      { "name": "Four Loko (Original Formula)", "slug": "four-loko-original" },
-      { "name": "Tilt (Original Formula)", "slug": "tilt-original" }
+      {
+        "name": "Four Loko (Original Formula)",
+        "slug": "four-loko-original"
+      },
+      {
+        "name": "Tilt (Original Formula)",
+        "slug": "tilt-original"
+      }
     ]
-  }
+  },
+  "image": "/images/brands/sparks-original.svg",
+  "image_alt": "Sparks (Original Caffeinated Formula) — original illustration",
+  "image_caption": "Original illustration — Vanished Brands"
 }

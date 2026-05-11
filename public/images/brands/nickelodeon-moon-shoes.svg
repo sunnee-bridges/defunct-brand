@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#E65100"/>
+  <rect x="20" y="20" width="760" height="760" fill="none" stroke="#FFE0B2" stroke-width="12" rx="12"/>
+  <rect y="610" width="800" height="190" fill="#FF6D00"/>
+  <ellipse cx="400" cy="300" rx="180" ry="60" fill="rgba(255,224,178,0.15)"/>
+  <text x="400" y="230" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="900" fill="white" letter-spacing="2">NICKELODEON</text>
+  <text x="400" y="330" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="56" font-weight="900" fill="#FFE0B2">MOON</text>
+  <text x="400" y="420" text-anchor="middle" dominant-baseline="middle" font-family="Arial,Helvetica,sans-serif" font-size="56" font-weight="900" fill="#FFE0B2">SHOES</text>
+  <text x="400" y="510" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="rgba(255,224,178,0.65)" letter-spacing="4">Mini Trampoline Shoes · 1992</text>
+  <text x="400" y="700" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="24" fill="white" letter-spacing="4">BIG TIME TOYS</text>
+  <text x="400" y="748" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-style="italic" fill="rgba(255,255,255,0.4)">Vanished Brands</text>
+</svg>
