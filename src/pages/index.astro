@@ -258,7 +258,7 @@ const currentPath = Astro.url.pathname;
 
     .brand-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
       gap: 18px; /* slightly larger to avoid crowding across collections */
     }
 
@@ -286,14 +286,37 @@ const currentPath = Astro.url.pathname;
     .fcard-sm {
       position:relative; border-radius:.875rem; border:1px solid var(--card-border, rgb(226 232 240));
       background: var(--card-bg, #fff); padding:.75rem .85rem; overflow:hidden; transition: transform .16s ease, box-shadow .16s ease;
+      display: flex; flex-direction: column;
+      border-top: 4px solid var(--tint);
     }
     .fcard-sm:hover{ transform: translateY(-1px); box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); }
     .dark .fcard-sm{ --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
 
-    .meta-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.35rem }
+    .card-label {
+      display: inline-block;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: .15rem .55rem; border-radius: 9999px; margin-bottom: .4rem;
+      background: color-mix(in oklab, var(--tint) 16%, white);
+      border: 1px solid color-mix(in oklab, var(--tint) 32%, white);
+      color: oklch(0.28 0 0);
+    }
+    .dark .card-label {
+      background: color-mix(in oklab, var(--tint) 25%, rgb(2 6 23));
+      border-color: color-mix(in oklab, var(--tint) 48%, rgb(2 6 23));
+      color: rgb(226 232 240);
+    }
+    /* Card title: 2-line clamp + uniform height */
+    .fcard-sm h4 {
+      font-size: .9rem; font-weight: 600; line-height: 1.3;
+      min-height: 2.4em;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      margin-bottom: .2rem;
+    }
+
+    .meta-row { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.5rem }
     .chip-lite {
-      display:inline-flex; align-items:center; gap:.35rem;
-      padding:.25rem .5rem; border-radius:9999px; font-size:.72rem; font-weight:600;
+      display:inline-flex; align-items:center; gap:.3rem;
+      padding:.2rem .45rem; border-radius:9999px; font-size:.68rem; font-weight:600;
       background: color-mix(in oklab, var(--tint) 14%, white);
       border: 1px solid color-mix(in oklab, var(--tint) 28%, white);
       color: oklch(0.28 0 0);
@@ -304,11 +327,13 @@ const currentPath = Astro.url.pathname;
       color: white;
     }
     .hook {
-      margin-top:.45rem;
-      font-size:.9rem;
-      line-height:1.25rem;
+      flex: 1;
+      margin-top:.4rem;
+      font-size:.82rem;
+      line-height:1.4;
       color: rgb(71 85 105);
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+      min-height: 3.2em;
     }
     .dark .hook { color: rgb(203 213 225); }
     .card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -368,11 +393,11 @@ const currentPath = Astro.url.pathname;
     }
 
     .hero-btn-primary {
-      background: linear-gradient(135deg, #6366f1, #7c3aed);
+      background: #1e2a4a;
       color: white;
     }
     .hero-btn-primary:hover {
-      filter: brightness(1.05);
+      background: #28395e;
     }
 
     .hero-btn-secondary {
@@ -467,15 +492,15 @@ const currentPath = Astro.url.pathname;
     .dark .search input { color: white; }
     .search-btn {
       grid-column: 2 / span 1; padding: 10px 16px; border: 0; border-radius: 10px;
-      background: linear-gradient(135deg, #6366f1, #7c3aed); color: white; font-weight: 700; cursor: pointer;
-      transition: transform .04s ease, filter .2s ease;
+      background: #1e2a4a; color: white; font-weight: 700; cursor: pointer;
+      transition: transform .04s ease, background .15s ease;
     }
-    .search-btn:hover { filter: brightness(1.08); }
+    .search-btn:hover { background: #28395e; }
     .search-btn:active { transform: translateY(1px); }
     .suggestions { display: flex; flex-wrap: wrap; gap: 8px; }
     .chip {
-      display: inline-flex; align-items:center; gap:.35rem; padding: .35rem .55rem; border-radius: 9999px;
-      font-size: 12px; font-weight: 600; color: rgb(30 41 59);
+      display: inline-flex; align-items:center; gap:.5rem; padding: .6rem 1.1rem; border-radius: 9999px;
+      font-size: 18px; font-weight: 600; color: rgb(30 41 59);
       background: color-mix(in oklab, rgb(99 102 241) 10%, white);
       border: 1px solid color-mix(in oklab, rgb(99 102 241) 22%, white); text-decoration: none;
     }
@@ -631,7 +656,7 @@ const currentPath = Astro.url.pathname;
    {(featuredPicks.length > 0 || featuredPosts.length > 0) && (
   <div class="collection">
     <div class="collection-header">
-      <h3>⭐ Popular Right Now</h3>
+      <h3>Popular Right Now</h3>
       <a href="/az/" class="see-all">See all stories →</a>
     </div>
     <div class="brand-grid">
@@ -644,21 +669,23 @@ const currentPath = Astro.url.pathname;
         const text = truncateInline(primaryTextOf(b), 120);
         return (
           <article class="fcard-sm" style={{ "--tint": tint }}>
-              <a
+            <a
               href={`/brand/${encodeURIComponent(b.slug)}/`}
               class="stretched-link focus-ring rounded"
               aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
             ></a>
-            <h4 class="text-base font-semibold leading-snug mb-1">{b.brand}</h4>
-            {text && (
-              <p class="hook">
-                <span aria-hidden="true">{icon}</span>{" "}{text}
+            {cat && (
+              <p class="card-label">
+                {cat}
               </p>
+            )}
+            <h4>{b.brand}</h4>
+            {text && (
+              <p class="hook">{text}</p>
             )}
             <div class="meta-row">
               {yrs && <span class="chip-lite">{yrs}</span>}
-              {cat && <span class="chip-lite">🏷️ {cat}</span>}
-               <span class="chip-lite">🔍 Brand page</span>
+              <span class="chip-lite">🔍 Brand page</span>
             </div>
           </article>
         );
@@ -671,10 +698,10 @@ const currentPath = Astro.url.pathname;
             class="stretched-link focus-ring rounded"
             aria-label={post.title}
           ></a>
-          <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">
+          <p class="card-label">
             {post.label}
           </p>
-          <h4 class="text-base font-semibold leading-snug mb-1">{post.title}</h4>
+          <h4>{post.title}</h4>
           <p class="hook">{post.desc}</p>
           <div class="meta-row">
             <span class="chip-lite">📖 Article</span>
@@ -690,7 +717,7 @@ const currentPath = Astro.url.pathname;
     {CFood.length > 0 && (
       <div class="collection">
         <div class="collection-header">
-          <h3>🍿 Discontinued Snacks We Crave</h3>
+          <h3>Discontinued Snacks We Crave</h3>
           <a href="/category/food-beverage/" class="see-all">See all food brands →</a>
         </div>
         <div class="brand-grid">
@@ -708,17 +735,17 @@ const currentPath = Astro.url.pathname;
                   class="stretched-link focus-ring rounded"
                   aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
                 ></a>
-                <h4 class="text-base font-semibold leading-snug mb-1">{b.brand}</h4>
-                {text && (
-                  <p class="hook">
-                    <span aria-hidden="true">{icon}</span>
-                    <span class="sr-only">Fate: {fateType}</span>
-                    {" "}{text}
+                {cat && (
+                  <p class="card-label">
+                    {cat}
                   </p>
+                )}
+                <h4>{b.brand}</h4>
+                {text && (
+                  <p class="hook">{text}</p>
                 )}
                 <div class="meta-row">
                   {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
-                  {cat && <span class="chip-lite" title={`Category: ${cat}`}>🏷️ {cat}</span>}
                 </div>
               </article>
             );
@@ -732,8 +759,8 @@ const currentPath = Astro.url.pathname;
 
   <!-- Categories -->
   <section class="mt-6" role="region" aria-label="Browse by category">
-    <h2 class="text-lg font-semibold mb-2">Browse by Category</h2>
-    <nav class="flex flex-wrap gap-2" role="navigation" aria-label="Categories">
+    <h2 class="text-2xl font-semibold mb-2">Browse by Category</h2>
+    <nav class="flex flex-wrap gap-3" role="navigation" aria-label="Categories">
       {categories.map((c) => {
         const href = `/category/${c.slug}/`;
         const isCurrent = currentPath.startsWith(href);
@@ -753,12 +780,12 @@ const currentPath = Astro.url.pathname;
 
   <!-- Decades -->
   <section class="mt-6 mb-32" role="region" aria-label="Browse by decade">
-    <h2 class="text-lg font-semibold mb-2">Browse by Decade</h2>
-    <p class="text-gray-600 dark:text-slate-300 text-sm mb-1">
+    <h2 class="text-2xl font-semibold mb-2">Browse by Decade</h2>
+    <p class="text-gray-600 dark:text-slate-300 text-lg mb-1">
       Explore brands by the decade they ended (or started when unknown).
     </p>
 
-    <nav class="flex flex-wrap gap-2 items-center" role="navigation" aria-label="Decades">
+    <nav class="flex flex-wrap gap-3 items-center" role="navigation" aria-label="Decades">
       {availableDecadeLabels.slice(0, 6).map((label) => {
         const href = `/decade/${label}/`;
         const isCurrent = currentPath === href;
@@ -788,10 +815,10 @@ const currentPath = Astro.url.pathname;
 <!-- SEO content — below the fold intentionally -->
 <section class="mt-12 space-y-6" aria-label="About this archive">
   <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
-    <h2 class="text-base font-semibold mb-2 text-slate-900 dark:text-slate-100">
+    <h2 class="text-xl font-semibold mb-2 text-slate-900 dark:text-slate-100">
       Why Brands Disappear
     </h2>
-    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+    <p class="text-lg leading-relaxed text-slate-600 dark:text-slate-400">
       When smartphones absorbed MP3 players, when e-commerce reshaped malls, when streaming remade media —
       vanished brands were the first visible signals of change. Each page summarizes the basics (founded,
       defunct, fate) with sources and related reading.
@@ -799,14 +826,14 @@ const currentPath = Astro.url.pathname;
   </article>
 
   <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
-    <h2 class="text-base font-semibold mb-3 text-slate-900 dark:text-slate-100">
+    <h2 class="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">
       How to Use This Archive
     </h2>
-    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-      <li><strong class="text-slate-900 dark:text-slate-100">🔍 Search:</strong> Use the box above to find brands by name with live suggestions</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">📅 By Decade:</strong> Browse brands from the {availableDecadeLabels.slice(0, 2).join(" or ")}, or explore our full timeline</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">🏷️ By Category:</strong> Filter by {catCount} categories: Tech, Retail, Food, Media, Finance, and more</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">📊 Download:</strong> Get all {totalAll} brands with dates and fates as a research-ready CSV</li>
+    <ul class="space-y-2 text-lg text-slate-600 dark:text-slate-400 list-disc pl-5 marker:text-indigo-400">
+      <li><strong class="text-slate-900 dark:text-slate-100">Search:</strong> Use the box above to find brands by name with live suggestions</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">By Decade:</strong> Browse brands from the {availableDecadeLabels.slice(0, 2).join(" or ")}, or explore our full timeline</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">By Category:</strong> Filter by {catCount} categories: Tech, Retail, Food, Media, Finance, and more</li>
+      <li><strong class="text-slate-900 dark:text-slate-100">Download:</strong> Get all {totalAll} brands with dates and fates as a research-ready CSV</li>
     </ul>
   </article>
 </section>

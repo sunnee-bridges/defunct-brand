@@ -96,25 +96,25 @@ const toSafeJson = (obj: any) =>
     .replace(/\u2028|\u2029/g, '');
 ---
 
-<header class="max-w-[1040px] mx-auto px-4" role="banner">
+<header class="max-w-6xl mx-auto px-4" role="banner">
   <!-- Top row: site brand + theme toggle -->
-  <div class="mt-8 flex items-center justify-between gap-4">
-    <div>
+  <div class="mt-4 sm:mt-8 flex items-center justify-between gap-4">
+    <div class="min-w-0 flex-1">
       <!-- Site name is branding, not the main document heading -->
-      <p class="text-2xl md:text-3xl font-bold">
+      <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
         <a
           href="/"
-          class="inline-flex items-center gap-1 hover:underline hover:underline-offset-2"
+          class="flex items-center gap-1 hover:underline hover:underline-offset-2"
           aria-label="Vanished Brands home"
         >
-          <span aria-hidden="true">🕰️</span>
+          <span aria-hidden="true" class="shrink-0">🕰️</span>
           <span>Vanished Brands Archive</span>
         </a>
       </p>
 
       <!-- Compact info strip: counts + span + example brands -->
       {showStats && (
-        <p class="text-xs md:text-sm text-gray-600 dark:text-slate-300 mt-1">
+        <p class="text-sm md:text-base text-gray-600 dark:text-slate-300 mt-1">
           {totalBrands} discontinued &amp; defunct brands · {yearSpan}
           <span class="hidden sm:inline">
             {" "}— from <strong>{firstBrandLabel}</strong> to <strong>{lastBrandLabel}</strong>
@@ -140,62 +140,53 @@ const toSafeJson = (obj: any) =>
   </div>
 
   <!-- Primary nav: Explore group (left) + Dataset + Random (right) -->
+  <style is:inline>
+    nav[data-site-nav] .chip,
+    nav[data-site-nav] .btn-primary {
+      font-size: 1rem;
+      padding: 0.625rem 1rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    @media (max-width: 639px) {
+      nav[data-site-nav] .chip,
+      nav[data-site-nav] .btn-primary {
+        font-size: 0.875rem;
+        padding: 0.4rem 0.7rem;
+        min-height: 44px;
+        align-items: center;
+      }
+    }
+  </style>
+
   <nav
     role="navigation"
     aria-label="Primary"
     data-site-nav
-    class="mt-5 mb-6 flex items-center gap-3 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] -mx-4 px-4"
+    class="mt-4 mb-6 flex flex-wrap items-center gap-2"
   >
-    <!-- Hide horizontal scrollbar in WebKit (keeps scroll behavior) -->
-    <style is:inline>
-      nav[data-site-nav]::-webkit-scrollbar { height: 0; }
-    </style>
+    {links.map((l) => {
+      const isCurrent = l.match(path);
+      return (
+        <a
+          href={l.href}
+          class={`inline-flex chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
+          aria-current={isCurrent ? "page" : undefined}
+        >
+          {l.label}
+        </a>
+      );
+    })}
 
-    <!-- Explore links -->
-    <div class="flex items-center gap-3" aria-label="Explore vanished brands">
-      {primaryLinks.map((l) => {
-        const isCurrent = l.match(path);
-        return (
-          <a
-            href={l.href}
-            class={`shrink-0 inline-flex chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
-            aria-current={isCurrent ? "page" : undefined}
-          >
-            {l.label}
-          </a>
-        );
-      })}
-    </div>
-
-    <!-- Dataset + Random Brand grouped on the right -->
-    <div class="flex items-center gap-2 ml-auto" aria-label="Tools and dataset">
-      {datasetLink && (
-        (() => {
-          const isCurrent = datasetLink.match(path);
-          return (
-            <a
-              href={datasetLink.href}
-              class={`shrink-0 inline-flex chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
-              aria-current={isCurrent ? "page" : undefined}
-            >
-              {datasetLink.label}
-            </a>
-          );
-        })()
-      )}
-
-      <a
-        href={`/brand/${fallbackSlug}/`}
-        class="shrink-0 inline-flex btn-primary focus-ring"
-        data-random
-        onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
-        aria-label="Jump to a random vanished brand"
-      >
-        <span aria-hidden="true">🎲</span>
-        <span class="ml-1 hidden sm:inline">Surprise me</span>
-        <span class="ml-1 sm:hidden">Random</span>
-      </a>
-    </div>
+    <a
+      href={`/brand/${fallbackSlug}/`}
+      class="inline-flex btn-primary focus-ring"
+      data-random
+      onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
+      aria-label="Jump to a random vanished brand"
+    >
+      Surprise me
+    </a>
   </nav>
 </header>
 

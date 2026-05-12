@@ -70,16 +70,16 @@ const datasetLdJson = JSON.stringify(datasetLd);
     <a href="/decade/" class="chip focus-ring">Decades</a>
   </nav>
 
-  <h1 class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands Dataset</h1>
-  <p class="text-slate-700 dark:text-slate-300 mb-4">
+  <h1 class="text-3xl md:text-4xl font-bold mb-2">Defunct Brands Dataset</h1>
+  <p class="text-lg text-slate-700 dark:text-slate-300 mb-4">
     A cleaned CSV of brands, categories, active years, and fate.
   </p>
 
   <div class="grid gap-4 md:grid-cols-2 md:gap-4 lg:gap-6">
     <!-- Free sample -->
     <section class="rounded-xl border p-4 bg-white/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-700">
-      <h2 class="text-lg font-semibold mb-2">Free sample (10 brands)</h2>
-      <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+      <h2 class="text-xl font-semibold mb-2">Free sample (10 brands)</h2>
+      <p class="text-base text-slate-600 dark:text-slate-400 mb-3">
         A tiny slice for evaluation and non-commercial use.
       </p>
       <a
@@ -95,8 +95,8 @@ const datasetLdJson = JSON.stringify(datasetLd);
 
     <!-- Full dataset -->
     <section class="rounded-xl border p-4 bg-white/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-700">
-      <h2 class="text-lg font-semibold mb-2">Full dataset (CSV)</h2>
-      <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+      <h2 class="text-xl font-semibold mb-2">Full dataset (CSV)</h2>
+      <p class="text-base text-slate-600 dark:text-slate-400 mb-3">
         Free for personal and research use. Enter your email and we’ll send a download link.
       </p>
       <form id="csv-request-form" novalidate>
@@ -109,7 +109,7 @@ const datasetLdJson = JSON.stringify(datasetLd);
             placeholder="you@example.com"
             autocomplete="email"
             class="flex-1 rounded-md border border-slate-300 dark:border-slate-600
-                   bg-white dark:bg-slate-800 px-3 py-2 text-sm
+                   bg-white dark:bg-slate-800 px-3 py-2 text-base
                    text-slate-900 dark:text-slate-100
                    focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
@@ -123,16 +123,16 @@ const datasetLdJson = JSON.stringify(datasetLd);
         </div>
         <p id="csv-msg" class="mt-2 text-sm" aria-live="polite"></p>
       </form>
-      <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">
+      <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">
         For commercial use, <a href="/contact/" class="underline">contact us</a> to arrange a license.
       </p>
     </section>
   </div>
 
   <!-- Schema -->
-  <h2 class="text-lg font-semibold mt-8 lg:mt-10 mb-2">Schema</h2>
+  <h2 class="text-xl font-semibold mt-8 lg:mt-10 mb-2">Schema</h2>
   <div class="overflow-x-auto">
-    <table class="w-full text-sm">
+    <table class="w-full text-base">
       <thead>
         <tr class="border-b border-slate-200 dark:border-slate-700">
           <th class="text-left py-1 pr-3">Column</th>
@@ -153,7 +153,7 @@ const datasetLdJson = JSON.stringify(datasetLd);
   </div>
 
   <!-- FAQ -->
-  <section class="mt-6 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+  <section class="mt-6 space-y-2 text-base text-slate-700 dark:text-slate-300">
     <details>
       <summary class="cursor-pointer font-medium">What's the file format?</summary>
       <div class="mt-1">UTF-8 CSV with a header row. New columns (if any) are appended to preserve backward compatibility.</div>
@@ -168,7 +168,7 @@ const datasetLdJson = JSON.stringify(datasetLd);
     </details>
   </section>
 
-  <p class="mt-3 text-sm text-slate-700 dark:text-slate-300 max-w-2xl">
+  <p class="mt-3 text-base text-slate-700 dark:text-slate-300 max-w-2xl">
     Spotted a mistake in the dataset or have additional sources to suggest?
     <a
   href="/contact/"
@@ -184,7 +184,7 @@ const datasetLdJson = JSON.stringify(datasetLd);
     and I’ll review it for a future update.
   </p>
 
-  <p class="mt-6 text-xs text-slate-600 dark:text-slate-400">
+  <p class="mt-6 text-sm text-slate-600 dark:text-slate-400">
     <strong>License:</strong> Free sample under CC BY-NC 4.0. Full CSV free for personal/research use; commercial license available on request.
   </p>
 

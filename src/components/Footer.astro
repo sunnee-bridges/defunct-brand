@@ -4,7 +4,7 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
 
 
 <footer
-  class="relative max-w-[1040px] mx-auto px-4
+  class="relative max-w-6xl mx-auto px-4
          mt-8 md:mt-12
          pb-10 md:pb-14
          mb-[env(safe-area-inset-bottom)]
@@ -23,7 +23,7 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
   <div class="pt-5 md:pt-6 flex flex-wrap items-center gap-3 justify-between">
 
     <!-- CTA row: small screens -->
-    <nav class="flex gap-3 md:hidden" aria-label="Footer quick links">
+    <nav class="flex flex-wrap gap-2 md:hidden" aria-label="Footer quick links">
       <a
         href="/az/"
         class="chip focus-ring motion-safe:transition-colors motion-safe:duration-150 motion-reduce:transition-none"

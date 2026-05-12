@@ -94,6 +94,28 @@ export default defineConfig({
         '@layouts': fileURLToPath(new URL('./src/layouts', import.meta.url)),
       },
     },
+    plugins: [
+      {
+        name: 'brand-slugs-dev',
+        configureServer(server) {
+          server.middlewares.use('/brand-slugs.txt', (_req, res, next) => {
+            const dir = path.resolve('src/content/brands');
+            if (!fs.existsSync(dir)) { next(); return; }
+            try {
+              const slugs = fs.readdirSync(dir)
+                .filter(f => /^[^.].*\.json$/i.test(f) && !/\.public\.json$/i.test(f))
+                .map(f => f.replace(/\.json$/i, ''))
+                .sort();
+              res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+              res.setHeader('Cache-Control', 'no-store');
+              res.end(slugs.join('\n') + '\n');
+            } catch (e) {
+              next();
+            }
+          });
+        },
+      },
+    ],
   },
 
   integrations: [

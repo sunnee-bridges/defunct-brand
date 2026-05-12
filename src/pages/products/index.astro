@@ -5,6 +5,7 @@ import {
   normalizeBrands,
   normalizeCategory,
   yearsOf,
+  catHue,
   fateIconOf,
   fateTypeOf,
   primaryTextOf,
@@ -81,90 +82,116 @@ const itemListLd = {
     .jump a {
       transition: background-color .15s ease, outline-color .15s ease, color .15s ease;
     }
-
     .jump a.active {
       outline: 2px solid rgb(99 102 241);
       outline-offset: 2px;
       background: rgba(99 102 241 / 0.10);
       color: rgb(55 48 163);
     }
-
     .dark .jump a.active {
       outline-color: rgb(165 180 252);
       background: rgba(99 102 241 / 0.25);
       color: rgb(224 231 255);
     }
-
     .dark .jump a {
       color: rgb(203 213 225);
     }
 
-    .product-card {
+    .card-label {
+      display: inline-block;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: .15rem .55rem; border-radius: 9999px; margin-bottom: .4rem;
+      background: color-mix(in oklab, var(--tint) 16%, white);
+      border: 1px solid color-mix(in oklab, var(--tint) 32%, white);
+      color: oklch(0.28 0 0);
+    }
+    .dark .card-label {
+      background: color-mix(in oklab, var(--tint) 25%, rgb(2 6 23));
+      border-color: color-mix(in oklab, var(--tint) 48%, rgb(2 6 23));
+      color: rgb(226 232 240);
+    }
+    .brand-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+      gap: 16px;
+    }
+    .fcard-sm {
       position: relative;
-      display: block;
-      height: 100%;
-      border-radius: 0.75rem;
-      border: 1px solid rgb(226 232 240);
-      background: white;
-      padding: 1rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      border-radius: .875rem;
+      border: 1px solid var(--card-border, rgb(226 232 240));
+      background:
+        linear-gradient(
+          180deg,
+          color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 10%, transparent) 0%,
+          transparent 24%
+        ),
+        var(--card-bg, #fff);
+      padding: .75rem .85rem;
+      overflow: hidden;
+      transition: transform .16s ease, box-shadow .16s ease;
+      display: flex; flex-direction: column;
+      border-top: 4px solid var(--tint);
     }
-
-    .dark .product-card {
-      background: rgb(15 23 42);
-      border-color: rgb(51 65 85);
+    .fcard-sm:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18);
     }
-
-    .product-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-      border-color: rgb(59 130 246);
+    .dark .fcard-sm {
+      --card-bg: rgb(2 6 23);
+      --card-border: rgb(51 65 85);
     }
-
+    .fcard-sm h3 {
+      font-size: .9rem !important;
+      font-weight: 600;
+      line-height: 1.3;
+      min-height: 2.4em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: .2rem;
+    }
     .meta-row {
       display: flex;
       flex-wrap: wrap;
       gap: .4rem;
       margin-top: .5rem;
     }
-
-    .meta-badge {
+    .chip-lite {
       display: inline-flex;
       align-items: center;
-      gap: .35rem;
-      padding: .2rem .5rem;
+      gap: .3rem;
+      padding: .2rem .45rem;
       border-radius: 9999px;
-      font-size: .75rem;
+      font-size: .68rem;
       font-weight: 600;
-      background: rgb(239 246 255);
-      color: rgb(30 64 175);
+      background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 14%, white);
+      border: 1px solid color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 28%, white);
+      color: oklch(0.28 0 0);
     }
-
-    .dark .meta-badge {
-      background: rgba(59, 130, 246, 0.15);
-      color: rgb(147 197 253);
+    .dark .chip-lite {
+      background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 22%, rgb(2 6 23));
+      border-color: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 45%, rgb(2 6 23));
+      color: white;
     }
-
     .hook {
-      margin-top: .35rem;
-      font-size: .875rem;
-      line-height: 1.3rem;
+      flex: 1;
+      margin-top: .3rem;
+      font-size: .82rem;
+      line-height: 1.4;
       color: rgb(71 85 105);
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      min-height: 3.2em;
     }
-
     .dark .hook {
       color: rgb(203 213 225);
     }
-
- 
- 
   </style>
 
-  <div class="max-w-6xl mx-auto px-4">
+  <div>
     <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
       <a href="/" class="chip focus-ring">← Home</a>
       <span class="chip opacity-70 cursor-default" aria-current="page">Products</span>
@@ -178,27 +205,34 @@ const itemListLd = {
       </p>
     </div>
 
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
       <span id="countLine" data-total={total}>Showing {total} of {total}</span>
     </p>
 
-    <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-      <label for="q" class="text-sm text-slate-600 dark:text-slate-300">Search</label>
-      <input
-        id="q"
-        type="search"
-        class="w-full sm:w-[320px] rounded-md border border-slate-300 bg-white text-slate-900 placeholder-slate-400 px-3 py-2 focus-ring dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-        placeholder="Search products…"
-        inputmode="search"
-        aria-describedby="countLine"
-      />
-
-      <div class="jump mt-1 sm:mt-0 flex flex-wrap gap-2" role="navigation" aria-label="Jump to letter">
-        {letters.map((L) => {
-          const anchor = anchorIdFor(L);
-          return <a href={`#${anchor}`} class="chip focus-ring" data-letter-link={anchor}>{L}</a>;
-        })}
+    <div class="mb-4 flex flex-wrap gap-2 items-center">
+      <label for="q" class="text-sm text-slate-700 dark:text-slate-300">
+        Search by product name:
+      </label>
+      <div class="flex gap-2 w-full max-w-2xl">
+        <input
+          id="q"
+          type="search"
+          class="w-full rounded-md border border-slate-300 dark:border-slate-700
+                 bg-white dark:bg-slate-900 px-3 py-2 text-base
+                 text-slate-900 dark:text-slate-100"
+          placeholder="e.g., PB Max, Crystal Pepsi"
+          inputmode="search"
+          autocomplete="off"
+          aria-describedby="countLine"
+        />
       </div>
+    </div>
+
+    <div class="jump flex flex-wrap gap-2 mb-6" role="navigation" aria-label="Jump to letter">
+      {letters.map((L) => {
+        const anchor = anchorIdFor(L);
+        return <a href={`#${anchor}`} class="chip focus-ring" data-letter-link={anchor}>{L}</a>;
+      })}
     </div>
 
     {total === 0 ? (
@@ -224,57 +258,40 @@ const itemListLd = {
                   </span>
                 </div>
 
-                <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <ul class="brand-grid">
                   {arr.map((b: any) => {
                     const yrs = yearsOf(b);
                     const cat = b.__seo_category_label || b.category || "";
-                    const icon = fateIconOf(b);
-                    const fateType = fateTypeOf(b) || "other";
+                    const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
                     const text = truncateInline(primaryTextOf(b), 120);
 
                     return (
-                     <li data-name={String(b.brand).toLowerCase()}>
-  <article
-    class="product-card h-full cursor-pointer"
-    data-card-href={`/brand/${encodeURIComponent(b.slug)}/`}
-    tabindex="0"
-    role="link"
-    aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
-  >
-    <div class="group">
-      <h3 class="text-base font-semibold leading-snug line-clamp-2 mb-1.5 text-slate-900 dark:text-slate-100">
-        {b.brand}
-      </h3>
+                      <li data-name={String(b.brand).toLowerCase()}>
+                        <article
+                          class="fcard-sm group h-full"
+                          style={{ "--tint": tint }}
+                        >
+                          <a
+                            href={`/brand/${encodeURIComponent(b.slug)}/`}
+                            class="stretched-link focus-ring rounded"
+                            aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+                          ></a>
 
-      {text && (
-        <p class="hook">
-          <span aria-hidden="true">{icon}</span>
-          <span class="sr-only">Fate: {fateType}</span>
-          {" "}{text}
-        </p>
-      )}
+                          {cat && <p class="card-label">{cat}</p>}
 
-      <div class="meta-row">
-        {yrs && (
-          <span class="meta-badge" aria-label={`Years active ${yrs}`}>
-            {yrs}
-          </span>
-        )}
-        {cat && (
-          <a
-            href={`/category/${encodeURIComponent(normalizeCategory(cat))}/`}
-            class="meta-badge focus-ring"
-            title={`Category: ${cat}`}
-            aria-label={`Browse category ${cat}`}
-            data-no-card-nav
-          >
-            🏷️ {cat}
-          </a>
-        )}
-      </div>
-    </div>
-  </article>
-</li>
+                          <h3>{b.brand}</h3>
+
+                          {text && <p class="hook">{text}</p>}
+
+                          <div class="meta-row">
+                            {yrs && (
+                              <span class="chip-lite" aria-label={`Years active ${yrs}`}>
+                                {yrs}
+                              </span>
+                            )}
+                          </div>
+                        </article>
+                      </li>
                     );
                   })}
                 </ul>
@@ -283,7 +300,7 @@ const itemListLd = {
           })}
         </div>
 
-        <div class="mt-8">
+        <div class="mt-10">
           <a href="#top" class="chip focus-ring">↑ Back to top</a>
         </div>
       </>
@@ -363,31 +380,6 @@ const itemListLd = {
 
       const hash = window.location.hash.slice(1);
       if (hash && letterLinks.has(hash)) setActiveLetter(hash);
-
-   document.addEventListener('click', (e) => {
-  const rawTarget = e.target;
-  const target =
-    rawTarget instanceof Element
-      ? rawTarget
-      : rawTarget && rawTarget.parentElement
-      ? rawTarget.parentElement
-      : null;
-
-  if (!target) return;
-
-  const tagLink = target.closest('[data-no-card-nav]');
-  if (tagLink) return;
-
-  const card = target.closest('[data-card-href]');
-  console.log('clicked target:', target, 'card:', card);
-
-  if (!card) return;
-
-  const href = card.getAttribute('data-card-href');
-  console.log('navigating to:', href);
-
-  if (href) window.location.href = href;
-});
     })();
   </script>
 </Base>

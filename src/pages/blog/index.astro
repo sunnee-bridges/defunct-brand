@@ -117,6 +117,9 @@ const itemListLd = {
 ---
 <Base title={title} description={desc} canonical={canonical} jsonLd={itemListLd}>
   <style is:inline>
+    .blog-submit-btn { background: #1e2a4a; }
+    .blog-submit-btn:hover { background: #28395e; }
+
     .blog-grid {
       display: grid;
       gap: 18px;
@@ -323,9 +326,9 @@ const itemListLd = {
 
       <button
         type="submit"
-        class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-1.5
-               text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none
-               focus-visible:ring-2 focus-visible:ring-indigo-500"
+        class="blog-submit-btn inline-flex items-center rounded-md px-3 py-1.5
+               text-sm font-medium text-white focus:outline-none
+               focus-visible:ring-2 focus-visible:ring-slate-500"
       >
         Search
       </button>

@@ -216,7 +216,7 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
     <!-- ✅ Fix nav wrapping differences by stabilizing viewport width -->
     <style is:inline>
       :root { scrollbar-gutter: stable both-edges; } /* modern */
-      html { overflow-y: scroll; }                  /* fallback */
+      html { overflow-y: scroll; overflow-x: hidden; } /* fallback; overflow-x on html prevents viewport scroll without breaking child scroll containers */
     </style>
 
     <!-- (Optional) Slightly tighten primary-nav gaps on narrower viewports -->
