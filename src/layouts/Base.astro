@@ -72,8 +72,8 @@ const jsonLdArray: any[] = [
 const urlFor = (p: string) => (Astro.site ? new URL(p, Astro.site).href : p);
 
 // Use short, clean names; keep URLs absolute when Astro.site is set.
-const NAV_LABELS = ["Categories","A–Z","Decades","Products","Blog","Data"];
-const NAV_PATHS  = ["/category/","/az/","/decade/","/products/","/blog/","/data/"];
+const NAV_LABELS = ["A–Z","Browse","Products","Blog"];
+const NAV_PATHS  = ["/az/","/browse/","/products/","/blog/"];
 const navSchema = {
   "@context": "https://schema.org",
   "@type": "SiteNavigationElement",
@@ -213,10 +213,11 @@ const BRAND_INDEX_VER = `${fileSlugs.length}:${INLINE_SEED[0] || ""}:${INLINE_SE
   }
 </style>
 
-    <!-- ✅ Fix nav wrapping differences by stabilizing viewport width -->
+    <!-- Prevent horizontal scroll (mobile + desktop) and stabilize layout width on scrollbar appearance -->
     <style is:inline>
-      :root { scrollbar-gutter: stable both-edges; } /* modern */
-      html { overflow-y: scroll; overflow-x: hidden; } /* fallback; overflow-x on html prevents viewport scroll without breaking child scroll containers */
+      :root { scrollbar-gutter: stable; } /* reserves right-side gutter only; both-edges caused left-gutter overflow on mobile */
+      html, body { overflow-x: hidden; } /* body needed: WebKit makes body the scroll container when html has overflow set */
+      html { overflow-y: scroll; } /* keeps layout stable when scrollbar appears/disappears on desktop */
     </style>
 
     <!-- (Optional) Slightly tighten primary-nav gaps on narrower viewports -->

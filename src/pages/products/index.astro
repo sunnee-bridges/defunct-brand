@@ -1,6 +1,7 @@
 ---
 // src/pages/products/index.astro
 import Base from "../../layouts/Base.astro";
+import CardStyles from "../../components/CardStyles.astro";
 import {
   normalizeBrands,
   normalizeCategory,
@@ -74,6 +75,7 @@ const itemListLd = {
 };
 ---
 
+<CardStyles />
 <Base title={PAGE_TITLE} description={PAGE_DESC} canonical={CANONICAL} jsonLd={itemListLd}>
   <style is:inline>
     html { scroll-behavior: smooth; }
@@ -97,105 +99,14 @@ const itemListLd = {
       color: rgb(203 213 225);
     }
 
-    .card-label {
-      display: inline-block;
-      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-      padding: .15rem .55rem; border-radius: 9999px; margin-bottom: .4rem;
-      background: color-mix(in oklab, var(--tint) 16%, white);
-      border: 1px solid color-mix(in oklab, var(--tint) 32%, white);
-      color: oklch(0.28 0 0);
-    }
-    .dark .card-label {
-      background: color-mix(in oklab, var(--tint) 25%, rgb(2 6 23));
-      border-color: color-mix(in oklab, var(--tint) 48%, rgb(2 6 23));
-      color: rgb(226 232 240);
-    }
     .brand-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
       gap: 16px;
     }
-    .fcard-sm {
-      position: relative;
-      border-radius: .875rem;
-      border: 1px solid var(--card-border, rgb(226 232 240));
-      background:
-        linear-gradient(
-          180deg,
-          color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 10%, transparent) 0%,
-          transparent 24%
-        ),
-        var(--card-bg, #fff);
-      padding: .75rem .85rem;
-      overflow: hidden;
-      transition: transform .16s ease, box-shadow .16s ease;
-      display: flex; flex-direction: column;
-      border-top: 4px solid var(--tint);
-    }
-    .fcard-sm:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18);
-    }
-    .dark .fcard-sm {
-      --card-bg: rgb(2 6 23);
-      --card-border: rgb(51 65 85);
-    }
-    .fcard-sm h3 {
-      font-size: .9rem !important;
-      font-weight: 600;
-      line-height: 1.3;
-      min-height: 2.4em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: .2rem;
-    }
-    .meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .4rem;
-      margin-top: .5rem;
-    }
-    .chip-lite {
-      display: inline-flex;
-      align-items: center;
-      gap: .3rem;
-      padding: .2rem .45rem;
-      border-radius: 9999px;
-      font-size: .68rem;
-      font-weight: 600;
-      background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 14%, white);
-      border: 1px solid color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 28%, white);
-      color: oklch(0.28 0 0);
-    }
-    .dark .chip-lite {
-      background: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 22%, rgb(2 6 23));
-      border-color: color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 45%, rgb(2 6 23));
-      color: white;
-    }
-    .hook {
-      flex: 1;
-      margin-top: .3rem;
-      font-size: .82rem;
-      line-height: 1.4;
-      color: rgb(71 85 105);
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      min-height: 3.2em;
-    }
-    .dark .hook {
-      color: rgb(203 213 225);
-    }
   </style>
 
   <div>
-    <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
-      <a href="/" class="chip focus-ring">← Home</a>
-      <span class="chip opacity-70 cursor-default" aria-current="page">Products</span>
-    </nav>
 
     <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">{PAGE_TITLE}</h1>
 

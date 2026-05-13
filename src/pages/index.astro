@@ -1,6 +1,7 @@
 ---
 // src/pages/index.astro
 import Base from "../layouts/Base.astro";
+import CardStyles from "../components/CardStyles.astro";
 import {
   normalizeBrands,
   toYear,
@@ -49,7 +50,6 @@ for (const b of brands) {
 const availableDecadeLabels: string[] = [...decadeSet]
   .sort((a, b) => a - b)
   .map((d) => `${d}s`);
-const totalDecades = availableDecadeLabels.length;
 
 /* ---------- Featured: most recently ended first (fallback to start) ---------- */
 const featured = brands
@@ -207,7 +207,6 @@ const faqLd = {
   ],
 };
 
-const currentPath = Astro.url.pathname;
 ---
 
 <Base
@@ -215,7 +214,7 @@ const currentPath = Astro.url.pathname;
   description={pageDesc}
   canonical={canonical}
   jsonLd={[orgLd, siteLd, categoriesItemListLd, decadesItemListLd, faqLd]}
-  showHeaderStats={true}
+  showHeaderStats={false}
 >
   <!-- Shared card + UI styles -->
   <style is:inline>
@@ -283,59 +282,6 @@ const currentPath = Astro.url.pathname;
         0 8px 16px -8px color-mix(in oklab, var(--tint) 35%, transparent),
         0 2px 10px -6px rgb(0 0 0 / .12);
     }
-    .fcard-sm {
-      position:relative; border-radius:.875rem; border:1px solid var(--card-border, rgb(226 232 240));
-      background: var(--card-bg, #fff); padding:.75rem .85rem; overflow:hidden; transition: transform .16s ease, box-shadow .16s ease;
-      display: flex; flex-direction: column;
-      border-top: 4px solid var(--tint);
-    }
-    .fcard-sm:hover{ transform: translateY(-1px); box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18); }
-    .dark .fcard-sm{ --card-bg: rgb(2 6 23); --card-border: rgb(51 65 85); }
-
-    .card-label {
-      display: inline-block;
-      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-      padding: .15rem .55rem; border-radius: 9999px; margin-bottom: .4rem;
-      background: color-mix(in oklab, var(--tint) 16%, white);
-      border: 1px solid color-mix(in oklab, var(--tint) 32%, white);
-      color: oklch(0.28 0 0);
-    }
-    .dark .card-label {
-      background: color-mix(in oklab, var(--tint) 25%, rgb(2 6 23));
-      border-color: color-mix(in oklab, var(--tint) 48%, rgb(2 6 23));
-      color: rgb(226 232 240);
-    }
-    /* Card title: 2-line clamp + uniform height */
-    .fcard-sm h4 {
-      font-size: .9rem; font-weight: 600; line-height: 1.3;
-      min-height: 2.4em;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-      margin-bottom: .2rem;
-    }
-
-    .meta-row { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.5rem }
-    .chip-lite {
-      display:inline-flex; align-items:center; gap:.3rem;
-      padding:.2rem .45rem; border-radius:9999px; font-size:.68rem; font-weight:600;
-      background: color-mix(in oklab, var(--tint) 14%, white);
-      border: 1px solid color-mix(in oklab, var(--tint) 28%, white);
-      color: oklch(0.28 0 0);
-    }
-    .dark .chip-lite {
-      background: color-mix(in oklab, var(--tint) 22%, rgb(2 6 23));
-      border-color: color-mix(in oklab, var(--tint) 45%, rgb(2 6 23));
-      color: white;
-    }
-    .hook {
-      flex: 1;
-      margin-top:.4rem;
-      font-size:.82rem;
-      line-height:1.4;
-      color: rgb(71 85 105);
-      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-      min-height: 3.2em;
-    }
-    .dark .hook { color: rgb(203 213 225); }
     .card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
     /* ===== Hero + compact stats + search ===== */
@@ -405,14 +351,25 @@ const currentPath = Astro.url.pathname;
       border-color: rgba(148, 163, 184, 0.8);
       color: rgb(15 23 42);
     }
+    .hero-btn-secondary:hover {
+      background: rgba(148, 163, 184, 0.12);
+      border-color: rgb(100 116 139);
+    }
     .dark .hero-btn-secondary {
       color: rgb(226 232 240);
       border-color: rgba(148, 163, 184, 0.9);
+    }
+    .dark .hero-btn-secondary:hover {
+      background: rgba(148, 163, 184, 0.1);
     }
 
     .hero-btn-ghost {
       background: transparent;
       color: rgb(79 70 229);
+    }
+    .hero-btn-ghost:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
     .dark .hero-btn-ghost {
       color: rgb(165 180 252);
@@ -453,16 +410,6 @@ const currentPath = Astro.url.pathname;
     .hero-stat dd {
       font-weight: 500;
     }
-
-    /* Stretched link fix */
-.fcard-sm { position: relative; }
-.stretched-link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-}
 
     @media (max-width: 640px) {
       .hero-actions {
@@ -563,17 +510,21 @@ const currentPath = Astro.url.pathname;
       </h1>
 
       <p class="hero-subtitle">
-        <strong>Vanished Brands</strong> is a searchable archive of {totalAll} defunct and discontinued brands,
-        browsable by decade, category, and fate — with a research-ready CSV dataset for journalists, analysts,
-        and the merely nostalgic.
+        What happened to them? Timelines, fates, and the real story behind every collapse.
       </p>
 
       <div class="hero-actions" aria-label="Primary actions">
-        <a href="/az/" class="hero-btn hero-btn-primary focus-ring">
-          Browse brands A–Z
+        <a
+          href="/brand/blockbuster/"
+          class="hero-btn hero-btn-primary focus-ring"
+          data-random
+          onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
+          aria-label="Jump to a random vanished brand"
+        >
+          Surprise me
         </a>
-        <a href="/decade/" class="hero-btn hero-btn-secondary focus-ring">
-          Explore by decade
+        <a href="/az/" class="hero-btn hero-btn-secondary focus-ring">
+          Browse all brands
         </a>
         <a href="/data/" class="hero-btn hero-btn-ghost focus-ring">
           Download dataset (CSV)
@@ -594,51 +545,9 @@ const currentPath = Astro.url.pathname;
             <dt>{catCount}</dt>
             <dd>Categories</dd>
           </div>
-          <div class="hero-stat">
-            <dt>Free sample</dt>
-            <dd>CSV dataset</dd>
-          </div>
         </dl>
       </div>
 
-      <form class="searchwrap" role="search" action="/az/" method="GET">
-        <div class="search">
-          <span class="search-icon" aria-hidden="true">🔎</span>
-          <input
-            type="search"
-            name="q"
-            id="brandSearch"
-            placeholder={`Search ${totalAll} brands: Blockbuster Video, Circuit City, Toys R Us…`}
-            aria-label="Search defunct brands"
-            autocomplete="off"
-          />
-          <button class="search-btn" type="submit">Search</button>
-
-          <!-- Live suggestions dropdown -->
-          <div
-            id="brandSearch-suggestions"
-            class="live-suggestions hidden"
-            role="listbox"
-            aria-label="Search suggestions"
-          ></div>
-        </div>
-
-        <!-- Example search chips -->
-        <div class="suggestions" aria-label="Example searches">
-          <a href="/az/?q=Blockbuster" class="chip">Blockbuster</a>
-          <a href="/az/?q=Circuit%20City" class="chip">Circuit City</a>
-          <a href="/az/?q=Napster" class="chip">Napster</a>
-          <a href="/decade/1990s/" class="chip">1990s</a>
-        </div>
-      </form>
-
-      <!-- Inline brand search index for live suggestions -->
-      <script
-        id="brand-index"
-        type="application/json"
-        is:inline
-        set:html={JSON.stringify(searchIndex)}
-      />
     </div>
   </section>
 
@@ -649,6 +558,7 @@ const currentPath = Astro.url.pathname;
     is available for analysts, researchers, and journalists.
   </p>
 
+  <CardStyles />
   <!-- ⭐ Featured Collections -->
   <section class="featured-collections" aria-label="Featured Collections">
     <h2>Featured Collections</h2>
@@ -757,61 +667,6 @@ const currentPath = Astro.url.pathname;
    
   </section>
 
-  <!-- Categories -->
-  <section class="mt-6" role="region" aria-label="Browse by category">
-    <h2 class="text-2xl font-semibold mb-2">Browse by Category</h2>
-    <nav class="flex flex-wrap gap-3" role="navigation" aria-label="Categories">
-      {categories.map((c) => {
-        const href = `/category/${c.slug}/`;
-        const isCurrent = currentPath.startsWith(href);
-        return (
-          <a
-            href={href}
-            class="chip focus-ring aria-[current=page]:ring-2 aria-[current=page]:ring-indigo-500"
-            aria-current={isCurrent ? "page" : undefined}
-            title={`Defunct brands in ${c.label}`}
-          >
-            {c.label}
-          </a>
-        );
-      })}
-    </nav>
-  </section>
-
-  <!-- Decades -->
-  <section class="mt-6 mb-32" role="region" aria-label="Browse by decade">
-    <h2 class="text-2xl font-semibold mb-2">Browse by Decade</h2>
-    <p class="text-gray-600 dark:text-slate-300 text-lg mb-1">
-      Explore brands by the decade they ended (or started when unknown).
-    </p>
-
-    <nav class="flex flex-wrap gap-3 items-center" role="navigation" aria-label="Decades">
-      {availableDecadeLabels.slice(0, 6).map((label) => {
-        const href = `/decade/${label}/`;
-        const isCurrent = currentPath === href;
-        return (
-          <a
-            href={href}
-            class="chip focus-ring aria-[current=page]:ring-2 aria-[current=page]:ring-indigo-500"
-            aria-current={isCurrent ? "page" : undefined}
-            title={`Defunct brands from the ${label}`}
-          >
-            {label}
-          </a>
-        );
-      })}
-      <a
-        href="/decade/"
-        class="btn-primary focus-ring"
-        aria-label={`View all decades${totalDecades ? ` (${totalDecades} available)` : ""}`}
-        title="View all decades"
-      >
-        View all »
-      </a>
-    </nav>
-  </section>
-
-
 <!-- SEO content — below the fold intentionally -->
 <section class="mt-12 space-y-6" aria-label="About this archive">
   <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
@@ -825,97 +680,6 @@ const currentPath = Astro.url.pathname;
     </p>
   </article>
 
-  <article class="rounded border p-4 bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800">
-    <h2 class="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">
-      How to Use This Archive
-    </h2>
-    <ul class="space-y-2 text-lg text-slate-600 dark:text-slate-400 list-disc pl-5 marker:text-indigo-400">
-      <li><strong class="text-slate-900 dark:text-slate-100">Search:</strong> Use the box above to find brands by name with live suggestions</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">By Decade:</strong> Browse brands from the {availableDecadeLabels.slice(0, 2).join(" or ")}, or explore our full timeline</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">By Category:</strong> Filter by {catCount} categories: Tech, Retail, Food, Media, Finance, and more</li>
-      <li><strong class="text-slate-900 dark:text-slate-100">Download:</strong> Get all {totalAll} brands with dates and fates as a research-ready CSV</li>
-    </ul>
-  </article>
 </section>
 
-  <!-- Live search behavior -->
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", function () {
-      const input = document.getElementById("brandSearch");
-      const dropdown = document.getElementById("brandSearch-suggestions");
-      const indexScript = document.getElementById("brand-index");
-
-      if (!input || !dropdown || !indexScript) {
-        console.warn("Search suggestions: missing input, dropdown, or index script");
-        return;
-      }
-
-      let index = [];
-      try {
-        const raw = indexScript.textContent || "[]";
-        index = JSON.parse(raw);
-      } catch (e) {
-        console.error("Search suggestions: failed to parse index JSON", e);
-        index = [];
-      }
-
-      if (!Array.isArray(index) || index.length === 0) {
-        console.warn("Search suggestions: index is empty");
-      }
-
-      function clearSuggestions() {
-        dropdown.innerHTML = "";
-        dropdown.classList.add("hidden");
-      }
-
-      function renderSuggestions(items) {
-        if (!items.length) {
-          clearSuggestions();
-          return;
-        }
-
-        dropdown.innerHTML = items
-          .map(
-            (item) => `
-              <a href="${item.url}" role="option">
-                <span>${item.name}</span>
-                ${item.category ? `<span class="subtext">${item.category}</span>` : ""}
-              </a>
-            `
-          )
-          .join("");
-
-        dropdown.classList.remove("hidden");
-      }
-
-      input.addEventListener("input", (event) => {
-        const q = event.target.value.trim().toLowerCase();
-
-        if (!q) {
-          clearSuggestions();
-          return;
-        }
-
-        const matches = index
-          .filter((item) => {
-            const name = (item.name || "").toLowerCase();
-            const category = (item.category || "").toLowerCase();
-            return name.includes(q) || category.includes(q);
-          })
-          .slice(0, 8);
-
-        renderSuggestions(matches);
-      });
-
-      // Hide dropdown shortly after blur so clicks still register
-      input.addEventListener("blur", () => {
-        setTimeout(clearSuggestions, 150);
-      });
-
-      // Prevent blur from killing clicks inside the dropdown when clicking a suggestion
-      dropdown.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-      });
-    });
-  </script>
 </Base>

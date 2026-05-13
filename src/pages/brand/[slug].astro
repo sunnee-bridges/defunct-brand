@@ -1434,4 +1434,39 @@ if (catPath && catLabel) {
         <a href="/contact/" class="underline underline-offset-2 hover:text-slate-700 dark:hover:text-slate-200">Get in touch</a>
         and I'll review it.
       </p>
+
+      <script is:inline define:vars={{
+        _vbSlug: slug,
+        _vbName: brand?.brand ?? '',
+        _vbCat:  brand?.category ?? '',
+        _vbEnd:  brand?.active?.end   ?? null,
+        _vbStart: brand?.active?.start ?? null,
+      }}>
+        (function () {
+          var KEY = 'vb_visited_v1', MAX = 50;
+          function toDecade(v) {
+            if (!v) return '';
+            var m = String(v).match(/\d{3,4}/);
+            if (!m) return '';
+            var y = parseInt(m[0], 10);
+            return (y >= 1800 && y <= 2100) ? Math.floor(y / 10) * 10 + 's' : '';
+          }
+          try {
+            var raw = localStorage.getItem(KEY);
+            var list = [];
+            try { list = JSON.parse(raw || '[]'); } catch (_) {}
+            if (!Array.isArray(list)) list = [];
+            list = list.filter(function (b) { return b.slug !== _vbSlug; });
+            list.unshift({
+              slug: _vbSlug,
+              name: _vbName,
+              cat: _vbCat,
+              decade: toDecade(_vbEnd) || toDecade(_vbStart),
+              ts: Date.now()
+            });
+            if (list.length > MAX) list = list.slice(0, MAX);
+            localStorage.setItem(KEY, JSON.stringify(list));
+          } catch (_) {}
+        })();
+      </script>
 </Base>

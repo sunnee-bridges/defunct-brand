@@ -125,8 +125,8 @@ const breadcrumbsLd = {
 
   {/* Optional hero */}
   {meta.heroImage && (
-    <div class="mb-5 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-      <img src={meta.heroImage} alt={`${meta.label} hero`} class="w-full h-auto block" loading="lazy" />
+    <div class="mb-5 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800" style="aspect-ratio: 16/9">
+      <img src={meta.heroImage} alt={`${meta.label} hero`} class="w-full h-full block object-cover" loading="lazy" />
     </div>
   )}
 

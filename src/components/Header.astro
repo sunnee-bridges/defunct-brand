@@ -9,15 +9,11 @@ const showStats: boolean = Astro.props.showStats ?? false;
 
 /* ---------- Primary nav links ---------- */
 const links = [
-  { href: "/category/",  label: "Categories",       match: (p: string) => p.startsWith("/category/") },
+  { href: "/",           label: "Home",             match: (p: string) => p === "/" },
   { href: "/az/",        label: "A–Z",              match: (p: string) => p.startsWith("/az/") },
+  { href: "/browse/",    label: "Browse",           match: (p: string) => p.startsWith("/browse/") },
   { href: "/decade/",    label: "Decades",          match: (p: string) => p.startsWith("/decade/") },
-
-  // Products hub (vanished products / cult favorites)
-  { href: "/products/",  label: "Products",         match: (p: string) => p.startsWith("/products/") },
-
   { href: "/blog/",      label: "Brand stories",    match: (p: string) => p.startsWith("/blog/") },
-  { href: "/data/",      label: "Dataset (CSV)",    match: (p: string) => p.startsWith("/data/") },
 ];
 
 const path = Astro.url.pathname;
@@ -98,16 +94,15 @@ const toSafeJson = (obj: any) =>
 
 <header class="max-w-6xl mx-auto px-4" role="banner">
   <!-- Top row: site brand + theme toggle -->
-  <div class="mt-4 sm:mt-8 flex items-center justify-between gap-4">
-    <div class="min-w-0 flex-1">
+  <div class="mt-4 sm:mt-8 flex items-center justify-between gap-6 sm:gap-10">
+    <div class="min-w-0">
       <!-- Site name is branding, not the main document heading -->
       <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
         <a
           href="/"
-          class="flex items-center gap-1 hover:underline hover:underline-offset-2"
+          class="flex items-center"
           aria-label="Vanished Brands home"
         >
-          <span aria-hidden="true" class="shrink-0">🕰️</span>
           <span>Vanished Brands Archive</span>
         </a>
       </p>
@@ -123,20 +118,36 @@ const toSafeJson = (obj: any) =>
       )}
     </div>
 
-    <!-- Theme toggle -->
-    <button
-      id="themeToggleBtn"
-      type="button"
-      class="shrink-0 px-3 py-1 rounded border border-slate-300 dark:border-slate-600
-             text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800
-             hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus-visible:ring-2
-             focus-visible:ring-indigo-500"
-      aria-label="Toggle color theme"
-      aria-pressed="false"
-      data-icon="🌓"
-    >
-      🌓 <span class="ml-1 hidden sm:inline">Theme</span>
-    </button>
+    <!-- Search + Theme -->
+    <div class="shrink-0 flex items-center gap-3">
+      <button
+        id="vb-search-btn"
+        type="button"
+        class="px-3 py-1 rounded border border-slate-300 dark:border-slate-600
+               text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800
+               hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus-visible:ring-2
+               focus-visible:ring-indigo-500 flex items-center gap-1"
+        aria-label="Search brands"
+        aria-haspopup="dialog"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <span class="hidden sm:inline">Search</span>
+      </button>
+
+      <button
+        id="themeToggleBtn"
+        type="button"
+        class="px-3 py-1 rounded border border-slate-300 dark:border-slate-600
+               text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800
+               hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus-visible:ring-2
+               focus-visible:ring-indigo-500"
+        aria-label="Toggle color theme"
+        aria-pressed="false"
+        data-icon="🌓"
+      >
+        🌓 <span class="ml-1 hidden sm:inline">Theme</span>
+      </button>
+    </div>
   </div>
 
   <!-- Primary nav: Explore group (left) + Dataset + Random (right) -->
@@ -146,15 +157,15 @@ const toSafeJson = (obj: any) =>
       font-size: 1rem;
       padding: 0.625rem 1rem;
       white-space: nowrap;
-      flex-shrink: 0;
     }
     @media (max-width: 639px) {
       nav[data-site-nav] .chip,
       nav[data-site-nav] .btn-primary {
         font-size: 0.875rem;
         padding: 0.4rem 0.7rem;
+      }
+      nav[data-site-nav] {
         min-height: 44px;
-        align-items: center;
       }
     }
   </style>
@@ -163,14 +174,14 @@ const toSafeJson = (obj: any) =>
     role="navigation"
     aria-label="Primary"
     data-site-nav
-    class="mt-4 mb-6 flex flex-wrap items-center gap-2"
+    class="mt-4 mb-6 flex flex-wrap items-center gap-3"
   >
     {links.map((l) => {
       const isCurrent = l.match(path);
       return (
         <a
           href={l.href}
-          class={`inline-flex chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
+          class={`chip focus-ring ${isCurrent ? "ring-2 ring-indigo-500" : ""}`}
           aria-current={isCurrent ? "page" : undefined}
         >
           {l.label}
@@ -180,7 +191,7 @@ const toSafeJson = (obj: any) =>
 
     <a
       href={`/brand/${fallbackSlug}/`}
-      class="inline-flex btn-primary focus-ring"
+      class="btn-primary focus-ring"
       data-random
       onclick="return window.__goRandomBrand ? window.__goRandomBrand(event) : true"
       aria-label="Jump to a random vanished brand"
@@ -378,5 +389,349 @@ const toSafeJson = (obj: any) =>
     }
 
     document.addEventListener('DOMContentLoaded', showRandomToastIfNeeded);
+  })();
+</script>
+
+<!-- ============================================================
+     Global search modal
+     ============================================================ -->
+<style is:inline>
+  /* Overlay */
+  #vb-search-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 6vh 1rem 1rem;
+  }
+  #vb-search-overlay.vb-open { display: flex; }
+  html.vb-search-open { overflow-y: hidden !important; }
+
+  #vb-search-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(3px);
+  }
+
+  /* Panel */
+  #vb-search-panel {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 600px;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    overflow: hidden;
+  }
+  .dark #vb-search-panel {
+    background: rgb(15 23 42);
+    border: 1px solid rgb(51 65 85);
+  }
+
+  /* Input row */
+  .vb-srow {
+    display: flex; align-items: center; gap: .5rem;
+    padding: .875rem 1rem;
+    border-bottom: 1px solid rgb(226 232 240);
+  }
+  .dark .vb-srow { border-color: rgb(51 65 85); }
+  .vb-srow svg { flex-shrink: 0; opacity: .5; }
+
+  #vb-search-input {
+    flex: 1; min-width: 0;
+    border: none; outline: none;
+    font-size: 1rem; background: transparent;
+    color: rgb(15 23 42);
+  }
+  .dark #vb-search-input { color: #fff; }
+  #vb-search-input::placeholder { color: rgb(148 163 184); }
+  /* remove browser X button on search inputs */
+  #vb-search-input::-webkit-search-cancel-button { display: none; }
+
+  #vb-search-close {
+    flex-shrink: 0; width: 1.75rem; height: 1.75rem;
+    border-radius: .375rem; border: 1px solid rgb(226 232 240);
+    background: transparent; color: rgb(100 116 139);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: .9rem;
+  }
+  .dark #vb-search-close { border-color: rgb(51 65 85); color: rgb(148 163 184); }
+  #vb-search-close:hover { background: rgb(241 245 249); color: rgb(15 23 42); }
+  .dark #vb-search-close:hover { background: rgb(30 41 59); color: #fff; }
+
+  /* Results list */
+  #vb-search-results {
+    list-style: none; margin: 0; padding: .25rem 0;
+    max-height: 55vh; overflow-y: auto;
+  }
+
+  .vb-result-item {
+    display: block; padding: .6rem 1rem;
+    text-decoration: none; color: inherit;
+    border-left: 3px solid transparent;
+    transition: background .1s;
+  }
+  .vb-result-item:hover,
+  .vb-result-item.vb-active {
+    background: rgb(241 245 249);
+    border-left-color: #1e2a4a;
+  }
+  .dark .vb-result-item:hover,
+  .dark .vb-result-item.vb-active {
+    background: rgb(30 41 59);
+    border-left-color: rgb(99 102 241);
+  }
+
+  .vb-result-name {
+    font-weight: 600; font-size: .9375rem;
+    color: rgb(15 23 42); display: block; margin-bottom: .15rem;
+  }
+  .dark .vb-result-name { color: rgb(248 250 252); }
+  .vb-result-name mark {
+    background: rgb(254 240 138); color: inherit; border-radius: 2px; padding: 0 1px;
+  }
+  .dark .vb-result-name mark { background: rgba(99,102,241,.35); }
+
+  .vb-result-meta {
+    display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .2rem;
+  }
+  .vb-result-chip {
+    display: inline-block; font-size: .65rem; font-weight: 600;
+    padding: .1rem .4rem; border-radius: 9999px;
+    background: rgb(241 245 249); border: 1px solid rgb(226 232 240);
+    color: rgb(71 85 105);
+  }
+  .dark .vb-result-chip {
+    background: rgb(30 41 59); border-color: rgb(51 65 85); color: rgb(148 163 184);
+  }
+
+  .vb-result-summary {
+    font-size: .8rem; color: rgb(71 85 105); line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .dark .vb-result-summary { color: rgb(148 163 184); }
+
+  .vb-search-msg {
+    padding: 1.25rem 1rem; text-align: center;
+    color: rgb(148 163 184); font-size: .875rem;
+  }
+
+  /* Footer hint */
+  .vb-shint {
+    display: flex; flex-wrap: wrap; gap: .5rem .75rem;
+    padding: .5rem 1rem; font-size: .7rem; color: rgb(148 163 184);
+    border-top: 1px solid rgb(226 232 240);
+  }
+  .dark .vb-shint { border-color: rgb(51 65 85); }
+  .vb-shint kbd {
+    display: inline-block; padding: .05rem .3rem; font-size: .65rem;
+    font-family: inherit; border: 1px solid rgb(203 213 225);
+    border-radius: 3px; background: rgb(248 250 252); color: rgb(71 85 105);
+  }
+  .dark .vb-shint kbd {
+    border-color: rgb(51 65 85); background: rgb(15 23 42); color: rgb(148 163 184);
+  }
+</style>
+
+<div id="vb-search-overlay" aria-hidden="true">
+  <div id="vb-search-backdrop"></div>
+  <div id="vb-search-panel" role="dialog" aria-modal="true" aria-label="Search brands" tabindex="-1">
+
+    <!-- Input row -->
+    <div class="vb-srow">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input
+        id="vb-search-input"
+        type="search"
+        placeholder="Search brands…"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search brands"
+        aria-autocomplete="list"
+        aria-controls="vb-search-results"
+        aria-expanded="false"
+      />
+      <button id="vb-search-close" type="button" aria-label="Close search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Results -->
+    <ul id="vb-search-results" role="listbox" aria-label="Search results">
+      <li class="vb-search-msg">Type to search…</li>
+    </ul>
+
+    <!-- Keyboard hint -->
+    <p class="vb-shint">
+      <span><kbd>/</kbd> open</span>
+      <span><kbd>↑↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> go</span>
+      <span><kbd>Esc</kbd> close</span>
+    </p>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var overlay   = document.getElementById('vb-search-overlay');
+    var panel     = document.getElementById('vb-search-panel');
+    var input     = document.getElementById('vb-search-input');
+    var results   = document.getElementById('vb-search-results');
+    var openBtn   = document.getElementById('vb-search-btn');
+    var closeBtn  = document.getElementById('vb-search-close');
+    var backdrop  = document.getElementById('vb-search-backdrop');
+    if (!overlay || !input || !results) return;
+
+    var index = [];
+    var activeIdx = -1;
+    var prevFocus = null;
+
+    /* ---- Load index (reuses the existing embedded JSON) ---- */
+    function loadIndex() {
+      if (index.length) return;
+      var el = document.getElementById('vb-random-index');
+      if (!el) return;
+      try { var d = JSON.parse(el.textContent || '[]'); if (Array.isArray(d)) index = d; } catch (_) {}
+    }
+
+    /* ---- Open / close ---- */
+    function openSearch() {
+      loadIndex();
+      prevFocus = document.activeElement;
+      overlay.classList.add('vb-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('vb-search-open');
+      input.focus();
+      if (input.value) doSearch(input.value);
+    }
+
+    function closeSearch() {
+      overlay.classList.remove('vb-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('vb-search-open');
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
+    }
+
+    /* ---- Search logic ---- */
+    function escHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function highlight(text, term) {
+      var t = term.toLowerCase();
+      var lo = text.toLowerCase();
+      var i = lo.indexOf(t);
+      if (i === -1) return escHtml(text);
+      return escHtml(text.slice(0, i)) +
+        '<mark>' + escHtml(text.slice(i, i + t.length)) + '</mark>' +
+        escHtml(text.slice(i + t.length));
+    }
+
+    function score(b, t) {
+      var n = b.name.toLowerCase();
+      var c = (b.category || '').toLowerCase();
+      var s = (b.summary  || '').toLowerCase();
+      if (n === t)            return 100;
+      if (n.startsWith(t))   return 80;
+      if (n.includes(t))     return 60;
+      if (c.includes(t))     return 30;
+      if (s.includes(t))     return 10;
+      return 0;
+    }
+
+    function doSearch(raw) {
+      var term = raw.trim();
+      activeIdx = -1;
+
+      if (!term) {
+        results.innerHTML = '<li class="vb-search-msg">Type to search…</li>';
+        input.setAttribute('aria-expanded', 'false');
+        return;
+      }
+
+      var t = term.toLowerCase();
+      var hits = index
+        .map(function(b) { return { b: b, s: score(b, t) }; })
+        .filter(function(x) { return x.s > 0; })
+        .sort(function(a, b) { return b.s - a.s || a.b.name.localeCompare(b.b.name); })
+        .slice(0, 8)
+        .map(function(x) { return x.b; });
+
+      if (!hits.length) {
+        results.innerHTML = '<li class="vb-search-msg">No brands found for “' + escHtml(term) + '”</li>';
+        input.setAttribute('aria-expanded', 'false');
+        return;
+      }
+
+      input.setAttribute('aria-expanded', 'true');
+      results.innerHTML = hits.map(function(b, i) {
+        var chips = [b.category, b.decade].filter(Boolean)
+          .map(function(c) { return '<span class="vb-result-chip">' + escHtml(c) + '</span>'; })
+          .join('');
+        return '<li role="option" id="vb-r' + i + '">' +
+          '<a href="/brand/' + encodeURIComponent(b.slug) + '/" class="vb-result-item" tabindex="-1" data-idx="' + i + '">' +
+            '<span class="vb-result-name">' + highlight(b.name, term) + '</span>' +
+            (chips ? '<div class="vb-result-meta">' + chips + '</div>' : '') +
+            (b.summary ? '<p class="vb-result-summary">' + escHtml(b.summary) + '</p>' : '') +
+          '</a>' +
+        '</li>';
+      }).join('');
+    }
+
+    function getLinks() {
+      return Array.from(results.querySelectorAll('a.vb-result-item'));
+    }
+
+    function setActive(idx) {
+      var links = getLinks();
+      links.forEach(function(a, i) {
+        a.classList.toggle('vb-active', i === idx);
+      });
+      activeIdx = idx;
+      if (idx >= 0 && links[idx]) {
+        links[idx].scrollIntoView({ block: 'nearest' });
+        input.setAttribute('aria-activedescendant', 'vb-r' + idx);
+      } else {
+        input.removeAttribute('aria-activedescendant');
+      }
+    }
+
+    /* ---- Events ---- */
+    input.addEventListener('input', function () { doSearch(this.value); });
+
+    input.addEventListener('keydown', function (e) {
+      var links = getLinks();
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setActive(Math.min(activeIdx + 1, links.length - 1));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setActive(Math.max(activeIdx - 1, -1));
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        var target = activeIdx >= 0 ? links[activeIdx] : links.length === 1 ? links[0] : null;
+        if (target) window.location.href = target.getAttribute('href');
+      } else if (e.key === 'Escape') {
+        closeSearch();
+      }
+    });
+
+    results.addEventListener('click', function (e) {
+      if (e.target.closest('a.vb-result-item')) closeSearch();
+    });
+
+    if (openBtn)  openBtn.addEventListener('click', openSearch);
+    if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+    if (backdrop) backdrop.addEventListener('click', closeSearch);
+
+    /* Keyboard shortcut: / opens search when not typing in a field */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === '/' && !e.metaKey && !e.ctrlKey) {
+        var tag = (document.activeElement || {}).tagName || '';
+        if (!['INPUT','TEXTAREA','SELECT'].includes(tag)) {
+          e.preventDefault();
+          openSearch();
+        }
+      }
+    });
   })();
 </script>

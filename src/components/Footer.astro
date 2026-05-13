@@ -3,6 +3,22 @@ const fallbackSlug = Astro.props.fallbackSlug ?? "blockbuster";
 ---
 
 
+<style is:inline>
+  footer[role="contentinfo"] .chip,
+  footer[role="contentinfo"] .btn-primary {
+    font-size: 1rem;
+    padding: 0.625rem 1rem;
+    white-space: nowrap;
+  }
+  @media (max-width: 639px) {
+    footer[role="contentinfo"] .chip,
+    footer[role="contentinfo"] .btn-primary {
+      font-size: 0.875rem;
+      padding: 0.4rem 0.7rem;
+    }
+  }
+</style>
+
 <footer
   class="relative max-w-6xl mx-auto px-4
          mt-8 md:mt-12

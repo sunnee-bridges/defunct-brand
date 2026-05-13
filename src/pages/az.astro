@@ -1,10 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
+import CardStyles from "../components/CardStyles.astro";
 import {
   normalizeBrands,
   yearsOf,
-  fateIconOf,
-  fateTypeOf,
   primaryTextOf,
   truncateInline,
 } from "../lib/brandUtils";
@@ -29,34 +28,8 @@ const slugify = (s: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-/* 🔎 Search index for live suggestions */
-const searchIndex = brands
-  .filter((b) => b?.brand && b?.slug)
-  .map((b) => ({
-    name: String(b.brand),
-    url: `/brand/${encodeURIComponent(b.slug)}/`,
-    category: String(b.__seo_category_label || b.category || "Brand"),
-  }));
-
-const searchIndexJson = JSON.stringify(searchIndex);
-
-/* Search query (server-side, by name or category) */
-const qRaw = Astro.url.searchParams.get("q") || "";
-const q = qRaw.trim().toLowerCase();
-
-/* Base list: filtered if q present */
-const baseList = q
-  ? brands.filter((b) => {
-      const name = String(b.brand || "").toLowerCase();
-      const cat = String(
-        b.__seo_category_label || b.category || ""
-      ).toLowerCase();
-      return name.includes(q) || cat.includes(q);
-    })
-  : brands;
-
 /* Sort & group (A–Z) */
-const sorted = baseList
+const sorted = brands
   .slice()
   .sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
 const groups: Record<string, any[]> = {};
@@ -86,26 +59,6 @@ const categoryOptions = Array.from(categoryMap.entries())
   .map(([value, label]) => ({ value, label }))
   .sort((a, b) => a.label.localeCompare(b.label));
 
-/* Fate options: value = fateTypeOf key (lowercase) */
-const fateSet = new Set<string>();
-for (const b of brands) {
-  const key = String(fateTypeOf(b) || "").trim().toLowerCase();
-  if (key) fateSet.add(key);
-}
-const fateLabelMap: Record<string, string> = {
-  bankruptcy: "Bankruptcy",
-  acquired: "Acquired / merged",
-  shutdown: "Shutdown",
-  fraud: "Fraud / scandal",
-  other: "Other / unclear",
-};
-const fateOptions = Array.from(fateSet)
-  .sort()
-  .map((value) => ({
-    value,
-    label:
-      fateLabelMap[value] || (value[0]?.toUpperCase() + value.slice(1) || value),
-  }));
 
 /* Helper: numeric year for sorting (client uses data-year) */
 const yearOf = (b: any): number => {
@@ -155,6 +108,7 @@ const itemListLd = {
 };
 ---
 
+<CardStyles />
 <Base
   title={PAGE_TITLE}
   description={PAGE_DESC}
@@ -162,120 +116,11 @@ const itemListLd = {
   jsonLd={[breadcrumbLd, itemListLd]}
 >
   <style is:inline>
-    .card-label {
-      display: inline-block;
-      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-      padding: .15rem .55rem; border-radius: 9999px; margin-bottom: .4rem;
-      background: color-mix(in oklab, var(--tint) 16%, white);
-      border: 1px solid color-mix(in oklab, var(--tint) 32%, white);
-      color: oklch(0.28 0 0);
-    }
-    .dark .card-label {
-      background: color-mix(in oklab, var(--tint) 25%, rgb(2 6 23));
-      border-color: color-mix(in oklab, var(--tint) 48%, rgb(2 6 23));
-      color: rgb(226 232 240);
-    }
     .brand-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
       gap: 16px;
     }
-    .fcard-sm {
-      position: relative;
-      border-radius: .875rem;
-      border: 1px solid var(--card-border, rgb(226 232 240));
-      background:
-        linear-gradient(
-          180deg,
-          color-mix(in oklab, var(--tint, oklch(0.7 0 0)) 10%, transparent) 0%,
-          transparent 24%
-        ),
-        var(--card-bg, #fff);
-      padding: .75rem .85rem;
-      overflow: hidden;
-      transition: transform .16s ease, box-shadow .16s ease;
-      display: flex; flex-direction: column;
-      border-top: 4px solid var(--tint);
-    }
-    .fcard-sm:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 12px -8px rgb(0 0 0 / .18);
-    }
-    .dark .fcard-sm {
-      --card-bg: rgb(2 6 23);
-      --card-border: rgb(51 65 85);
-    }
-    /* Card title */
-    .fcard-sm h3 {
-      font-size: .9rem !important;
-      font-weight: 600;
-      line-height: 1.3;
-      min-height: 2.4em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: .2rem;
-    }
-    .meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .4rem;
-      margin-top: .5rem;
-    }
-    .chip-lite {
-      display: inline-flex;
-      align-items: center;
-      gap: .3rem;
-      padding: .2rem .45rem;
-      border-radius: 9999px;
-      font-size: .68rem;
-      font-weight: 600;
-      background: color-mix(
-        in oklab,
-        var(--tint, oklch(0.7 0 0)) 14%,
-        white
-      );
-      border: 1px solid color-mix(
-        in oklab,
-        var(--tint, oklch(0.7 0 0)) 28%,
-        white
-      );
-      color: oklch(0.28 0 0);
-    }
-    .dark .chip-lite {
-      background: color-mix(
-        in oklab,
-        var(--tint, oklch(0.7 0 0)) 22%,
-        rgb(2 6 23)
-      );
-      border-color: color-mix(
-        in oklab,
-        var(--tint, oklch(0.7 0 0)) 45%,
-        rgb(2 6 23)
-      );
-      color: white;
-    }
-    .hook {
-      flex: 1;
-      margin-top: .3rem;
-      font-size: .82rem;
-      line-height: 1.4;
-      color: rgb(71 85 105);
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      min-height: 3.2em;
-    }
-    .dark .hook {
-      color: rgb(203 213 225);
-    }
-
-    /* 🔽 Live suggestions dropdown — sized to the search input */
-    .az-submit-btn { background: #1e2a4a; }
-    .az-submit-btn:hover { background: #28395e; }
-
     .az-select {
       appearance: none;
       background-color: #fff;
@@ -291,48 +136,21 @@ const itemListLd = {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     }
 
-    .live-suggestions {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      margin-top: 4px;
-      max-height: 260px;
-      overflow-y: auto;
-      border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: white;
-      box-shadow: 0 8px 22px -14px rgba(0, 0, 0, 0.25);
-      z-index: 30;
+    /* Mobile: stack filters full-width, shrink jump chips */
+    @media (max-width: 639px) {
+      #az-filter-bar { flex-direction: column; }
+      #az-filter-bar .az-select { width: 100%; }
+      [data-az-jump] .chip {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.55rem;
+        min-height: 0;
+      }
     }
-    .dark .live-suggestions {
-      background: rgb(15 23 42);
-      border-color: rgba(148, 163, 184, 0.6);
+    /* Desktop: push sort to the right */
+    @media (min-width: 640px) {
+      #az-filter-bar #az-sort { margin-left: auto; }
     }
-    .live-suggestions a {
-      display: block;
-      padding: 8px 12px;
-      font-size: 14px;
-      color: rgb(30 41 59);
-      text-decoration: none;
-    }
-    .dark .live-suggestions a {
-      color: rgb(226 232 240);
-    }
-    .live-suggestions a:hover {
-      background: rgb(239 246 255);
-    }
-    .dark .live-suggestions a:hover {
-      background: rgb(30 64 175 / 0.35);
-    }
-    .live-suggestions .subtext {
-      display: block;
-      font-size: 11px;
-      color: rgb(100 116 139);
-    }
-    .dark .live-suggestions .subtext {
-      color: rgb(148 163 184);
-    }
+
   </style>
 
   <p class="sr-only">
@@ -341,116 +159,35 @@ const itemListLd = {
   </p>
 
   <div class="max-w-6xl mx-auto px-4">
-    <nav class="mb-4 flex flex-wrap gap-2" aria-label="Breadcrumb">
-      <a href="/" class="chip focus-ring">← Home</a>
-      <a href="/az/" class="chip focus-ring" aria-current="page">A–Z</a>
-    </nav>
 
     <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Browse A–Z</h1>
-    <p class="text-slate-700 dark:text-slate-300 mb-4">
-      A cleaned CSV of brands, categories, active years, and fate.
-    </p>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
-      Total brands: {total}
+    <p class="text-slate-600 dark:text-slate-400 mb-5">
+      {total} brands, A to Z. Filter by category or change the sort order below.
     </p>
 
-    <!-- 🔎 Search within A–Z (server-side) -->
-    <form
-      id="az-filters"
-      action="/az/"
-      method="GET"
-      class="mb-6 flex flex-wrap gap-2 items-center"
-    >
-      <label
-        for="az-search"
-        class="text-sm text-slate-700 dark:text-slate-300"
+    <!-- Filters -->
+    <div id="az-filter-bar" class="flex flex-wrap gap-2 mb-6" role="group" aria-label="Filter brands">
+      <select
+        id="az-category"
+        class="az-select rounded-md border border-slate-300 dark:border-slate-700
+               text-slate-900 dark:text-slate-100"
       >
-        Search by brand name or category:
-      </label>
+        <option value="">All categories</option>
+        {categoryOptions.map((opt) => (
+          <option value={opt.value}>{opt.label}</option>
+        ))}
+      </select>
 
-      <div class="flex gap-2 w-full max-w-2xl">
-        <div class="relative flex-1">
-          <input
-            id="az-search"
-            type="search"
-            name="q"
-            value={qRaw}
-            placeholder="e.g., PB Max, Blockbuster"
-            autocomplete="off"
-            class="w-full rounded-md border border-slate-300 dark:border-slate-700
-                   bg-white dark:bg-slate-900 px-3 py-2 text-base
-                   text-slate-900 dark:text-slate-100"
-          />
-          <div
-            id="az-search-suggestions"
-            class="live-suggestions hidden"
-            role="listbox"
-            aria-label="Brand suggestions"
-          ></div>
-        </div>
-
-        <button
-          type="submit"
-          class="az-submit-btn inline-flex items-center rounded-md px-3 py-1.5
-                 text-sm font-medium text-white focus:outline-none
-                 focus-visible:ring-2 focus-visible:ring-slate-500"
-        >
-          Search
-        </button>
-      </div>
-
-      {q && (
-        <p class="w-full text-xs text-slate-500 dark:text-slate-400 mt-1">
-          Showing results for <strong>{qRaw}</strong> ({total} match
-          {total === 1 ? "" : "es"}).
-          <a href="/az/" class="ml-1 underline">Clear</a>
-        </p>
-      )}
-
-      <!-- Client-side filters + sort -->
-      <div class="w-full grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mt-4">
-        <select
-          name="category"
-          id="az-category"
-          class="az-select rounded-md border border-slate-300 dark:border-slate-700
-                 text-slate-900 dark:text-slate-100"
-        >
-          <option value="">All categories</option>
-          {categoryOptions.map((opt) => (
-            <option value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-
-        <select
-          name="fate"
-          id="az-fate"
-          class="az-select rounded-md border border-slate-300 dark:border-slate-700
-                 text-slate-900 dark:text-slate-100"
-        >
-          <option value="">All outcomes</option>
-          {fateOptions.map((opt) => (
-            <option value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-
-        <select
-          name="sort"
-          id="az-sort"
-          class="az-select col-span-2 sm:ml-auto rounded-md border border-slate-300 dark:border-slate-700
-                 text-slate-900 dark:text-slate-100"
-        >
-          <option value="az" selected>
-            A–Z
-          </option>
-          <option value="recent">
-            Most recently defunct
-          </option>
-          <option value="oldest">
-            Oldest brands first
-          </option>
-        </select>
-      </div>
-    </form>
+      <select
+        id="az-sort"
+        class="az-select rounded-md border border-slate-300 dark:border-slate-700
+               text-slate-900 dark:text-slate-100"
+      >
+        <option value="az">A–Z</option>
+        <option value="recent">Most recently defunct</option>
+        <option value="oldest">Oldest first</option>
+      </select>
+    </div>
 
     {/* Jump bar */}
     {total > 0 && (
@@ -508,8 +245,6 @@ const itemListLd = {
                     h = (h * 31 + s.charCodeAt(i)) >>> 0;
                   }
                   const tint = `oklch(0.7 0.12 ${h % 360})`;
-                  const icon = fateIconOf(b);
-                  const fateType = (fateTypeOf(b) || "other").toLowerCase();
                   const text = truncateInline(primaryTextOf(b), 120);
                   const yearSort = yearOf(b);
                   const catKey = slugify(catLabel || "uncategorized");
@@ -519,7 +254,6 @@ const itemListLd = {
                     <li
                       data-az-item
                       data-category={catKey || "uncategorized"}
-                      data-fate={fateType}
                       data-year={yearSort}
                       data-brand={brandKey}
                     >
@@ -579,176 +313,56 @@ const itemListLd = {
     </p>
   </div>
 
-  <!-- 🧠 Live suggestions + client-side filters/sorting + jump bar sync -->
-  <script is:inline define:vars={{ searchIndexJson }}>
+  <!-- Client-side category filter + sort + jump bar sync -->
+  <script is:inline>
     document.addEventListener("DOMContentLoaded", function () {
-      const input = document.getElementById("az-search");
-      const dropdown = document.getElementById("az-search-suggestions");
-
-      // --- Live suggestions (unchanged) ---
-      if (input && dropdown) {
-        let INDEX = [];
-        try {
-          INDEX = JSON.parse(searchIndexJson) || [];
-        } catch (e) {
-          console.error("Failed to parse A–Z searchIndexJson", e);
-          INDEX = [];
-        }
-
-        function clearSuggestions() {
-          dropdown.innerHTML = "";
-          dropdown.classList.add("hidden");
-        }
-
-        function renderSuggestions(items) {
-          if (!items.length) {
-            clearSuggestions();
-            return;
-          }
-
-          dropdown.innerHTML = items
-            .map(
-              (item) => `
-                <a href="${item.url}" role="option">
-                  <span>${item.name}</span>
-                  ${
-                    item.category
-                      ? `<span class="subtext">${item.category}</span>`
-                      : ""
-                  }
-                </a>
-              `
-            )
-            .join("");
-
-          dropdown.classList.remove("hidden");
-        }
-
-        input.addEventListener("input", function (event) {
-          const q = event.target.value.trim().toLowerCase();
-          if (!q) {
-            clearSuggestions();
-            return;
-          }
-
-          const matches = INDEX.filter((item) => {
-            const name = (item.name || "").toLowerCase();
-            const category = (item.category || "").toLowerCase();
-            return name.includes(q) || category.includes(q);
-          }).slice(0, 8);
-
-          renderSuggestions(matches);
-        });
-
-        input.addEventListener("blur", () => {
-          setTimeout(clearSuggestions, 150);
-        });
-
-        dropdown.addEventListener("mousedown", (e) => {
-          // keep click from blurring the input before navigation
-          e.preventDefault();
-        });
-      }
-
-      // --- Client-side filters + sort + jump bar sync ---
-      const categorySelect = document.getElementById("az-category");
-      const fateSelect = document.getElementById("az-fate");
-      const sortSelect = document.getElementById("az-sort");
-
-      const sections = Array.from(
-        document.querySelectorAll("[data-letter-section]")
-      );
-      const items = Array.from(
-        document.querySelectorAll("[data-az-item]")
-      );
-      const jumpNav = document.querySelector("[data-az-jump]");
-      const jumpLinks = jumpNav
-        ? Array.from(jumpNav.querySelectorAll("[data-az-jump-link]"))
-        : [];
+      var categorySelect = document.getElementById("az-category");
+      var sortSelect     = document.getElementById("az-sort");
+      var sections  = Array.from(document.querySelectorAll("[data-letter-section]"));
+      var items     = Array.from(document.querySelectorAll("[data-az-item]"));
+      var jumpNav   = document.querySelector("[data-az-jump]");
+      var jumpLinks = jumpNav ? Array.from(jumpNav.querySelectorAll("[data-az-jump-link]")) : [];
 
       function applyFilters() {
-        const catVal = categorySelect ? categorySelect.value : "";
-        const fateVal = fateSelect ? fateSelect.value : "";
-        const sortVal = sortSelect ? sortSelect.value : "az";
+        var catVal  = categorySelect ? categorySelect.value : "";
+        var sortVal = sortSelect ? sortSelect.value : "az";
 
-        // Filter visibility
-        items.forEach((el) => {
-          const itemCat = el.getAttribute("data-category") || "";
-          const itemFate = el.getAttribute("data-fate") || "";
-          let visible = true;
-
-          if (catVal && itemCat !== catVal) visible = false;
-          if (fateVal && itemFate !== fateVal) visible = false;
-
-          el.hidden = !visible;
+        items.forEach(function (el) {
+          var itemCat = el.getAttribute("data-category") || "";
+          el.hidden = !!(catVal && itemCat !== catVal);
         });
 
-        // Hide sections with no visible items
-        sections.forEach((section) => {
-          const visibleItem = section.querySelector(
-            "[data-az-item]:not([hidden])"
-          );
-          section.hidden = !visibleItem;
+        sections.forEach(function (section) {
+          section.hidden = !section.querySelector("[data-az-item]:not([hidden])");
         });
 
-        // Sort items within each visible section
-        sections.forEach((section) => {
-          const list = section.querySelector("ul");
+        sections.forEach(function (section) {
+          var list = section.querySelector("ul");
           if (!list) return;
-
-          const sectionItems = Array.from(
-            list.querySelectorAll("[data-az-item]")
-          );
-
-          sectionItems.sort((a, b) => {
+          var sectionItems = Array.from(list.querySelectorAll("[data-az-item]"));
+          sectionItems.sort(function (a, b) {
             if (sortVal === "recent" || sortVal === "oldest") {
-              const ya = parseInt(a.getAttribute("data-year") || "0", 10);
-              const yb = parseInt(b.getAttribute("data-year") || "0", 10);
-              if (sortVal === "recent") return yb - ya;
-              return ya - yb;
+              var ya = parseInt(a.getAttribute("data-year") || "0", 10);
+              var yb = parseInt(b.getAttribute("data-year") || "0", 10);
+              return sortVal === "recent" ? yb - ya : ya - yb;
             }
-
-            // A–Z by brand
-            const nameA = (a.getAttribute("data-brand") || "").localeCompare(
-              b.getAttribute("data-brand") || ""
-            );
-            return nameA;
+            return (a.getAttribute("data-brand") || "").localeCompare(b.getAttribute("data-brand") || "");
           });
-
-          sectionItems.forEach((el) => list.appendChild(el));
+          sectionItems.forEach(function (el) { list.appendChild(el); });
         });
 
-        // Sync jump bar: hide letters whose section is hidden / empty
-        jumpLinks.forEach((link) => {
-          const href = link.getAttribute("href") || "";
-          const id = href.startsWith("#") ? href.slice(1) : href;
-          const target = id ? document.getElementById(id) : null;
-          const hasVisible =
-            target &&
-            !target.hidden &&
-            target.querySelector("[data-az-item]:not([hidden])");
-
-          if (hasVisible) {
-            link.hidden = false;
-            link.setAttribute("aria-disabled", "false");
-          } else {
-            link.hidden = true;
-            link.setAttribute("aria-disabled", "true");
-          }
+        jumpLinks.forEach(function (link) {
+          var id = (link.getAttribute("href") || "").replace(/^#/, "");
+          var target = id ? document.getElementById(id) : null;
+          var hasVisible = target && !target.hidden && target.querySelector("[data-az-item]:not([hidden])");
+          link.hidden = !hasVisible;
+          link.setAttribute("aria-disabled", hasVisible ? "false" : "true");
         });
       }
 
-      if (categorySelect) {
-        categorySelect.addEventListener("change", applyFilters);
-      }
-      if (fateSelect) {
-        fateSelect.addEventListener("change", applyFilters);
-      }
-      if (sortSelect) {
-        sortSelect.addEventListener("change", applyFilters);
-      }
+      if (categorySelect) categorySelect.addEventListener("change", applyFilters);
+      if (sortSelect)     sortSelect.addEventListener("change", applyFilters);
 
-      // Initial application so jump bar reflects default (All)
       applyFilters();
     });
   </script>

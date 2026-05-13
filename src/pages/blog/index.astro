@@ -197,7 +197,7 @@ const itemListLd = {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      font-size: 12px;
+      font-size: 14px;
       color: rgb(100 116 139);
     }
 
@@ -262,10 +262,13 @@ const itemListLd = {
     .dark .live-suggestions a {
       color: rgb(226 232 240);
     }
-    .live-suggestions a:hover {
+    .live-suggestions a:hover,
+    .live-suggestions a:focus-visible {
       background: rgb(239 246 255);
+      outline: none;
     }
-    .dark .live-suggestions a:hover {
+    .dark .live-suggestions a:hover,
+    .dark .live-suggestions a:focus-visible {
       background: rgb(30 64 175 / 0.35);
     }
     .live-suggestions .subtext {
@@ -277,10 +280,6 @@ const itemListLd = {
       color: rgb(148 163 184);
     }
   </style>
-
-  <nav class="mb-4">
-    <a href="/" class="chip focus-ring">← Home</a>
-  </nav>
 
   <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
   <p class="text-slate-600 dark:text-slate-300 mb-5">{desc}</p>
@@ -315,6 +314,9 @@ const itemListLd = {
                  bg-white dark:bg-slate-900 px-3 py-1.5 text-sm
                  text-slate-900 dark:text-slate-100"
           autocomplete="off"
+          aria-autocomplete="list"
+          aria-controls="blog-search-suggestions"
+          aria-expanded="false"
         />
         <div
           id="blog-search-suggestions"
@@ -369,7 +371,8 @@ const itemListLd = {
             <a
               href={`/blog/${p.slug}/`}
               class="stretched-link"
-              aria-label={p.data.title}
+              tabindex="-1"
+              aria-hidden="true"
             ></a>
 
             <div class={`thumb ${img.src ? "has-img" : ""}`}>
@@ -470,9 +473,18 @@ const itemListLd = {
         INDEX = [];
       }
 
+      var focusedIdx = -1;
+
+      function getOptions() {
+        return Array.from(dropdown.querySelectorAll('[role="option"]'));
+      }
+
       function clearSuggestions() {
         dropdown.innerHTML = "";
         dropdown.classList.add("hidden");
+        input.setAttribute("aria-expanded", "false");
+        input.removeAttribute("aria-activedescendant");
+        focusedIdx = -1;
       }
 
       function renderSuggestions(items) {
@@ -482,24 +494,55 @@ const itemListLd = {
         }
 
         dropdown.innerHTML = items
-          .map((item) => {
+          .map((item, i) => {
             const tags = Array.isArray(item.tags) ? item.tags.slice(0, 3) : [];
             const tagLine = tags.length ? tags.join(", ") : "";
             return `
-              <a href="${item.url}" role="option">
+              <a href="${item.url}" role="option" id="bs-opt-${i}" tabindex="-1">
                 <span>${item.title}</span>
-                ${
-                  tagLine
-                    ? `<span class="subtext">${tagLine}</span>`
-                    : ""
-                }
+                ${tagLine ? `<span class="subtext">${tagLine}</span>` : ""}
               </a>
             `;
           })
           .join("");
 
         dropdown.classList.remove("hidden");
+        input.setAttribute("aria-expanded", "true");
+        focusedIdx = -1;
       }
+
+      function moveFocus(delta) {
+        var opts = getOptions();
+        if (!opts.length) return;
+        if (focusedIdx === -1 && delta < 0) return;
+        focusedIdx = focusedIdx === -1
+          ? (delta > 0 ? 0 : opts.length - 1)
+          : Math.max(0, Math.min(opts.length - 1, focusedIdx + delta));
+        opts[focusedIdx].focus();
+        input.setAttribute("aria-activedescendant", "bs-opt-" + focusedIdx);
+      }
+
+      input.addEventListener("keydown", function (e) {
+        if (dropdown.classList.contains("hidden")) return;
+        if (e.key === "ArrowDown") { e.preventDefault(); moveFocus(1); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); moveFocus(-1); }
+        else if (e.key === "Escape") { clearSuggestions(); input.focus(); }
+      });
+
+      dropdown.addEventListener("keydown", function (e) {
+        var opts = getOptions();
+        var cur = opts.findIndex(function(el) { return document.activeElement === el; });
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (cur < opts.length - 1) { focusedIdx = cur + 1; opts[focusedIdx].focus(); input.setAttribute("aria-activedescendant", "bs-opt-" + focusedIdx); }
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (cur > 0) { focusedIdx = cur - 1; opts[focusedIdx].focus(); input.setAttribute("aria-activedescendant", "bs-opt-" + focusedIdx); }
+          else { focusedIdx = -1; input.focus(); input.removeAttribute("aria-activedescendant"); }
+        } else if (e.key === "Escape") {
+          clearSuggestions(); input.focus();
+        }
+      });
 
       input.addEventListener("input", function (event) {
         const q = event.target.value.trim().toLowerCase();
@@ -521,12 +564,13 @@ const itemListLd = {
           );
         }).slice(0, 8);
 
-        console.log("[blog search] Query:", q, "matches:", matches.length);
         renderSuggestions(matches);
       });
 
-      input.addEventListener("blur", () => {
-        setTimeout(clearSuggestions, 150);
+      input.addEventListener("blur", function () {
+        setTimeout(function () {
+          if (!dropdown.contains(document.activeElement)) clearSuggestions();
+        }, 150);
       });
 
       dropdown.addEventListener("mousedown", (e) => {

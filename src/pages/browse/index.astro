@@ -1,0 +1,388 @@
+---
+// src/pages/browse/index.astro
+import Base from "../../layouts/Base.astro";
+import CardStyles from "../../components/CardStyles.astro";
+import {
+  normalizeBrands,
+  yearsOf,
+  catHue,
+  primaryTextOf,
+  truncateInline,
+  toYear,
+  decadeStart,
+} from "../../lib/brandUtils";
+
+const modules = import.meta.glob("/src/content/brands/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
+const brands: any[] = normalizeBrands(modules);
+
+// ── Unique decades (ascending) ──────────────────────────────────────
+const decadeSet = new Set<number>();
+for (const b of brands) {
+  const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
+  if (y !== undefined) decadeSet.add(decadeStart(y));
+}
+const decades = [...decadeSet].sort((a, b) => a - b).map(d => `${d}s`);
+
+// ── Unique categories (slug → label, alpha by label) ────────────────
+const catMap = new Map<string, string>();
+for (const b of brands) {
+  const slug  = String(b.__seo_category || "").trim();
+  const label = String(b.__seo_category_label || b.category || "").trim();
+  if (slug && label && !catMap.has(slug)) catMap.set(slug, label);
+}
+const categories = [...catMap.entries()]
+  .sort((a, b) => a[1].localeCompare(b[1]))
+  .map(([slug, label]) => ({ slug, label }));
+
+// ── Enrich each brand with its decade ──────────────────────────────
+const enriched = brands
+  .filter((b: any) => b.slug && b.brand)
+  .map((b: any) => {
+    const y = toYear(b?.active?.end) ?? toYear(b?.active?.start);
+    return { ...b, __decade: y !== undefined ? `${decadeStart(y)}s` : "" };
+  })
+  .sort((a: any, b: any) => String(a.brand).localeCompare(String(b.brand)));
+
+// ── Top categories by brand count (for quick-start chips) ───────────
+const catCounts = new Map<string, number>();
+for (const b of enriched) {
+  const slug = String(b.__seo_category || "").trim();
+  if (slug) catCounts.set(slug, (catCounts.get(slug) || 0) + 1);
+}
+const topCategories = [...catMap.entries()]
+  .map(([slug, label]) => ({ slug, label, count: catCounts.get(slug) || 0 }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 4);
+
+const recentDecades = decades.slice(-4).reverse();
+
+// ── SEO ─────────────────────────────────────────────────────────────
+const PAGE_TITLE = "Explore Defunct Brands by Decade & Category";
+const PAGE_DESC  = "Cross-filter the Vanished Brands archive by decade and category — find 1990s Retail, 1980s Tech, and more.";
+const CANONICAL  = Astro.site ? new URL("/browse/", Astro.site).href : "/browse/";
+---
+
+<CardStyles />
+<Base title={PAGE_TITLE} description={PAGE_DESC} canonical={CANONICAL}>
+  <style is:inline>
+    /* ── Filters ──────────────────────────────────────────────────── */
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: .75rem; align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .filter-group { display: flex; align-items: center; gap: .5rem; }
+    .filter-label {
+      font-size: .875rem; font-weight: 500;
+      color: rgb(71 85 105); white-space: nowrap;
+    }
+    .dark .filter-label { color: rgb(148 163 184); }
+
+    .xsel {
+      appearance: none;
+      background-color: #fff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .65rem center;
+      border: 1px solid rgb(226 232 240);
+      border-radius: .625rem;
+      color: rgb(15 23 42);
+      font-size: 1rem;
+      min-height: 44px;
+      padding: .5rem 2.25rem .5rem .75rem;
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+    .xsel:focus { outline: none; border-color: #1e2a4a; }
+    .dark .xsel {
+      background-color: rgb(15 23 42);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      border-color: rgb(51 65 85);
+      color: rgb(241 245 249);
+    }
+    .dark .xsel:focus { border-color: rgb(99 102 241); }
+
+    .reset-btn {
+      font-size: .8rem; color: rgb(100 116 139); background: none;
+      border: none; cursor: pointer; padding: .25rem .5rem;
+      border-radius: .375rem; text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .reset-btn:hover { color: rgb(15 23 42); }
+    .dark .reset-btn:hover { color: white; }
+
+    /* Active filter badge */
+    .active-filter {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .3rem .65rem; border-radius: 9999px;
+      font-size: .78rem; font-weight: 600;
+      background: #1e2a4a; color: #fff;
+    }
+    .active-filter button {
+      background: none; border: none; color: rgba(255,255,255,.7);
+      cursor: pointer; font-size: .85rem; line-height: 1;
+      padding: 0; margin-left: .15rem;
+    }
+    .active-filter button:hover { color: #fff; }
+
+    /* ── Result count ─────────────────────────────────────────────── */
+    .result-meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: .75rem;
+      margin-bottom: 1rem; min-height: 1.75rem;
+    }
+    .result-count { font-size: .875rem; color: rgb(100 116 139); }
+    .dark .result-count { color: rgb(148 163 184); }
+
+    /* ── Card grid ────────────────────────────────────────────────── */
+    .browse-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+      gap: 14px;
+    }
+    /* Let each li stretch to the full row height so the card can fill it */
+    .browse-grid > li { display: flex; }
+    /* browse grid needs full-height cards */
+    .fcard-sm { height: 100%; }
+    .empty-state {
+      grid-column: 1 / -1; padding: 3rem 1rem;
+      text-align: center; color: rgb(148 163 184); font-size: .95rem;
+    }
+
+    /* ── Quick-start chips ────────────────────────────────────────── */
+    #browse-prompt {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+    }
+    .qs-label {
+      font-size: .8rem; font-weight: 500;
+      color: rgb(148 163 184); white-space: nowrap;
+    }
+    .pchip {
+      padding: .35rem .85rem; border-radius: 9999px;
+      border: 1px solid rgb(226 232 240);
+      background: #fff; color: rgb(15 23 42);
+      font-size: .875rem; cursor: pointer;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .pchip:hover { background: #1e2a4a; color: #fff; border-color: #1e2a4a; }
+    .dark .pchip { border-color: rgb(51 65 85); background: rgb(2 6 23); color: rgb(226 232 240); }
+    .dark .pchip:hover { background: rgb(99 102 241); border-color: rgb(99 102 241); color: #fff; }
+  </style>
+
+  <h1 class="text-2xl md:text-3xl font-bold mb-1">{PAGE_TITLE}</h1>
+  <p class="text-slate-600 dark:text-slate-400 mb-5">
+    Pick a decade, a category, or both to find what you're looking for.
+  </p>
+
+  <!-- Dropdowns (always visible) -->
+  <div class="toolbar" role="search" aria-label="Filter brands by decade and category">
+    <div class="filter-group">
+      <label for="f-decade" class="filter-label">Decade</label>
+      <select id="f-decade" class="xsel" aria-label="Filter by decade">
+        <option value="">All decades</option>
+        {decades.map(d => <option value={d}>{d}</option>)}
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="f-cat" class="filter-label">Category</label>
+      <select id="f-cat" class="xsel" aria-label="Filter by category">
+        <option value="">All categories</option>
+        {categories.map(c => <option value={c.slug}>{c.label}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <!-- Quick-start chips: visible until a filter is chosen -->
+  <div id="browse-prompt">
+    <span class="qs-label">Quick start:</span>
+    {recentDecades.map(d => (
+      <button class="pchip" type="button" data-f-decade={d}>{d}</button>
+    ))}
+    {topCategories.map(c => (
+      <button class="pchip" type="button" data-f-cat={c.slug}>{c.label}</button>
+    ))}
+  </div>
+
+  <!-- Results: hidden until a filter is chosen -->
+  <div id="browse-results" hidden>
+    <div class="result-meta">
+      <span id="result-count" class="result-count" aria-live="polite"></span>
+      <span id="active-filters" aria-label="Active filters"></span>
+      <button id="f-reset" class="reset-btn" type="button" hidden>Clear all</button>
+    </div>
+
+    <ul class="browse-grid" id="browse-grid" role="list">
+      {enriched.map((b: any) => {
+        const yrs  = yearsOf(b);
+        const cat  = b.__seo_category_label || b.category || "";
+        const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
+        const text = truncateInline(primaryTextOf(b), 120);
+
+        return (
+          <li
+            role="listitem"
+            data-decade={b.__decade}
+            data-cat={b.__seo_category || ""}
+            data-name={String(b.brand).toLowerCase()}
+          >
+            <article class="fcard-sm" style={{ "--tint": tint }}>
+              <a
+                href={`/brand/${encodeURIComponent(b.slug)}/`}
+                class="stretched-link focus-ring rounded"
+                aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
+              ></a>
+              <p class="card-label" aria-hidden={!cat}>{cat}</p>
+              <h3>{b.brand}</h3>
+              <p class="hook">{text}</p>
+              <div class="meta-row">
+                {yrs && <span class="chip-lite">{yrs}</span>}
+                {b.__decade && <span class="chip-lite">{b.__decade}</span>}
+              </div>
+            </article>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var decadeSel  = document.getElementById('f-decade');
+      var catSel     = document.getElementById('f-cat');
+      var resetBtn   = document.getElementById('f-reset');
+      var countEl    = document.getElementById('result-count');
+      var activeEl   = document.getElementById('active-filters');
+      var promptEl   = document.getElementById('browse-prompt');
+      var resultsEl  = document.getElementById('browse-results');
+      var grid       = document.getElementById('browse-grid');
+      var items      = Array.from(grid.querySelectorAll(':scope > li'));
+      var totalAll   = items.length;
+      var emptyNode  = null;
+
+      // ── Restore from URL (skip prompt if params present) ───────
+      var params = new URLSearchParams(location.search);
+      if (params.get('decade')) decadeSel.value = params.get('decade');
+      if (params.get('cat'))    catSel.value    = params.get('cat');
+
+      // ── Core filter ────────────────────────────────────────────
+      function applyFilters() {
+        var decade    = decadeSel.value;
+        var cat       = catSel.value;
+        var hasFilter = !!(decade || cat);
+
+        // Show prompt or results
+        if (promptEl)  promptEl.hidden  = hasFilter;
+        if (resultsEl) resultsEl.hidden = !hasFilter;
+
+        if (!hasFilter) {
+          if (resetBtn) resetBtn.hidden = true;
+          history.replaceState(null, '', location.pathname);
+          return;
+        }
+
+        var n = 0;
+        items.forEach(function (li) {
+          var ok = (!decade || li.dataset.decade === decade) &&
+                   (!cat    || li.dataset.cat    === cat);
+          li.style.display = ok ? '' : 'none';
+          if (ok) n++;
+        });
+
+        // Empty state within results
+        if (n === 0) {
+          if (!emptyNode) {
+            emptyNode = document.createElement('li');
+            emptyNode.className = 'empty-state';
+            emptyNode.setAttribute('role', 'listitem');
+            grid.appendChild(emptyNode);
+          }
+          var dl = decadeSel.options[decadeSel.selectedIndex].text;
+          var cl = catSel.options[catSel.selectedIndex].text;
+          emptyNode.textContent = 'No brands found for ' +
+            [decade ? dl : '', cat ? cl : ''].filter(Boolean).join(' + ') + '.';
+          emptyNode.style.display = '';
+        } else if (emptyNode) {
+          emptyNode.style.display = 'none';
+        }
+
+        // Count line
+        if (countEl) {
+          var parts = [];
+          if (decade) parts.push(decade);
+          if (cat) parts.push(catSel.options[catSel.selectedIndex].text);
+          countEl.textContent = n + ' brand' + (n === 1 ? '' : 's') +
+            (parts.length ? ' in ' + parts.join(' · ') : '');
+        }
+
+        // Active filter badges
+        if (activeEl) {
+          activeEl.innerHTML = '';
+          if (decade) activeEl.appendChild(makeChip(decade, function () {
+            decadeSel.value = ''; applyFilters();
+          }));
+          if (cat) {
+            var cl2 = catSel.options[catSel.selectedIndex].text;
+            activeEl.appendChild(makeChip(cl2, function () {
+              catSel.value = ''; applyFilters();
+            }));
+          }
+        }
+
+        if (resetBtn) resetBtn.hidden = false;
+
+        // Shareable URL
+        var p = new URLSearchParams();
+        if (decade) p.set('decade', decade);
+        if (cat)    p.set('cat', cat);
+        history.replaceState(null, '', location.pathname + '?' + p.toString());
+      }
+
+      function makeChip(label, onRemove) {
+        var span = document.createElement('span');
+        span.className = 'active-filter';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'Remove filter: ' + label);
+        btn.textContent = '×';
+        btn.addEventListener('click', onRemove);
+        span.appendChild(document.createTextNode(label + ' '));
+        span.appendChild(btn);
+        return span;
+      }
+
+      // ── Prompt chip clicks ─────────────────────────────────────
+      document.querySelectorAll('[data-f-decade]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          decadeSel.value = btn.getAttribute('data-f-decade');
+          applyFilters();
+          if (resultsEl) resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      document.querySelectorAll('[data-f-cat]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          catSel.value = btn.getAttribute('data-f-cat');
+          applyFilters();
+          if (resultsEl) resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      if (resetBtn) resetBtn.addEventListener('click', function () {
+        decadeSel.value = ''; catSel.value = ''; applyFilters();
+        if (promptEl) promptEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      decadeSel.addEventListener('change', applyFilters);
+      catSel.addEventListener('change', applyFilters);
+
+      // Initialise (shows prompt or results depending on URL params)
+      applyFilters();
+    })();
+  </script>
+</Base>
