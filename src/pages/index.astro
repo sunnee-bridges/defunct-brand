@@ -247,6 +247,15 @@ const faqLd = {
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
     }
 
+    .see-all {
+      font-size: .8rem; font-weight: 600; text-decoration: none;
+      color: rgb(99 102 241); white-space: nowrap;
+      border-bottom: 1px solid transparent;
+    }
+    .see-all:hover { border-bottom-color: rgb(99 102 241); }
+    .dark .see-all { color: rgb(165 180 252); }
+    .dark .see-all:hover { border-bottom-color: rgb(165 180 252); }
+
     .collection-header {
       display: flex;
       justify-content: space-between;
@@ -624,19 +633,17 @@ const faqLd = {
 )}
   
 
-    {CFood.length > 0 && (
+    {C90s.length > 0 && (
       <div class="collection">
         <div class="collection-header">
-          <h3>Discontinued Snacks We Crave</h3>
-          <a href="/category/food-beverage/" class="see-all">See all food brands →</a>
+          <h3>Gone by 2000 — Brands That Defined the '90s</h3>
+          <a href="/decade/1990s/" class="see-all">See all 90s brands →</a>
         </div>
         <div class="brand-grid">
-          {CFood.slice(0, 4).map((b) => {
+          {C90s.slice(0, 6).map((b) => {
             const yrs = yearsOf(b);
             const cat = b.__seo_category_label || b.category || "Brand";
             const tint = `oklch(0.7 0.12 ${catHue(cat)})`;
-            const icon = fateIconOf(b);
-            const fateType = fateTypeOf(b) || "other";
             const text = truncateInline(primaryTextOf(b), 120);
             return (
               <article class="fcard-sm" style={{ "--tint": tint }}>
@@ -645,17 +652,11 @@ const faqLd = {
                   class="stretched-link focus-ring rounded"
                   aria-label={`${b.brand}${yrs ? ` (${yrs})` : ""}${cat ? ` — ${cat}` : ""}`}
                 ></a>
-                {cat && (
-                  <p class="card-label">
-                    {cat}
-                  </p>
-                )}
+                {cat && <p class="card-label">{cat}</p>}
                 <h4>{b.brand}</h4>
-                {text && (
-                  <p class="hook">{text}</p>
-                )}
+                {text && <p class="hook">{text}</p>}
                 <div class="meta-row">
-                  {yrs && <span class="chip-lite" aria-label={`Years active ${yrs}`}>{yrs}</span>}
+                  {yrs && <span class="chip-lite">{yrs}</span>}
                 </div>
               </article>
             );
@@ -664,8 +665,67 @@ const faqLd = {
       </div>
     )}
 
-   
   </section>
+
+<!-- Explore the archive -->
+<section class="mt-14" aria-label="Browse the archive">
+  <h2 class="text-xl font-semibold mb-5 text-slate-900 dark:text-slate-100">Explore the archive</h2>
+  <div class="archive-browse-grid">
+    <a href="/az/" class="browse-card focus-ring">
+      <span class="browse-card-stat">{totalAll}</span>
+      <span class="browse-card-label">Brands A–Z</span>
+      <span class="browse-card-hint">Full alphabetical index</span>
+    </a>
+    <a href="/browse/" class="browse-card focus-ring">
+      <span class="browse-card-stat">{catCount}</span>
+      <span class="browse-card-label">Categories</span>
+      <span class="browse-card-hint">From retail to tech to food</span>
+    </a>
+    <a href="/decade/" class="browse-card focus-ring">
+      <span class="browse-card-stat">{yearSpan}</span>
+      <span class="browse-card-label">Decades covered</span>
+      <span class="browse-card-hint">Browse by era</span>
+    </a>
+    <a href="/blog/" class="browse-card focus-ring">
+      <span class="browse-card-stat">Stories</span>
+      <span class="browse-card-label">Brand deep-dives</span>
+      <span class="browse-card-hint">The full collapse explained</span>
+    </a>
+  </div>
+</section>
+
+<style is:inline>
+  .archive-browse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+    gap: 14px;
+  }
+  .browse-card {
+    display: flex; flex-direction: column; gap: .2rem;
+    padding: 1rem 1.1rem; border-radius: .875rem; text-decoration: none;
+    border: 1px solid rgb(226 232 240);
+    background: rgb(248 250 252);
+    transition: background .15s, border-color .15s, transform .15s;
+  }
+  .browse-card:hover { background: white; border-color: rgb(99 102 241 / .5); transform: translateY(-1px); }
+  .dark .browse-card { background: rgb(15 23 42); border-color: rgb(51 65 85); }
+  .dark .browse-card:hover { background: rgb(30 41 59); border-color: rgb(99 102 241 / .6); }
+  .browse-card-stat {
+    font-size: 1.5rem; font-weight: 800; line-height: 1.1;
+    color: rgb(15 23 42);
+  }
+  .dark .browse-card-stat { color: rgb(248 250 252); }
+  .browse-card-label {
+    font-size: .875rem; font-weight: 600;
+    color: rgb(30 41 59);
+  }
+  .dark .browse-card-label { color: rgb(203 213 225); }
+  .browse-card-hint {
+    font-size: .75rem; color: rgb(100 116 139);
+    margin-top: .1rem;
+  }
+  .dark .browse-card-hint { color: rgb(100 116 139); }
+</style>
 
 <!-- SEO content — below the fold intentionally -->
 <section class="mt-12 space-y-6" aria-label="About this archive">
@@ -679,7 +739,6 @@ const faqLd = {
       defunct, fate) with sources and related reading.
     </p>
   </article>
-
 </section>
 
 </Base>
