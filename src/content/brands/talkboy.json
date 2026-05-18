@@ -8,9 +8,9 @@
     "start": 1992,
     "end": "late 1990s"
   },
-  "hook": "Home Alone–famous voice recorder that let kids slow, speed, and prank-call like Kevin McCallister.",
-  "fate": "Original Tiger Electronics line discontinued by the late 1990s/early 2000s as cassettes and gimmick recorders faded; no modern equivalent in production.",
-  "summary": "A handheld cassette recorder made iconic by *Home Alone 2* (1992). Tiger Electronics turned the movie prop into a real product that could record, play back, and (on later models) change speed. Best-selling through the mid-1990s, the line ended as digital gadgets overtook cassette toys.",
+  "hook": "A cassette recorder that became a real toy after kids saw it in Home Alone 2, letting you record your voice and play it back slower or faster to sound like someone completely different.",
+  "fate": "Tiger Electronics stopped making Talkboys in the late 1990s as cassette tapes went out of use and digital gadgets took over. Tiger Electronics was bought by Hasbro in 1998.",
+  "summary": "The Talkboy was a handheld cassette recorder made by Tiger Electronics. It appeared as a prop in the movie Home Alone 2: Lost in New York in 1992. Kids wanted the real thing after seeing it in the film, so Tiger Electronics made one. You could record your voice and play it back at a faster or slower speed to make it sound different. The Deluxe version added a dial to control the speed. Tiger Electronics later made a pink version called Talkgirl. The line faded in the late 1990s as cassette tapes fell out of use.",
   "topics": [
     "discontinued",
     "toys",
@@ -18,15 +18,15 @@
     "cult-favorite"
   ],
   "notable_products": [
-    "Talkboy (1992/93 original)",
-    "Talkboy Deluxe (variable speed)",
-    "Talkgirl (purple/pink variant)",
-    "Talkboy FX+ (sound effects keychain/mini)"
+    "Talkboy (1992/1993), the original cassette recorder with record and playback",
+    "Talkboy Deluxe, a version with a speed dial that let you make your voice sound deeper or higher",
+    "Talkgirl, a pink and purple version of the Talkboy",
+    "Talkboy FX+, a smaller keychain version with built-in sound effect buttons"
   ],
   "taglines": [
     {
       "text": "The portable recorder that really works!",
-      "source": "1990s packaging/ads"
+      "source": "1990s packaging and ads"
     }
   ],
   "links": {
@@ -35,27 +35,27 @@
     "home_alone_2": "https://en.wikipedia.org/wiki/Home_Alone_2:_Lost_in_New_York",
     "tv_commercials_search": "https://www.youtube.com/results?search_query=Talkboy+commercial+1993"
   },
-  "overview_md": "**Talkboy** is the quintessential **’90s movie-to-toy** success story. Shown as a kid’s gadget in *Home Alone 2* (**1992**), the prop generated so much interest that **Tiger Electronics** released a **real Talkboy** soon after. The handheld **cassette recorder** let kids **record**, **play back**, and—on the **Deluxe** model—**change playback speed** to deepen or raise their voice (perfect for prank calls and Kevin-style hijinks). A color-swapped **Talkgirl** targeted the broader kid market, and bite-size **FX** spinoffs added sound-effect buttons.\n\nTalkboy rode the early-’90s wave of **movie tie-ins** and **low-cost electronics** to become a holiday hit. But as **digital players**, **mini-disc/MP3**, and later **phones** replaced cassette gadgets, the line faded. By the **late 1990s/early 2000s**, Talkboy was **discontinued**, living on as a nostalgia icon—and a reminder that one perfect movie moment can launch a real-world toy craze.",
+  "overview_md": "**Talkboy** was a handheld cassette recorder made by Tiger Electronics. It showed up as a prop in Home Alone 2: Lost in New York in 1992, where the main character Kevin McCallister uses it to record voices, play them back at the wrong speed, and trick adults throughout the movie.\n\nAfter the film came out, kids wanted the real thing. Tiger Electronics released an actual Talkboy for the 1992 holiday season, with wider availability in early 1993. The device worked like a basic cassette recorder: you pressed record, spoke into it, then played back what you said. The Deluxe version added a speed dial. Turn it one way and your voice played back slower and deeper. Turn it the other way and your voice came out faster and higher. That feature was the whole point for most kids who bought one.\n\nLater models expanded the lineup. The Talkgirl came in pink and purple. The Talkboy FX+ was a smaller keychain version that added buttons for built-in sound effects.\n\nThe Talkboy sold well through the mid-1990s. It was one of those toys that worked because a movie made it feel real and desirable before it even existed as a product. But the cassette tape format was fading by the late 1990s. Digital gadgets, CDs, and eventually MP3 players replaced tape-based devices. Tiger Electronics itself was bought by Hasbro in 1998.\n\nThe Talkboy line was discontinued in the late 1990s. People who grew up in that era still remember it because of the movie connection and because playing with your own voice on a cheap cassette recorder turned out to be genuinely fun.",
   "timeline": [
     {
-      "date": "1992-11",
-      "text": "Talkboy prop appears in *Home Alone 2: Lost in New York*; demand spikes."
+      "date": "1992",
+      "text": "The Talkboy appears as a prop in Home Alone 2: Lost in New York. Kids who see the movie start asking for it as a real toy."
     },
     {
-      "date": "1992-12",
-      "text": "Tiger Electronics rush-releases Talkboy for the holiday season (broad retail in early 1993)."
+      "date": "1992-1993",
+      "text": "Tiger Electronics releases the real Talkboy for the holiday season. Wider retail availability follows in early 1993."
     },
     {
       "date": "1993-1995",
-      "text": "Line expands: Talkboy Deluxe (variable speed) and Talkgirl variant hit shelves; heavy TV advertising."
+      "text": "The line expands with the Talkboy Deluxe, which adds a variable speed dial, and the Talkgirl, a pink and purple version. TV commercials run heavily."
     },
     {
       "date": "1998",
-      "text": "Tiger Electronics acquired by Hasbro; cassette toy category softens as digital devices rise."
+      "text": "Hasbro buys Tiger Electronics. Cassette-based toy gadgets start falling out of fashion as digital devices become more common."
     },
     {
       "date": "late 1990s",
-      "text": "Talkboy line discontinued in most markets; becomes a 90s-nostalgia collectible."
+      "text": "The Talkboy line is discontinued. The toy becomes a nostalgic memory for kids who grew up in the early 1990s."
     }
   ],
   "sources": [
@@ -64,22 +64,20 @@
       "url": "https://en.wikipedia.org/wiki/Talkboy"
     },
     {
-      "label": "Wikipedia — Tiger Electronics (brand owner; acquired by Hasbro in 1998)",
+      "label": "Wikipedia — Tiger Electronics (brand owner, bought by Hasbro in 1998)",
       "url": "https://en.wikipedia.org/wiki/Tiger_Electronics"
     },
     {
-      "label": "Film context — Home Alone 2 (1992)",
+      "label": "Wikipedia — Home Alone 2: Lost in New York",
       "url": "https://en.wikipedia.org/wiki/Home_Alone_2:_Lost_in_New_York"
-    },
-    {
-      "label": "1990s TV commercials (archival ads showing features/claims)",
-      "url": "https://www.youtube.com/results?search_query=Talkboy+commercial+1993"
     }
   ],
   "seo": {
-    "meta_description": "The Talkboy was a cassette recorder made famous in Home Alone 2 (1992). Tiger Electronics turned it into a real toy that let kids record, play back, and change speed."
+    "meta_description": "The Talkboy was a cassette recorder made famous in Home Alone 2 (1992). Tiger Electronics turned it into a real toy that let kids record their voice and play it back at different speeds."
   },
   "image": "/images/brands/talkboy.webp",
-  "image_alt": "Talkboy cassette recorder toy",
-  "image_caption": "Source: Wikimedia Commons — File:Talkboy_recorder.JPG"
+  "image_width": 800,
+  "image_height": 844,
+  "image_alt": "Talkboy Deluxe cassette recorder toy",
+  "image_caption": "Source: Wikimedia Commons — Talkboy Deluxe cassette recorder"
 }

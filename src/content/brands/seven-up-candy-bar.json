@@ -8,11 +8,11 @@
     "start": 1930,
     "end": 1979
   },
-  "hook": "Pearson’s segmented chocolate bar with seven different fillings in one.",
-  "fate": "Discontinued in 1979; no official relaunch since.",
-  "summary": "Pearson’s **Seven Up** was a segmented milk-chocolate bar introduced in the 1930s. The bar was molded into seven small chambers, each holding a different filling. Lineups varied over time, but fan-favorite centers often included coconut, butterscotch caramel, buttercream, fudge, Brazil nut, cherry cream, and orange jelly. Production ended in 1979, though the bar still inspires intense nostalgia among candy collectors.",
+  "hook": "A chocolate bar from the 1930s with seven sections and seven different fillings, originally made by Trudeau Candy and later taken over by Pearson’s — retired in 1979 due to rising costs and a naming dispute with the 7UP soda brand.",
+  "fate": "Pearson’s discontinued the Seven Up bar in 1979. The two reasons cited were high manufacturing costs and a trademark dispute with the company behind 7UP soda. It was never brought back.",
+  "summary": "The Seven Up candy bar launched in the 1930s, originally made by Trudeau Candy Company in St. Paul, Minnesota. The bar had seven small sections under a milk-chocolate shell, each with a different filling. Pearson’s Candy Company acquired Trudeau in 1951 and took over the bar. The fillings changed over the years but commonly included coconut, butterscotch caramel, buttercream, fudge, Brazil nut, cherry cream, and orange jelly. Pearson’s discontinued it in 1979 due to rising manufacturing costs and a trademark conflict with the company that owns the 7UP soda name.",
   "notable_products": [
-    "Seven Up (7-chamber bar)"
+    "Seven Up bar, a milk-chocolate bar divided into seven small filled sections, each with a different flavor including coconut, butterscotch caramel, buttercream, fudge, Brazil nut, cherry cream, and orange jelly"
   ],
   "topics": [
     "discontinued",
@@ -20,24 +20,21 @@
     "70s-nostalgia"
   ],
   "links": {
-    "company_wikipedia": "https://en.wikipedia.org/wiki/Pearson%27s_Candy_Company",
-    "image_search": "https://www.google.com/search?q=%22Seven+Up%22+candy+bar+Pearson%27s+wrapper+ad",
-    "youtube_search": "https://www.youtube.com/results?search_query=%22Seven+Up%22+candy+bar+commercial",
-    "archival_catalogs_search": "https://archive.org/search?query=%22Seven+Up%22+candy+bar"
+    "company_wikipedia": "https://en.wikipedia.org/wiki/Pearson%27s_Candy_Company"
   },
-  "overview_md": "The **Seven Up** candy bar came from Pearson’s Candy Company during the **1930s** and stood out for a clever format: **seven bite-size sections** under one milk-chocolate shell, each with a different filling. The exact mix changed across decades and regions, but longtime fans remember combinations like **coconut**, **butterscotch caramel**, **buttercream**, **fudge**, **Brazil nut**, **cherry cream**, and **orange jelly**.\n\nThat ‘sampler in a single bar’ idea gave Seven Up a small cult following—shoppers who liked variety and the surprise of not knowing which flavor you’d hit next. By the late 1970s, shifting costs, changing tastes, and a crowded confectionery aisle caught up with it. Pearson’s **ended production in 1979**, and the bar never returned to national shelves. Today it lives on in **candy-history blogs, wrapper archives, and collector forums**, where it’s often cited as one of the most-missed novelty bars of the mid-20th century.",
+  "overview_md": "**Seven Up** was a candy bar with a format different from most chocolate bars of its era. It was divided into seven small sections, each one holding a different filling under a milk-chocolate shell. Eating a single bar meant tasting seven different flavors.\n\nThe bar launched in the 1930s, originally made by Trudeau Candy Company, a St. Paul, Minnesota confectionery. The early Trudeau fillings included caramel, vanilla cream, maple walnut, Brazil nut caramel, apple butter jelly, chocolate pudding, and coconut cream. In 1951, Pearson’s Candy Company acquired Trudeau and took over the Seven Up bar along with the rest of the lineup.\n\nUnder Pearson’s, the fillings evolved. The lineup that most people who remember the bar associate with it included coconut, butterscotch caramel, buttercream, fudge, Brazil nut, cherry cream, and orange jelly. Other fillings that rotated through over the years included nougat, mint, and maple.\n\nThe bar sold for several more decades under Pearson’s, but by the late 1970s two problems had built up. One was the cost of making a bar with seven separate filled chambers, which was more expensive to produce than a simpler candy. The other was a trademark conflict with the company behind 7UP soda, which had been using that name since the 1920s and had legal standing on it.\n\nPearson’s discontinued the Seven Up bar in 1979. It was never relaunched. People who grew up eating it still remember it, and it comes up regularly on lists of candy bars people wish would come back.",
   "timeline": [
     {
-      "date": "1930-01",
-      "text": "Pearson’s introduces Seven Up, a chocolate bar divided into seven filled sections."
+      "date": "1930s",
+      "text": "Trudeau Candy Company in St. Paul, Minnesota introduces the Seven Up bar, a milk-chocolate bar divided into seven sections each with a different filling."
     },
     {
-      "date": "1940s-1960s",
-      "text": "Fillings rotate over time; core favorites develop among regional buyers."
+      "date": "1951",
+      "text": "Pearson’s Candy Company acquires Trudeau Candy. The Seven Up bar becomes part of the Pearson’s lineup. The fillings evolve over time."
     },
     {
-      "date": "1979-01",
-      "text": "Seven Up candy bar is discontinued by Pearson’s."
+      "date": "1979",
+      "text": "Pearson’s discontinues the Seven Up bar, citing high manufacturing costs and a trademark conflict with the 7UP soda brand. It is never relaunched."
     }
   ],
   "sources": [
@@ -54,6 +51,9 @@
       "url": "https://www.thetakeout.com/1999280/vintage-snacks-people-loved-1930s/"
     }
   ],
+  "seo": {
+    "meta_description": "The Seven Up candy bar launched in the 1930s with seven chocolate sections and seven different fillings. Originally made by Trudeau Candy, it was discontinued in 1979 over costs and a trademark dispute with the 7UP soda brand."
+  },
   "image": "/images/brands/seven-up-candy-bar.svg",
   "image_alt": "Seven Up (Candy Bar) — original illustration",
   "image_caption": "Original illustration — Vanished Brands"

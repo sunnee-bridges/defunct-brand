@@ -8,62 +8,56 @@
     "start": 1974,
     "end": 2023
   },
-  "hook": "Discount home goods for 49 years, closed all stores in 2023",
-  "fate": "Liquidation following a second Chapter 11 filing; U.S. stores closed in 2023",
-  "summary": "Off-price home-goods chain founded in 1974; known for closeout décor, linens, and kitchenware. Restructured in 2020, filed again in 2023, and liquidated its remaining U.S. stores.",
+  "hook": "A discount store for home goods that ran for nearly 50 years, selling leftover and overstock items at low prices before closing all its stores in 2023.",
+  "fate": "Tuesday Morning filed for bankruptcy in 2023 for the second time and closed all of its remaining stores. A court approved the liquidation and the stores held going-out-of-business sales before shutting down for good.",
+  "summary": "Tuesday Morning was a chain of discount stores that sold home goods at low prices. It was founded in 1974 in Dallas, Texas. The stores carried things like kitchenware, linens, rugs, and home decor that brands could not sell elsewhere, often at big discounts. Tuesday Morning went through bankruptcy in 2020 during the COVID-19 pandemic and again in 2023. After the second bankruptcy it closed all of its remaining stores.",
   "topics": [
     "bankruptcy",
     "retail",
     "2000s-nostalgia"
   ],
+  "notable_products": [
+    "Discounted home goods including kitchenware, linens, rugs, candles, and seasonal decorations",
+    "Brand-name closeouts and overstock items bought cheaply and sold at reduced prices"
+  ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Tuesday_Morning"
   },
-  "overview_md": "**Tuesday Morning** was a U.S. off-price retailer specializing in brand-name closeouts for the home—tabletop, linens, rugs, seasonal décor, and kitchenware. Founded in 1974 in Dallas, the chain grew through a no-frills model: modest stores, opportunistic buying, and limited advertising, relying on treasure-hunt merchandising and mailed circulars to drive trips. Locations were common in neighborhood centers rather than enclosed malls, and assortments turned quickly with liquidation lots and vendor overstock.\n\nAs e-commerce reshaped value shopping and supply chains tightened, the closeout pipeline became less predictable while store traffic fragmented. The company entered **Chapter 11 in May 2020**, shuttering underperforming stores during the pandemic and working down lease liabilities before emerging later that year into early 2021. **In February 2023**, Tuesday Morning again sought bankruptcy protection amid liquidity pressure, freight and occupancy costs, and recovery lag in discretionary categories.\n\nCourt filings in spring **2023** led to a wind-down and **liquidation of remaining U.S. stores**, with merchandise sold through going-out-of-business events. The brand’s decline reflected broader pressures on mid-scale specialty chains caught between faster off-price giants and online marketplaces—where closeout goods increasingly reach consumers without a dedicated brick-and-mortar stop.",
+  "overview_md": "**Tuesday Morning** was a chain of discount stores that sold home goods at low prices. It was founded in 1974 in Dallas, Texas.\n\nThe stores carried things like kitchenware, linens, rugs, candles, and home decorations. What made Tuesday Morning different from regular stores was where it got its products. It bought leftover stock and discontinued items from name-brand companies and sold them at big discounts. Shoppers never knew exactly what would be in the store from visit to visit, which made it feel a little like a treasure hunt.\n\nThe stores were usually in small strip malls rather than big enclosed shopping malls. Tuesday Morning did not spend a lot on advertising. It relied on mailed flyers and word of mouth to bring shoppers in.\n\nIn May 2020, during the COVID-19 pandemic, Tuesday Morning filed for bankruptcy protection. The company closed some of its weaker stores and tried to get back on its feet. It emerged from that bankruptcy in early 2021 and kept running.\n\nBut the business kept struggling. Shipping costs went up, fewer people were shopping in stores, and bigger off-price chains were pulling customers away. In February 2023, Tuesday Morning filed for bankruptcy again. This time the company could not find a way to keep going. A court approved a plan to close all remaining stores and hold going-out-of-business sales. The last Tuesday Morning stores shut down in 2023, nearly 50 years after the chain first opened.",
   "timeline": [
     {
       "date": "1974",
-      "text": "Company founded in Dallas, Texas"
+      "text": "Tuesday Morning is founded in Dallas, Texas as a discount store selling closeout and overstock home goods at low prices."
     },
     {
       "date": "1990s",
-      "text": "Nationwide expansion of neighborhood-center stores focused on home closeouts"
+      "text": "The chain expands across the country, opening stores in strip malls and neighborhood shopping centers."
     },
     {
-      "date": "2020-05",
-      "text": "Files for Chapter 11 during the pandemic; store rationalization begins"
+      "date": "2020",
+      "text": "Tuesday Morning files for Chapter 11 bankruptcy protection in May during the COVID-19 pandemic. The company closes weaker stores and tries to restructure. It emerges from bankruptcy in early 2021."
     },
     {
-      "date": "2023-02",
-      "text": "Second Chapter 11 filing amid liquidity and cost pressures"
-    },
-    {
-      "date": "2023-05",
-      "text": "Court-approved liquidation; remaining U.S. stores close over subsequent weeks"
+      "date": "2023",
+      "text": "Tuesday Morning files for bankruptcy again in February. A court approves a liquidation plan and the remaining stores hold going-out-of-business sales. All locations close by mid-2023."
     }
   ],
   "sources": [
     {
-      "label": "Wikipedia",
+      "label": "Wikipedia — Tuesday Morning",
       "url": "https://en.wikipedia.org/wiki/Tuesday_Morning"
     },
     {
       "label": "Wayback snapshot (tuesdaymorning.com)",
       "url": "https://web.archive.org/web/*/tuesdaymorning.com"
-    },
-    {
-      "label": "Bankruptcy court/estate information (public dockets & notices)",
-      "url": "https://cases.stretto.com/"
-    },
-    {
-      "label": "Business press coverage (bankruptcy & liquidation)",
-      "url": "https://www.reuters.com/"
     }
   ],
   "seo": {
-    "meta_description": "Tuesday Morning sold discounted home goods and décor for 49 years before its second bankruptcy filing in 2023 forced the closure of all remaining U.S. store locations."
+    "meta_description": "Tuesday Morning sold discounted home goods and décor for nearly 50 years before its second bankruptcy filing in 2023 forced the closure of all remaining U.S. store locations."
   },
   "image": "/images/brands/tuesday-morning.webp",
-  "image_alt": "Tuesday Morning store",
-  "image_caption": "Source: Wikimedia Commons — File:Tuesday_Morning,_Capital_Plaza,_Thomasville_Road,_Tallahassee.JPG"
+  "image_width": 800,
+  "image_height": 600,
+  "image_alt": "Tuesday Morning store at Capital Plaza, Tallahassee, Florida",
+  "image_caption": "Source: Wikimedia Commons — Tuesday Morning store in Tallahassee, Florida"
 }

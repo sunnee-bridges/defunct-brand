@@ -8,14 +8,14 @@
     "start": 2008,
     "end": 2013
   },
-  "hook": "Beloved Facebook virtual pet game with 70 million players shut down by EA in 2013",
-  "fate": "Shut down June 14, 2013 by Playfish/EA after 5 years; servers permanently closed despite being one of Facebook's most popular games with tens of millions of players",
-  "summary": "Virtual pet game on Facebook by Playfish where players adopted pets, decorated homes, played mini-games, and visited friends. Launched 2008, reached 70+ million players at peak before EA shut it down in 2013, devastating the massive player base.",
+  "hook": "A Facebook virtual pet game that drew around 59 million monthly players and made $100,000 a day before EA shut it down in 2013.",
+  "fate": "EA announced in April 2013 that it would shut down Pet Society along with two other Playfish games. The original shutdown date was June 14, 2013, but it stayed up a few extra days due to player demand and went dark on June 17.",
+  "summary": "Pet Society was a virtual pet game on Facebook made by Playfish, a London-based studio. It launched in August 2008 and became one of the most popular games on the platform. Players adopted a small round pet, decorated its home, fed and washed it, and visited friends' pets to earn coins. At its peak the game had around 59 million monthly players and was making about $100,000 a day from in-game purchases. EA acquired Playfish in 2009 and shut down Pet Society in June 2013 as part of a broader move to close the Playfish game portfolio.",
   "notable_products": [
-    "Pet Society Facebook game",
-    "Playfish Cash (premium currency)",
-    "Virtual pet clothing and accessories",
-    "Home furniture and decorations"
+    "Virtual pet adoption and care, including daily feeding, washing, and playing with a customizable round pet character",
+    "Home decoration, a major part of the game where players designed and furnished their pet's home room by room from a large catalog of items",
+    "Mini-games including pet racing, which became one of the most popular ways to earn coins",
+    "Playfish Cash, a premium currency players could buy with real money to unlock exclusive clothing, furniture, and items"
   ],
   "topics": [
     "discontinued",
@@ -26,71 +26,50 @@
   "links": {
     "ea": "https://www.ea.com/"
   },
-  "overview_md": "**Pet Society** was one of Facebook's most beloved games, a virtual pet simulation developed by Playfish that launched in 2008 and captivated over 70 million players worldwide. Players adopted adorable round pets, decorated elaborate homes, played mini-games, and visited friends' pets daily. Despite massive popularity, Electronic Arts shut down Pet Society on June 14, 2013, sparking one of the largest player outcries in Facebook gaming history.\n\nLaunched in **August 2008**, Pet Society arrived early in Facebook gaming's explosion. The game's charm was immediate—colorful graphics, adorable pets, and simple but engaging gameplay made it accessible to all ages. Players adopted customizable pets that waddled around and reacted to actions, creating instant emotional attachment.\n\nGameplay involved **caring for your pet** by keeping it clean, fed, and happy. Washing your pet was a mini-game with soap and sponge. Feeding involved buying food with coins earned through activities. Daily care created gentle pressure to return regularly, building habit and attachment.\n\n**Home decoration** was where Pet Society truly shined. Players designed elaborate houses room by room with massive furniture catalogs—beach houses, gothic mansions, modern apartments, fantasy castles. Some players created museum-quality designs that friends visited to admire. The creative freedom was limitless.\n\nThe **social features** defined the experience. Visiting friends' pets daily was essential for earning coins and maintaining friendships. Many players had daily visiting routes, checking dozens of friends' pets every morning. These rituals fostered genuine connections across the platform.\n\n**Mini-games** provided entertainment and income. Racing against friends' pets became particularly popular, with players obsessively beating records. Playfish monetized through premium currency that bought exclusive items. Many players spent hundreds of dollars on dream homes and pet outfits.\n\nPet Society reached its peak in **2009-2010** with over **70 million monthly active players**, making it one of Facebook's top games. The community was massive and engaged, transcending demographics—kids, teens, adults, and seniors all played.\n\nPlayfish's **acquisition by EA** in November 2009 for $400 million initially seemed positive. However, as Facebook gaming declined in the early 2010s, Pet Society's fate became uncertain. In **April 2013**, EA announced the shutdown for **June 14, 2013**, devastating players who had invested five years of daily care.\n\nThe **\"Save Pet Society\" movement** became one of gaming's largest protests. Change.org petitions gathered over 100,000 signatures. Facebook groups organized campaigns with tens of thousands of members. Players who had spent hundreds or thousands of dollars received no compensation. The digital items they purchased simply ceased to exist.\n\nAs shutdown approached, players held virtual farewell parties and took final screenshots. Many reported genuine grief over losing virtual pets they'd named after deceased relatives. Children cried over losing pets they'd cared for years. The emotional response highlighted how virtual experiences create real feelings.\n\nFormer players created **memorial websites** preserving Pet Society memories. Some communities still exist today, a decade later. No spiritual successor captured Pet Society's unique combination of social features, decoration depth, and charming aesthetic.\n\nToday, Pet Society is completely unplayable—no private servers, no archives, no alternatives. For the **tens of millions** who played, it represents a golden moment in social gaming when Facebook games felt magical and innocent, and daily pet care rituals created genuine community that vanished forever.",
+  "overview_md": "**Pet Society** was a virtual pet game on Facebook made by Playfish, a London-based game studio. It launched in August 2008, early in the wave of Facebook social games, and quickly became one of the most popular games on the platform.\n\nThe game gave each player a small round pet to take care of. You washed it, fed it, and kept it happy. Your pet lived in a house that you could decorate room by room, picking from a large catalog of furniture, rugs, wallpaper, and accessories. New themed items came out regularly, including seasonal collections and limited editions. A lot of players spent significant time and real money putting together particular looks for their pet's home.\n\nThe social side of the game was built around visiting friends. You could walk your pet over to a friend's house, see what they had decorated, and earn coins for visiting. Many players went through a list of friends every day as part of their routine. Racing mini-games against other players' pets were also popular and gave you another way to earn in-game currency.\n\nAt its peak around 2009 and 2010, Pet Society had about 59 million monthly players and around 5 million who played every day. The game was making roughly $100,000 a day through in-game purchases of premium items. EA acquired Playfish in November 2009 for around $300 million, which brought Pet Society under EA's ownership.\n\nBy the early 2010s, Facebook gaming had peaked and player numbers were declining across the whole category. In April 2013, EA announced it would shut down Pet Society along with The Sims Social and SimCity Social, two other Playfish games. The announcement drew a large response from players. Petitions were created asking EA to keep the game running, and some gathered hundreds of thousands of signatures. Players had spent years building their pets' homes and had no way to take any of it with them.\n\nThe game was originally set to close on June 14, 2013. EA kept it running a few extra days due to the player response and shut it down on June 17. The servers went dark and the game became unplayable.\n\nIn 2023 a new game called Pet Paradise launched, made by some of the original Pet Society developers, intended as a spiritual successor. It brought back many of the same ideas including pet care, home decoration, and visiting friends.",
   "timeline": [
     {
       "date": "2008-08",
-      "text": "Pet Society launches on Facebook by Playfish; immediate popularity"
+      "text": "Pet Society launches on Facebook by Playfish. The game quickly becomes one of the most played applications on the platform."
     },
     {
       "date": "2009-11",
-      "text": "Playfish acquired by Electronic Arts for $400 million"
+      "text": "EA acquires Playfish for around $300 million, bringing Pet Society under EA ownership."
     },
     {
       "date": "2009-2010",
-      "text": "Peak popularity: 70+ million monthly active players"
-    },
-    {
-      "date": "2010-2012",
-      "text": "Regular updates add new furniture, clothing, mini-games, and seasonal events"
-    },
-    {
-      "date": "2012-2013",
-      "text": "Facebook gaming declines; EA begins consolidating social game portfolio"
+      "text": "Pet Society reaches its peak with about 59 million monthly players and 5 million daily players. The game earns around $100,000 a day from in-game purchases."
     },
     {
       "date": "2013-04",
-      "text": "EA announces Pet Society will shut down June 14, 2013"
+      "text": "EA announces it will shut down Pet Society, The Sims Social, and SimCity Social. Players start petitions asking EA to keep the game running."
     },
     {
-      "date": "2013-04-05",
-      "text": "Save Pet Society protests begin; petitions gather 100,000+ signatures"
+      "date": "2013-06-17",
+      "text": "Pet Society servers go dark. The original shutdown date was June 14 but EA kept the game running a few extra days due to the player response."
     },
     {
-      "date": "2013-06-14",
-      "text": "Servers permanently shut down; game becomes unplayable"
-    },
-    {
-      "date": "2013-06",
-      "text": "Players hold virtual funerals and farewell parties; widespread grief reported"
-    },
-    {
-      "date": "2013-present",
-      "text": "Memorial communities preserve memories; no spiritual successor captures original magic"
+      "date": "2023",
+      "text": "Pet Paradise launches as a spiritual successor to Pet Society, made by some of the original Playfish developers."
     }
   ],
+  "links": {
+    "wikipedia_pet_society": "https://en.wikipedia.org/wiki/Pet_Society",
+    "wikipedia_playfish": "https://en.wikipedia.org/wiki/Playfish"
+  },
   "sources": [
     {
-      "label": "Electronic Arts (parent company)",
-      "url": "https://www.ea.com/"
+      "label": "Wikipedia — Pet Society",
+      "url": "https://en.wikipedia.org/wiki/Pet_Society"
     },
     {
-      "label": "Facebook gaming history: Social Times, Inside Social Games archives",
-      "url": "https://www.adweek.com/social-marketing/"
-    },
-    {
-      "label": "Gaming industry coverage: Gamasutra, Kotaku",
-      "url": "https://kotaku.com/"
-    },
-    {
-      "label": "Player communities and Save Pet Society campaign coverage",
-      "url": "https://www.reddit.com/r/gaming/"
-    },
-    {
-      "label": "Playfish game history and retrospectives",
-      "url": "https://www.gamedeveloper.com/"
+      "label": "Wikipedia — Playfish",
+      "url": "https://en.wikipedia.org/wiki/Playfish"
     }
   ],
+  "seo": {
+    "meta_description": "Pet Society was a Facebook virtual pet game by Playfish that reached 59 million monthly players before EA shut it down in June 2013. A spiritual successor called Pet Paradise launched in 2023."
+  },
   "image": "/images/brands/pet-society.svg",
   "image_alt": "Pet Society — original illustration",
   "image_caption": "Original illustration — Vanished Brands"

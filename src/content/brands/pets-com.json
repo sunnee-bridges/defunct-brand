@@ -8,39 +8,43 @@
     "start": 1998,
     "end": 2000
   },
-  "hook": "Spent $300M on sock puppet ads, lasted 268 days",
-  "fate": "Liquidated in late 2000 after rapid burn and weak unit economics; brand assets sold off.",
-  "summary": "Dot-com era pet-supply e-tailer famous for the sock-puppet mascot. Launched in 1998, went public in 2000, and shut down the same year amid unsustainable shipping costs and thin margins.",
+  "hook": "An online pet supply store that raised over $300 million, ran a Super Bowl ad featuring a sock puppet, and shut down just 268 days after going public in 2000.",
+  "fate": "Pets.com shut down in November 2000, 268 days after its IPO. The company had lost $147 million in the first nine months of 2000 and could not find a path to profitability. The sock puppet's rights were later sold for $125,000.",
+  "summary": "Pets.com launched in 1998 as an online retailer selling pet food and supplies. It became one of the most recognized brands of the dot-com boom, mostly because of its wisecracking sock puppet mascot who appeared in a Super Bowl ad in January 2000. The company raised over $300 million from investors including Amazon, went public in February 2000, and shut down nine months later. The core problem was that shipping heavy items like dog food and cat litter cost more than the company was charging for them. Pets.com became one of the most cited examples of dot-com era overspending.",
   "notable_products": [
-    "E-commerce (pet supplies)",
-    "Sock-puppet advertising mascot"
+    "Online pet food and supplies, including dog food, cat litter, and accessories shipped directly to customers' homes",
+    "The sock puppet mascot, a wisecracking hand puppet who became one of the most recognized advertising characters of the dot-com era and appeared in a Super Bowl ad in 2000"
   ],
   "topics": [
     "bankruptcy",
     "internet-history",
     "2000s-nostalgia"
   ],
-  "overview_md": "**Pets.com** was a late-1990s online retailer that tried to move the pet aisle to the web. Launched in **1998**, the company leaned on heavy brand marketing—most memorably a wisecracking **sock-puppet** that became a pop-culture fixture and appeared in national TV spots and a Super Bowl ad. The pitch resonated with awareness, but economics lagged the attention: bulky, low-margin pet goods (kibble, litter) were expensive to ship and hard to make profitable without scale, repeat purchase behavior, and tight logistics.\n\nBacked by prominent investors and partnerships, Pets.com expanded quickly and rolled out nationwide fulfillment while pricing aggressively to win share. In **early 2000** it completed an IPO during the peak of dot-com exuberance. Within months, tightening capital markets and rising customer-acquisition costs exposed the model’s fragility. Despite strong traffic and name recognition, contribution margins stayed thin and marketing spend remained high. By **late 2000**, the company announced it would cease operations and liquidate, selling intellectual property and inventory.\n\nToday, Pets.com is shorthand for the **dot-com bubble**—a case study in the gap between brand fame and unit economics. The sock-puppet lives on as cultural memory, while the lesson about shipping-heavy, low-margin categories remains part of e-commerce strategy playbooks.",
+  "overview_md": "**Pets.com** launched in 1998 as an online store selling pet food, cat litter, toys, and other pet supplies shipped directly to your door. The idea fit the moment. In the late 1990s, investors and entrepreneurs believed the internet would move nearly every kind of retail online, and pet supplies seemed like a natural category.\n\nThe company raised money quickly. Amazon put in $50 million and ended up with about a 30 percent stake. Venture capital firms added more. By the time Pets.com went public in February 2000, it had raised over $300 million in total funding.\n\nThe sock puppet appeared in ads starting in August 1999 and became the face of the brand almost immediately. He was a hand puppet with a microphone, friendly and a little sarcastic, and he showed up on television, in print ads, and in the Macy’s Thanksgiving Day Parade. In January 2000 the sock puppet appeared in a Super Bowl ad, which was one of the most expensive advertising placements available. The spot ran just days before the company’s IPO.\n\nBut the business had a problem that all the marketing in the world could not fix. Shipping heavy items like bags of dog food or jugs of cat litter across the country cost more than the company was charging customers. Pets.com was selling products at or below what it paid for them, then paying again to ship them. The more customers it attracted, the more money it lost on each order.\n\nThe IPO raised about $82.5 million. The stock opened at $11 per share and never really recovered. By the fall of 2000, the dot-com market had turned and investors were no longer willing to fund companies burning through cash without a path to profit. Pets.com lost $147 million in just the first nine months of 2000.\n\nIn November 2000, just 268 days after the IPO, Pets.com announced it was shutting down. Inventory was liquidated and the company closed. The sock puppet’s rights were eventually sold for $125,000 in 2002. Pets.com is still frequently cited as the most recognizable example of the dot-com bubble.",
   "timeline": [
     {
-      "date": "1998-08",
-      "text": "Site launches; national expansion plans begin."
+      "date": "1998",
+      "text": "Pets.com launches as an online pet supply retailer. Amazon invests $50 million and takes a significant stake in the company."
     },
     {
-      "date": "1999-11",
-      "text": "Sock-puppet campaign gains traction; broad TV and print push."
+      "date": "1999-08",
+      "text": "The sock puppet mascot appears in advertising for the first time and quickly becomes the recognizable face of the brand."
     },
     {
       "date": "2000-01",
-      "text": "Super Bowl appearance amplifies brand awareness."
+      "text": "The sock puppet appears in a Super Bowl ad, one of the most expensive advertising placements of the year."
     },
     {
       "date": "2000-02",
-      "text": "Initial public offering during the dot-com boom."
+      "text": "Pets.com goes public on the Nasdaq at $11 per share, raising about $82.5 million. Total funding raised exceeds $300 million."
     },
     {
       "date": "2000-11",
-      "text": "Company announces shutdown and liquidation; brand assets later sold."
+      "text": "Pets.com shuts down, 268 days after its IPO. The company lost $147 million in the first nine months of 2000. Inventory is liquidated and the site goes dark."
+    },
+    {
+      "date": "2002",
+      "text": "The rights to the sock puppet are sold for $125,000 to a group called Sock Puppet LLC."
     }
   ],
   "links": {
@@ -71,6 +75,8 @@
     "meta_description": "Pets.com went from IPO to liquidation in just 268 days after burning through $300M. The sock puppet-fronted pet supply site became the defining dot-com bust of 2000."
   },
   "image": "/images/brands/pets-com.webp",
+  "image_width": 800,
+  "image_height": 1067,
   "image_alt": "Pets.com sock puppet mascot",
-  "image_caption": "Source: Wikimedia Commons"
+  "image_caption": "Source: Wikimedia Commons — File:Pets.com_sockpuppet.jpg"
 }

@@ -219,17 +219,17 @@ const faqLd = {
   <!-- Shared card + UI styles -->
   <style is:inline>
     /* Featured collections */
-    .featured-collections { margin: 44px 0; }
-    .featured-collections > h2 { font-size: 22px; margin: 0 0 22px 0; }
+    .featured-collections { margin: 52px 0; }
+    .featured-collections > h2 { font-size: 24px; margin: 0 0 26px 0; }
 
     .collection {
-      margin: 28px 0 44px;
+      margin: 32px 0 52px;
     }
 
     /* ✅ Clear separation between adjacent collections */
     .collection + .collection {
-      margin-top: 44px;
-      padding-top: 22px;
+      margin-top: 52px;
+      padding-top: 26px;
       position: relative;
     }
 
@@ -248,7 +248,7 @@ const faqLd = {
     }
 
     .see-all {
-      font-size: .8rem; font-weight: 600; text-decoration: none;
+      font-size: .88rem; font-weight: 600; text-decoration: none;
       color: rgb(99 102 241); white-space: nowrap;
       border-bottom: 1px solid transparent;
     }
@@ -261,17 +261,17 @@ const faqLd = {
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      margin-bottom: 14px; /* a bit more room above the grid */
+      margin-bottom: 20px;
     }
 
     .brand-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
-      gap: 18px; /* slightly larger to avoid crowding across collections */
+      grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));
+      gap: 24px;
     }
 
     @media (max-width: 768px) {
-      .brand-grid { gap: 14px; }
+      .brand-grid { gap: 16px; }
     }
 
     .fcard {
@@ -295,14 +295,14 @@ const faqLd = {
 
     /* ===== Hero + compact stats + search ===== */
     .hero-section {
-      margin-top: 0.5rem;
-      margin-bottom: 1.75rem;
+      margin-top: 0.75rem;
+      margin-bottom: 2.25rem;
     }
 
     .hero-inner {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 1rem;
     }
 
     .hero-title {
@@ -316,14 +316,14 @@ const faqLd = {
     }
 
     .hero-subtitle {
-      font-size: 0.95rem;
-      line-height: 1.5rem;
-      color: rgb(71 85 105);
+      font-size: 1.1rem;
+      line-height: 1.7rem;
+      color: rgb(51 65 85);
       max-width: none;
       width: 100%;
     }
     .dark .hero-subtitle {
-      color: rgb(203 213 225);
+      color: rgb(226 232 240);
     }
 
     .hero-actions {
@@ -391,8 +391,8 @@ const faqLd = {
     .hero-stats-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.25rem;
-      font-size: 0.75rem;
+      gap: 1.5rem;
+      font-size: 0.82rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: rgb(100 116 139);
@@ -409,7 +409,7 @@ const faqLd = {
 
     .hero-stat dt {
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       color: rgb(15 23 42);
     }
     .dark .hero-stat dt {
@@ -697,12 +697,12 @@ const faqLd = {
 <style is:inline>
   .archive-browse-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+    gap: 18px;
   }
   .browse-card {
-    display: flex; flex-direction: column; gap: .2rem;
-    padding: 1rem 1.1rem; border-radius: .875rem; text-decoration: none;
+    display: flex; flex-direction: column; gap: .35rem;
+    padding: 1.25rem 1.35rem; border-radius: .875rem; text-decoration: none;
     border: 1px solid rgb(226 232 240);
     background: rgb(248 250 252);
     transition: background .15s, border-color .15s, transform .15s;
@@ -711,18 +711,18 @@ const faqLd = {
   .dark .browse-card { background: rgb(15 23 42); border-color: rgb(51 65 85); }
   .dark .browse-card:hover { background: rgb(30 41 59); border-color: rgb(99 102 241 / .6); }
   .browse-card-stat {
-    font-size: 1.5rem; font-weight: 800; line-height: 1.1;
+    font-size: 1.7rem; font-weight: 800; line-height: 1.1;
     color: rgb(15 23 42);
   }
   .dark .browse-card-stat { color: rgb(248 250 252); }
   .browse-card-label {
-    font-size: .875rem; font-weight: 600;
+    font-size: 1rem; font-weight: 600;
     color: rgb(30 41 59);
   }
   .dark .browse-card-label { color: rgb(203 213 225); }
   .browse-card-hint {
-    font-size: .75rem; color: rgb(100 116 139);
-    margin-top: .1rem;
+    font-size: .82rem; color: rgb(100 116 139);
+    margin-top: .15rem;
   }
   .dark .browse-card-hint { color: rgb(100 116 139); }
 </style>

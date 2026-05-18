@@ -8,13 +8,13 @@
     "start": 1879,
     "end": 1997
   },
-  "fate": "Converted/closed",
-  "hook": "The five-and-dime that evolved into Foot Locker’s parent company.",
-  "summary": "America’s original five-and-dime chain shut its last U.S. stores in 1997. The corporate shell became **Venator Group** and later **Foot Locker, Inc.**, which still operates today. **Fun fact:** founder Frank W. Woolworth’s namesake **Woolworth Building** (opened 1913) was famously said to be paid **in cash from nickels and dimes**—a nod to the chain’s low-price roots.",
+  "fate": "The last American Woolworth stores closed in July 1997. The company changed its name to Venator Group and later became Foot Locker, Inc., which still runs shoe stores today.",
+  "hook": "The original American budget store, where a nickel or a dime could get you almost anything on the shelf.",
+  "summary": "Woolworth was a chain of stores that started in 1879. The stores sold everyday things at low prices and became a fixture in towns all across America. They were famous for their lunch counters, where shoppers could grab a cheap meal while they browsed the aisles. In 1960, a Woolworth lunch counter in Greensboro, North Carolina became part of a famous moment in the civil rights movement when Black college students sat down at a whites-only counter and refused to leave. The last American Woolworth stores closed in 1997, and the company eventually became Foot Locker, Inc. Frank Woolworth, who started the chain, paid for the Woolworth Building in New York City in 1913 entirely in cash.",
   "notable_products": [
-    "Five-and-dime variety stores",
-    "Lunch counters",
-    "Foot Locker corporate spinoff"
+    "Five-and-dime variety stores, where everything on the shelves originally cost five or ten cents",
+    "Lunch counters inside stores, where shoppers could sit down for a cheap meal while they shopped",
+    "The Woolworth Building in New York City (1913), paid for entirely in cash by Frank Woolworth"
   ],
   "topics": [
     "discontinued",
@@ -26,32 +26,32 @@
     "wikipedia_company": "https://en.wikipedia.org/wiki/F._W._Woolworth_Company",
     "wikipedia_woolworth_building": "https://en.wikipedia.org/wiki/Woolworth_Building"
   },
-  "overview_md": "**F.W. Woolworth** popularized the five-and-dime format—fixed low prices, broad everyday assortment, and lunch counters that became cultural touchstones (and civil-rights landmarks). As specialty big boxes and discount chains rose, Woolworth’s variety format waned. In **1997** the company closed its remaining U.S. Woolworth stores, rebranded as **Venator Group**, and ultimately **Foot Locker, Inc.**—today a global athletic retailer—while international Woolworth banners followed their own paths. _Fun note:_ the 1913 **Woolworth Building** in New York, long among the world’s tallest, was widely reported as paid **in cash** by Frank W. Woolworth.",
+  "overview_md": "**F. W. Woolworth** opened his first successful store in 1879 in Lancaster, Pennsylvania. The idea was simple: sell everyday things at very low prices. For a long time, everything in the store cost either five cents or ten cents. That is where the name five-and-dime came from.\n\nThe stores spread fast. By the early 1900s, Woolworth stores were a common sight in towns and cities across the United States. The stores carried a wide range of products including candy, housewares, small toys, fabric, and basic clothing. They also had lunch counters where shoppers could sit down and get a cheap meal.\n\nIn 1913, Frank Woolworth had a large office tower built in New York City. The Woolworth Building stood 792 feet tall and was the tallest building in the world for a time. Frank Woolworth paid for it in cash, reportedly writing a check for about 13 million dollars rather than taking out a loan.\n\nThe lunch counters inside Woolworth stores became part of an important moment in American history in 1960. Four Black college students sat down at the whites-only lunch counter at a Woolworth store in Greensboro, North Carolina. They were refused service but stayed seated. Their quiet protest sparked a wave of similar sit-ins at lunch counters across the South and helped push the civil rights movement forward.\n\nBy the 1980s and 1990s, shoppers were moving to discount stores and specialty retailers. Woolworth began closing stores and shifting focus to its athletic shoe brands. The last American Woolworth stores closed in July 1997. The company changed its name to Venator Group and later became Foot Locker, Inc., which still runs shoe stores around the world today.",
   "timeline": [
     {
       "date": "1879",
-      "text": "First Woolworth store opens; five-and-dime concept takes shape."
+      "text": "Frank Woolworth opens his first successful store in Lancaster, Pennsylvania. Everything costs five or ten cents. The format catches on right away."
     },
     {
-      "date": "1913-04-24",
-      "text": "Woolworth Building opens in NYC."
+      "date": "1913",
+      "text": "The Woolworth Building opens in New York City on April 24. It stands 792 feet tall and is the tallest building in the world for a time. Frank Woolworth pays for it in cash."
     },
     {
       "date": "1960",
-      "text": "Woolworth lunch counters figure in civil-rights sit-ins."
+      "text": "Four Black college students sit down at the whites-only lunch counter at a Woolworth in Greensboro, North Carolina. They are refused service but stay seated. The protest sparks sit-ins at lunch counters across the South."
     },
     {
-      "date": "1997-07-17",
-      "text": "Final U.S. Woolworth stores close."
+      "date": "1997",
+      "text": "The last American Woolworth stores close on July 17, 1997. The company changes its name to Venator Group and later becomes Foot Locker, Inc."
     }
   ],
   "sources": [
     {
-      "label": "Wikipedia — F.W. Woolworth Company (history & closure)",
+      "label": "Wikipedia — F.W. Woolworth Company (history and closure)",
       "url": "https://en.wikipedia.org/wiki/F._W._Woolworth_Company"
     },
     {
-      "label": "Wikipedia — Woolworth Building (background & financing lore)",
+      "label": "Wikipedia — Woolworth Building",
       "url": "https://en.wikipedia.org/wiki/Woolworth_Building"
     }
   ],

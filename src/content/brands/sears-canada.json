@@ -8,9 +8,9 @@
     "start": 1952,
     "end": 2018
   },
-  "fate": "Liquidation",
-  "hook": "Outlasted catalog era, couldn't survive e-commerce",
-  "summary": "Canadian department store chain liquidated in 2018.",
+  "fate": "Sears Canada filed for creditor protection in 2017 and closed all of its remaining stores by January 2018 after failing to find a buyer.",
+  "hook": "A Canadian department store that started as a mail-order catalog business in 1952, grew into one of the country's biggest retail chains, and closed all its stores in 2018.",
+  "summary": "Sears Canada began in 1952 as a joint venture between the Canadian retailer Simpsons and the American company Sears, Roebuck. For decades it was one of the most recognized names in Canadian retail, known for its thick mail-order catalogs and large stores in shopping malls across the country. The chain sold appliances, clothing, tools, and home goods. It changed its name to Sears Canada in 1984. By the 2000s, online shopping and competition from specialty stores pulled customers away. The company filed for creditor protection in 2017 and closed its last stores in January 2018.",
   "topics": [
     "bankruptcy",
     "retail",
@@ -18,37 +18,50 @@
     "2000s-nostalgia"
   ],
   "notable_products": [
-    "Department stores",
-    "Kenmore (licensed)"
+    "The Sears catalog, a thick mail-order book that Canadian families used to shop for everything from appliances to clothing, sent to homes across the country",
+    "Kenmore appliances, a brand licensed from Sears in the US and sold in Canadian stores for decades",
+    "Sears Home stores, a standalone home furnishings format the company operated in some markets",
+    "Sears Auto Centre, in-store automotive service departments found in many larger locations"
   ],
-  "overview_md": "**Sears (Canada)** began in 1952 as a joint venture between Simpsons and Sears, Roebuck, blending U.S.-style catalog scale with Canadian merchandising know-how. Through the 1950s–1970s it became a household name: the thick catalog on kitchen tables, auto centers in suburban plazas, and anchor stores in new shopping malls from coast to coast. Its mix of trusted private labels (including licensed **Kenmore**) and broad “one-stop” assortments made Sears a default destination for appliances, tools, fashions, and home goods.\n\nBy the 2000s, however, the formula that once guaranteed traffic started to fray. Malls matured, e-commerce accelerated, and category killers chipped away at high-margin lines such as appliances and electronics. Cost controls and property monetization bought time but dulled the in-store experience. Attempts to modernize—store remodels, edited assortments, and a smaller catalog footprint—couldn’t overcome falling sales and rising obligations. In **2017** the company sought court protection and, after failed bids to reorganize, moved to an orderly wind-down. The final stores closed in **2018**, ending more than six decades of Canadian retail history.\n\nFor many Canadians, Sears was more than a store; it was where families ordered bunk beds, winter boots, or their first washer-dryer set. The brand’s disappearance marked the close of a catalog-to-mall era and a reminder of how quickly retail habits can shift.",
+  "overview_md": "**Sears Canada** started in 1952 as a partnership between Simpsons, a Canadian retailer, and Sears, Roebuck, the large American department store company. The idea was to bring Sears-style catalog shopping to Canada. Families across the country received thick mail-order catalogs and could order clothing, appliances, tools, and home goods without leaving the house.\n\nThrough the 1960s and 1970s the company grew steadily. It opened large stores in shopping malls from British Columbia to Newfoundland, added auto service centres in many locations, and sold licensed brands like Kenmore appliances. In 1984 the company changed its name from Simpsons-Sears to Sears Canada. By that point it was one of the most recognized retail names in the country.\n\nThe catalog business started shrinking in the 1990s and was eventually shut down. The stores kept going, but by the 2000s the chain was losing customers to online shopping, discount retailers, and stores that focused on single categories like electronics or home improvement. Sears struggled to stay relevant and cut costs over several years without finding a way to bring shoppers back.\n\nIn June 2017 Sears Canada filed for creditor protection under Canadian law after sales had fallen for years and the company could not cover its obligations. The company tried to find a buyer but no successful deal came together. The final stores closed in January 2018 after more than 65 years in Canadian retail.\n\nA lot of Canadians grew up with a Sears catalog in the house and remember going to Sears with their families for back-to-school shopping or appliances. The closure was widely covered and felt like the end of something that had been around for most people’s entire lives.",
   "timeline": [
     {
-      "date": "1952-09",
-      "text": "Simpsons-Sears Limited is formed as a joint venture to operate catalog and retail stores in Canada."
+      "date": "1952",
+      "text": "Simpsons-Sears Limited is formed as a joint venture between the Canadian retailer Simpsons and Sears, Roebuck of the United States. The business launches catalog shopping in Canada."
     },
     {
-      "date": "1953-09",
-      "text": "First Simpsons-Sears catalog season and early stores roll out across multiple provinces."
+      "date": "1953",
+      "text": "The first Simpsons-Sears catalog goes out to Canadian homes and the first stores open across multiple provinces."
     },
     {
-      "date": "1984-01",
-      "text": "Corporate identity transitions to Sears Canada Inc., consolidating brand presence nationwide."
+      "date": "1984",
+      "text": "The company renames itself Sears Canada Inc. By this point it has stores in shopping malls across the country."
     },
     {
       "date": "2017-06",
-      "text": "Sears Canada files for protection under the Companies’ Creditors Arrangement Act (CCAA)."
+      "text": "Sears Canada files for creditor protection after years of falling sales. The company looks for a buyer but does not find one."
     },
     {
       "date": "2018-01",
-      "text": "All remaining Sears Canada stores close as liquidation completes."
+      "text": "All remaining Sears Canada stores close. The company has operated for more than 65 years."
     }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Sears_Canada",
     "wayback": "https://web.archive.org/web/*/http://www.sears.ca"
   },
+  "sources": [
+    {
+      "label": "Wikipedia — Sears Canada",
+      "url": "https://en.wikipedia.org/wiki/Sears_Canada"
+    }
+  ],
+  "seo": {
+    "meta_description": "Sears Canada started as a mail-order catalog business in 1952 and became one of Canada's biggest retail chains. It filed for creditor protection in 2017 and closed all stores in January 2018."
+  },
   "image": "/images/brands/sears-canada.webp",
-  "image_alt": "Sears Canada store",
-  "image_caption": "Source: Wikimedia Commons — File:Sears_Canada_logo.svg"
+  "image_width": 800,
+  "image_height": 450,
+  "image_alt": "Sears Canada store at Oshawa Centre, 2017",
+  "image_caption": "Source: Wikimedia Commons — File:Sears_Canada_at_Oshawa_Centre_2017.jpg"
 }

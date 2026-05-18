@@ -8,15 +8,15 @@
     "start": 2012,
     "end": 2016
   },
-  "hook": "Crowdfunding smartwatch hero, acquired and killed by Fitbit",
-  "fate": "Core assets acquired by Fitbit in Dec 2016; Pebble hardware discontinued and cloud services later sunset.",
-  "summary": "Crowdfunding-era smartwatch pioneer best known for long battery life, e-paper displays, and a vibrant developer community. Acquired by Fitbit in 2016; products discontinued.",
+  "hook": "A smartwatch that broke Kickstarter records in 2012 with a week-long battery and e-paper display, acquired by Fitbit for an estimated $30–40 million in 2016 and shut down.",
+  "fate": "Pebble filed for insolvency in December 2016 and sold its software, patents, and key staff to Fitbit for an estimated $30–40 million. All Pebble hardware was discontinued. A community project called Rebble later rebuilt the backend servers to keep existing watches functional.",
+  "summary": "Pebble was a smartwatch company founded in 2012 that became famous for a Kickstarter campaign that raised over $10 million, making it the most funded project in Kickstarter history at the time. The watches were known for week-long battery life, an e-paper display readable in sunlight, and compatibility with both iPhone and Android. Pebble built a strong developer community and released several watch models through 2015. Competition from Apple Watch and other smartwatches made it hard to raise more funding, and the company filed for insolvency in late 2016. Fitbit acquired the software and talent for an estimated $30–40 million and discontinued all hardware.",
   "notable_products": [
-    "Pebble (Classic)",
-    "Pebble Steel",
-    "Pebble Time",
-    "Pebble Time Steel",
-    "Pebble Time Round"
+    "Pebble Classic, the original 2012 smartwatch with an e-paper display, week-long battery life, and water resistance, first shipped to Kickstarter backers in early 2013",
+    "Pebble Steel, a stainless steel version announced in 2014 with a more premium look while keeping the same e-paper display and battery life",
+    "Pebble Time, a 2015 model with a color e-paper display, a built-in microphone, and a new Timeline interface for scrolling through past and upcoming events",
+    "Pebble Time Round, a thinner circular version of the Pebble Time released in 2015",
+    "Pebble Time Steel, a premium stainless steel version of the Pebble Time with longer battery life"
   ],
   "topics": [
     "acquired",
@@ -24,27 +24,31 @@
     "wearables",
     "2000s-nostalgia"
   ],
-  "overview_md": "**Pebble** helped prove that smartwatches had an audience well before the mainstream took off. Launched via a record-breaking **Kickstarter** in 2012, Pebble’s appeal was practical: a sunlight-readable e-paper display, **week-long battery life**, simple notifications, fitness tracking, and water resistance. Its open SDK and watchface/app gallery fostered a lively developer scene, letting owners customize everything from running dashboards to retro game faces.\n\nHardware iterations—**Pebble Steel** and the **Pebble Time** family—refined materials, colors, and microphones while keeping battery life and platform neutrality (iOS and Android) as core strengths. But as Apple Watch and Android Wear matured, competition for components, distribution, and developer attention intensified. Scaling challenges and a tough fundraising environment pushed Pebble to sell key assets to **Fitbit** in **2016**; Pebble stopped making devices and the cloud services that powered voice replies, timeline sync, and app distribution were set to wind down (a community project, *Rebble*, later kept much functionality alive).\n\nPebble’s legacy is visible in today’s wearables: quick-glance UIs, focus on notification triage, and the idea that battery life and comfort matter as much as raw specs. For many, Pebble remains the quintessential “do-less-better” smartwatch—hackable, friendly, and delightfully reliable.",
+  "overview_md": "**Pebble** was a smartwatch company that got its start on Kickstarter in April 2012. The campaign asked for $100,000 and hit that goal in two hours. By the time it ended, 68,929 backers had pledged over $10 million, making it the most funded project in Kickstarter history at that point.\n\nThe original Pebble watch had a few things that made it stand out. It used an e-paper display similar to what you find in e-readers, which meant it was easy to read in direct sunlight and used very little power. The battery lasted about a week on a single charge, which was far longer than most smartwatches that came after it. It worked with both iPhone and Android phones, which was uncommon at the time. It could show notifications, track steps, and run third-party apps and watch faces built by developers.\n\nPebble released updated models over the next few years. Pebble Steel in 2014 brought a stainless steel case. The Pebble Time in 2015 added a color e-paper display and a microphone. That model also ran a second Kickstarter campaign that raised $20.3 million, again a record at the time. Pebble Time Round was a thinner, circular version released the same year.\n\nBy 2015 and 2016 the competitive landscape had changed significantly. Apple Watch launched in 2015 and drew a lot of attention and developer resources. Android Wear watches from Samsung and others gave Android users more options. Pebble struggled to raise new investment to keep up.\n\nIn December 2016 Pebble filed for insolvency and sold its software, patents, and key employees to Fitbit for an estimated $30 to 40 million. All Pebble hardware was discontinued immediately. The backend servers that handled app syncing, voice replies, and the app store were shut down over the following years.\n\nA community project called Rebble rebuilt those servers independently and kept existing Pebble watches functional for people who were still using them. Fitbit itself was later acquired by Google in 2021.",
   "timeline": [
     {
       "date": "2012-04-11",
-      "text": "Pebble Kickstarter launches and quickly becomes one of the platform’s largest campaigns."
+      "text": "Pebble launches on Kickstarter with a $100,000 goal. It hits that goal in two hours and goes on to raise over $10 million from 68,929 backers, the most funded Kickstarter project at the time."
     },
     {
-      "date": "2013-01-23",
-      "text": "First Pebble units begin shipping to backers; app store and watchface ecosystem grow."
+      "date": "2013-01",
+      "text": "First Pebble watches ship to Kickstarter backers. Developers start building watch faces and apps for the open platform."
     },
     {
-      "date": "2014-02-10",
-      "text": "Pebble Steel announced, bringing a premium stainless-steel design to the lineup."
+      "date": "2014-02",
+      "text": "Pebble Steel is announced, adding a stainless steel case to the lineup while keeping the same e-paper display and battery life."
     },
     {
-      "date": "2015-02-24",
-      "text": "Pebble Time (color e-paper, microphone, Timeline UI) Kickstarter launches; strong funding response."
+      "date": "2015-02",
+      "text": "Pebble Time Kickstarter launches with a color e-paper display, a microphone, and a new Timeline interface. It raises $20.3 million, another Kickstarter record."
     },
     {
-      "date": "2016-12-07",
-      "text": "Fitbit announces acquisition of Pebble’s software assets and talent; Pebble hardware discontinued (cloud services later sunset, with community-led alternatives emerging)."
+      "date": "2015",
+      "text": "Apple Watch launches, drawing significant developer attention and changing the competitive landscape for smartwatches."
+    },
+    {
+      "date": "2016-12",
+      "text": "Pebble files for insolvency and sells its software, patents, and key staff to Fitbit for an estimated $30 to 40 million. All Pebble hardware is discontinued."
     }
   ],
   "links": {
@@ -80,6 +84,8 @@
     "meta_description": "Pebble was the crowdfunding-era smartwatch pioneer, known for long battery life and an e-paper display. Fitbit acquired it in 2016 and discontinued all Pebble hardware."
   },
   "image": "/images/brands/pebble.webp",
-  "image_alt": "Pebble smartwatch",
-  "image_caption": "Source: Wikimedia Commons"
+  "image_width": 800,
+  "image_height": 600,
+  "image_alt": "Pebble smartwatch collection",
+  "image_caption": "Source: Wikimedia Commons — File:Pebble_watch_trio_group_04.png"
 }

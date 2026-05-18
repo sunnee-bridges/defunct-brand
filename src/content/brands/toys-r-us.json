@@ -1,5 +1,5 @@
 {
-  "brand": "Toys “R” Us",
+  "brand": "Toys \"R\" Us",
   "slug": "toys-r-us",
   "category": "Retail",
   "seo_category": "retail",
@@ -8,13 +8,13 @@
     "start": 1948,
     "end": 2018
   },
-  "hook": "Childhood wonderland crushed by $5B debt and Amazon",
-  "fate": "After a 2017 Chapter 11 filing, the U.S. business entered liquidation in 2018 and closed hundreds of stores. The intellectual property was later acquired and relaunched by new owners with small-format stores and Macy’s shop-in-shops.",
-  "summary": "Founded by Charles Lazarus, Toys “R” Us grew from a post-war children’s furniture shop (1948) into the world’s best-known toy superstore chain. Following years of debt from a 2005 LBO and mounting competition from e-commerce and big-box retailers, the company filed for Chapter 11 in 2017 and liquidated its U.S. stores in 2018. The brand name lived on under new owners (Tru Kids, later with WHP Global), including online sales and shop-in-shop locations at Macy’s.",
+  "hook": "The biggest toy store in the world for kids growing up in the 1980s and 1990s, brought down by a massive debt load and competition from Amazon and Walmart.",
+  "fate": "Toys R Us filed for bankruptcy in September 2017 and announced it would close all US stores in 2018. Most locations shut down by June 2018. The brand name was sold to new owners who later opened small stores and put Toys R Us sections inside Macy's department stores.",
+  "summary": "Toys R Us was a chain of large toy stores that started in 1948 in Washington D.C. The stores were famous for their huge selection of toys and their mascot Geoffrey the Giraffe. In 2005 a group of investors bought the company by borrowing about five billion dollars, leaving the company with a massive debt to pay off. That debt, combined with growing competition from Amazon and Walmart, made it impossible to keep going. Toys R Us filed for bankruptcy in 2017 and closed all its US stores in 2018.",
   "notable_products": [
-    "Toy superstores",
-    "Babies “R” Us (subcategory)",
-    "Geoffrey the Giraffe (mascot)"
+    "Large toy superstores with a huge selection of games, action figures, bikes, dolls, and board games",
+    "Babies R Us, a sister store for baby and toddler products that often shared a building with Toys R Us",
+    "Geoffrey the Giraffe, the brand mascot who appeared in ads and at store events for decades"
   ],
   "topics": [
     "bankruptcy",
@@ -23,86 +23,79 @@
     "mall-era",
     "90s-nostalgia"
   ],
-  "overview_md": "**Toys “R” Us** became synonymous with toy shopping in the U.S. and abroad. The chain popularized the big-box toy superstore model, expanded internationally, and spun up **Babies “R” Us** for infant goods.\n\nHeavy debt from a **2005 leveraged buyout** and a rapid shift toward **e-commerce** and **discounters** eroded performance. The company filed for **Chapter 11 in 2017** and, unable to find a buyer for the entire U.S. business, **liquidated in 2018**, shuttering hundreds of stores. The **intellectual property** was later acquired by **Tru Kids** (and subsequently tied to **WHP Global**), which experimented with small experiential stores, online sales, and **Macy’s** shop-in-shops.\n\nWhile the original U.S. company ended in 2018, the **brand** persists in limited forms—an example of a famous retail name outliving the corporation that made it ubiquitous.",
+  "overview_md": "**Toys R Us** was a chain of large toy stores that millions of kids grew up visiting. It was founded in 1948 by Charles Lazarus in Washington D.C., where it started as a store selling children's furniture. In 1957 he opened a store that sold only toys, and the chain was born.\n\nThe stores were enormous compared to what most shops looked like at the time. Walking into a Toys R Us felt like stepping into a place where every shelf was stacked from floor to ceiling with games, action figures, bikes, and board games. A cartoon giraffe named Geoffrey became the face of the brand and was one of the most recognized mascots in American retail.\n\nIn 1978 the company went public on the New York Stock Exchange. Geoffrey the Giraffe started showing up in TV commercials and became a fixture in American pop culture. In 1996 the company launched Babies R Us, a separate store focused on products for babies and young children. The two stores often shared a building and became a familiar sight in shopping centers across the country.\n\nIn 2005 a group of investment firms bought Toys R Us. To do it they borrowed a huge amount of money, roughly five billion dollars, and the company became responsible for paying it back. That kind of deal is called a leveraged buyout. The debt made it very hard to invest in things like better stores, more staff, or a good website.\n\nWhile Toys R Us was weighed down by that debt, Amazon and Walmart started selling toys online and in their own stores at lower prices. Toys R Us kept losing customers year after year. The company filed for bankruptcy in September 2017.\n\nToys R Us tried to find a buyer who would keep the stores open, but no deal came together. In March 2018, the company announced it would close all US locations. Most stores were shut by June 2018. It was the end of a chain that had been the go-to toy store in America for decades.\n\nThe Toys R Us name was sold to a company called Tru Kids Brands. They opened small stores and later partnered with Macy's to put Toys R Us sections inside Macy's department stores. The original chain is gone, but the name found a smaller second life.",
   "timeline": [
     {
-      "date": "1948-01-01",
-      "text": "Charles Lazarus opens a children’s furniture shop in Washington, D.C., the precursor to Toys “R” Us."
+      "date": "1948",
+      "text": "Charles Lazarus opens a children's furniture shop in Washington D.C. It is the starting point for what will become Toys R Us."
     },
     {
-      "date": "1957-01-01",
-      "text": "First dedicated Toys “R” Us store opens, focusing on toys year-round."
+      "date": "1957",
+      "text": "The first dedicated Toys R Us store opens, selling only toys year-round instead of just during the holiday season."
     },
     {
-      "date": "1978-01-01",
-      "text": "IPO on the New York Stock Exchange fuels expansion; Geoffrey the Giraffe becomes a pop-culture mascot."
+      "date": "1978",
+      "text": "Toys R Us goes public on the New York Stock Exchange. Geoffrey the Giraffe becomes a well-known mascot through TV commercials."
     },
     {
-      "date": "1996-01-01",
-      "text": "Launch of Babies “R” Us concept focused on infant and toddler products."
+      "date": "1996",
+      "text": "Babies R Us launches as a separate store focused on products for babies and toddlers. Many locations share a building with Toys R Us stores."
     },
     {
-      "date": "2005-07-21",
-      "text": "Taken private in a leveraged buyout by Bain Capital, KKR, and Vornado; debt load weighs on flexibility."
+      "date": "2005",
+      "text": "Investment firms Bain Capital, KKR, and Vornado buy Toys R Us in a leveraged buyout, loading the company with roughly five billion dollars in debt."
     },
     {
-      "date": "2017-09-18",
-      "text": "Files for Chapter 11 bankruptcy protection in the U.S. amid declining sales and high debt service."
+      "date": "2017",
+      "text": "Toys R Us files for Chapter 11 bankruptcy protection in September after years of struggling to pay its debt while losing customers to Amazon and Walmart."
     },
     {
-      "date": "2018-03-15",
-      "text": "Company announces U.S. liquidation after failing to secure a going-concern sale."
+      "date": "2018",
+      "text": "The company announces it will close all US stores in March after failing to find a buyer. Most locations shut down by June 2018."
     },
     {
-      "date": "2018-06-29",
-      "text": "Most remaining U.S. stores close; the original U.S. company effectively ends operations."
+      "date": "2019",
+      "text": "Tru Kids Brands acquires the Toys R Us and Babies R Us names and begins exploring a comeback with small stores."
     },
     {
-      "date": "2019-02-01",
-      "text": "Tru Kids Brands assumes ownership of the Toys “R” Us and Babies “R” Us IP; explores relaunch."
+      "date": "2021",
+      "text": "Macy's announces a partnership to sell Toys R Us products online and open Toys R Us sections inside its stores."
     },
     {
-      "date": "2019-11-01",
-      "text": "Small experiential stores open under new ownership; later closures precede a revised strategy."
-    },
-    {
-      "date": "2021-08-19",
-      "text": "Macy’s partnership announced: online sales collaboration and plan for in-store Toys “R” Us shops."
-    },
-    {
-      "date": "2022-10-01",
-      "text": "Nationwide Macy’s shop-in-shop rollout expands brand presence ahead of the holiday season."
+      "date": "2022",
+      "text": "Toys R Us sections open inside Macy's stores across the country ahead of the holiday season."
     }
   ],
   "links": {
     "wikipedia": "https://en.wikipedia.org/wiki/Toys_%22R%22_Us",
     "liquidation_news": "https://www.nytimes.com/2018/03/15/business/toys-r-us-liquidation.html",
-    "lbo_background": "https://www.wsj.com/articles/SB111135454862531707",
     "tru_kids_ip": "https://www.prnewswire.com/news-releases/tru-kids-brands-owns-toys-r-us-and-babies-r-us-brands-300799342.html",
     "macys_partnership": "https://press.macysinc.com/news-releases/news-release-details/macys-and-toys-r-us-announce-partnership"
   },
   "sources": [
     {
-      "label": "Wikipedia – Toys “R” Us",
+      "label": "Wikipedia — Toys R Us",
       "url": "https://en.wikipedia.org/wiki/Toys_%22R%22_Us"
     },
     {
-      "label": "NYTimes – Toys “R” Us to Liquidate (Mar 15, 2018)",
+      "label": "New York Times — Toys R Us to Liquidate (March 15, 2018)",
       "url": "https://www.nytimes.com/2018/03/15/business/toys-r-us-liquidation.html"
     },
     {
-      "label": "PR Newswire – Tru Kids owns Toys “R” Us IP (2019)",
+      "label": "PR Newswire — Tru Kids acquires Toys R Us brand (2019)",
       "url": "https://www.prnewswire.com/news-releases/tru-kids-brands-owns-toys-r-us-and-babies-r-us-brands-300799342.html"
     },
     {
-      "label": "Macy’s Press – Partnership Announcement (2021)",
+      "label": "Macy's — Toys R Us partnership announcement (2021)",
       "url": "https://press.macysinc.com/news-releases/news-release-details/macys-and-toys-r-us-announce-partnership"
     }
   ],
   "seo": {
-    "meta_description": "Toys 'R' Us filed for bankruptcy in 2017 and closed its U.S. stores in 2018 after private-equity debt and Amazon competition overwhelmed the iconic toy chain."
+    "meta_description": "Toys R Us filed for bankruptcy in 2017 and closed its US stores in 2018 after private-equity debt and competition from Amazon and Walmart overwhelmed the iconic toy chain."
   },
   "image": "/images/brands/toys-r-us.webp",
-  "image_alt": "Toys R Us store",
-  "image_caption": "Source: Wikimedia Commons — File:Toys_R_Us.JPG"
+  "image_width": 800,
+  "image_height": 600,
+  "image_alt": "Toys R Us and Babies R Us store exterior",
+  "image_caption": "Source: Wikimedia Commons — Toys R Us and Babies R Us store"
 }

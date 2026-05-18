@@ -8,13 +8,14 @@
     "start": 1998,
     "end": 2001
   },
-  "hook_alt": "Ahead of its time, beaten by PlayStation 2",
-  "fate": "Sega discontinued Dreamcast hardware in 2001 and exited the console business to become a third-party publisher.",
-  "summary": "Sega’s final home console (launched 1998 JP, 1999 NA) known for built-in online play, inventive first-party titles, and the VMU. Discontinued in 2001 as Sega left the hardware market.",
+  "hook": "Sega’s last home console, launched in 1998 with a built-in modem for online play — discontinued in 2001 after PlayStation 2 took the market and EA refused to make games for it.",
+  "fate": "Sega stopped making the Dreamcast on March 31, 2001, and left the console hardware business entirely. The company went on to make games for other companies’ platforms instead.",
+  "summary": "The Sega Dreamcast was Sega’s last home video game console. It launched in Japan in November 1998 and in North America on September 9, 1999. The console had a built-in modem for online play, a distinctive memory card called the VMU that had its own small screen, and a strong game library that included Soulcalibur, Crazy Taxi, Jet Set Radio, and Phantasy Star Online. It ran into problems it could not overcome: Sony’s PlayStation 2 announcement hurt sales, EA refused to make games for it after Sega turned down a demand for sports game exclusivity, and the console was being sold at a loss per unit. Sega announced it would stop production on January 31, 2001.",
   "notable_products": [
-    "Dreamcast console",
-    "VMU (Visual Memory Unit)",
-    "Broadband Adapter (optional)"
+    "Dreamcast console, Sega’s sixth-generation home system that launched in Japan in November 1998 with a built-in 56K modem for online play — the first home console to include one",
+    "VMU (Visual Memory Unit), a memory card with a small built-in screen and buttons that could function as a standalone mini-device, with some games showing extra information or mini-games on it",
+    "SegaNet, Sega’s internet service for Dreamcast players that made it easier to find opponents and play online",
+    "Broadband Adapter, an optional add-on that let players connect at faster speeds for online games"
   ],
   "topics": [
     "discontinued",
@@ -22,27 +23,27 @@
     "cult-favorite",
     "90s-nostalgia"
   ],
-  "overview_md": "**Dreamcast** was Sega’s forward-looking final console. Debuting in Japan in **1998** and North America on the iconic **9/9/99**, it shipped with a built-in modem—normalizing online play from day one—and a compact **GD-ROM** format. The system courted developers with a Hitachi SH-4/PowerVR 2D–3D pipeline and optional **Windows CE** middleware, while players got crisp VGA output, sleek industrial design, and the quirky **VMU** (a memory card with a screen that doubled as a mini companion device).\n\nIts library punched above its weight: **Soulcalibur**, **Crazy Taxi**, **Jet Set Radio**, **Shenmue**, **NFL 2K**, and **Phantasy Star Online** (one of the first console online RPGs) showcased arcade-grade visuals and inventive mechanics. In the U.S., Sega pushed a dedicated ISP, **SegaNet**, for low-latency matchmaking.\n\nDespite critical praise, the platform struggled against **PlayStation 2** hype and DVD playback (which Dreamcast lacked), uneven third-party support, and rising piracy exploits. On **January 31, 2001**, Sega announced it would discontinue Dreamcast hardware and shift to software publishing; production wound down that spring. The console’s influence endures in cel-shaded art, online console services, and fan communities that still celebrate its experimental spirit.",
+  "overview_md": "**Sega Dreamcast** was Sega’s last home video game console. It launched in Japan on November 27, 1998, and in North America on September 9, 1999. That launch date, known as 9/9/99, became one of the most recognized dates in gaming history.\n\nThe Dreamcast was the first home console to ship with a built-in modem. That meant players could connect to the internet and play games online without buying any extra hardware. Sega set up its own internet service called SegaNet to make online matchmaking easier. Online play on a home console was still a new idea at the time, and the Dreamcast was ahead of most of its competition on that front.\n\nThe console also came with a memory card called the VMU, which stood for Visual Memory Unit. The VMU had a small screen and buttons built into it, so it could work as a standalone mini-device. Some games put extra information on the VMU screen while you played, and others let you play mini-games on it away from the TV.\n\nThe game library was strong. Soulcalibur, Crazy Taxi, Jet Set Radio, Shenmue, NFL 2K, and Phantasy Star Online were all well-regarded titles. Phantasy Star Online was one of the first games to let console players connect and explore an online world together. Jet Set Radio used a visual style called cel-shading that made the graphics look like a cartoon, which was new at the time.\n\nThe Dreamcast ran into problems it could not overcome. In 1999, Sony announced the PlayStation 2, which could also play DVD movies. The Dreamcast could not play DVDs, and that gap mattered to a lot of buyers. Third-party support was uneven, partly because some developers were wary about committing to a platform made by a company that had lost money on its previous console, the Saturn. EA, one of the biggest game publishers in the world, refused to make games for the Dreamcast after Sega turned down EA’s demand for exclusive rights to all sports titles on the platform. That meant no Madden, no FIFA, and no other EA Sports games.\n\nSega was also selling each Dreamcast unit at a loss, hoping to make the money back on game sales. That model required strong sales momentum, which the PS2 announcement disrupted. Piracy spread quickly too, because it was easy to copy and play games without modifying the hardware.\n\nOn January 31, 2001, Sega announced it would stop making the Dreamcast. Production ended on March 31, 2001. Sega left the console hardware business and went on to make games for other companies’ platforms. The Dreamcast sold around 9 million units worldwide, which was not enough to keep it going, but it built a devoted following that still celebrates the console today.",
   "timeline": [
     {
       "date": "1998-11-27",
-      "text": "Launches in Japan; first sixth-generation console to market."
+      "text": "Dreamcast launches in Japan, becoming the first sixth-generation home console on the market."
     },
     {
       "date": "1999-09-09",
-      "text": "North American launch (“9/9/99”) with a strong first-party/arcade lineup."
+      "text": "Dreamcast launches in North America on September 9, 1999 — a date marketed as 9/9/99. Launch titles include Soulcalibur and NFL 2K."
     },
     {
       "date": "1999-10-14",
-      "text": "European launch expands global footprint ahead of rival platforms."
+      "text": "Dreamcast launches in Europe."
     },
     {
       "date": "2000-12-21",
-      "text": "Phantasy Star Online releases in Japan (NA in 2001), pioneering console online RPG play."
+      "text": "Phantasy Star Online launches in Japan, one of the first online RPGs playable on a home console. The North American version follows in 2001."
     },
     {
       "date": "2001-01-31",
-      "text": "Sega announces exit from console hardware; Dreamcast production ends in 2001."
+      "text": "Sega announces it will stop making the Dreamcast and leave the console hardware business. Production ends March 31, 2001."
     }
   ],
   "links": {
@@ -74,6 +75,9 @@
       "url": "https://www.cnet.com/tech/gaming/sega-to-quit-console-business/"
     }
   ],
+  "seo": {
+    "meta_description": "The Sega Dreamcast was Sega's last home console, launched in 1998 with built-in online play. It was discontinued in 2001 after PlayStation 2 competition, EA's refusal to publish games for it, and mounting losses ended its run."
+  },
   "image": "/images/brands/sega-dreamcast.webp",
   "image_alt": "Sega Dreamcast console",
   "image_caption": "Source: Wikimedia Commons — File:Sega-dreamcast-set.png"

@@ -141,7 +141,7 @@ const itemListLd = {
       display: flex;
       flex-direction: column;
     }
-    .dark .card { border-color: rgb(51 65 85); background: rgb(2 6 23); }
+    .dark .card { border-color: rgb(51 65 85); background: rgb(22 27 40); }
     .card:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -18px rgba(0,0,0,.45); }
 
     .thumb {
@@ -177,7 +177,7 @@ const itemListLd = {
 
     }
     .title {
-      font-weight: 700; line-height: 1.3; font-size: 0.9rem; color: rgb(15 23 42);
+      font-weight: 700; line-height: 1.3; font-size: 1.1rem; color: rgb(15 23 42);
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
       min-height: 2.6em;
     }
@@ -185,7 +185,7 @@ const itemListLd = {
     .title a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
     .desc {
-      margin-top: 8px; color: rgb(71 85 105); font-size: 0.78rem; line-height: 1.5;
+      margin-top: 9px; color: rgb(71 85 105); font-size: 1rem; line-height: 1.5;
       display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
       min-height: 4.5em;
     }
@@ -197,7 +197,7 @@ const itemListLd = {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      font-size: 14px;
+      font-size: 0.84rem;
       color: rgb(100 116 139);
     }
 
@@ -216,14 +216,14 @@ const itemListLd = {
       border: 1px solid color-mix(in oklab, rgb(99 102 241) 24%, white); color: rgb(30 41 59);
     }
     .dark .chip {
-      background: color-mix(in oklab, rgb(99 102 241) 26%, rgb(2 6 23));
-      border-color: color-mix(in oklab, rgb(99 102 241) 42%, rgb(2 6 23));
+      background: color-mix(in oklab, rgb(99 102 241) 26%, rgb(22 27 40));
+      border-color: color-mix(in oklab, rgb(99 102 241) 42%, rgb(22 27 40));
       color: white;
     }
 
     .badge {
       position: absolute; top: 10px; left: 10px;
-      font-size: 11px; font-weight: 700;
+      font-size: 14px; font-weight: 700;
       padding: .28rem .5rem; border-radius: 9999px;
       background: rgba(255,255,255,.92); color: #111827;
       border: 1px solid rgba(0,0,0,.06);
@@ -282,12 +282,9 @@ const itemListLd = {
   </style>
 
   <h1 class="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
-  <p class="text-slate-600 dark:text-slate-300 mb-5">{desc}</p>
-
   <p class="text-slate-600 dark:text-slate-300 mb-5">
-  Have your own memories, corrections, or a brand story to share?{" "}
-  <a href="/contact/" class="inline underline decoration-indigo-500 decoration-2 underline-offset-2 hover:decoration-indigo-600 -mx-1 px-1 rounded-sm font-medium text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:bg-indigo-50 dark:hover:bg-slate-800">Get in touch via the contact form</a>.
-</p>
+    The real story behind discontinued products, defunct retailers, and forgotten brands.
+  </p>
 
   <!-- 🔎 Blog search by title / description / tags -->
   <form
@@ -578,6 +575,15 @@ const itemListLd = {
       });
     })();
   </script>
+
+  <!-- Contribute callout -->
+  <aside class="mt-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 px-6 py-5">
+    <p class="font-semibold text-slate-900 dark:text-slate-100 mb-1">Have a brand story to share?</p>
+    <p class="text-sm text-slate-600 dark:text-slate-300">
+      Memories, corrections, or a brand we're missing —{" "}
+      <a href="/contact/" class="font-medium text-indigo-600 dark:text-indigo-400 underline underline-offset-2 hover:text-indigo-800 dark:hover:text-indigo-300">get in touch</a>.
+    </p>
+  </aside>
 
   <!-- Date prettifier -->
   <script is:inline>

@@ -873,21 +873,25 @@ if (catPath && catLabel) {
 }
 
   if (Array.isArray(brand?.topics) && brand.topics.length > 0) {
-  // normalize category to a slug so "Retail" matches "retail"
+  // normalize category and seo_category to slugs for deduplication
   const categorySlug = String(brand?.category || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  const seoSlug = String(brand?.seo_category || "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
   const uniq = Array.from(new Set(brand.topics.map((t: string) => String(t))));
 
-  // remove any topic that matches the category (e.g., topic "retail" when category is "Retail")
+  // remove any topic that matches the category or seo_category to avoid duplicate "More in X" links
   const filtered = uniq.filter((t) => {
     const tSlug = String(t)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
-    return tSlug !== categorySlug;
+    return tSlug !== categorySlug && tSlug !== seoSlug;
   });
 
   filtered.slice(0, 2).forEach((t) => {
@@ -1024,7 +1028,7 @@ if (catPath && catLabel) {
 
       {/* Fate (prominent on brand page) */}
       {brand.fate && (
-        <p id="brand-fate" class="mt-8 mb-8 text-base text-slate-800 dark:text-slate-200">
+        <p id="brand-fate" class="mt-8 mb-8 text-lg text-slate-800 dark:text-slate-200">
           <strong>{pickFateIcon(brand.fate, brand.topics)} Fate:</strong>{" "}
           <Fragment set:html={inlineMd(brand.fate)} />
         </p>
@@ -1043,7 +1047,7 @@ if (catPath && catLabel) {
 {hasQuickFacts(brand) && (
   <aside class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
     <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-3">Quick Facts</h3>
-    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-base">
       {/* Prefer quick_facts if available */}
       {brand?.quick_facts ? (
         <>
@@ -1228,8 +1232,8 @@ if (catPath && catLabel) {
             class="rounded-lg border border-slate-200 dark:border-slate-700 w-full"
             loading="lazy"
             decoding="async"
-            width="800"
-            height="800"
+            width={brand.image_width ?? 800}
+            height={brand.image_height ?? 800}
           />
           {brand.image_caption && (
             <figcaption class="mt-1 text-[11px] text-slate-400 dark:text-slate-500 text-center leading-relaxed">
@@ -1241,7 +1245,7 @@ if (catPath && catLabel) {
 
       {/* Overview body (Markdown) */}
       {(brand.overview_md || overviewHtml || brand?.content?.introduction) && (
-        <section id="brand-overview" aria-label="Overview" class="prose dark:prose-invert max-w-none mt-6">
+        <section id="brand-overview" aria-label="Overview" class="prose prose-lg dark:prose-invert max-w-none mt-6">
           <Fragment set:html={overviewHtml || mdToHtml(String(brand.overview_md || brand?.content?.introduction || ""))} />
         </section>
       )}
@@ -1261,7 +1265,7 @@ if (catPath && catLabel) {
               >
                 {section.heading}
               </h2>
-              <div class="prose dark:prose-invert max-w-none">
+              <div class="prose prose-lg dark:prose-invert max-w-none">
                 <Fragment set:html={mdToHtml(section.content)} />
               </div>
             </section>
@@ -1289,7 +1293,7 @@ if (catPath && catLabel) {
 
                 <ul class="mt-2 space-y-2">
                   {group.items.map((t) => (
-                    <li class="text-slate-700 dark:text-slate-300">
+                    <li class="text-lg text-slate-700 dark:text-slate-300">
                       {t.subLabel && (
                         <span class="font-semibold text-slate-900 dark:text-slate-100">
                           {t.subLabel} —{" "}
@@ -1317,7 +1321,7 @@ if (catPath && catLabel) {
                 <h3 class="text-lg font-semibold mb-2 text-slate-800 dark:text-slate-200">
                   {item.question}
                 </h3>
-                <div class="text-slate-700 dark:text-slate-300 prose dark:prose-invert max-w-none">
+                <div class="text-slate-700 dark:text-slate-300 prose prose-lg dark:prose-invert max-w-none">
                   <Fragment set:html={mdToHtml(item.answer)} />
                 </div>
               </div>

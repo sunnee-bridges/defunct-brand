@@ -8,9 +8,9 @@
     "start": 2013,
     "end": 2020
   },
-  "hook": "The original Red Edition flavor—cranberry—quietly vanished when Watermelon took its place.",
-  "fate": "Cranberry Red Edition discontinued in the U.S. and effectively replaced by Red Edition Watermelon around 2020.",
-  "summary": "Red Bull’s first Red Edition launched as **Cranberry** in 2013 and built a steady following. In the U.S., the ‘Red Edition’ later switched to **Watermelon** (keeping the Red Edition name), and cranberry disappeared from shelves by ~2020. Today, Red Edition in the U.S. means Watermelon; cranberry is considered discontinued here.",
+  "hook": "Red Bull’s original cranberry-flavored Red Edition launched in 2013 and disappeared from US shelves around 2020 when watermelon took over the Red Edition slot.",
+  "fate": "Red Bull introduced watermelon as a limited summer flavor in 2020 and it sold well enough to become a permanent product. When it did, watermelon took the Red Edition name and cranberry was discontinued in the US.",
+  "summary": "Red Bull launched its Editions line in 2013 with three flavors: cranberry as the Red Edition, blueberry as the Blue Edition, and lime as the Silver Edition. Cranberry Red Edition was sold in the US for about seven years. In 2020 Red Bull introduced a watermelon Summer Edition that proved popular enough to become a permanent flavor. It was given the Red Edition name, and cranberry was discontinued in the US. Some markets outside the US still carry a cranberry Red Edition.",
   "topics": [
     "discontinued",
     "beverages",
@@ -26,31 +26,39 @@
     "red_bull_product_page_current": "https://www.redbull.com/us-en/energydrink/red-bull-red-edition",
     "retail_listings_watermelon": "https://www.harristeeter.com/p/red-bull-red-edition-watermelon-energy-drink/0061126900086"
   },
-  "overview_md": "The **Red Edition** debuted in the early 2010s with **cranberry** as its U.S. flavor. For years the can read *The Red Edition (Cranberry)* alongside Blue (Blueberry) and Silver (Lime). Around **2020**, Red Bull shifted the U.S. Red Edition to **Watermelon**, and the cranberry SKU exited mainstream distribution. The *Red Edition* name stayed—only the taste changed—so fans generally treat cranberry as a **discontinued U.S. flavor**.",
+  "notable_products": [
+    "Red Edition Cranberry, the original cranberry-flavored Red Edition sold in the US from 2013 to around 2020",
+    "Blue Edition Blueberry, one of the other two original flavors launched alongside cranberry in 2013",
+    "Silver Edition Lime, the third flavor in the original 2013 Editions launch"
+  ],
+  "overview_md": "**Red Bull Red Edition (Cranberry)** was the original flavor behind the Red Edition can. Red Bull launched its Editions line in 2013, introducing three new flavors alongside the original energy drink: cranberry as the Red Edition, blueberry as the Blue Edition, and lime as the Silver Edition. Each came in a distinctly colored can and had a fruit flavor added to the familiar Red Bull base.\n\nCranberry Red Edition sold in the US for about seven years. It built a following among people who liked the tart cranberry flavor as an alternative to the original. The Editions line grew over the years as Red Bull added seasonal and limited flavors, but cranberry remained the standard Red Edition through most of that period.\n\nIn 2020 Red Bull introduced a watermelon flavor as part of its Summer Edition lineup. It sold well and Red Bull made it a permanent product, giving it the Red Edition name. Cranberry was discontinued in the US when that happened. The Red Edition can stayed on shelves, the color stayed roughly the same, but the flavor inside changed.\n\nFans who had been buying cranberry noticed the switch and a number of petitions were created asking Red Bull to bring the original flavor back. Cranberry Red Edition is still available in some markets outside the US, but it has not returned to US shelves as a regular product.",
   "timeline": [
     {
-      "date": "2013-03",
-      "text": "Red Bull introduces the ‘Editions’ line in the U.S. with **Cranberry (Red)**, **Blueberry (Blue)**, and **Lime (Silver)**."
+      "date": "2013",
+      "text": "Red Bull launches its Editions line in the US with three flavors: cranberry as the Red Edition, blueberry as the Blue Edition, and lime as the Silver Edition."
     },
     {
-      "date": "2016-01",
-      "text": "Cranberry Red Edition widely available; lineup coexists with seasonal ‘Summer Edition’ SKUs."
+      "date": "2016",
+      "text": "Cranberry Red Edition is widely available across the US alongside a growing lineup of seasonal and limited edition flavors."
     },
     {
-      "date": "2020-01",
-      "text": "U.S. **Red Edition switches to Watermelon**; **cranberry** effectively discontinued in this market."
+      "date": "2020",
+      "text": "Red Bull introduces watermelon as a Summer Edition. It performs well enough to become permanent, taking the Red Edition name and replacing cranberry in the US."
     }
   ],
   "sources": [
     {
-      "label": "Red Bull – Red Edition (current, Watermelon)",
-      "url": "https://www.redbull.com/us-en/energydrink/red-bull-red-edition"
+      "label": "Red Bull Wiki (Fandom) — Red Edition history",
+      "url": "https://red-bull.fandom.com/wiki/Red_Edition"
     },
     {
-      "label": "Harris Teeter – Red Edition Watermelon listing",
-      "url": "https://www.harristeeter.com/p/red-bull-red-edition-watermelon-energy-drink/0061126900086"
+      "label": "Red Bull — current Red Edition product page",
+      "url": "https://www.redbull.com/us-en/energydrink/red-bull-red-edition"
     }
   ],
+  "seo": {
+    "meta_description": "Red Bull Cranberry Red Edition launched in 2013 as one of the original three Editions flavors. It was discontinued in the US around 2020 when watermelon took over the Red Edition slot."
+  },
   "notes": [
     "Wayback snapshots for the exact historic cranberry product URL are not available; trade press from 2013 confirms the cranberry launch.",
     "Watermelon appears as the permanent U.S. Red Edition from 2020 onward; cranberry not in current U.S. lineup."

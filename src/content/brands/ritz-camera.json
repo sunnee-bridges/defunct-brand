@@ -10,10 +10,10 @@
     "end": 2012,
     "status": "Defunct"
   },
-  "hook": "One-hour photo labs in every mall, killed by digital cameras and smartphones.",
-  "excerpt": "Ritz Camera operated for 94 years before digital photography and smartphones destroyed the film processing business that sustained its 800+ stores.",
-  "fate": "Filed for bankruptcy twice (2009, 2012) amid the digital photography transition; most U.S. stores closed or sold; brand assets later operated online under new ownership.",
-  "summary": "Century-old camera and photo-finishing retailer known for one-hour labs and mall shops; collapsed after the transition to digital imaging and two bankruptcies.",
+  "category": "Retail/Photography",
+  "hook": "A chain of mall camera stores that developed your film in an hour, ran for 94 years, and closed in 2012 after digital cameras and smartphones made film processing obsolete.",
+  "fate": "Ritz Camera filed for bankruptcy in February 2009 and closed around 300 stores. The chain tried to continue but filed again in June 2012. All physical stores closed that year. The brand name was sold and later used by an online-only retailer.",
+  "summary": "Ritz Camera was a camera and photo store chain founded in 1918 by David Ritz. For most of its history the business was built on selling film and developing photos, with one-hour photo labs in hundreds of mall locations. At its peak the chain operated over 800 stores, including Wolf Camera, which it acquired in 2001. Digital cameras cut into film processing revenue in the early 2000s and smartphones reduced demand for cameras altogether. Ritz filed for bankruptcy twice and closed all its physical stores in 2012 after 94 years.",
   "seo": {
     "meta_title": "What Happened to Ritz Camera? (1918-2012) - Complete History",
     "meta_description": "Ritz Camera operated 800+ stores with one-hour photo labs until digital cameras killed film processing. Learn why the 94-year-old chain failed.",
@@ -164,6 +164,13 @@
       }
     ]
   },
+  "notable_products": [
+    "One-hour photo labs, mini-labs inside the stores that could develop a roll of 35mm film and have prints ready within an hour while customers waited or ran other errands",
+    "Camera sales, from affordable point-and-shoot cameras to enthusiast and professional gear",
+    "Film and photo supplies, including darkroom supplies, albums, frames, and enlargements",
+    "Wolf Camera, a regional camera chain Ritz acquired in 2001 that operated mostly in the Southeast under its own name"
+  ],
+  "overview_md": "**Ritz Camera** was a chain of camera and photo stores founded in 1918 by David Ritz. For most of its history the business was built around selling cameras, film, and photo supplies, and then developing the film customers brought back in. The photo processing side of the business kept people coming back regularly. You shot a roll of film on a vacation or at a birthday party, then came back to the store a few days later to pick up your prints.\n\nThe chain grew through the 1980s and 1990s, adding hundreds of mall locations across the country. One of the main draws was the one-hour photo lab. You could drop off a roll of film in the morning, do some shopping, and come back to the store with your prints ready. Ritz also acquired other camera chains along the way, including Wolf Camera in 2001, which pushed the total above 800 stores.\n\nThe problems started in the early 2000s when digital cameras went mainstream. Digital cameras let you see your photos on a small screen right away and delete the ones that did not turn out. You no longer needed to buy film or pay for developing. Film processing revenue, which had been one of the most profitable parts of the Ritz business, fell sharply across the whole industry. Ritz shifted toward selling digital cameras, memory cards, and accessories, but those products had much thinner margins and customers could often find better prices at big-box stores or online.\n\nThen smartphones arrived. The iPhone launched in 2007 and phone cameras kept getting better. For casual photographers, which was the core Ritz customer, a phone camera was good enough and always in their pocket. There was no need to carry a separate camera. Point-and-shoot camera sales dropped fast. The mall stores that Ritz had built its business around had less and less reason for people to visit.\n\nRitz filed for bankruptcy in February 2009 and closed around 300 stores. A smaller version of the chain kept going but could not recover. The company filed again in June 2012. This time the stores did not reopen. The Ritz Camera name was sold and used by an online-only retailer, but the physical stores were gone. The chain had run for 94 years.",
   "topics": [
     "bankruptcy",
     "retail",
@@ -185,45 +192,31 @@
   "timeline": [
     {
       "date": "1918",
-      "year": 1918,
-      "text": "David Ritz opens first camera shop, beginning 94-year run.",
-      "milestone": "founding"
+      "text": "David Ritz opens his first camera shop, starting what would become a 94-year retail chain."
     },
     {
       "date": "1980s",
-      "year": 1980,
-      "text": "Rapid national expansion into shopping malls; one-hour mini-labs become core business.",
-      "milestone": "expansion"
+      "text": "Ritz expands into shopping malls across the country and installs one-hour photo labs that can develop film while customers wait."
     },
     {
       "date": "1990s",
-      "year": 1990,
-      "text": "Peak growth period with hundreds of stores across America.",
-      "milestone": "peak"
+      "text": "The chain reaches its peak with hundreds of locations selling cameras, film, and photo finishing services."
     },
     {
       "date": "2001",
-      "year": 2001,
-      "text": "Acquires Wolf Camera chain, expanding to 800+ stores nationwide.",
-      "milestone": "acquisition"
+      "text": "Ritz acquires Wolf Camera, a regional chain based mainly in the Southeast, pushing the total above 800 stores nationwide."
     },
     {
       "date": "2003-2007",
-      "year": 2005,
-      "text": "Digital cameras gain mainstream adoption; film processing volumes begin collapse.",
-      "milestone": "decline"
+      "text": "Digital cameras go mainstream. Customers stop buying film and using photo labs. Film processing revenue drops sharply across the industry."
     },
     {
       "date": "2009-02",
-      "year": 2009,
-      "text": "Files Chapter 11 bankruptcy during recession; closes ~300 stores.",
-      "milestone": "bankruptcy"
+      "text": "Ritz files for bankruptcy and closes around 300 stores. A smaller version of the chain continues."
     },
     {
       "date": "2012-06",
-      "year": 2012,
-      "text": "Second bankruptcy and liquidation; all remaining physical stores close; brand sold to online operator.",
-      "milestone": "closure"
+      "text": "Ritz files for bankruptcy a second time. All remaining physical stores close. The brand name is sold and later used by an online-only retailer."
     }
   ],
   "stats": {
@@ -295,16 +288,6 @@
       "label": "Wayback Machine — Ritz Camera website archives",
       "url": "https://web.archive.org/web/*/ritzcamera.com",
       "type": "archive"
-    },
-    {
-      "label": "New York Times — Ritz Camera 2009 bankruptcy coverage",
-      "url": "https://www.nytimes.com/",
-      "type": "news"
-    },
-    {
-      "label": "Reuters — Ritz Camera 2012 liquidation",
-      "url": "https://www.reuters.com/",
-      "type": "news"
     }
   ],
   "publishing": {
@@ -339,6 +322,8 @@
     }
   ],
   "image": "/images/brands/ritz-camera.webp",
-  "image_alt": "Ritz Camera store",
-  "image_caption": "Source: Wikimedia Commons"
+  "image_width": 799,
+  "image_height": 735,
+  "image_alt": "Ritz Camera logo",
+  "image_caption": "Source: Wikimedia Commons — File:RITZLOGO.jpg"
 }

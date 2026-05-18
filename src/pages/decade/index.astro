@@ -172,19 +172,11 @@ const faqLd = {
 
   <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Defunct Brands by Decade</h1>
 
-  <div class="prose dark:prose-invert max-w-none mb-6">
-    <p>
-      Explore vanished and discontinued brands by the decade they went defunct — from older consumer
-      names to modern retail chains, technology products, food brands, and internet-era casualties.
-    </p>
-    <p>
-      Each decade page groups brands by the period when they closed or were discontinued. This makes
-      it easier to spot how different eras saw different kinds of brand collapses across retail,
-      technology, food, media, and consumer culture.
-    </p>
-  </div>
+  <p class="text-slate-600 dark:text-slate-300 mb-5">
+    {totalBrands} discontinued brands grouped by the era they disappeared — retail, tech, food, and more.
+  </p>
 
-  <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+  <div class="mb-8 flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
     <span class="chip opacity-90">Total decades: {decades.length}</span>
     <span class="chip opacity-90">Total brands grouped: {totalBrands}</span>
     {decades.length > 0 && (
@@ -193,26 +185,6 @@ const faqLd = {
       </span>
     )}
   </div>
-
-  <section class="section-card mb-8" aria-labelledby="how-grouped">
-    <h2 id="how-grouped" class="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">
-      How brands are grouped by decade
-    </h2>
-    <div class="prose dark:prose-invert max-w-none">
-      <p>
-        Brands are grouped by the decade in which they went defunct, using the end year as the
-        primary signal. If an end year is missing, the start year is used as a fallback so the
-        brand can still appear in the archive.
-      </p>
-      <p>The archive spans multiple industries, including:</p>
-      <ul>
-        <li>Retail chains and department stores</li>
-        <li>Consumer electronics and internet services</li>
-        <li>Food, drink, and packaged goods</li>
-        <li>Regional, nostalgia, and cultural brands</li>
-      </ul>
-    </div>
-  </section>
 
   {decades.length === 0 ? (
     <p class="text-slate-600 dark:text-slate-400">No decades available yet.</p>
@@ -253,50 +225,17 @@ const faqLd = {
         </ul>
       </section>
 
-      <section class="mt-10" aria-labelledby="why-browse">
-        <h2 id="why-browse" class="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
-          Why browse brands by decade?
+      <section class="mt-10 space-y-3" aria-labelledby="faq">
+        <h2 id="faq" class="text-base font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
+          FAQ
         </h2>
-        <div class="prose dark:prose-invert max-w-none">
-          <p>
-            Looking at disappeared brands by decade can reveal how consumer tastes, technology,
-            competition, and economic pressures changed over time. Some decades were shaped by
-            mall decline and retail bankruptcies, while others reflect media disruption, product
-            discontinuations, or the collapse of once-familiar regional chains.
-          </p>
-          <p>
-            If you are researching nostalgia, retail history, consumer culture, or defunct brand
-            trends, decade pages provide a broader view than a single brand profile alone.
-          </p>
+        <div class="section-card">
+          <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-1">How are brands grouped?</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">By the decade they went defunct, using the end year as the primary signal. Start year is used as a fallback if no end year is available.</p>
         </div>
-      </section>
-
-      <section class="mt-10" aria-labelledby="faq">
-        <h2 id="faq" class="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
-          Frequently Asked Questions
-        </h2>
-
-        <div class="space-y-4">
-          <div class="section-card">
-            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
-              How are brands grouped by decade?
-            </h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300">
-              Brands are grouped by the decade in which they went defunct, based primarily on the
-              end year in the dataset. If an end year is missing, the start year is used as a fallback
-              so the brand can still appear in the archive.
-            </p>
-          </div>
-
-          <div class="section-card">
-            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">
-              What kinds of brands are included?
-            </h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300">
-              The archive includes retail brands, food and drink products, consumer goods,
-              technology products, media names, and other vanished brands across industries.
-            </p>
-          </div>
+        <div class="section-card">
+          <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-1">What's included?</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Retail chains, food and drink brands, consumer electronics, media names, and other discontinued or defunct brands across industries.</p>
         </div>
       </section>
     </>
