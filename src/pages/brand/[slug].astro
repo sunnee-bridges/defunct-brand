@@ -991,11 +991,11 @@ if (catPath && catLabel) {
         {pageH1}
         {Array.isArray(brand?.topics) && brand.topics.includes("scandal") && (
           <span
-            class="ml-2 inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 text-[12px] font-medium text-rose-700
+            class="ml-2 inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 text-[14px] font-medium text-rose-700
                    dark:bg-rose-900/30 dark:text-rose-300"
             title="Ended due to scandal"
           >
-            ⚠️ Scandal
+            Scandal
           </span>
         )}
       </h1>
@@ -1018,7 +1018,7 @@ if (catPath && catLabel) {
           )}
           {brand?.publishing?.estimated_read_time && (
             <span class="text-slate-500 dark:text-slate-400">
-              • ⏱️ {brand.publishing.estimated_read_time} min read
+              • {brand.publishing.estimated_read_time} min read
             </span>
           )}
         </div>
@@ -1029,7 +1029,7 @@ if (catPath && catLabel) {
       {/* Fate (prominent on brand page) */}
       {brand.fate && (
         <p id="brand-fate" class="mt-8 mb-8 text-lg text-slate-800 dark:text-slate-200">
-          <strong>{pickFateIcon(brand.fate, brand.topics)} Fate:</strong>{" "}
+          <strong class="text-amber-600 dark:text-amber-400">Fate:</strong>{" "}
           <Fragment set:html={inlineMd(brand.fate)} />
         </p>
       )}
