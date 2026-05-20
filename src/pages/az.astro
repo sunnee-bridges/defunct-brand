@@ -118,7 +118,7 @@ const itemListLd = {
   <style is:inline>
     .brand-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
       gap: 24px;
     }
     .az-select {
@@ -136,13 +136,21 @@ const itemListLd = {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     }
 
-    /* Mobile: stack filters full-width, shrink jump chips */
+    /* Smaller chips for letter jump bar and back-to-top */
+    [data-az-jump] .chip,
+    .az-back-top.chip {
+      font-size: 1.16rem;
+      padding: 0.44rem 0.87rem;
+      min-height: 0;
+    }
+
+    /* Mobile: stack filters full-width, shrink jump chips further */
     @media (max-width: 639px) {
       #az-filter-bar { flex-direction: column; }
       #az-filter-bar .az-select { width: 100%; }
       [data-az-jump] .chip {
-        font-size: 0.75rem;
-        padding: 0.3rem 0.55rem;
+        font-size: 1.02rem;
+        padding: 0.37rem 0.67rem;
         min-height: 0;
       }
     }
@@ -158,7 +166,7 @@ const itemListLd = {
     quick links to brand timelines, categories, and outcomes.
   </p>
 
-  <div class="max-w-6xl mx-auto px-4">
+  <div class="max-w-5xl mx-auto px-4">
 
     <h1 id="top" class="text-2xl md:text-3xl font-bold mb-2">Browse A–Z</h1>
     <p class="text-slate-600 dark:text-slate-400 mb-5">
@@ -301,7 +309,7 @@ const itemListLd = {
     )}
 
     <div class="mt-10">
-      <a href="#top" class="chip focus-ring">
+      <a href="#top" class="chip az-back-top focus-ring">
         ↑ Back to top
       </a>
     </div>

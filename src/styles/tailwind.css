@@ -62,7 +62,7 @@
 
 /* Base transitions + reduced motion */
 @layer base {
-  html { font-size: 19.8px; }
+  html { font-size: 16px; }
   body { @apply transition-opacity duration-300 ease-out; }
   .fade-out { opacity: 0; }
 }

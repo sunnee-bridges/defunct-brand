@@ -1245,7 +1245,7 @@ if (catPath && catLabel) {
 
       {/* Overview body (Markdown) */}
       {(brand.overview_md || overviewHtml || brand?.content?.introduction) && (
-        <section id="brand-overview" aria-label="Overview" class="prose prose-lg dark:prose-invert max-w-none mt-6">
+        <section id="brand-overview" aria-label="Overview" class="prose dark:prose-invert max-w-none mt-6">
           <Fragment set:html={overviewHtml || mdToHtml(String(brand.overview_md || brand?.content?.introduction || ""))} />
         </section>
       )}
@@ -1265,7 +1265,7 @@ if (catPath && catLabel) {
               >
                 {section.heading}
               </h2>
-              <div class="prose prose-lg dark:prose-invert max-w-none">
+              <div class="prose dark:prose-invert max-w-none">
                 <Fragment set:html={mdToHtml(section.content)} />
               </div>
             </section>
@@ -1321,7 +1321,7 @@ if (catPath && catLabel) {
                 <h3 class="text-lg font-semibold mb-2 text-slate-800 dark:text-slate-200">
                   {item.question}
                 </h3>
-                <div class="text-slate-700 dark:text-slate-300 prose prose-lg dark:prose-invert max-w-none">
+                <div class="text-slate-700 dark:text-slate-300 prose dark:prose-invert max-w-none">
                   <Fragment set:html={mdToHtml(item.answer)} />
                 </div>
               </div>
